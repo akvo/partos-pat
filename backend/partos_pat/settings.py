@@ -64,7 +64,7 @@ ROOT_URLCONF = "partos_pat.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [Path.joinpath(BASE_DIR, "partos_pat/templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -177,3 +177,13 @@ SIMPLE_JWT = {
 
 # Override the default user model
 AUTH_USER_MODEL = "v1_users.SystemUser"
+
+# MAIL SETUP
+EMAIL_BACKEND = "django_mailjet.backends.MailjetBackend"
+MAILJET_API_KEY = environ["MAILJET_APIKEY"]
+MAILJET_API_SECRET = environ["MAILJET_SECRET"]
+EMAIL_FROM = environ.get("EMAIL_FROM") or "noreply@akvo.org"
+
+WEBDOMAIN = environ.get("WEBDOMAIN", "http://localhost:3000")
+
+TEST_ENV = environ.get("TEST_ENV") or False
