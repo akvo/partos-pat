@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "api.v1.v1_init",
+    "api.v1.v1_users",
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
@@ -173,3 +174,6 @@ SIMPLE_JWT = {
         "rest_framework_simplejwt.tokens.AccessToken",
     },
 }
+
+# Override the default user model
+AUTH_USER_MODEL = "v1_users.SystemUser"
