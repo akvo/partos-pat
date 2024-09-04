@@ -80,7 +80,7 @@ const RegisterForm = () => {
         return (
           <>
             <Form.Item
-              name="fullname"
+              name="name"
               rules={[
                 {
                   required: true,
