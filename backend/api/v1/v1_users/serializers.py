@@ -14,11 +14,6 @@ from utils.custom_serializer_fields import (
 )
 
 
-class UserRoleSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    value = serializers.CharField()
-
-
 class RegisterSerializer(serializers.ModelSerializer):
     name = CustomCharField()
     gender = CustomChoiceField(choices=Gender.FieldStr)
@@ -27,7 +22,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     email = CustomEmailField()
     password = CustomCharField()
     confirm_password = CustomCharField()
-    agreement = CustomBooleanField()
+    agreement = CustomBooleanField(default=False)
 
     def validate(self, attrs):
         if attrs.get("password") != attrs.get("confirm_password"):
@@ -99,3 +94,16 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "last_login",
         ]
+
+
+class VerifyTokenSerializer(serializers.Serializer):
+    token = serializers.CharField()
+
+    def validate_token(self, value):
+        if not SystemUser.objects.filter(
+            verification_token=value
+        ).exists():
+            raise serializers.ValidationError(
+                "Invalid token"
+            )
+        return value
