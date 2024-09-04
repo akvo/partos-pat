@@ -99,21 +99,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <Form
-      name="register"
-      form={form}
-      initialValues={{
-        name: "Iwan",
-        gender: 1,
-        country: "ID",
-        account_purpose: 1,
-        email: "iwan@akvo.org",
-        password: "Open1234",
-        confirm_password: "Open1234",
-        agreement: true,
-      }}
-      onFinish={onFinish}
-    >
+    <Form name="register" form={form} onFinish={onFinish}>
       {(_, formInstance) => {
         return (
           <>
