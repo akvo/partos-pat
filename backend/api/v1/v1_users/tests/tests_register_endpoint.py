@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test.utils import override_settings
 
 
-@override_settings(USE_TZ=False)
+@override_settings(USE_TZ=False, TEST_ENV=True)
 class RegistrationTestCase(TestCase):
     def test_successfully_register(self):
         payload = {
