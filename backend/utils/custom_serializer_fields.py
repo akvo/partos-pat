@@ -15,7 +15,6 @@ from rest_framework.fields import (
     FileField,
     DateTimeField,
     JSONField,
-    Field,
 )
 from rest_framework.relations import PrimaryKeyRelatedField
 
@@ -234,21 +233,6 @@ class CustomJSONField(JSONField):
     }
 
 
-class UnvalidatedField(Field):
-    default_error_messages = {
-        "null": _("field_title may not be null."),
-    }
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.allow_blank = True
-        self.allow_null = False
-
-    def to_internal_value(self, data):
-        return data
-
-    def to_representation(self, value):
-        return value
 
 
 def validate_serializers_message(errors):
