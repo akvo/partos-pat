@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
 from utils.soft_deletes_model import SoftDeletesManager
+from uuid import uuid4
 
 
 class UserManager(BaseUserManager, SoftDeletesManager):
@@ -13,6 +14,7 @@ class UserManager(BaseUserManager, SoftDeletesManager):
             raise ValueError("The given email must be set")
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
+        user.verification_token = uuid4()
         user.save(using=self._db)
         return user
 
@@ -22,6 +24,7 @@ class UserManager(BaseUserManager, SoftDeletesManager):
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_verified", True)
 
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
