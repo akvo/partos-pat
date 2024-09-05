@@ -5,11 +5,8 @@ from api.v1.v1_users.models import SystemUser
 class UserModelTestCase(TestCase):
     def setUp(self):
         self.user = SystemUser.objects.create_user(
-            email="test@test.org", password="Test1234", first_name="test"
+            email="test@test.org", password="Test1234", full_name="test"
         )
-
-    def test_get_name(self):
-        self.assertEqual(self.user.name, "test ")
 
     def test_get_sign_pk(self):
         self.assertTrue(self.user.get_sign_pk)
@@ -33,7 +30,7 @@ class UserModelTestCase(TestCase):
             SystemUser.objects.create_user(
                 email=None,
                 password="test1234",
-                first_name="test",
+                full_name="test",
             )
         self.assertEqual(
             str(context.exception),
@@ -44,7 +41,7 @@ class UserModelTestCase(TestCase):
         admin = SystemUser.objects.create_superuser(
             email="admin@mail.com",
             password="admin",
-            first_name="admin"
+            full_name="admin"
         )
         self.assertIsNotNone(admin.id)
         total_admin = SystemUser.objects.filter(
@@ -58,7 +55,7 @@ class UserModelTestCase(TestCase):
             SystemUser.objects.create_superuser(
                 email="admin@mail.com",
                 password="admin",
-                first_name="admin",
+                full_name="admin",
                 is_superuser=False
             )
         self.assertEqual(
