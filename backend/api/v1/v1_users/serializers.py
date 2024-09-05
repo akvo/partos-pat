@@ -1,5 +1,5 @@
+import re
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 
@@ -23,16 +23,24 @@ class RegisterSerializer(serializers.ModelSerializer):
     confirm_password = CustomCharField()
     agreement = CustomBooleanField(default=False)
 
-    def validate(self, attrs):
-        if attrs.get("password") != attrs.get("confirm_password"):
-            raise ValidationError(
-                {
-                    "confirm_password": (
-                        "Confirm password and password are not same"
-                    )
-                }
+    def validate_password(self, value):
+        criteria = re.compile(
+            r'^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*^\S*$)(?=.{8,})'
+        )
+        if not criteria.match(value):
+            raise serializers.ValidationError(
+                "False Password Criteria"
             )
-        return attrs
+        return value
+
+    def validate_confirm_password(self, value):
+        # Access the initial data for password
+        password = self.initial_data.get('password')
+        if password != value:
+            raise serializers.ValidationError(
+                "Confirm password and password are not same"
+            )
+        return value
 
     def validate_email(self, value):
         if SystemUser.objects.filter(email=value).exists():
@@ -106,7 +114,7 @@ class VerifyTokenSerializer(serializers.Serializer):
 
     def validate_token(self, value):
         if not SystemUser.objects.filter(
-            verification_token=value
+            verification_code=value
         ).exists():
             raise serializers.ValidationError(
                 "Invalid token"
