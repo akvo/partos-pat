@@ -1,0 +1,140 @@
+name: Deploy to Test Cluster
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push:
+    name: Build and Push to Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: src
+
+      - name: Checkout Akvo composite actions
+        uses: actions/checkout@v4
+        with:
+          repository: akvo/composite-actions
+          token: ${{ secrets.GH_PAT }}
+          path: composite-actions
+          ref: main
+
+      - name: Copy i18n
+        run: |
+          cp src/i18n src/frontend/ -R
+        shell: bash
+
+      - name: List files
+        run: |
+          ls -la src/frontend/i18n
+        shell: bash
+
+      - name: Prepare Frontend Build
+        run: |
+          mv src/frontend/next.config.prod.mjs src/frontend/next.config.mjs
+        shell: bash
+
+
+      - name: Node Operations
+        uses: ./composite-actions/.github/actions/node-operation
+        with:
+          node-version: "18"
+          node-command: "yarn install --no-progress --frozen-lock && yarn build"
+
+      - name: Docker Build Nginx
+        uses: ./composite-actions/.github/actions/docker-build
+        with:
+          app-name: "partos-pat"
+          service-name: "nginx"
+          dockerfile-location: "nginx"
+
+      - name: Docker Build Frontend
+        uses: ./composite-actions/.github/actions/docker-build
+        with:
+          app-name: "partos-pat"
+          service-name: "frontend"
+          dockerfile-location: "frontend"
+
+      - name: Docker Build Backend
+        uses: ./composite-actions/.github/actions/docker-build
+        with:
+          app-name: "partos-pat"
+          service-name: "backend"
+          dockerfile-location: "backend/Dockerfile.prod"
+
+      - name: Docker Push Nginx
+        uses: ./composite-actions/.github/actions/docker-push
+        with:
+          app-name: "partos-pat"
+          service-name: "nginx"
+          gcloud-sa:  ${{ secrets.GCLOUD_SERVICE_ACCOUNT_REGISTRY }}
+          cluster-name: "test"
+
+      - name: Docker Push Frontend
+        uses: ./composite-actions/.github/actions/docker-push
+        with:
+          app-name: "partos-pat"
+          service-name: "frontend"
+          gcloud-sa:  ${{ secrets.GCLOUD_SERVICE_ACCOUNT_REGISTRY }}
+          cluster-name: "test"
+
+      - name: Docker Push Backend
+        uses: ./composite-actions/.github/actions/docker-push
+        with:
+          app-name: "partos-pat"
+          service-name: "backend"
+          gcloud-sa:  ${{ secrets.GCLOUD_SERVICE_ACCOUNT_REGISTRY }}
+          cluster-name: "test"
+
+  rollout:
+    name: Rollout to the server
+    needs: build-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: src
+
+      - name: Checkout Akvo composite actions
+        uses: actions/checkout@v4
+        with:
+          repository: akvo/composite-actions
+          token: ${{ secrets.GH_PAT }}
+          path: composite-actions
+          ref: main
+
+      - name: Rollout Nginx
+        uses: ./composite-actions/.github/actions/k8s-rollout
+        with:
+          app-name: "partos-pat"
+          deployment-name: "nginx-deployment"
+          container-name: "nginx"
+          cluster-name: "test"
+          namespace-name: "partos-pat-namespace"
+          gcloud-sa:  ${{ secrets.GCLOUD_SERVICE_ACCOUNT_K8S }}
+
+
+      - name: Rollout Frontend
+        uses: ./composite-actions/.github/actions/k8s-rollout
+        with:
+          app-name: "partos-pat"
+          deployment-name: "frontend-deployment"
+          container-name: "frontend"
+          cluster-name: "test"
+          namespace-name: "partos-pat-namespace"
+          gcloud-sa:  ${{ secrets.GCLOUD_SERVICE_ACCOUNT_K8S }}
+
+      - name: Rollout Backend
+        uses: ./composite-actions/.github/actions/k8s-rollout
+        with:
+          app-name: "partos-pat"
+          deployment-name: "backend-deployment"
+          container-name: "backend"
+          cluster-name: "test"
+          namespace-name: "partos-pat-namespace"
+          gcloud-sa:  ${{ secrets.GCLOUD_SERVICE_ACCOUNT_K8S }}
