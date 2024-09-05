@@ -19,7 +19,7 @@ class VerificationTestCase(TestCase):
 
     def test_successfully_verified(self):
         req = self.client.get(
-            f"/api/v1/verify?token={self.user.verification_token}",
+            f"/api/v1/verify?token={self.user.verification_code}",
             content_type="application/json",
         )
         self.assertEqual(req.status_code, 302)
@@ -37,14 +37,14 @@ class VerificationTestCase(TestCase):
         )
         self.assertEqual(req.status_code, 400)
         res = req.json()
-        self.assertEqual(res, {"message": "Invalid token"})
+        self.assertEqual(res, {"message": '“INVALID” is not a valid UUID.'})
 
     def test_user_is_verified(self):
         self.user.is_verified = True
         self.user.save()
 
         req = self.client.get(
-            f"/api/v1/verify?token={self.user.verification_token}",
+            f"/api/v1/verify?token={self.user.verification_code}",
             content_type="application/json",
         )
         self.assertEqual(req.status_code, 302)
