@@ -12,7 +12,10 @@
     "checkboxAgreementLink": "PAT Terms",
     "loginText": "Have an account?",
     "loginTextLink": "Login",
-    "contactText": "The Partos Political Monitor is a political database with a weekly newsletter for all Partos members. Do you also want to register (for free) or do you have questions? Contact <email>here</email>"
+    "contactText": "The Partos Political Monitor is a political database with a weekly newsletter for all Partos members. Do you also want to register (for free) or do you have questions? Contact <email>here</email>",
+    "successRegister": "Success! Check your email to verify your account.",
+    "successVerified": "Your account has been successfully verified",
+    "emailExists": "A user with this email already exists."
   },
   "common": {
     "male": "Male",
