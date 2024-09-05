@@ -85,7 +85,7 @@ const RegisterForm = () => {
     try {
       await api.post("/register", values);
       Modal.success({
-        content: "Success! Check your email to verify your account.",
+        content: t("successRegister"),
         onOk: () => {
           router.push("/login");
         },
