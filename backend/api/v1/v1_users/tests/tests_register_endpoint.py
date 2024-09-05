@@ -118,15 +118,15 @@ class RegistrationTestCase(TestCase):
             },
         )
 
-    def test_password_not_match(self):
+    def test_confirm_password_not_match(self):
         payload = {
             "name": "User 1",
             "gender": 1,
             "country": "ID",
             "account_purpose": 1,
             "email": "user1@example.com",
-            "password": "Test",
-            "confirm_password": "Test#123",
+            "password": "Open1234",
+            "confirm_password": "Test",
             "agreement": True,
         }
 
@@ -165,3 +165,22 @@ class RegistrationTestCase(TestCase):
                 )
             },
         )
+
+    def test_password_not_match_criteria(self):
+        payload = {
+            "name": "User 1",
+            "gender": 1,
+            "country": "ID",
+            "account_purpose": 1,
+            "email": "user1@example.com",
+            "password": "secret",
+            "confirm_password": "secret",
+            "agreement": True,
+        }
+
+        req = self.client.post(
+            "/api/v1/register", payload, content_type="application/json"
+        )
+        self.assertEqual(req.status_code, 400)
+        res = req.json()
+        self.assertEqual(res, {"message": "False Password Criteria"})
