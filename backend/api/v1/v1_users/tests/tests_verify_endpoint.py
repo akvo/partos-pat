@@ -10,8 +10,7 @@ class VerificationTestCase(TestCase):
         self.user = SystemUser.objects.create_user(
             email="test@test.org",
             password="test1234",
-            first_name="test",
-            last_name="testing",
+            full_name="test",
             gender=1,
             country="ID",
             account_purpose=1,
