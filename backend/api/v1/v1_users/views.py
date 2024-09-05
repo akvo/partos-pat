@@ -19,7 +19,6 @@ from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
-from partos_pat.settings import WEBDOMAIN
 
 
 @extend_schema(
@@ -78,8 +77,8 @@ def verify_token(request, version):
     token = serializer.validated_data.get("token")
     user = SystemUser.objects.get(verification_token=token)
     if user.is_verified:
-        return HttpResponseRedirect(f"{WEBDOMAIN}/en/login")
+        return HttpResponseRedirect(f"{settings.WEBDOMAIN}/en/login")
     user.is_verified = True
     user.updated = timezone.now()
     user.save()
-    return HttpResponseRedirect(f"{WEBDOMAIN}/en/login?verified=true")
+    return HttpResponseRedirect(f"{settings.WEBDOMAIN}/en/login?verified=true")
