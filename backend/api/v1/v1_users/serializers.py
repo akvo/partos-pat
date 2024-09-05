@@ -2,7 +2,6 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
-from uuid import uuid4
 
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.constants import Gender, AccountPurpose
@@ -48,12 +47,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         name = validated_data.pop("name")
         names = name.split()
         validated_data["first_name"] = names[0]
+        last_name = ""
         if len(names) > 1:
-            validated_data["last_name"] = names[1]
-        user = super(RegisterSerializer, self).create(validated_data)
-        user.set_password(validated_data["password"])
-        user.verification_token = uuid4()
-        user.save()
+            last_name = names[1]
+        user = SystemUser.objects.create_user(
+            email=validated_data["email"],
+            password=validated_data["password"],
+            first_name=validated_data["first_name"],
+            last_name=last_name,
+            gender=validated_data["gender"],
+            country=validated_data["country"],
+            account_purpose=validated_data["account_purpose"],
+        )
         return user
 
     class Meta:
