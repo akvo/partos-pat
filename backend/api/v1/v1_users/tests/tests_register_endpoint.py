@@ -11,12 +11,12 @@ class RegistrationTestCase(TestCase):
             gender=1,
             account_purpose=1,
             country="EN",
-            password="secret"
+            password="secret",
         )
 
     def test_successfully_register_with_fullname(self):
         payload = {
-            "name": "Jane Doe",
+            "full_name": "Jane Doe",
             "gender": 2,
             "country": "ID",
             "account_purpose": 1,
@@ -34,7 +34,7 @@ class RegistrationTestCase(TestCase):
         self.assertEqual(
             res,
             {
-                "name": "Jane Doe",
+                "full_name": "Jane Doe",
                 "gender": 2,
                 "country": "ID",
                 "account_purpose": 1,
@@ -45,7 +45,7 @@ class RegistrationTestCase(TestCase):
 
     def test_successfully_register_with_single(self):
         payload = {
-            "name": "Joe",
+            "full_name": "Joe",
             "gender": 1,
             "country": "UK",
             "account_purpose": 2,
@@ -63,7 +63,7 @@ class RegistrationTestCase(TestCase):
         self.assertEqual(
             res,
             {
-                "name": "Joe ",
+                "full_name": "Joe",
                 "gender": 1,
                 "country": "UK",
                 "account_purpose": 2,
@@ -74,7 +74,7 @@ class RegistrationTestCase(TestCase):
 
     def test_invalid_email(self):
         payload = {
-            "name": "User 1",
+            "full_name": "User 1",
             "gender": 1,
             "country": "ID",
             "account_purpose": 1,
@@ -93,7 +93,7 @@ class RegistrationTestCase(TestCase):
 
     def test_invalid_optiions(self):
         payload = {
-            "name": "User 1",
+            "full_name": "User 1",
             "gender": 12,
             "country": "ID",
             "account_purpose": 111,
@@ -120,7 +120,7 @@ class RegistrationTestCase(TestCase):
 
     def test_confirm_password_not_match(self):
         payload = {
-            "name": "User 1",
+            "full_name": "User 1",
             "gender": 1,
             "country": "ID",
             "account_purpose": 1,
@@ -142,7 +142,7 @@ class RegistrationTestCase(TestCase):
 
     def test_email_exists(self):
         payload = {
-            "name": "Joni",
+            "full_name": "Joni",
             "gender": 1,
             "country": "ID",
             "account_purpose": 3,
@@ -159,16 +159,12 @@ class RegistrationTestCase(TestCase):
         res = req.json()
         self.assertEqual(
             res,
-            {
-                "message": (
-                    "A user with this email already exists."
-                )
-            },
+            {"message": ("A user with this email already exists.")},
         )
 
     def test_password_not_match_criteria(self):
         payload = {
-            "name": "User 1",
+            "full_name": "User 1",
             "gender": 1,
             "country": "ID",
             "account_purpose": 1,
