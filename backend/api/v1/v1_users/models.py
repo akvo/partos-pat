@@ -13,8 +13,7 @@ from api.v1.v1_users.constants import (
 
 class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50, blank=True)
+    full_name = models.CharField(max_length=100)
     date_joined = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(default=None, null=True)
     country = models.CharField(max_length=25)
@@ -33,7 +32,7 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "country", "account_purpose"]
+    REQUIRED_FIELDS = ["full_name", "country", "account_purpose"]
 
     def delete(self, using=None, keep_parents=False, hard: bool = False):
         if hard:
@@ -47,13 +46,6 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
     def restore(self) -> None:
         self.deleted_at = None
         self.save(update_fields=["deleted_at"])
-
-    def get_full_name(self):
-        return "{0} {1}".format(self.first_name, self.last_name)
-
-    @property
-    def name(self):
-        return "{0} {1}".format(self.first_name, self.last_name)
 
     def get_sign_pk(self):
         return signing.dumps(self.pk)
