@@ -23,6 +23,13 @@ class RegisterSerializer(serializers.ModelSerializer):
     confirm_password = CustomCharField()
     agreement = CustomBooleanField(default=False)
 
+    def validate_agreement(self, value):
+        if not value:
+            raise serializers.ValidationError(
+                "checkAgreementRequired"
+            )
+        return value
+
     def validate_password(self, value):
         criteria = re.compile(
             r'^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*^\S*$)(?=.{8,})'

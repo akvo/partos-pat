@@ -180,3 +180,22 @@ class RegistrationTestCase(TestCase):
         self.assertEqual(req.status_code, 400)
         res = req.json()
         self.assertEqual(res, {"message": "False Password Criteria"})
+
+    def test_agreement_is_false(self):
+        payload = {
+            "full_name": "User 1",
+            "gender": 1,
+            "country": "ID",
+            "account_purpose": 1,
+            "email": "user1@example.com",
+            "password": "Open1234",
+            "confirm_password": "Open1234",
+            "agreement": False,
+        }
+
+        req = self.client.post(
+            "/api/v1/register", payload, content_type="application/json"
+        )
+        self.assertEqual(req.status_code, 400)
+        res = req.json()
+        self.assertEqual(res, {"message": "checkAgreementRequired"})
