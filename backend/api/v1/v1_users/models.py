@@ -29,7 +29,7 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
         null=True
     )
     is_verified = models.BooleanField(default=False)
-    verification_token = models.TextField()
+    verification_code = models.UUIDField(default=None, null=True)
     objects = UserManager()
 
     USERNAME_FIELD = "email"

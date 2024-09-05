@@ -41,7 +41,7 @@ def email_context(context: dict, type: str):
                 "cta_text": "Verify My Email",
                 "cta_url": "{0}/api/v1/verify?token={1}".format(
                     WEBDOMAIN,
-                    context["verification_token"]
+                    context["verification_code"]
                 ),
             }
         )

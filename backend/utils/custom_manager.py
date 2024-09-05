@@ -14,7 +14,7 @@ class UserManager(BaseUserManager, SoftDeletesManager):
             raise ValueError("The given email must be set")
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.verification_token = uuid4()
+        user.verification_code = uuid4()
         user.save(using=self._db)
         return user
 

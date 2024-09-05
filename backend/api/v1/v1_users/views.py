@@ -42,7 +42,7 @@ def register(request, version):
             context={
                 "send_to": [user.email],
                 "name": user.name,
-                "verification_token": user.verification_token,
+                "verification_code": user.verification_code,
             },
         )
 
@@ -75,7 +75,7 @@ def verify_token(request, version):
             status=status.HTTP_400_BAD_REQUEST,
         )
     token = serializer.validated_data.get("token")
-    user = SystemUser.objects.get(verification_token=token)
+    user = SystemUser.objects.get(verification_code=token)
     if user.is_verified:
         return HttpResponseRedirect(f"{settings.WEBDOMAIN}/en/login")
     user.is_verified = True
