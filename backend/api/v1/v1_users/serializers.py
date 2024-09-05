@@ -14,7 +14,7 @@ from utils.custom_serializer_fields import (
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    name = CustomCharField()
+    full_name = CustomCharField()
     gender = CustomChoiceField(choices=Gender.FieldStr)
     country = CustomCharField()
     account_purpose = CustomChoiceField(choices=AccountPurpose.FieldStr)
@@ -52,17 +52,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("agreement")
         validated_data.pop("confirm_password")
-        name = validated_data.pop("name")
-        names = name.split()
-        validated_data["first_name"] = names[0]
-        last_name = ""
-        if len(names) > 1:
-            last_name = names[1]
         user = SystemUser.objects.create_user(
             email=validated_data["email"],
             password=validated_data["password"],
-            first_name=validated_data["first_name"],
-            last_name=last_name,
+            full_name=validated_data["full_name"],
             gender=validated_data["gender"],
             country=validated_data["country"],
             account_purpose=validated_data["account_purpose"],
@@ -72,7 +65,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = SystemUser
         fields = [
-            "name",
+            "full_name",
             "gender",
             "country",
             "account_purpose",
@@ -84,12 +77,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
     last_login = serializers.SerializerMethodField()
-
-    @extend_schema_field(OpenApiTypes.STR)
-    def get_name(self, instance):
-        return instance.get_full_name()
 
     @extend_schema_field(OpenApiTypes.INT)
     def get_last_login(self, instance):
@@ -100,7 +88,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = SystemUser
         fields = [
-            "name",
+            "full_name",
             "gender",
             "country",
             "account_purpose",

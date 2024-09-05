@@ -41,7 +41,7 @@ def register(request, version):
             type=EmailTypes.user_register,
             context={
                 "send_to": [user.email],
-                "name": user.name,
+                "name": user.full_name,
                 "verification_code": user.verification_code,
             },
         )
