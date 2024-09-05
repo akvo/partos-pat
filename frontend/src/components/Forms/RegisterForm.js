@@ -1,6 +1,15 @@
 "use client";
 import { useState } from "react";
-import { Button, Checkbox, Form, Input, Modal, Select, Tooltip } from "antd";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  message,
+  Modal,
+  Select,
+  Tooltip,
+} from "antd";
 import { useTranslations } from "next-intl";
 import {
   Envelope,
@@ -14,6 +23,7 @@ import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 import countryOptions from "../../../i18n/countries.json";
 import { useRouter } from "@/routing";
 import SubmitButton from "../SubmitButton";
+import { api } from "@/lib";
 
 const InputPassword = (props) => {
   const [visible, setVisible] = useState(false);
@@ -37,6 +47,7 @@ const RegisterForm = () => {
   const [checkedList, setCheckedList] = useState([]);
   const [openTerms, setOpenTerms] = useState(false);
   const [openPasswordCheck, setOpenPasswordCheck] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const [form] = useForm();
 
@@ -69,9 +80,22 @@ const RegisterForm = () => {
     setCheckedList(criteria);
   };
 
-  const onFinish = (values) => {
-    console.info("values", values);
-    router.push("/login");
+  const onFinish = async (values) => {
+    setSubmitting(true);
+    try {
+      await api.post("/register", values);
+      Modal.success({
+        content: t("successRegister"),
+        onOk: () => {
+          router.push("/login");
+        },
+      });
+      setSubmitting(false);
+    } catch ({ data: errData }) {
+      const { message: errorMessage } = errData;
+      message.error(errorMessage);
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -80,7 +104,7 @@ const RegisterForm = () => {
         return (
           <>
             <Form.Item
-              name="fullname"
+              name="full_name"
               rules={[
                 {
                   required: true,
@@ -129,7 +153,7 @@ const RegisterForm = () => {
               />
             </Form.Item>
             <Form.Item
-              name="purpose_account"
+              name="account_purpose"
               rules={[
                 {
                   required: true,
@@ -292,7 +316,7 @@ const RegisterForm = () => {
               onCancel={() => setOpenTerms(false)}
               closable
             />
-            <SubmitButton form={form} block>
+            <SubmitButton form={form} loading={submitting} block>
               {t("btnCreateAccount")}
             </SubmitButton>
           </>
