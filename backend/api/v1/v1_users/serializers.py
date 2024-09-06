@@ -1,7 +1,5 @@
 import re
 from rest_framework import serializers
-from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema_field
 
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.constants import Gender, AccountPurpose
@@ -84,23 +82,14 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    last_login = serializers.SerializerMethodField()
-
-    @extend_schema_field(OpenApiTypes.INT)
-    def get_last_login(self, instance):
-        if instance.last_login:
-            return instance.last_login.timestamp()
-        return None
-
     class Meta:
         model = SystemUser
         fields = [
+            "id",
             "full_name",
+            "email",
             "gender",
             "country",
-            "account_purpose",
-            "email",
-            "last_login",
         ]
 
 
@@ -115,3 +104,8 @@ class VerifyTokenSerializer(serializers.Serializer):
                 "Invalid token"
             )
         return value
+
+
+class LoginSerializer(serializers.Serializer):
+    email = CustomEmailField()
+    password = CustomCharField()
