@@ -5,19 +5,19 @@
     "gender": "Genre",
     "country": "Pays d'origine",
     "purposeAccount": "Objet du compte",
-    "email": "E-mail",
-    "password": "Mot de passe",
     "confirmPassword": "Confirmez le mot de passe",
     "checkboxAgreement": "J'accepte le",
     "checkboxAgreementLink": "Conditions PAT",
     "loginText": "Vous avez un compte ?",
     "loginTextLink": "Se connecter",
-    "contactText": "Le Partos Political Monitor est une base de donn\u00e9es politique avec une newsletter hebdomadaire pour tous les membres de Partos. Vous souhaitez \u00e9galement vous inscrire (gratuitement) ou vous avez des questions ? Contactez <email>ici</email>",
     "successRegister": "Succ\u00e8s! V\u00e9rifiez votre courrier \u00e9lectronique pour v\u00e9rifier votre compte.",
     "successVerified": "Votre compte a \u00e9t\u00e9 v\u00e9rifi\u00e9 avec succ\u00e8s",
     "emailExists": "Un utilisateur avec cette adresse e-mail existe d\u00e9j\u00e0."
   },
   "common": {
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "contactText": "Le Partos Political Monitor est une base de donn\u00e9es politique avec une newsletter hebdomadaire pour tous les membres de Partos. Vous souhaitez \u00e9galement vous inscrire (gratuitement) ou vous avez des questions ? Contactez <email>ici</email>",
     "male": "M\u00e2le",
     "female": "Femelle",
     "other": "Autre",
@@ -35,15 +35,27 @@
     "purposeAccountRequired": "Veuillez s\u00e9lectionner l'objet de votre compte",
     "confirmPasswordRequired": "Veuillez confirmer le mot de passe",
     "emailRequired": "Veuillez entrer votre e-mail",
-    "purposeOfAccount1": "J'animerai une s\u00e9ance d'\u00e9valuation du partenariat (de base, finale)",
-    "purposeOfAccount2": "Je participerai \u00e0 une s\u00e9ance d'\u00e9valuation du partenariat (baseline, endline)",
+    "purposeOfAccount1": "J'animerai une s\u00e9ance d'\u00e9valuation du partenariat (r\u00e9f\u00e9rence, fin)",
+    "purposeOfAccount2": "Je participerai \u00e0 une session d'\u00e9valuation du partenariat (baseline, endline)",
     "purposeOfAccount3": "J'animerai une session pour cartographier la dynamique du pouvoir dans un futur consortium",
     "purposeOfAccount4": "Je participerai \u00e0 une session pour cartographier la dynamique du pouvoir dans un futur consortium",
-    "purposeOfAccount5": "Je suis \u00e9tudiant/chercheur et je souhaite en savoir plus sur les dynamiques de pouvoir",
+    "purposeOfAccount5": "Je suis \u00e9tudiant/chercheur et je souhaite en savoir plus sur la dynamique du pouvoir",
     "purposeOfAccount6": "Autre",
     "countryRequired": "Veuillez s\u00e9lectionner votre pays",
     "genderRequired": "Veuillez s\u00e9lectionner votre sexe",
     "passwordStrength": "Force du mot de passe\u00a0:\u00a0crit\u00e8res {progress} remplis",
     "checkAgreementRequired": "Veuillez examiner et v\u00e9rifier l'accord"
+  },
+  "Error": {
+    "invalidEmail": "Entrez une adresse e-mail valide.",
+    "required": "{field_title} est obligatoire.",
+    "blank": "{field_title} n'est peut-\u00eatre pas vide",
+    "null": "{field_title} ne peut pas \u00eatre nul.",
+    "500": "Erreur interne du serveur. Veuillez r\u00e9essayer plus tard."
+  },
+  "Login": {
+    "invalidLogin": "Identifiants de connexion invalides",
+    "loginText": "Se connecter",
+    "createAccount": "Cr\u00e9er un compte"
   }
 }
