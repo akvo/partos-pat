@@ -22,7 +22,7 @@ import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 
 import countryOptions from "../../../i18n/countries.json";
 import { useRouter } from "@/routing";
-import SubmitButton from "../SubmitButton";
+import SubmitButton from "../Buttons/SubmitButton";
 import { api } from "@/lib";
 
 const InputPassword = (props) => {

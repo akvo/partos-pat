@@ -5,9 +5,9 @@ import { Form, Input, message } from "antd";
 import { useTranslations } from "next-intl";
 import { Envelope } from "@/components/Icons";
 import { useRouter } from "@/routing";
-import SubmitButton from "../SubmitButton";
-import { api } from "@/lib";
+import SubmitButton from "../Buttons/SubmitButton";
 import { PasswordInput } from "../PasswordInput";
+import { signIn } from "@/lib/auth";
 
 const { useForm } = Form;
 
@@ -18,17 +18,21 @@ const LoginForm = () => {
 
   const t = useTranslations("Login");
   const tc = useTranslations("common");
-  const te = useTranslations("Error");
+  const tr = useTranslations("Error");
 
   const onFinish = async (values) => {
     setSubmitting(true);
     try {
-      await api.post("/users/login", values);
-      router.push("/dashboard");
+      const { status, message: errorKey } = await signIn(values);
       setSubmitting(false);
-    } catch ({ data: errData, status }) {
-      const { message: errorMessage } = errData;
-      message.error(status === 500 ? te("500") : errorMessage);
+      if (status === 200) {
+        router.push("/dashboard");
+      } else {
+        message.error(tr(errorKey));
+      }
+    } catch (error) {
+      const errorKey = error.message.replace(/^Error:\s*/, "");
+      message.error(tr(errorKey));
       setSubmitting(false);
     }
   };
