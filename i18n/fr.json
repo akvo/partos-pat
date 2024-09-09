@@ -36,7 +36,7 @@
     "confirmPasswordRequired": "Veuillez confirmer le mot de passe",
     "emailRequired": "Veuillez entrer votre e-mail",
     "purposeOfAccount1": "J'animerai une s\u00e9ance d'\u00e9valuation du partenariat (r\u00e9f\u00e9rence, fin)",
-    "purposeOfAccount2": "Je participerai \u00e0 une session d'\u00e9valuation du partenariat (baseline, endline)",
+    "purposeOfAccount2": "Je participerai \u00e0 une s\u00e9ance d'\u00e9valuation du partenariat (baseline, endline)",
     "purposeOfAccount3": "J'animerai une session pour cartographier la dynamique du pouvoir dans un futur consortium",
     "purposeOfAccount4": "Je participerai \u00e0 une session pour cartographier la dynamique du pouvoir dans un futur consortium",
     "purposeOfAccount5": "Je suis \u00e9tudiant/chercheur et je souhaite en savoir plus sur la dynamique du pouvoir",
@@ -44,17 +44,18 @@
     "countryRequired": "Veuillez s\u00e9lectionner votre pays",
     "genderRequired": "Veuillez s\u00e9lectionner votre sexe",
     "passwordStrength": "Force du mot de passe\u00a0:\u00a0crit\u00e8res {progress} remplis",
-    "checkAgreementRequired": "Veuillez examiner et v\u00e9rifier l'accord"
+    "checkAgreementRequired": "Veuillez examiner et v\u00e9rifier l'accord",
+    "logout": "D\u00e9connexion"
   },
   "Error": {
     "invalidEmail": "Entrez une adresse e-mail valide.",
     "required": "{field_title} est obligatoire.",
     "blank": "{field_title} n'est peut-\u00eatre pas vide",
     "null": "{field_title} ne peut pas \u00eatre nul.",
-    "500": "Erreur interne du serveur. Veuillez r\u00e9essayer plus tard."
+    "500": "Erreur interne du serveur. Veuillez r\u00e9essayer plus tard.",
+    "invalidLogin": "Identifiants de connexion invalides"
   },
   "Login": {
-    "invalidLogin": "Identifiants de connexion invalides",
     "loginText": "Se connecter",
     "createAccount": "Cr\u00e9er un compte"
   }

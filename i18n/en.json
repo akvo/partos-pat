@@ -44,17 +44,18 @@
     "countryRequired": "Please select your country",
     "genderRequired": "Please select your gender",
     "passwordStrength": "Password Strength: {progress} criteria met",
-    "checkAgreementRequired": "Please review and check the agreement"
+    "checkAgreementRequired": "Please review and check the agreement",
+    "logout": "Logout"
   },
   "Error": {
     "invalidEmail": "Enter a valid email address.",
     "required": "{field_title} is required.",
     "blank": "{field_title} may not be blank",
     "null": "{field_title} may not be null.",
-    "500": "Internal Server Error. Please try again later."
+    "500": "Internal Server Error. Please try again later.",
+    "invalidLogin": "Invalid login credentials"
   },
   "Login": {
-    "invalidLogin": "Invalid login credentials",
     "loginText": "Login",
     "createAccount": "Create account"
   }
