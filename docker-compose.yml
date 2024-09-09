@@ -41,6 +41,9 @@ services:
       - ./frontend:/app:delegated
       - ./i18n:/app/i18n:delegated
     working_dir: /app
+    environment:
+      - WEBDOMAIN=$WEBDOMAIN
+      - NEXT_AUTH_SECRET_KEY=$NEXT_AUTH_SECRET_KEY
     depends_on:
       - backend
 volumes:
