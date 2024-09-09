@@ -16,6 +16,8 @@
   --border-input-rgba: 139, 139, 139, 0.5;
   --input-bg-disabled: #d9d9d9;
   --input-color-disabled: #8b8b8b;
+  --button-ghost-border: #1e1e1e;
+  --button-ghost-color: #1e1e1e;
 
   .ant-input-affix-wrapper {
     padding: 0;
@@ -66,17 +68,32 @@
   .ant-input-group .ant-input-group-addon .ant-btn-link:active {
     color: var(--button-text);
   }
-  .ant-btn:not(.ant-btn-link) {
+  .ant-btn,
+  .ant-btn.ant-btn-default {
     height: auto;
     color: var(--button-text);
-    box-shadow: 0px 4px 34px 0px rgba(var(--box-shadow-rgba));
     font-weight: 600;
     line-height: 24px;
     padding-top: 12px;
     padding-bottom: 12px;
   }
-  .ant-btn:hover {
+
+  .ant-btn:not(.ant-btn-link):not(.ant-btn-background-ghost) {
+    box-shadow: 0px 4px 34px 0px rgba(var(--box-shadow-rgba));
+  }
+  .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
     color: var(--button-text-hover);
+    font-weight: 700;
+    border-color: transparent;
+  }
+  .ant-btn.ant-btn-background-ghost {
+    color: var(--button-ghost-color);
+    border-color: var(--button-ghost-border);
+    border-width: 2px;
+    border-radius: 5px;
+  }
+  .ant-btn.ant-btn-background-ghost:hover {
+    border-color: var(--button-ghost-border) !important;
   }
   .ant-btn:disabled {
     color: var(--button-color-disabled);
