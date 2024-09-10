@@ -3,10 +3,10 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
-const secretKey = process.env.NEXT_AUTH_SECRET_KEY;
+const secretKey = process.env.NEXT_AUTH_SECRET_KEY || "secret";
 const key = new TextEncoder().encode(secretKey);
 const protectedRoutes = ["dashboard"];
-const authRoutes = ["login"];
+const authRoutes = ["login", "register"];
 
 export const encrypt = async ({ expirationTime, ...payload }) => {
   const expirationDate = new Date(expirationTime);
@@ -45,7 +45,7 @@ export const signIn = async (formData) => {
     );
 
     const { user, token, expiration_time: expirationTime } = await req.json();
-    if (expirationTime) {
+    if (req.ok) {
       const expires = new Date(expirationTime);
       // Create the session
       const currentUser = await encrypt({ user, token, expirationTime });
@@ -83,18 +83,23 @@ export const OptimisticCheck = async (locale, pathName, request) => {
     request.nextUrl.pathname = `/${locale}/login`;
   }
 
-  if (!session) return;
+  if (!session) return true;
 
   if (locale && authRoutes.includes(pathName)) {
     request.nextUrl.pathname = `/${locale}/dashboard`;
   }
   // check expires
-  const { expires } = await decrypt(session);
-  const now = Date.now();
+  const { token: authToken } = await decrypt(session);
 
-  // Convert token_expires to a timestamp
-  const expiresTime = new Date(expires).getTime();
-  if (now >= expiresTime) {
-    request.nextUrl.pathname = `/${locale}/login`;
-  }
+  const req = await fetch(
+    `${process.env.WEBDOMAIN}/api/v1/users/me?format=json`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+  return req.ok;
 };
