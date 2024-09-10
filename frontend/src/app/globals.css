@@ -95,6 +95,10 @@
   .ant-btn.ant-btn-background-ghost:hover {
     border-color: var(--button-ghost-border) !important;
   }
+  .ant-btn-link:not(:disabled):not(.ant-btn-disabled):hover {
+    color: var(--button-text-hover);
+    text-decoration: underline;
+  }
   .ant-btn:disabled {
     color: var(--button-color-disabled);
     background-color: var(--button-bg-disabled);
