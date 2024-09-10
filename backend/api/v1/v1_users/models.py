@@ -1,14 +1,14 @@
+import uuid
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core import signing
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
 
 from utils.soft_deletes_model import SoftDeletes
 from utils.custom_manager import UserManager
-from api.v1.v1_users.constants import (
-    AccountPurpose, Gender
-)
+from api.v1.v1_users.constants import AccountPurpose, Gender
 
 
 class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
@@ -18,17 +18,16 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
     updated = models.DateTimeField(default=None, null=True)
     country = models.CharField(max_length=25)
     account_purpose = models.IntegerField(
-        choices=AccountPurpose.FieldStr.items(),
-        default=None,
-        null=True
+        choices=AccountPurpose.FieldStr.items(), default=None, null=True
     )
     gender = models.IntegerField(
-        choices=Gender.FieldStr.items(),
-        default=None,
-        null=True
+        choices=Gender.FieldStr.items(), default=None, null=True
     )
     is_verified = models.BooleanField(default=False)
     verification_code = models.UUIDField(default=None, null=True)
+    reset_password_code = models.UUIDField(default=None, null=True, blank=True)
+    reset_password_code_expiry = models.DateTimeField(null=True, blank=True)
+
     objects = UserManager()
 
     USERNAME_FIELD = "email"
@@ -49,6 +48,19 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
 
     def get_sign_pk(self):
         return signing.dumps(self.pk)
+
+    def generate_reset_password_code(self):
+        self.reset_password_code = uuid.uuid4()
+        self.reset_password_code_expiry = timezone.now() + timedelta(hours=1)
+        self.save(
+            update_fields=["reset_password_code", "reset_password_code_expiry"]
+        )
+        return self.reset_password_code
+
+    def is_reset_code_valid(self):
+        if self.reset_password_code and self.reset_password_code_expiry:
+            return timezone.now() < self.reset_password_code_expiry
+        return False
 
     class Meta:
         db_table = "system_user"

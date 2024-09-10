@@ -23,24 +23,20 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate_agreement(self, value):
         if not value:
-            raise serializers.ValidationError(
-                "checkAgreementRequired"
-            )
+            raise serializers.ValidationError("checkAgreementRequired")
         return value
 
     def validate_password(self, value):
         criteria = re.compile(
-            r'^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*^\S*$)(?=.{8,})'
+            r"^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*^\S*$)(?=.{8,})"
         )
         if not criteria.match(value):
-            raise serializers.ValidationError(
-                "False Password Criteria"
-            )
+            raise serializers.ValidationError("False Password Criteria")
         return value
 
     def validate_confirm_password(self, value):
         # Access the initial data for password
-        password = self.initial_data.get('password')
+        password = self.initial_data.get("password")
         if password != value:
             raise serializers.ValidationError(
                 "Confirm password and password are not same"
@@ -97,15 +93,22 @@ class VerifyTokenSerializer(serializers.Serializer):
     token = serializers.CharField()
 
     def validate_token(self, value):
-        if not SystemUser.objects.filter(
-            verification_code=value
-        ).exists():
-            raise serializers.ValidationError(
-                "Invalid token"
-            )
+        if not SystemUser.objects.filter(verification_code=value).exists():
+            raise serializers.ValidationError("Invalid token")
         return value
 
 
 class LoginSerializer(serializers.Serializer):
     email = CustomEmailField()
     password = CustomCharField()
+
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = CustomEmailField()
+
+    def validate_email(self, value):
+        if not SystemUser.objects.filter(email=value).exists():
+            raise serializers.ValidationError(
+                "User with this email does not exist."
+            )
+        return value

@@ -19,6 +19,7 @@ from api.v1.v1_users.serializers import (
     UserSerializer,
     VerifyTokenSerializer,
     LoginSerializer,
+    ForgotPasswordSerializer,
 )
 from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import validate_serializers_message
@@ -99,9 +100,7 @@ def login(request, version):
     serializer = LoginSerializer(data=request.data)
     if not serializer.is_valid():
         return Response(
-            {
-                "message": validate_serializers_message(serializer.errors)
-            },
+            {"message": validate_serializers_message(serializer.errors)},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
@@ -115,9 +114,7 @@ def login(request, version):
         user.save()
         refresh = RefreshToken.for_user(user)
         # Get the expiration time of the new token
-        expiration_time = datetime.fromtimestamp(
-            refresh.access_token["exp"]
-        )
+        expiration_time = datetime.fromtimestamp(refresh.access_token["exp"])
         expiration_time = timezone.make_aware(expiration_time)
 
         data = {}
@@ -139,6 +136,42 @@ def login(request, version):
 
 
 @extend_schema(
+    responses={200: ForgotPasswordSerializer},
+    tags=["Auth"],
+    summary="Forgot password",
+)
+@api_view(["POST"])
+def forgot_password(request, version):
+    serializer = ForgotPasswordSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(
+            {"message": validate_serializers_message(serializer.errors)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    email = serializer.validated_data.get("email")
+    user = SystemUser.objects.get(email=email)
+    if not user:
+        return Response(
+            {"message": "User not found"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+    user.generate_reset_password_code()
+    if not settings.TEST_ENV:
+        send_email(
+            type=EmailTypes.forgot_password,
+            context={
+                "send_to": [user.email],
+                "name": user.full_name,
+                "reset_password_code": user.reset_password_code,
+            },
+        )
+    return Response(
+        {"message": "Email sent successfully"},
+        status=status.HTTP_200_OK,
+    )
+
+
+@extend_schema(
     responses={200: UserSerializer},
     tags=["Auth"],
     summary="Get user details from token",
@@ -147,6 +180,5 @@ def login(request, version):
 @permission_classes([IsAuthenticated])
 def get_profile(request, version):
     return Response(
-        UserSerializer(instance=request.user).data,
-        status=status.HTTP_200_OK
+        UserSerializer(instance=request.user).data, status=status.HTTP_200_OK
     )
