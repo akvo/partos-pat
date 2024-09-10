@@ -140,9 +140,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # https://www.django-rest-framework.org/api-guide/settings/
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
+    "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
+    ),
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
     "DATE_FORMAT": "%d-%m-%Y",
     "DEFAULT_VERSION": "v1",
@@ -170,9 +170,9 @@ SPECTACULAR_SETTINGS = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "AUTH_TOKEN_CLASSES": {
+    "AUTH_TOKEN_CLASSES": (
         "rest_framework_simplejwt.tokens.AccessToken",
-    },
+    ),
 }
 
 # Override the default user model

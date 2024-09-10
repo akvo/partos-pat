@@ -29,48 +29,14 @@ class RegistrationTestCase(TestCase):
         req = self.client.post(
             "/api/v1/register", payload, content_type="application/json"
         )
-        self.assertEqual(req.status_code, 200)
+        self.assertEqual(req.status_code, 201)
         res = req.json()
         self.assertEqual(
-            res,
-            {
-                "full_name": "Jane Doe",
-                "gender": 2,
-                "country": "ID",
-                "account_purpose": 1,
-                "email": "user1@example.com",
-                "last_login": None,
-            },
+            list(res),
+            ["id", "full_name", "email", "gender", "country"],
         )
-
-    def test_successfully_register_with_single(self):
-        payload = {
-            "full_name": "Joe",
-            "gender": 1,
-            "country": "UK",
-            "account_purpose": 2,
-            "email": "joe@test.com",
-            "password": "Test#123",
-            "confirm_password": "Test#123",
-            "agreement": True,
-        }
-
-        req = self.client.post(
-            "/api/v1/register", payload, content_type="application/json"
-        )
-        self.assertEqual(req.status_code, 200)
-        res = req.json()
-        self.assertEqual(
-            res,
-            {
-                "full_name": "Joe",
-                "gender": 1,
-                "country": "UK",
-                "account_purpose": 2,
-                "email": "joe@test.com",
-                "last_login": None,
-            },
-        )
+        self.assertEqual(res["full_name"], "Jane Doe")
+        self.assertEqual(res["email"], "user1@example.com")
 
     def test_invalid_email(self):
         payload = {

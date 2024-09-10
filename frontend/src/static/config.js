@@ -12,3 +12,7 @@ export const PURPOSE_OF_ACCOUNT = {
   purposeOfAccount5: 5,
   purposeOfAccount6: 6,
 };
+
+export const PARTOS = {
+  email: "niels@partos.nl",
+};

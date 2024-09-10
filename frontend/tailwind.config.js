@@ -11,6 +11,8 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "profile-gradient":
+          "linear-gradient(0deg, rgba(236, 241, 245, 0.90) 0%, rgba(236, 241, 245, 0.20) 108.91%)",
       },
     },
     maxWidth: {
@@ -44,11 +46,13 @@ module.exports = {
         10: "#1e1e1e",
       },
       blue: "#0089D7",
+      grey: "#ECF1F5",
       primary: {
         hover: "#FFDE7B",
         normal: "#FFD249",
         active: "#FFC20E",
         dark: "#FF9C00",
+        menu: "#FFF7E5",
       },
     },
   },
