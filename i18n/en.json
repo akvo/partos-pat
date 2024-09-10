@@ -62,7 +62,8 @@
     },
     "ForgotPassword": {
         "sendLink": "Send reset link",
-        "backToText": "Back to",
-        "loginTextLink": "Login"
+        "backToLogin": "Back to Login",
+        "emailSent": "Email sent successfully",
+        "emailSentDescription": "Please check your email to reset your password"
     }
 }
