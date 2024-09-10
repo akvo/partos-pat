@@ -57,6 +57,12 @@
   },
   "Login": {
     "loginText": "Login",
-    "createAccount": "Create account"
+    "createAccount": "Create account",
+    "forgotLink": "Forgot your password"
+  },
+  "ForgotPassword": {
+    "sendLink": "Send reset link",
+    "backToText": "Back to",
+    "loginTextLink": "Login"
   }
 }

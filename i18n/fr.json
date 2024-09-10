@@ -36,10 +36,10 @@
     "confirmPasswordRequired": "Veuillez confirmer le mot de passe",
     "emailRequired": "Veuillez entrer votre e-mail",
     "purposeOfAccount1": "J'animerai une s\u00e9ance d'\u00e9valuation du partenariat (r\u00e9f\u00e9rence, fin)",
-    "purposeOfAccount2": "Je participerai \u00e0 une s\u00e9ance d'\u00e9valuation du partenariat (baseline, endline)",
+    "purposeOfAccount2": "Je participerai \u00e0 une session d'\u00e9valuation du partenariat (baseline, endline)",
     "purposeOfAccount3": "J'animerai une session pour cartographier la dynamique du pouvoir dans un futur consortium",
     "purposeOfAccount4": "Je participerai \u00e0 une session pour cartographier la dynamique du pouvoir dans un futur consortium",
-    "purposeOfAccount5": "Je suis \u00e9tudiant/chercheur et je souhaite en savoir plus sur la dynamique du pouvoir",
+    "purposeOfAccount5": "Je suis \u00e9tudiant/chercheur et je souhaite en savoir plus sur les dynamiques de pouvoir",
     "purposeOfAccount6": "Autre",
     "countryRequired": "Veuillez s\u00e9lectionner votre pays",
     "genderRequired": "Veuillez s\u00e9lectionner votre sexe",
@@ -57,6 +57,12 @@
   },
   "Login": {
     "loginText": "Se connecter",
-    "createAccount": "Cr\u00e9er un compte"
+    "createAccount": "Cr\u00e9er un compte",
+    "forgotLink": "Mot de passe oubli\u00e9"
+  },
+  "ForgotPassword": {
+    "sendLink": "Envoyer le lien de r\u00e9initialisation",
+    "backToText": "Retour \u00e0",
+    "loginTextLink": "Se connecter"
   }
 }
