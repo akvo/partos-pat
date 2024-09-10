@@ -1,7 +1,7 @@
 import { DashboardIcon } from "@/components/Icons";
 import { getSession } from "@/lib/auth";
 import { Link } from "@/routing";
-import { Avatar, Col, Row, Space } from "antd";
+import { Avatar, Space } from "antd";
 import Image from "next/image";
 
 const DashboardTemplate = async ({ children }) => {
@@ -37,12 +37,12 @@ const DashboardTemplate = async ({ children }) => {
                 <Avatar
                   size={48}
                 >{`${firstName ? firstName[0].toUpperCase() : ""}${lastName ? lastName?.[0]?.toUpperCase() : ""}`}</Avatar>
-                <Row>
-                  <Col>
-                    <strong>{user?.full_name}</strong>
-                    <p>{user?.email}</p>
-                  </Col>
-                </Row>
+                <div>
+                  <strong>{user?.full_name}</strong>
+                  <p className="w-full md:w-48 overflow-x-hidden text-sm text-ellipsis">
+                    {user?.email}
+                  </p>
+                </div>
               </Space>
             </Link>
           </li>
