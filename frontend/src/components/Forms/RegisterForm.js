@@ -23,7 +23,6 @@ import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 import countryOptions from "../../../i18n/countries.json";
 import { useRouter } from "@/routing";
 import SubmitButton from "../Buttons/SubmitButton";
-import { api } from "@/lib";
 
 const InputPassword = (props) => {
   const [visible, setVisible] = useState(false);
@@ -53,6 +52,7 @@ const RegisterForm = () => {
 
   const t = useTranslations("Register");
   const tc = useTranslations("common");
+  const t_err = useTranslations("Error");
   const genderOptions = Object.keys(GENDER).map((k) => ({
     label: tc(k),
     value: GENDER?.[k],
@@ -83,17 +83,28 @@ const RegisterForm = () => {
   const onFinish = async (values) => {
     setSubmitting(true);
     try {
-      await api.post("/register", values);
-      Modal.success({
-        content: t("successRegister"),
-        onOk: () => {
-          router.push("/login");
+      const req = await fetch(`/api/v1/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(values),
       });
-      setSubmitting(false);
-    } catch ({ data: errData }) {
-      const { message: errorMessage } = errData;
-      message.error(errorMessage);
+      if (req.ok) {
+        Modal.success({
+          content: t("successRegister"),
+          onOk: () => {
+            router.push("/login");
+          },
+        });
+        setSubmitting(false);
+      } else {
+        const { message: errorMessage } = await req.json();
+        message.error(errorMessage);
+        setSubmitting(false);
+      }
+    } catch {
+      message.error(t_err("500"));
       setSubmitting(false);
     }
   };
@@ -178,7 +189,7 @@ const RegisterForm = () => {
               ]}
             >
               <Input
-                placeholder={t("email")}
+                placeholder={tc("email")}
                 type="email"
                 prefix={<Envelope />}
                 variant="borderless"
@@ -241,7 +252,7 @@ const RegisterForm = () => {
               }
             >
               <InputPassword
-                placeholder={t("password")}
+                placeholder={tc("password")}
                 onChange={onChangePassword}
                 variant="borderless"
                 className="min-h-10"
