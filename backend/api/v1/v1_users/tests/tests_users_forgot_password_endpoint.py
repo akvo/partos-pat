@@ -22,6 +22,8 @@ class RegistrationTestCase(TestCase):
             content_type="application/json",
         )
         self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertEqual(res, {"message": "OK"})
 
     def test_email_not_found(self):
         payload = {"email": "random@test.com"}
@@ -30,8 +32,7 @@ class RegistrationTestCase(TestCase):
             payload,
             content_type="application/json",
         )
-        self.assertEqual(req.status_code, 400)
+        self.assertEqual(req.status_code, 200)
         res = req.json()
-        self.assertEqual(
-            res, {"message": "User with this email does not exist."}
-        )
+        # success even the email is not found
+        self.assertEqual(res, {"message": "OK"})

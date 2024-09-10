@@ -49,8 +49,9 @@ def email_context(context: dict, type: str):
             {
                 "subject": "Reset Your Password",
                 "body": """
-                We received a request to reset your password.
-                If you didn't make the request, just ignore this email.
+                We received a password reset request for
+                the Partos Power Awareness tool for your account
+                If you did not make the request, please ignore this email.
                 Otherwise, you can reset your password using the link below:
                 """,
                 "cta_instruction": """

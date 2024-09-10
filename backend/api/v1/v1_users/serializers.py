@@ -108,7 +108,5 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         if not SystemUser.objects.filter(email=value).exists():
-            raise serializers.ValidationError(
-                "User with this email does not exist."
-            )
+            raise serializers.ValidationError("User not found")
         return value

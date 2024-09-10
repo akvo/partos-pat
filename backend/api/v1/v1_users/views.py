@@ -145,17 +145,11 @@ def forgot_password(request, version):
     serializer = ForgotPasswordSerializer(data=request.data)
     if not serializer.is_valid():
         return Response(
-            {"message": validate_serializers_message(serializer.errors)},
-            status=status.HTTP_400_BAD_REQUEST,
+            {"message": "OK"},
+            status=status.HTTP_200_OK,
         )
-    email = serializer.validated_data.get("email")
+    email = serializer.validated_data["email"]
     user = SystemUser.objects.get(email=email)
-    if not user:
-        return Response(
-            {"message": "User not found"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
-    user.generate_reset_password_code()
     if not settings.TEST_ENV:
         send_email(
             type=EmailTypes.forgot_password,
@@ -166,7 +160,7 @@ def forgot_password(request, version):
             },
         )
     return Response(
-        {"message": "Email sent successfully"},
+        {"message": "OK"},
         status=status.HTTP_200_OK,
     )
 
