@@ -85,7 +85,7 @@ const WithRules = ({ errors = [] }) => {
         }
       >
         <PasswordField
-          placeholder={t("password")}
+          placeholder={tc("password")}
           onChange={onChangePassword}
           variant="borderless"
           className="min-h-10"
