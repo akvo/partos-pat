@@ -1,11 +1,8 @@
-import { apiGet } from "@/lib/api";
+import { api } from "@/lib";
 
 const HomeDashboardPage = async () => {
-  const data = await apiGet("/users/me");
-  /**
-   * TODO will be removed it soon
-   */
-  console.log("data", data);
+  const data = await api("GET", "/users/me");
+  console.log("profile", data);
   return <>{/* TODO -- ADD dashboard content */}</>;
 };
 
