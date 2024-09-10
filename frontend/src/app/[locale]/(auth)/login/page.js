@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { PartosLogo } from "@/components/Icons";
 import { Link } from "@/routing";
 import { LoginForm } from "@/components";
 import { Alert, Button } from "antd";
@@ -18,11 +17,6 @@ const LoginPage = ({ searchParams }) => {
       {verified && (
         <Alert type="success" message={tr("successVerified")} closable />
       )}
-      <div className="w-full flex items-center justify-center pt-4 text-dark-10">
-        <Link href="/">
-          <PartosLogo width={125} height={125} />
-        </Link>
-      </div>
       <LoginForm />
       <div className="mt-4">
         <Link href="/register">
