@@ -27,3 +27,5 @@ fi
 echo "Generate Django DBML"
 ./manage.py dbml >> db.dbml
 echo "Done"
+
+flake8

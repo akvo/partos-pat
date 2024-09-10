@@ -9,9 +9,11 @@ from partos_pat.settings import EMAIL_FROM, WEBDOMAIN
 
 class EmailTypes:
     user_register = "user_register"
+    forgot_password = "forgot_password"
 
     FieldStr = {
         user_register: "user_register",
+        forgot_password: "forgot_password",
     }
 
 
@@ -22,9 +24,7 @@ class ListEmailTypeRequestSerializer(serializers.Serializer):
 
 
 def email_context(context: dict, type: str):
-    context.update({
-        "logo": f"{WEBDOMAIN}/logo.png"
-    })
+    context.update({"logo": f"{WEBDOMAIN}/logo.png"})
     if type == EmailTypes.user_register:
         context.update(
             {
@@ -40,8 +40,26 @@ def email_context(context: dict, type: str):
                 """,
                 "cta_text": "Verify My Email",
                 "cta_url": "{0}/api/v1/verify?token={1}".format(
-                    WEBDOMAIN,
-                    context["verification_code"]
+                    WEBDOMAIN, context["verification_code"]
+                ),
+            }
+        )
+    if type == EmailTypes.forgot_password:
+        context.update(
+            {
+                "subject": "Reset Your Password",
+                "body": """
+                We received a password reset request for
+                the Partos Power Awareness tool for your account
+                If you did not make the request, please ignore this email.
+                Otherwise, you can reset your password using the link below:
+                """,
+                "cta_instruction": """
+                Please click the link below to reset your password:
+                """,
+                "cta_text": "Reset My Password",
+                "cta_url": "{0}/reset-password?token={1}".format(
+                    WEBDOMAIN, context["reset_password_code"]
                 ),
             }
         )
