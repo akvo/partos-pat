@@ -64,6 +64,11 @@
 		"sendLink": "Envoyer le lien de réinitialisation",
 		"backToLogin": "Retour à la connexion",
 		"emailSent": "Un e-mail a été envoyé à votre adresse e-mail pour réinitialiser votre mot de passe.",
-		"emailSentDescription": "Veuillez vérifier votre boîte de réception et votre dossier de courrier indésirable pour réinitialiser votre mot de passe."
+		"emailSentDescription": "Veuillez vérifier votre boîte de réception et votre dossier de courrier indésirable pour réinitialiser votre mot de passe.",
+		"resetPassword": "Réinitialiser le mot de passe",
+		"invalidLinkTitle": "Lien invalide",
+		"invalidLinkMessage": "Le lien de réinitialisation du mot de passe est invalide ou a expiré. Veuillez demander un nouveau lien de réinitialisation.",
+		"requestNewLink": "Demander un nouveau lien",
+		"successReset": "Mot de passe réinitialisé avec succès"
 	}
 }
