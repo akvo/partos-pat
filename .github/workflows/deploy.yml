@@ -36,14 +36,13 @@ jobs:
       - name: Prepare Frontend Build
         run: |
           mv src/frontend/next.config.prod.mjs src/frontend/next.config.mjs
+          echo 'WEBDOMAIN=${{ secrets.WEBDOMAIN }}' >> src/frontend/.env
+          echo 'NEXT_AUTH_SECRET_KEY=${{ secrets.NEXT_AUTH_SECRET_KEY }}' >> src/frontend/.env
         shell: bash
 
 
       - name: Node Operations
         uses: ./composite-actions/.github/actions/node-operation
-        env:
-          WEBDOMAIN: ${{ secrets.WEBDOMAIN }}
-          NEXT_AUTH_SECRET_KEY: ${{ secrets.NEXT_AUTH_SECRET_KEY }}
         with:
           node-version: "18"
           node-command: "yarn install --no-progress --frozen-lock && yarn build"
