@@ -203,13 +203,27 @@ def verify_password_code(request, version):
 
 
 @extend_schema(
-    responses={200: UserSerializer},
+    responses={200: DefaultResponseSerializer},
     tags=["Auth"],
     summary="Reset password",
+    parameters=[
+        OpenApiParameter(
+            name="token",
+            required=True,
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+        ),
+    ],
 )
 @api_view(["POST"])
 def reset_password(request, version):
-    serializer = ResetPasswordSerializer(data=request.data)
+    new_password = ResetPasswordSerializer(data=request.data)
+    if not new_password.is_valid():
+        return Response(
+            {"message": validate_serializers_message(new_password.errors)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    serializer = VerifyPasswordTokenSerializer(data=request.GET)
     if not serializer.is_valid():
         return Response(
             {"message": validate_serializers_message(serializer.errors)},
@@ -222,7 +236,7 @@ def reset_password(request, version):
             {"message": "Invalid token"},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    user.set_password(serializer.validated_data["password"])
+    user.set_password(new_password.validated_data["password"])
     user.reset_password_code = None
     user.reset_password_code_expiry = None
     user.save()
