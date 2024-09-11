@@ -20,6 +20,7 @@ from api.v1.v1_users.serializers import (
     VerifyTokenSerializer,
     LoginSerializer,
     ForgotPasswordSerializer,
+    VerifyPasswordTokenSerializer,
     ResetPasswordSerializer,
 )
 from api.v1.v1_users.models import SystemUser
@@ -170,18 +171,26 @@ def forgot_password(request, version):
 @extend_schema(
     responses={200: DefaultResponseSerializer},
     tags=["Auth"],
-    summary="Reset password",
+    summary="Verify password code",
+    parameters=[
+        OpenApiParameter(
+            name="token",
+            required=True,
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+        ),
+    ],
 )
 @api_view(["GET"])
 def verify_password_code(request, version):
-    serializer = VerifyTokenSerializer(data=request.GET)
+    serializer = VerifyPasswordTokenSerializer(data=request.GET)
     if not serializer.is_valid():
         return Response(
             {"message": validate_serializers_message(serializer.errors)},
             status=status.HTTP_400_BAD_REQUEST,
         )
     token = serializer.validated_data.get("token")
-    user = SystemUser.objects.get(reset_password_code=str(token))
+    user = SystemUser.objects.get(reset_password_code=token)
     if not user.is_reset_code_valid():
         return Response(
             {"message": "Invalid token"},

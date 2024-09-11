@@ -44,9 +44,10 @@ class ForgotPasswordTestCase(TestCase):
         self.user.generate_reset_password_code()
         self.assertTrue(self.user.reset_password_code)
         self.assertTrue(self.user.reset_password_code_expiry > timezone.now())
+        token = self.user.reset_password_code
         req = self.client.get(
-            "/api/v1/users/verify-password-code?token="
-            + str(self.user.reset_password_code),
+            f"/api/v1/users/verify-password-code?token={token}",
+            content_type="application/json",
         )
         self.assertEqual(req.status_code, 200)
         res = req.json()

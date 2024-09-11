@@ -131,3 +131,12 @@ class ResetPasswordSerializer(serializers.Serializer):
         if not criteria.match(value):
             raise serializers.ValidationError("False Password Criteria")
         return value
+
+
+class VerifyPasswordTokenSerializer(serializers.Serializer):
+    token = serializers.CharField()
+
+    def validate_token(self, value):
+        if not SystemUser.objects.filter(reset_password_code=value).exists():
+            raise serializers.ValidationError("Invalid token")
+        return value
