@@ -150,6 +150,7 @@ def forgot_password(request, version):
         )
     email = serializer.validated_data["email"]
     user = SystemUser.objects.get(email=email)
+    user.generate_reset_password_code()
     if not settings.TEST_ENV:
         send_email(
             type=EmailTypes.forgot_password,
