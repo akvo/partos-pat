@@ -15,7 +15,7 @@ export const encrypt = async ({ expirationTime, ...payload }) => {
 
   // Convert to hours
   const hours = Math.floor(
-    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
@@ -41,7 +41,7 @@ export const signIn = async (formData) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      }
+      },
     );
 
     const { user, token, expiration_time: expirationTime } = await req.json();
@@ -99,7 +99,7 @@ export const OptimisticCheck = async (locale, pathName, request) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${authToken}`,
       },
-    }
+    },
   );
   return req.ok;
 };

@@ -110,3 +110,33 @@ class ForgotPasswordSerializer(serializers.Serializer):
         if not SystemUser.objects.filter(email=value).exists():
             raise serializers.ValidationError("User not found")
         return value
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    password = CustomCharField()
+    confirm_password = CustomCharField()
+
+    def validate_confirm_password(self, value):
+        password = self.initial_data.get("password")
+        if password != value:
+            raise serializers.ValidationError(
+                "Confirm password and password are not same"
+            )
+        return value
+
+    def validate_password(self, value):
+        criteria = re.compile(
+            r"^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*^\S*$)(?=.{8,})"
+        )
+        if not criteria.match(value):
+            raise serializers.ValidationError("False Password Criteria")
+        return value
+
+
+class VerifyPasswordTokenSerializer(serializers.Serializer):
+    token = serializers.CharField()
+
+    def validate_token(self, value):
+        if not SystemUser.objects.filter(reset_password_code=value).exists():
+            raise serializers.ValidationError("Invalid token")
+        return value
