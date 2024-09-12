@@ -54,6 +54,13 @@ module.exports = {
         dark: "#FF9C00",
         menu: "#FFF7E5",
       },
+      green: {
+        active: "#d4e7e3",
+        bold: "#00A392",
+      },
+    },
+    container: {
+      center: true,
     },
   },
   plugins: [],

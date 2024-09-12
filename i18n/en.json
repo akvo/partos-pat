@@ -16,6 +16,7 @@
 	},
 	"common": {
 		"email": "E-mail",
+		"confirmPassword": "Confirm Password",
 		"password": "Password",
 		"contactText": "The Partos Political Monitor is a political database with a weekly newsletter for all Partos members. Do you also want to register (for free) or do you have questions? Contact <email>here</email>",
 		"male": "Male",
@@ -45,7 +46,8 @@
 		"genderRequired": "Please select your gender",
 		"passwordStrength": "Password Strength: {progress} criteria met",
 		"checkAgreementRequired": "Please review and check the agreement",
-		"logout": "Logout"
+		"logout": "Logout",
+		"submit": "Submit"
 	},
 	"Error": {
 		"invalidEmail": "Enter a valid email address.",
@@ -60,6 +62,11 @@
 		"createAccount": "Create account",
 		"forgotLink": "Forgot your password"
 	},
+	"NotFound": {
+		"title": "PAGE NOT FOUND",
+		"description": "The page you are looking for might have been removed had it\u2019s name changed or is temporarily unavailable.",
+		"backButton": "Homepage"
+	},
 	"ForgotPassword": {
 		"sendLink": "Send reset link",
 		"backToLogin": "Back to Login",
@@ -70,5 +77,23 @@
 		"invalidLinkMessage": "The link has expired. Please request a new one.",
 		"requestNewLink": "Request new link",
 		"successReset": "Password reset successfully"
+	},
+	"Dashboard": {
+		"dashboard": "Dashboard",
+		"support": "Support",
+		"faqs": "FAQs",
+		"resources": "Resources",
+		"joinSession": "Join Session",
+		"newPATSession": "New PAT Session",
+		"aboutTitle": "About the Power Awareness Tool",
+		"aboutDescription": "The Power Awareness Tool helps partners to make power relations more visible. This way it becomes easier for partners to reflect on their power relations and agree on changes where necessary. This is the first major update of the Power Awareness Tool. The first version, the PAT 1.0, was launched by Partos in February 2020. Since then, several Partos members and their partners have been using the PAT. In 2022 the PAT 1.0 was evaluated. The evaluation examined user experiences of the Power Awareness Tool among Partos members and their Southern partners, mainly in the context of the partnerships that have been established in the framework of the Power of Voices programme. Over 70 users contributed to the evaluation. The evaluation examined user experiences of the Power Awareness Tool among Partos members and their Southern partners, mainly in the context of the partnerships.",
+		"learnMore": "Learn More",
+		"title": "PAT Sessions",
+		"subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.",
+		"closedSessions": "Closed Sessions",
+		"facilitatingTab": "Facilitating",
+		"viewingTab": "Viewing",
+		"participantsCount": "Participants:",
+		"active": "Active"
 	}
 }
