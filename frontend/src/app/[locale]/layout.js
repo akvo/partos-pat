@@ -15,7 +15,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
   const messages = await getMessages();
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={sourceSans.className}>
         <NextIntlClientProvider messages={messages}>
           <AntdRegistry>
