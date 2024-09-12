@@ -61,8 +61,8 @@ const ActiveSessionList = ({ data = [] }) => {
         dataSource={dataSource}
         loading={loading}
         renderItem={(item) => (
-          <div className="bg-green-active">
-            <Card className="inherit">
+          <div className="bg-green-active shadow-md cursor-pointer">
+            <Card className="inherit" bordered={false}>
               <Flex justify="space-between" align="center">
                 <div>
                   <FolderIcon />
