@@ -1,4 +1,4 @@
-import { DashboardIcon } from "@/components/Icons";
+import { DashboardMenu } from "@/components";
 import { getSession } from "@/lib/auth";
 import { Link } from "@/routing";
 import { Avatar, Space } from "antd";
@@ -8,9 +8,9 @@ const DashboardTemplate = async ({ children }) => {
   const { user } = (await getSession()) || {};
   const [firstName, lastName] = user ? user.full_name?.split(/\s/g) : [];
   return (
-    <div className="w-full h-screen bg-grey flex flex-col md:flex-row text-base text-dark-10 overflow-y-auto lg:overflow-y-hidden">
-      <aside className="w-full md:w-72 min-h-72 md:h-screen bg-light-1 shadow-lg flex flex-col justify-between">
-        <div className="w-full space-y-8 mt-12">
+    <div className="w-full max-w-9xl h-screen bg-grey flex flex-col md:flex-row text-base text-dark-10 overflow-y-auto lg:overflow-y-hidden">
+      <aside className="w-full h-auto md:w-64 lg:w-72 md:h-screen bg-light-1 shadow-lg flex flex-col justify-between">
+        <div className="w-full h-auto lg:h-[calc(100vh-235px)] space-y-8 mt-12">
           <div className="w-full flex justify-center px-4">
             <Image
               width={260}
@@ -19,16 +19,7 @@ const DashboardTemplate = async ({ children }) => {
               src="https://placehold.co/260x55"
             />
           </div>
-          <ul>
-            <li className="p-4 bg-primary-menu font-bold">
-              <Link href="/dashboard">
-                <Space>
-                  <DashboardIcon />
-                  <span>Dashboard</span>
-                </Space>
-              </Link>
-            </li>
-          </ul>
+          <DashboardMenu />
         </div>
         <ul className="border-t-[.5px] border-t-light-10 py-6 px-4 bg-profile-gradient">
           <li>
@@ -48,7 +39,7 @@ const DashboardTemplate = async ({ children }) => {
           </li>
         </ul>
       </aside>
-      <div className="w-full md:w-4/5">{children}</div>
+      <div className="w-full md:w-4/5 px-5 py-8">{children}</div>
     </div>
   );
 };
