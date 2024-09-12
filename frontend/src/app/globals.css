@@ -78,7 +78,7 @@
     padding-bottom: 12px;
   }
 
-  .ant-btn:not(.ant-btn-link):not(.ant-btn-background-ghost) {
+  .ant-btn:not(.ant-btn-link):not(.ant-btn-background-ghost):not(.ant-btn-text) {
     box-shadow: 0px 4px 34px 0px rgba(var(--box-shadow-rgba));
   }
   .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
@@ -90,7 +90,7 @@
     color: var(--button-ghost-color);
     border-color: var(--button-ghost-border);
     border-width: 2px;
-    border-radius: 5px;
+    border-radius: 2px;
   }
   .ant-btn.ant-btn-background-ghost:hover {
     border-color: var(--button-ghost-border) !important;
@@ -99,9 +99,27 @@
     color: var(--button-text-hover);
     text-decoration: underline;
   }
+  .ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: inherit;
+  }
   .ant-btn:disabled {
     color: var(--button-color-disabled);
     background-color: var(--button-bg-disabled);
+  }
+  .ant-tabs-top > .ant-tabs-nav {
+    margin: 0;
+  }
+  .ant-typography {
+    margin-bottom: 2px;
+  }
+  .ant-card {
+    border-radius: 2px;
+  }
+  .ant-card.inherit {
+    background-color: inherit;
+  }
+  .ant-card .ant-card-body {
+    padding: 16px;
   }
 }
 
