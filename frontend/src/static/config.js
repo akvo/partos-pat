@@ -1,3 +1,5 @@
+import { DashboardIcon } from "@/components/Icons";
+
 export const GENDER = {
   male: 1,
   female: 2,
@@ -16,3 +18,24 @@ export const PURPOSE_OF_ACCOUNT = {
 export const PARTOS = {
   email: "niels@partos.nl",
 };
+
+export const DASHBOARD_MENU = [
+  {
+    id: 1,
+    name: "dashboard",
+    icon: <DashboardIcon />,
+    url: "/dashboard",
+  },
+  {
+    id: 2,
+    name: "faqs",
+    icon: <DashboardIcon />,
+    url: "/faqs",
+  },
+  {
+    id: 3,
+    name: "resources",
+    icon: <DashboardIcon />,
+    url: "/pat-resources",
+  },
+];
