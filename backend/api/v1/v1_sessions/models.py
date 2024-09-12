@@ -1,9 +1,12 @@
 from django.db import models
+from django.utils import timezone
+
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_sessions.constants import SectorTypes
+from utils.soft_deletes_model import SoftDeletes
 
 
-class PATSession(models.Model):
+class PATSession(SoftDeletes):
     user_id = models.ForeignKey(
         to=SystemUser,
         on_delete=models.CASCADE,
@@ -21,6 +24,23 @@ class PATSession(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=None, null=True)
     closed_at = models.DateTimeField(default=None, null=True)
+
+    REQUIRED_FIELDS = [
+        "session_name", "countries", "sector", "date", "context"
+    ]
+
+    def delete(self, using=None, keep_parents=False, hard: bool = False):
+        if hard:
+            return super().delete(using, keep_parents)
+        self.deleted_at = timezone.now()
+        self.save(update_fields=["deleted_at"])
+
+    def soft_delete(self) -> None:
+        self.delete(hard=False)
+
+    def restore(self) -> None:
+        self.deleted_at = None
+        self.save(update_fields=["deleted_at"])
 
     def __str__(self):
         return self.session_name
