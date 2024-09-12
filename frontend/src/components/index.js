@@ -8,3 +8,5 @@ export { default as ClosedSessionList } from "./ClosedSessionList";
 export { default as ActiveSessionList } from "./ActiveSessionList";
 export { default as DashboardMenu } from "./DashboardMenu";
 export { default as ResetPasswordForm } from "./Forms/ResetPasswordForm";
+export { default as PATLogo } from "./PATLogo";
+export { default as HorizontalDivider } from "./HorizontalDivider";
