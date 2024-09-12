@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "api.v1.v1_init",
     "api.v1.v1_users",
+    "api.v1.v1_sessions",
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
