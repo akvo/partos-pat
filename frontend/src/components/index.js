@@ -7,3 +7,4 @@ export { default as ForgotPasswordForm } from "./Forms/ForgotPasswordForm";
 export { default as ClosedSessionList } from "./ClosedSessionList";
 export { default as ActiveSessionList } from "./ActiveSessionList";
 export { default as DashboardMenu } from "./DashboardMenu";
+export { default as ResetPasswordForm } from "./Forms/ResetPasswordForm";

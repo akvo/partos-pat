@@ -15,7 +15,7 @@ describe("HomePage", () => {
     render(
       <NextIntlClientProvider locale="en" messages={messages}>
         <Home />
-      </NextIntlClientProvider>
+      </NextIntlClientProvider>,
     );
 
     const nextjsLogo = screen.getByAltText("Next.js Logo");
@@ -27,7 +27,7 @@ describe("HomePage", () => {
     const { container } = render(
       <NextIntlClientProvider locale="en" messages={messages}>
         <Home />
-      </NextIntlClientProvider>
+      </NextIntlClientProvider>,
     );
     expect(container).toMatchSnapshot();
   });

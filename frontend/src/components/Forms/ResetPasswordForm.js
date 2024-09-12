@@ -18,7 +18,6 @@ import {
   UserCircle,
   WarningCicle,
 } from "@/components/Icons";
-import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 
 import countryOptions from "../../../i18n/countries.json";
 import { useRouter } from "@/routing";
@@ -42,9 +41,8 @@ const InputPassword = (props) => {
 
 const { useForm } = Form;
 
-const RegisterForm = () => {
+const ResetPasswordForm = ({ token }) => {
   const [checkedList, setCheckedList] = useState([]);
-  const [openTerms, setOpenTerms] = useState(false);
   const [openPasswordCheck, setOpenPasswordCheck] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
@@ -52,15 +50,8 @@ const RegisterForm = () => {
 
   const t = useTranslations("Register");
   const tc = useTranslations("common");
+  const tf = useTranslations("ForgotPassword");
   const t_err = useTranslations("Error");
-  const genderOptions = Object.keys(GENDER).map((k) => ({
-    label: tc(k),
-    value: GENDER?.[k],
-  }));
-  const purposeOptions = Object.keys(PURPOSE_OF_ACCOUNT).map((k) => ({
-    label: tc(k),
-    value: PURPOSE_OF_ACCOUNT?.[k],
-  }));
 
   const checkBoxOptions = [
     { name: tc("passwordRule1"), re: /[a-z]/ },
@@ -83,7 +74,7 @@ const RegisterForm = () => {
   const onFinish = async (values) => {
     setSubmitting(true);
     try {
-      const req = await fetch(`/api/v1/register`, {
+      const req = await fetch(`/api/v1/users/reset-password?token=${token}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +83,7 @@ const RegisterForm = () => {
       });
       if (req.ok) {
         Modal.success({
-          content: t("successRegister"),
+          content: tf("successReset"),
           onOk: () => {
             router.push("/login");
           },
@@ -114,87 +105,6 @@ const RegisterForm = () => {
       {(_, formInstance) => {
         return (
           <>
-            <Form.Item
-              name="full_name"
-              rules={[
-                {
-                  required: true,
-                  message: tc("fullNameRequired"),
-                },
-              ]}
-            >
-              <Input
-                placeholder={t("fullName")}
-                prefix={<UserCircle />}
-                variant="borderless"
-              />
-            </Form.Item>
-            <Form.Item
-              name="gender"
-              rules={[
-                {
-                  required: true,
-                  message: tc("genderRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t("gender")}
-                options={genderOptions}
-                variant="borderless"
-              />
-            </Form.Item>
-            <Form.Item
-              name="country"
-              rules={[
-                {
-                  required: true,
-                  message: tc("countryRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t("country")}
-                options={countryOptions}
-                fieldNames={{ label: "name", value: "alpha-2" }}
-                optionFilterProp="name"
-                variant="borderless"
-                showSearch
-                allowClear
-              />
-            </Form.Item>
-            <Form.Item
-              name="account_purpose"
-              rules={[
-                {
-                  required: true,
-                  message: tc("purposeAccountRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t("purposeAccount")}
-                options={purposeOptions}
-                variant="borderless"
-              />
-            </Form.Item>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  type: "email",
-                  message: tc("emailRequired"),
-                },
-              ]}
-            >
-              <Input
-                placeholder={tc("email")}
-                type="email"
-                prefix={<Envelope />}
-                variant="borderless"
-              />
-            </Form.Item>
             <Form.Item
               name="password"
               rules={[
@@ -297,38 +207,8 @@ const RegisterForm = () => {
                 disabled={checkBoxOptions.length != checkedList.length}
               />
             </Form.Item>
-            <Form.Item
-              name="agreement"
-              valuePropName="checked"
-              rules={[
-                {
-                  validator: (_, value) =>
-                    value
-                      ? Promise.resolve()
-                      : Promise.reject(new Error(tc("checkAgreementRequired"))),
-                },
-              ]}
-            >
-              <Checkbox>
-                <span>{t("checkboxAgreement")}</span>
-                <button
-                  type="button"
-                  className="text-blue underline font-bold ml-1"
-                  onClick={() => setOpenTerms(true)}
-                >
-                  {t("checkboxAgreementLink")}
-                </button>
-              </Checkbox>
-            </Form.Item>
-            <Modal
-              title={t("checkboxAgreementLink")}
-              open={openTerms}
-              onOk={() => setOpenTerms(false)}
-              onCancel={() => setOpenTerms(false)}
-              closable
-            />
             <SubmitButton form={form} loading={submitting} block>
-              {t("btnCreateAccount")}
+              {tf("resetPassword")}
             </SubmitButton>
           </>
         );
@@ -337,4 +217,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default ResetPasswordForm;

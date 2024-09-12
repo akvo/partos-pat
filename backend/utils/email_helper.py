@@ -58,7 +58,7 @@ def email_context(context: dict, type: str):
                 Please click the link below to reset your password:
                 """,
                 "cta_text": "Reset My Password",
-                "cta_url": "{0}/reset-password?token={1}".format(
+                "cta_url": "{0}/en/reset-password?token={1}".format(
                     WEBDOMAIN, context["reset_password_code"]
                 ),
             }

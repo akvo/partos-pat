@@ -67,12 +67,17 @@
         "description": "The page you are looking for might have been removed had it\u2019s name changed or is temporarily unavailable.",
         "backButton": "Homepage"
     },
-    "ForgotPassword": {
-        "sendLink": "Send reset link",
-        "backToLogin": "Back to Login",
-        "emailSent": "Email sent successfully",
-        "emailSentDescription": "Please check your email to reset your password"
-    },
+	"ForgotPassword": {
+		"sendLink": "Send reset link",
+		"backToLogin": "Back to Login",
+		"emailSent": "Email sent successfully",
+		"emailSentDescription": "Please check your email to reset your password",
+		"resetPassword": "Reset Password",
+		"invalidLinkTitle": "Invalid or expired link",
+		"invalidLinkMessage": "The link has expired. Please request a new one.",
+		"requestNewLink": "Request new link",
+		"successReset": "Password reset successfully"
+	},
     "Dashboard": {
         "dashboard": "Dashboard",
         "support": "Support",

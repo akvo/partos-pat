@@ -20,6 +20,8 @@ from api.v1.v1_users.serializers import (
     VerifyTokenSerializer,
     LoginSerializer,
     ForgotPasswordSerializer,
+    VerifyPasswordTokenSerializer,
+    ResetPasswordSerializer,
 )
 from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import validate_serializers_message
@@ -162,6 +164,84 @@ def forgot_password(request, version):
         )
     return Response(
         {"message": "OK"},
+        status=status.HTTP_200_OK,
+    )
+
+
+@extend_schema(
+    responses={200: DefaultResponseSerializer},
+    tags=["Auth"],
+    summary="Verify password code",
+    parameters=[
+        OpenApiParameter(
+            name="token",
+            required=True,
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+        ),
+    ],
+)
+@api_view(["GET"])
+def verify_password_code(request, version):
+    serializer = VerifyPasswordTokenSerializer(data=request.GET)
+    if not serializer.is_valid():
+        return Response(
+            {"message": validate_serializers_message(serializer.errors)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    token = serializer.validated_data.get("token")
+    user = SystemUser.objects.get(reset_password_code=token)
+    if not user.is_reset_code_valid():
+        return Response(
+            {"message": "Invalid token"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    return Response(
+        {"message": "OK"},
+        status=status.HTTP_200_OK,
+    )
+
+
+@extend_schema(
+    responses={200: DefaultResponseSerializer},
+    tags=["Auth"],
+    summary="Reset password",
+    parameters=[
+        OpenApiParameter(
+            name="token",
+            required=True,
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+        ),
+    ],
+)
+@api_view(["POST"])
+def reset_password(request, version):
+    new_password = ResetPasswordSerializer(data=request.data)
+    if not new_password.is_valid():
+        return Response(
+            {"message": validate_serializers_message(new_password.errors)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    serializer = VerifyPasswordTokenSerializer(data=request.GET)
+    if not serializer.is_valid():
+        return Response(
+            {"message": validate_serializers_message(serializer.errors)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    token = serializer.validated_data.get("token")
+    user = SystemUser.objects.get(reset_password_code=token)
+    if not user.is_reset_code_valid():
+        return Response(
+            {"message": "Invalid token"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    user.set_password(new_password.validated_data["password"])
+    user.reset_password_code = None
+    user.reset_password_code_expiry = None
+    user.save()
+    return Response(
+        {"message": "Password reset successfully"},
         status=status.HTTP_200_OK,
     )
 

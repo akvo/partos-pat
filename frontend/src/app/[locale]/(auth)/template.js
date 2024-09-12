@@ -12,7 +12,7 @@ const AuthTemplate = ({ children }) => {
     <div
       className={classNames(
         sourceSans.className,
-        "w-full max-w-9xl h-screen mx-auto flex flex-col md:flex-row gap-0 overflow-y-hidden"
+        "w-full max-w-9xl h-screen mx-auto flex flex-col md:flex-row gap-0 overflow-y-hidden",
       )}
     >
       <div className="hidden lg:block w-full lg:w-1/2 xl:w-3/4">
