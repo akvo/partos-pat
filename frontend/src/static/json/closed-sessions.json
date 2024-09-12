@@ -1,351 +1,351 @@
 [
-    {
-        "id": 211,
-        "user_id": 1,
-        "session_name": "Capacity Building - Education Sector",
-        "countries": [
-            "Australia",
-            "South Africa"
-        ],
-        "sector": "Education",
-        "date": "2024-09-15",
-        "context": "Assessing the impact of capacity building initiatives.",
-        "organizations": [
-            {
-                "name": "Save the Children",
-                "acronym": "STC"
-            },
-            {
-                "name": "Unicef",
-                "acronym": "UNC"
-            }
-        ]
-    },
-    {
-        "id": 212,
-        "user_id": 1,
-        "session_name": "Sustainable Development - Water Sector",
-        "countries": [
-            "Canada",
-            "Mexico"
-        ],
-        "sector": "Water",
-        "date": "2024-09-15",
-        "context": "Analyzing the effectiveness of sustainable development initiatives.",
-        "organizations": [
-            {
-                "name": "Water for People",
-                "acronym": "WFP"
-            },
-            {
-                "name": "World Wildlife Fund",
-                "acronym": "WWF"
-            }
-        ]
-    },
-    {
-        "id": 213,
-        "user_id": 1,
-        "session_name": "Food Security - Agriculture Sector",
-        "countries": [
-            "United States",
-            "Brazil"
-        ],
-        "sector": "Agriculture",
-        "date": "2024-09-15",
-        "context": "Evaluating the impact of food security initiatives.",
-        "organizations": [
-            {
-                "name": "Farm Aid",
-                "acronym": "FAM"
-            },
-            {
-                "name": "Global Harvest Initiative",
-                "acronym": "GHI"
-            }
-        ]
-    },
-    {
-        "id": 214,
-        "user_id": 1,
-        "session_name": "Environmental Conservation - Forestry Sector",
-        "countries": [
-            "Sweden",
-            "Norway"
-        ],
-        "sector": "Forestry",
-        "date": "2024-09-15",
-        "context": "Assessing the effectiveness of environmental conservation initiatives.",
-        "organizations": [
-            {
-                "name": "The Forestry Trust",
-                "acronym": "FTR"
-            },
-            {
-                "name": "World Wildlife Fund",
-                "acronym": "WWF"
-            }
-        ]
-    },
-    {
-        "id": 215,
-        "user_id": 1,
-        "session_name": "Disaster Relief - Humanitarian Sector",
-        "countries": [
-            "Japan",
-            "Thailand"
-        ],
-        "sector": "Humanitarian",
-        "date": "2024-09-15",
-        "context": "Evaluating the impact of disaster relief initiatives.",
-        "organizations": [
-            {
-                "name": "Red Cross Society",
-                "acronym": "RCS"
-            },
-            {
-                "name": "United Nations High Commissioner for Refugees",
-                "acronym": "UNHCR"
-            }
-        ]
-    },
-    {
-        "id": 216,
-        "user_id": 1,
-        "session_name": "Sustainable Energy - Renewable Sector",
-        "countries": [
-            "Germany",
-            "China"
-        ],
-        "sector": "Renewable",
-        "date": "2024-09-15",
-        "context": "Assessing the effectiveness of sustainable energy initiatives.",
-        "organizations": [
-            {
-                "name": "Green Energy Initiative",
-                "acronym": "GEI"
-            },
-            {
-                "name": "International Renewable Energy Agency",
-                "acronym": "IREA"
-            }
-        ]
-    },
-    {
-        "id": 217,
-        "user_id": 3,
-        "session_name": "Technology in Education",
-        "countries": [
-            "India",
-            "United States"
-        ],
-        "sector": "Education",
-        "date": "2024-11-22",
-        "context": "Discussing the role of technology in modern education.",
-        "organizations": [
-            {
-                "name": "EdTechGlobal",
-                "acronym": "ETG"
-            },
-            {
-                "name": "GlobalLearn",
-                "acronym": "GL"
-            }
-        ]
-    },
-    {
-        "id": 218,
-        "user_id": 4,
-        "session_name": "Water Resource Management",
-        "countries": [
-            "South Africa",
-            "Australia"
-        ],
-        "sector": "Water Management",
-        "date": "2024-08-12",
-        "context": "Strategies for sustainable water use.",
-        "organizations": [
-            {
-                "name": "WaterWatch",
-                "acronym": "WW"
-            },
-            {
-                "name": "AquaFund",
-                "acronym": "AF"
-            }
-        ]
-    },
-    {
-        "id": 219,
-        "user_id": 5,
-        "session_name": "Healthcare Access in Low-Income Regions",
-        "countries": [
-            "Ethiopia",
-            "Haiti"
-        ],
-        "sector": "Health",
-        "date": "2024-12-05",
-        "context": "Improving healthcare delivery in low-resource settings.",
-        "organizations": [
-            {
-                "name": "Global Health Solutions",
-                "acronym": "GHS"
-            },
-            {
-                "name": "HealthForAll",
-                "acronym": "HFA"
-            }
-        ]
-    },
-    {
-        "id": 220,
-        "user_id": 6,
-        "session_name": "Climate Change Impact on Fisheries",
-        "countries": [
-            "Canada",
-            "Indonesia"
-        ],
-        "sector": "Fisheries",
-        "date": "2024-09-30",
-        "context": "Analyzing the effects of climate change on marine ecosystems.",
-        "organizations": [
-            {
-                "name": "Oceanic Institute",
-                "acronym": "OI"
-            },
-            {
-                "name": "MarineLife",
-                "acronym": "ML"
-            }
-        ]
-    },
-    {
-        "id": 221,
-        "user_id": 7,
-        "session_name": "Energy Partnerships for Sustainable Development",
-        "countries": [
-            "Germany",
-            "Nigeria"
-        ],
-        "sector": "Energy",
-        "date": "2024-11-18",
-        "context": "Evaluating energy collaborations for long-term sustainability.",
-        "organizations": [
-            {
-                "name": "Energy Future",
-                "acronym": "EF"
-            },
-            {
-                "name": "PowerNow",
-                "acronym": "PN"
-            }
-        ]
-    },
-    {
-        "id": 223,
-        "user_id": 8,
-        "session_name": "Educational Equity in Digital Learning",
-        "countries": [
-            "Mexico",
-            "Vietnam"
-        ],
-        "sector": "Education",
-        "date": "2024-10-07",
-        "context": "Promoting equity in digital education systems.",
-        "organizations": [
-            {
-                "name": "LearnTech",
-                "acronym": "LT"
-            },
-            {
-                "name": "Education First",
-                "acronym": "EF"
-            }
-        ]
-    },
-    {
-        "id": 224,
-        "user_id": 9,
-        "session_name": "Urban Development for Sustainable Cities",
-        "countries": [
-            "China",
-            "Tanzania"
-        ],
-        "sector": "Urban Development",
-        "date": "2024-11-09",
-        "context": "Building sustainable urban environments.",
-        "organizations": [
-            {
-                "name": "GreenCities",
-                "acronym": "GC"
-            },
-            {
-                "name": "UrbanPlanners",
-                "acronym": "UP"
-            }
-        ]
-    },
-    {
-        "user_id": 10,
-        "session_name": "Biodiversity Conservation Partnerships",
-        "countries": [
-            "Colombia",
-            "Madagascar"
-        ],
-        "sector": "Conservation",
-        "date": "2024-12-15",
-        "context": "Conserving biodiversity through global partnerships.",
-        "organizations": [
-            {
-                "name": "WildlifeFund",
-                "acronym": "WF"
-            },
-            {
-                "name": "ConserveEarth",
-                "acronym": "CE"
-            }
-        ]
-    },
-    {
-        "user_id": 11,
-        "session_name": "Public Health Preparedness",
-        "countries": [
-            "United Kingdom",
-            "India"
-        ],
-        "sector": "Health",
-        "date": "2024-11-01",
-        "context": "Preparing public health systems for future challenges.",
-        "organizations": [
-            {
-                "name": "HealthSec",
-                "acronym": "HS"
-            },
-            {
-                "name": "GlobalCare",
-                "acronym": "GC"
-            }
-        ]
-    },
-    {
-        "user_id": 12,
-        "session_name": "Technology and Innovation in Agriculture",
-        "countries": [
-            "Argentina",
-            "Kenya"
-        ],
-        "sector": "Agriculture",
-        "date": "2024-09-20",
-        "context": "Promoting innovative solutions in the agriculture sector.",
-        "organizations": [
-            {
-                "name": "AgroTech",
-                "acronym": "AT"
-            },
-            {
-                "name": "FarmInnovators",
-                "acronym": "FI"
-            }
-        ]
-    }
+	{
+		"id": 211,
+		"user_id": 1,
+		"session_name": "Capacity Building - Education Sector",
+		"countries": [
+			"Australia",
+			"South Africa"
+		],
+		"sector": "Education",
+		"date": "2024-09-15",
+		"context": "Assessing the impact of capacity building initiatives.",
+		"organizations": [
+			{
+				"name": "Save the Children",
+				"acronym": "STC"
+			},
+			{
+				"name": "Unicef",
+				"acronym": "UNC"
+			}
+		]
+	},
+	{
+		"id": 212,
+		"user_id": 1,
+		"session_name": "Sustainable Development - Water Sector",
+		"countries": [
+			"Canada",
+			"Mexico"
+		],
+		"sector": "Water",
+		"date": "2024-09-15",
+		"context": "Analyzing the effectiveness of sustainable development initiatives.",
+		"organizations": [
+			{
+				"name": "Water for People",
+				"acronym": "WFP"
+			},
+			{
+				"name": "World Wildlife Fund",
+				"acronym": "WWF"
+			}
+		]
+	},
+	{
+		"id": 213,
+		"user_id": 1,
+		"session_name": "Food Security - Agriculture Sector",
+		"countries": [
+			"United States",
+			"Brazil"
+		],
+		"sector": "Agriculture",
+		"date": "2024-09-15",
+		"context": "Evaluating the impact of food security initiatives.",
+		"organizations": [
+			{
+				"name": "Farm Aid",
+				"acronym": "FAM"
+			},
+			{
+				"name": "Global Harvest Initiative",
+				"acronym": "GHI"
+			}
+		]
+	},
+	{
+		"id": 214,
+		"user_id": 1,
+		"session_name": "Environmental Conservation - Forestry Sector",
+		"countries": [
+			"Sweden",
+			"Norway"
+		],
+		"sector": "Forestry",
+		"date": "2024-09-15",
+		"context": "Assessing the effectiveness of environmental conservation initiatives.",
+		"organizations": [
+			{
+				"name": "The Forestry Trust",
+				"acronym": "FTR"
+			},
+			{
+				"name": "World Wildlife Fund",
+				"acronym": "WWF"
+			}
+		]
+	},
+	{
+		"id": 215,
+		"user_id": 1,
+		"session_name": "Disaster Relief - Humanitarian Sector",
+		"countries": [
+			"Japan",
+			"Thailand"
+		],
+		"sector": "Humanitarian",
+		"date": "2024-09-15",
+		"context": "Evaluating the impact of disaster relief initiatives.",
+		"organizations": [
+			{
+				"name": "Red Cross Society",
+				"acronym": "RCS"
+			},
+			{
+				"name": "United Nations High Commissioner for Refugees",
+				"acronym": "UNHCR"
+			}
+		]
+	},
+	{
+		"id": 216,
+		"user_id": 1,
+		"session_name": "Sustainable Energy - Renewable Sector",
+		"countries": [
+			"Germany",
+			"China"
+		],
+		"sector": "Renewable",
+		"date": "2024-09-15",
+		"context": "Assessing the effectiveness of sustainable energy initiatives.",
+		"organizations": [
+			{
+				"name": "Green Energy Initiative",
+				"acronym": "GEI"
+			},
+			{
+				"name": "International Renewable Energy Agency",
+				"acronym": "IREA"
+			}
+		]
+	},
+	{
+		"id": 217,
+		"user_id": 3,
+		"session_name": "Technology in Education",
+		"countries": [
+			"India",
+			"United States"
+		],
+		"sector": "Education",
+		"date": "2024-11-22",
+		"context": "Discussing the role of technology in modern education.",
+		"organizations": [
+			{
+				"name": "EdTechGlobal",
+				"acronym": "ETG"
+			},
+			{
+				"name": "GlobalLearn",
+				"acronym": "GL"
+			}
+		]
+	},
+	{
+		"id": 218,
+		"user_id": 4,
+		"session_name": "Water Resource Management",
+		"countries": [
+			"South Africa",
+			"Australia"
+		],
+		"sector": "Water Management",
+		"date": "2024-08-12",
+		"context": "Strategies for sustainable water use.",
+		"organizations": [
+			{
+				"name": "WaterWatch",
+				"acronym": "WW"
+			},
+			{
+				"name": "AquaFund",
+				"acronym": "AF"
+			}
+		]
+	},
+	{
+		"id": 219,
+		"user_id": 5,
+		"session_name": "Healthcare Access in Low-Income Regions",
+		"countries": [
+			"Ethiopia",
+			"Haiti"
+		],
+		"sector": "Health",
+		"date": "2024-12-05",
+		"context": "Improving healthcare delivery in low-resource settings.",
+		"organizations": [
+			{
+				"name": "Global Health Solutions",
+				"acronym": "GHS"
+			},
+			{
+				"name": "HealthForAll",
+				"acronym": "HFA"
+			}
+		]
+	},
+	{
+		"id": 220,
+		"user_id": 6,
+		"session_name": "Climate Change Impact on Fisheries",
+		"countries": [
+			"Canada",
+			"Indonesia"
+		],
+		"sector": "Fisheries",
+		"date": "2024-09-30",
+		"context": "Analyzing the effects of climate change on marine ecosystems.",
+		"organizations": [
+			{
+				"name": "Oceanic Institute",
+				"acronym": "OI"
+			},
+			{
+				"name": "MarineLife",
+				"acronym": "ML"
+			}
+		]
+	},
+	{
+		"id": 221,
+		"user_id": 7,
+		"session_name": "Energy Partnerships for Sustainable Development",
+		"countries": [
+			"Germany",
+			"Nigeria"
+		],
+		"sector": "Energy",
+		"date": "2024-11-18",
+		"context": "Evaluating energy collaborations for long-term sustainability.",
+		"organizations": [
+			{
+				"name": "Energy Future",
+				"acronym": "EF"
+			},
+			{
+				"name": "PowerNow",
+				"acronym": "PN"
+			}
+		]
+	},
+	{
+		"id": 223,
+		"user_id": 8,
+		"session_name": "Educational Equity in Digital Learning",
+		"countries": [
+			"Mexico",
+			"Vietnam"
+		],
+		"sector": "Education",
+		"date": "2024-10-07",
+		"context": "Promoting equity in digital education systems.",
+		"organizations": [
+			{
+				"name": "LearnTech",
+				"acronym": "LT"
+			},
+			{
+				"name": "Education First",
+				"acronym": "EF"
+			}
+		]
+	},
+	{
+		"id": 224,
+		"user_id": 9,
+		"session_name": "Urban Development for Sustainable Cities",
+		"countries": [
+			"China",
+			"Tanzania"
+		],
+		"sector": "Urban Development",
+		"date": "2024-11-09",
+		"context": "Building sustainable urban environments.",
+		"organizations": [
+			{
+				"name": "GreenCities",
+				"acronym": "GC"
+			},
+			{
+				"name": "UrbanPlanners",
+				"acronym": "UP"
+			}
+		]
+	},
+	{
+		"user_id": 10,
+		"session_name": "Biodiversity Conservation Partnerships",
+		"countries": [
+			"Colombia",
+			"Madagascar"
+		],
+		"sector": "Conservation",
+		"date": "2024-12-15",
+		"context": "Conserving biodiversity through global partnerships.",
+		"organizations": [
+			{
+				"name": "WildlifeFund",
+				"acronym": "WF"
+			},
+			{
+				"name": "ConserveEarth",
+				"acronym": "CE"
+			}
+		]
+	},
+	{
+		"user_id": 11,
+		"session_name": "Public Health Preparedness",
+		"countries": [
+			"United Kingdom",
+			"India"
+		],
+		"sector": "Health",
+		"date": "2024-11-01",
+		"context": "Preparing public health systems for future challenges.",
+		"organizations": [
+			{
+				"name": "HealthSec",
+				"acronym": "HS"
+			},
+			{
+				"name": "GlobalCare",
+				"acronym": "GC"
+			}
+		]
+	},
+	{
+		"user_id": 12,
+		"session_name": "Technology and Innovation in Agriculture",
+		"countries": [
+			"Argentina",
+			"Kenya"
+		],
+		"sector": "Agriculture",
+		"date": "2024-09-20",
+		"context": "Promoting innovative solutions in the agriculture sector.",
+		"organizations": [
+			{
+				"name": "AgroTech",
+				"acronym": "AT"
+			},
+			{
+				"name": "FarmInnovators",
+				"acronym": "FI"
+			}
+		]
+	}
 ]
