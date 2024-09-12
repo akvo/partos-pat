@@ -1,10 +1,8 @@
-import { Inter } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-
-const inter = Inter({ subsets: ["latin"] });
+import { sourceSans } from "../fonts";
 
 export const metadata = {
   title: "PARTOS-PAT",
@@ -18,7 +16,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={sourceSans.className}>
         <NextIntlClientProvider messages={messages}>
           <AntdRegistry>
             <ConfigProvider
@@ -32,6 +30,13 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                 components: {
                   Form: {
                     itemMarginBottom: 16,
+                  },
+                  Tabs: {
+                    inkBarColor: "#1677ff",
+                    itemActiveColor: "#0958d9",
+                    itemColor: "#1e1e1e",
+                    itemHoverColor: "#4096ff",
+                    itemSelectedColor: "#1677ff",
                   },
                 },
               }}
