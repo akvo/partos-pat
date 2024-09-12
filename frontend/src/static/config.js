@@ -17,6 +17,7 @@ export const PURPOSE_OF_ACCOUNT = {
 
 export const PARTOS = {
   email: "niels@partos.nl",
+  name: "Power Awareness Tool",
 };
 
 export const DASHBOARD_MENU = [
