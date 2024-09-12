@@ -1,4 +1,4 @@
-import { DashboardMenu } from "@/components";
+import { DashboardMenu, PATLogo } from "@/components";
 import { getSession } from "@/lib/auth";
 import { Link } from "@/routing";
 import { Avatar, Space } from "antd";
@@ -10,14 +10,9 @@ const DashboardTemplate = async ({ children }) => {
   return (
     <div className="w-full max-w-9xl h-screen bg-grey flex flex-col md:flex-row text-base text-dark-10 overflow-y-auto lg:overflow-y-hidden">
       <aside className="w-full h-auto md:w-64 lg:w-72 md:h-screen bg-light-1 shadow-lg flex flex-col justify-between">
-        <div className="w-full h-auto lg:h-[calc(100vh-235px)] space-y-8 mt-12">
-          <div className="w-full flex justify-center px-4">
-            <Image
-              width={260}
-              height={55}
-              alt="Power Awareness Tool Logo"
-              src="https://placehold.co/260x55"
-            />
+        <div className="w-full h-auto lg:h-[calc(100vh-235px)] space-y-8 mt-8">
+          <div className="px-4">
+            <PATLogo />
           </div>
           <DashboardMenu />
         </div>
