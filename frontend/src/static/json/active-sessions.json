@@ -1,0 +1,48 @@
+[
+    {
+        "id": 111,
+        "user_id": 1,
+        "session_name": "Partnership Evaluation - Health Sector",
+        "countries": [
+            "Netherlands",
+            "Kenya"
+        ],
+        "sector": "Health",
+        "date": "2024-09-15",
+        "context": "Evaluating the partnership dynamics.",
+        "organizations": [
+            {
+                "name": "Akvo",
+                "acronym": "AKV"
+            },
+            {
+                "name": "Partos",
+                "acronym": "PTS"
+            }
+        ],
+        "participants_count": 12
+    },
+    {
+        "id": 112,
+        "user_id": 2,
+        "session_name": "Sustainability in Agriculture",
+        "countries": [
+            "Brazil",
+            "Uganda"
+        ],
+        "sector": "Agriculture",
+        "date": "2024-10-01",
+        "context": "Exploring sustainable farming practices.",
+        "organizations": [
+            {
+                "name": "AgriCorp",
+                "acronym": "AC"
+            },
+            {
+                "name": "Sustainable Land",
+                "acronym": "SL"
+            }
+        ],
+        "participants_count": 7
+    }
+]
