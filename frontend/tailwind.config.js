@@ -13,6 +13,7 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "profile-gradient":
           "linear-gradient(0deg, rgba(236, 241, 245, 0.90) 0%, rgba(236, 241, 245, 0.20) 108.91%)",
+        "not-found": "url('/images/bg-image-404.png')",
       },
     },
     maxWidth: {
