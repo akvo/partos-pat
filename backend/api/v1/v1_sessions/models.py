@@ -3,56 +3,56 @@ from django.utils import timezone
 
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_sessions.constants import SectorTypes
-from utils.soft_deletes_model import SoftDeletes
+from utils.custom_manager import PATSessionManager
 
 
-class PATSession(SoftDeletes):
+class PATSession(models.Model):
     user_id = models.ForeignKey(
         to=SystemUser,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name="user_owner_session",
     )
     session_name = models.CharField(max_length=255)
-    countries = models.TextField()
+    countries = models.JSONField()
     sector = models.IntegerField(choices=SectorTypes.FieldStr.items())
     other_sector = models.CharField(max_length=100, null=True)
     date = models.DateField()
     context = models.TextField()
     summary = models.TextField(default=None, null=True)
-    join_code = models.CharField(max_length=100, default=None, null=True)
+    join_code = models.CharField(max_length=100, unique=True)
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=None, null=True)
     closed_at = models.DateTimeField(default=None, null=True)
 
-    REQUIRED_FIELDS = [
-        "session_name", "countries", "sector", "date", "context"
-    ]
+    REQUIRED_FIELDS = ["session_name", "countries", "sector", "date", "context"]
 
-    def delete(self, using=None, keep_parents=False, hard: bool = False):
-        if hard:
-            return super().delete(using, keep_parents)
-        self.deleted_at = timezone.now()
-        self.save(update_fields=["deleted_at"])
+    objects = PATSessionManager()
 
-    def soft_delete(self) -> None:
-        self.delete(hard=False)
+    def set_published(self, is_published=True):
+        self.is_published = is_published
+        self.save()
 
-    def restore(self) -> None:
-        self.deleted_at = None
-        self.save(update_fields=["deleted_at"])
+    def set_closed(self, closed_at=None):
+        if not closed_at:
+            closed_at = timezone.now()
+        if self.is_published:
+            self.closed_at = closed_at
+            self.save()
 
     def __str__(self):
         return self.session_name
 
     class Meta:
         db_table = "pat_sessions"
+        verbose_name = "PAT Session"
+        verbose_name_plural = "PAT Sessions"
 
 
 class Organization(models.Model):
     session_id = models.ForeignKey(
         to=PATSession,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name="session_organization",
     )
     organization_name = models.CharField(max_length=255)
@@ -73,12 +73,12 @@ class Participant(models.Model):
     )
     session_id = models.ForeignKey(
         to=PATSession,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         related_name="session_participant",
     )
     organization_id = models.ForeignKey(
         to=Organization,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name="organization_participant",
     )
     joined_at = models.DateTimeField(auto_now_add=True)
@@ -93,7 +93,7 @@ class Participant(models.Model):
 class Decision(models.Model):
     session_id = models.ForeignKey(
         to=PATSession,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         related_name="session_decision",
     )
     name = models.CharField(max_length=255)
@@ -112,17 +112,17 @@ class Decision(models.Model):
 class ParticipantDecision(models.Model):
     user_id = models.ForeignKey(
         to=SystemUser,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name="user_participant_decision",
     )
     decision_id = models.ForeignKey(
         to=Decision,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name="decision_participant",
     )
     score = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=None, null=True)
-    closed_at = models.DateTimeField(default=None, null=True)
 
     def __str__(self):
         return f"{self.user_id.email} | {self.decision_id.name}"
