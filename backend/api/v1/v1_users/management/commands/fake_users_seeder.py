@@ -22,7 +22,7 @@ class Command(BaseCommand):
         return random.choice(list(AccountPurpose.FieldStr.keys()))
 
     def fake_gender(self):
-        return random.choice(list(Gender.FieldStr.keys()))
+        return random.choice(['M', 'F', 'OTHER'])
 
     def handle(self, *args, **options):
         test = options.get("test")
@@ -37,15 +37,12 @@ class Command(BaseCommand):
         repeat = options.get("repeat")
 
         for r in range(repeat):
-            gender = self.fake_gender()
-            sex_code = {
-                1: "M",
-                2: "F",
-                3: random.choice(["M", "F"])
-            }
-            sex = sex_code[gender]
-            profile = fake.simple_profile(sex=sex)
+            gender_code = self.fake_gender()
+            profile = fake.simple_profile(
+                sex=gender_code if gender_code != 'OTHER' else None
+            )
             country = random.choice(countries)
+            gender = Gender.FieldStr.get(gender_code)
             SystemUser.objects.create_user(
                 email=profile["mail"],
                 password="Test1234",
