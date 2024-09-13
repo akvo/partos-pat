@@ -19,6 +19,38 @@ fake = Faker()
 MAX_ITEMS = 6
 
 
+def get_random_published_and_closed_status(n: int) -> List:
+    items = []
+    # Flags to track conditions
+    has_P_true_C_false = False
+    has_P_true_C_true = False
+    for i in range(n):
+        # Randomly set A to True or False
+        A = fake.boolean()
+
+        # Randomly set B but ensure
+        # at least one A=True, B=False and one A=True, B=True
+        if i == 2:  # On the last item, make sure conditions are met
+            if not has_P_true_C_false:
+                A = True
+                B = False
+            elif not has_P_true_C_true:
+                A = True
+                B = True
+            else:
+                B = fake.boolean()
+        else:
+            B = fake.boolean()
+            # Update flags based on generated values
+            if A and not B:
+                has_P_true_C_false = True
+            elif A and B:
+                has_P_true_C_true = True
+
+        items.append({'published': A, 'closed': B})
+    return items
+
+
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
@@ -72,7 +104,7 @@ class Command(BaseCommand):
             if not test:
                 print("please run fake_users_seeder first")
             exit()
-        total_published = 0
+        status_items = get_random_published_and_closed_status(n=repeat)
         for r in range(repeat):
             sector = self.fake_sector()
             other_sector = None
@@ -95,9 +127,6 @@ class Command(BaseCommand):
                 context=fake.paragraph()
             )
             pat_session.other_sector = other_sector
-            is_published = True if r == 0 else fake.boolean()
-            if is_published:
-                pat_session.set_published()
             pat_session.save()
             org_total = fake.random_int(
                 min=1, max=users_count-1
@@ -106,8 +135,9 @@ class Command(BaseCommand):
                 pat_session=pat_session,
                 total=org_total
             )
-            if pat_session.is_published:
-                total_published += 1
+            if status_items[r]["published"]:
+                pat_session.set_published()
+
                 participants = []
                 for p in user_participants:
                     p_org = random.choice(orgs)
@@ -120,10 +150,7 @@ class Command(BaseCommand):
 
                 decisions = self.fake_decisions(pat_session=pat_session)
 
-                is_closed = fake.boolean()
-                if not is_closed and total_published < 2:
-                    is_closed = True
-                if is_closed:
+                if status_items[r]["closed"]:
                     spent_days = fake.random_int(min=0, max=7)
                     score = fake.random_int(min=1, max=5)
                     closed_at = pat_session.created_at + timedelta(
