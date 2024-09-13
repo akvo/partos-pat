@@ -66,8 +66,12 @@ class Command(BaseCommand):
         repeat = options.get("repeat")
         test = options.get("test")
         users_count = SystemUser.objects.count()
+        # minimum: 3 users
+        # 1 owner 2 participants
         if users_count < 3:
-            print("please run fake_users_seeder first")
+            if not test:
+                print("please run fake_users_seeder first")
+            exit()
         total_published = 0
         for r in range(repeat):
             sector = self.fake_sector()
