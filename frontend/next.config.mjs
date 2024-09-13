@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import createNextIntlPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
@@ -17,15 +17,6 @@ const nextConfig = {
         destination: "http://localhost:8000/api/:path*",
       },
     ];
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "placehold.co",
-      },
-    ],
-    dangerouslyAllowSVG: true,
   },
 };
 
