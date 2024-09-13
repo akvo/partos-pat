@@ -1,4 +1,5 @@
 class SectorTypes:
+    sector_other = 0
     sector1 = 1
     sector2 = 2
     sector3 = 3
@@ -7,14 +8,19 @@ class SectorTypes:
     sector6 = 6
     sector7 = 7
     sector8 = 8
+    sector9 = 9
+    sector10 = 10
 
     FieldStr = {
-        sector1: "Agriculture and Food Security",
-        sector2: "Disaster Relief and Humanitarian Aid",
-        sector3: "Economic Development and Poverty Alleviation",
-        sector4: "Education",
-        sector5: "Environmental Conservation",
-        sector6: "Health and Medical Services",
-        sector7: "Human Rights and Social Justice",
-        sector8: "Other"
+        sector1: "Policy coherence",
+        sector2: "International fair agreements",
+        sector3: "Equality, inclusion & diversity",
+        sector4: "Human rights",
+        sector5: "Global Citizen & Global Engagement",
+        sector6: "Collaborate on sustainable development",
+        sector7: "Promoting peace and stabilising conflict",
+        sector8: "Nature, environment & climate justice",
+        sector9: "Fair distribution & access to basic amenities",
+        sector10: "Humanitarian emergency aid",
+        sector_other: "Other"
     }
