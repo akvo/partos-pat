@@ -39,7 +39,7 @@ class Command(BaseCommand):
             name = fake.company()
             acronym = generate_acronym(name=name)
             org = Organization.objects.create(
-                session_id=pat_session,
+                session=pat_session,
                 organization_name=name,
                 acronym=acronym
             )
@@ -54,7 +54,7 @@ class Command(BaseCommand):
         total = fake.random_int(min=1, max=MAX_ITEMS)
         for d in range(total):
             decision = Decision.objects.create(
-                session_id=pat_session,
+                session=pat_session,
                 name=fake.sentence(),
                 agree=fake.boolean(),
                 notes=fake.paragraph()
@@ -112,9 +112,9 @@ class Command(BaseCommand):
                 for p in user_participants:
                     p_org = random.choice(orgs)
                     participant = Participant.objects.create(
-                        user_id=p,
-                        session_id=pat_session,
-                        organization_id=p_org,
+                        user=p,
+                        session=pat_session,
+                        organization=p_org,
                     )
                     participants.append(participant)
 
@@ -140,8 +140,8 @@ class Command(BaseCommand):
                     for participant in participants:
                         for decision in decisions:
                             ParticipantDecision.objects.create(
-                                user_id=participant.user_id,
-                                decision_id=decision,
+                                user=participant.user,
+                                decision=decision,
                                 score=score
                             )
         if not test:

@@ -42,7 +42,7 @@ class PATSessionManager(models.Manager):
             # TODO: replace with unique code from library
             join_code = generate_random_string(length=8)
         pat_session = self.create(
-            user_id=owner,
+            user=owner,
             session_name=name,
             countries=countries,
             sector=sector,
