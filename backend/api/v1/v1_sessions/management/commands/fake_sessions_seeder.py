@@ -95,7 +95,8 @@ class Command(BaseCommand):
                 context=fake.paragraph()
             )
             pat_session.other_sector = other_sector
-            if fake.boolean():
+            is_published = True if r == 0 else fake.boolean()
+            if is_published:
                 pat_session.set_published()
             pat_session.save()
             org_total = fake.random_int(
