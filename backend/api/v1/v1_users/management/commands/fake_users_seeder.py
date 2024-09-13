@@ -25,10 +25,17 @@ class Command(BaseCommand):
         return random.choice(list(Gender.FieldStr.keys()))
 
     def handle(self, *args, **options):
-        countries_json = open("./i18n/countries.json", "r")
-        countries_json = json.load(countries_json)
-        repeat = options.get("repeat")
         test = options.get("test")
+        countries = ["ID", "NL", "UK", "AX", "AF"]
+        if not test:
+            countries_json = open("./i18n/countries.json", "r")
+            countries_json = json.load(countries_json)
+            countries = [
+                c["alpha-2"]
+                for c in countries_json
+            ]
+        repeat = options.get("repeat")
+
         for r in range(repeat):
             gender = self.fake_gender()
             sex_code = {
@@ -38,10 +45,7 @@ class Command(BaseCommand):
             }
             sex = sex_code[gender]
             profile = fake.simple_profile(sex=sex)
-            country = random.choice([
-                c["alpha-2"]
-                for c in countries_json
-            ])
+            country = random.choice(countries)
             SystemUser.objects.create_user(
                 email=profile["mail"],
                 password="Test1234",
