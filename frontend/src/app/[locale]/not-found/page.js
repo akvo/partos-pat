@@ -6,6 +6,7 @@ import { Button } from "antd";
 import { PartosLogo } from "@/components/Icons";
 import { Link } from "@/routing";
 import { sourceSans } from "@/app/fonts";
+import classNames from "classnames";
 
 const NotFoundPage = () => {
   const { locale } = useParams();
@@ -13,8 +14,9 @@ const NotFoundPage = () => {
   const t = useTranslations("NotFound");
   return (
     <html lang={locale}>
-      <body className={sourceSans.className}>
-        <div className="w-full max-w-9xl h-screen bg-grey flex flex-col items-center justify-center space-y-8 text-base text-dark-10">
+      <body className={classNames(sourceSans.className, "bg-grey")}>
+        <div className="w-full relative max-w-9xl h-screen flex flex-col items-center justify-center space-y-8 text-base text-dark-10">
+          <div className="w-1/2 lg:w-2/5 h-screen absolute bottom-0 right-0 bg-not-found bg-no-repeat bg-contain bg-right-bottom" />
           <div className="text-center">
             <Link href="/">
               <PartosLogo width={125} height={125} />
