@@ -25,7 +25,9 @@ class PATSession(models.Model):
     updated_at = models.DateTimeField(default=None, null=True)
     closed_at = models.DateTimeField(default=None, null=True)
 
-    REQUIRED_FIELDS = ["session_name", "countries", "sector", "date", "context"]
+    REQUIRED_FIELDS = [
+        "session_name", "countries", "sector", "date", "context"
+    ]
 
     objects = PATSessionManager()
 
