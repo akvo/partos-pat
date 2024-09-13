@@ -46,7 +46,8 @@ def get_random_published_and_closed_status(n: int) -> List:
                 has_P_true_C_false = True
             elif A and B:
                 has_P_true_C_true = True
-
+        if B and not A:
+            A = True
         items.append({'published': A, 'closed': B})
     return items
 
@@ -108,7 +109,7 @@ class Command(BaseCommand):
         for r in range(repeat):
             sector = self.fake_sector()
             other_sector = None
-            if sector == SectorTypes.sector8:
+            if sector == SectorTypes.sector_other:
                 other_sector = fake.catch_phrase()
             owner = SystemUser.objects.order_by('?').first()
             user_participants = SystemUser.objects.exclude(
