@@ -39,7 +39,6 @@ class PATSessionManager(models.Manager):
         self, owner, name, countries, sector, date, context, join_code=None
     ):
         if not join_code:
-            # TODO: replace with unique code from library
             join_code = passcode_generator(word=4, number=4)
         pat_session = self.create(
             user=owner,
