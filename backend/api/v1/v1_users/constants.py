@@ -17,8 +17,8 @@ class AccountPurpose:
 
 
 class Gender:
-    MALE = 1
-    FEMALE = 2
+    M = 1
+    F = 2
     OTHER = 3
 
-    FieldStr = {MALE: "male", FEMALE: "female", OTHER: "other"}
+    FieldStr = {M: "male", F: "female", OTHER: "other"}

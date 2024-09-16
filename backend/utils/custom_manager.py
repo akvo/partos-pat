@@ -1,6 +1,8 @@
+from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from utils.soft_deletes_model import SoftDeletesManager
 from uuid import uuid4
+from readable_passcode import passcode_generator
 
 
 class UserManager(BaseUserManager, SoftDeletesManager):
@@ -30,3 +32,22 @@ class UserManager(BaseUserManager, SoftDeletesManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(email, password, **extra_fields)
+
+
+class PATSessionManager(models.Manager):
+    def create_session(
+        self, owner, name, countries, sector, date, context, join_code=None
+    ):
+        if not join_code:
+            # TODO: replace with unique code from library
+            join_code = passcode_generator(word=4, number=4)
+        pat_session = self.create(
+            user=owner,
+            session_name=name,
+            countries=countries,
+            sector=sector,
+            date=date,
+            context=context,
+            join_code=join_code,
+        )
+        return pat_session
