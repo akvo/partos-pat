@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from utils.soft_deletes_model import SoftDeletesManager
 from uuid import uuid4
-from utils.custom_helper import generate_random_string
+from readable_passcode import passcode_generator
 
 
 class UserManager(BaseUserManager, SoftDeletesManager):
@@ -40,7 +40,7 @@ class PATSessionManager(models.Manager):
     ):
         if not join_code:
             # TODO: replace with unique code from library
-            join_code = generate_random_string(length=8)
+            join_code = passcode_generator(word=4, number=4)
         pat_session = self.create(
             user=owner,
             session_name=name,
