@@ -20,36 +20,22 @@ MAX_ITEMS = 6
 
 
 def get_random_published_and_closed_status(n: int) -> List:
-    items = []
-    # Flags to track conditions
-    has_P_true_C_false = False
-    has_P_true_C_true = False
-    for i in range(n):
-        # Randomly set A to True or False
-        A = fake.boolean()
+    # Define the possible statuses
+    statuses = [
+        {"published": False, "closed": False},  # Unpublish
+        {"published": True, "closed": False},   # Publish
+        {"published": True, "closed": True}     # Closed
+    ]
 
-        # Randomly set B but ensure
-        # at least one A=True, B=False and one A=True, B=True
-        if i == 2:  # On the last item, make sure conditions are met
-            if not has_P_true_C_false:
-                A = True
-                B = False
-            elif not has_P_true_C_true:
-                A = True
-                B = True
-            else:
-                B = fake.boolean()
-        else:
-            B = fake.boolean()
-            # Update flags based on generated values
-            if A and not B:
-                has_P_true_C_false = True
-            elif A and B:
-                has_P_true_C_true = True
-        if B and not A:
-            A = True
-        items.append({'published': A, 'closed': B})
-    return items
+    # Ensure exactly one of each status
+    result = statuses[:]
+
+    # If more data is needed, fill the remaining with random choices
+    while len(result) < n:
+        result.append(random.choice(statuses))
+    # Shuffle the result to randomize the order
+    random.shuffle(result)
+    return result
 
 
 class Command(BaseCommand):
