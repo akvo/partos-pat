@@ -29,3 +29,20 @@ class FakeSessionSeederTestCase(TestCase):
             call_command("fake_sessions_seeder", "--test", True)
             total = PATSession.objects.count()
             self.assertEqual(total, 0)
+
+    def test_with_certain_user(self):
+        user = SystemUser.objects.create_user(
+            full_name="John Doe",
+            country="US",
+            account_purpose=3,
+            email="john@test.com",
+            password="Open1234"
+        )
+        call_command(
+            "fake_sessions_seeder",
+            "--test", True,
+            "--repeat", 2,
+            "--user", user.id
+        )
+        user_sessions = user.user_owner_session.count()
+        self.assertEqual(user_sessions, 2)
