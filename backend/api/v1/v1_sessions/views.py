@@ -82,7 +82,11 @@ class PATSessionAddListView(APIView):
     def get(self, request, version):
         id = request.GET.get("id")
         code = request.GET.get("code")
-        published = False if not request.GET.get("published") else True
+        published_param = request.GET.get("published")
+
+        published = False
+        if published_param is not None:
+            published = published_param.lower() in ['true', '1']
         if id:
             instance = PATSession.objects.filter(
                 (

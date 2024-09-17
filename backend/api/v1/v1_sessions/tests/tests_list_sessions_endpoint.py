@@ -29,7 +29,6 @@ class ListSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         call_command(
             "fake_sessions_seeder",
             "--test", True,
-            "--repeat", 2,
             "--user", self.user.id
         )
         self.reset_db_sequence(SystemUser)
