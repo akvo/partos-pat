@@ -2,7 +2,7 @@ from django.utils import timezone
 from rest_framework import serializers
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
-
+from django.db.models import Count
 from api.v1.v1_sessions.constants import SectorTypes
 from api.v1.v1_sessions.models import PATSession, Organization
 from api.v1.v1_users.models import SystemUser
@@ -23,7 +23,7 @@ class OrganizationFormSerializer(serializers.Serializer):
         fields = ["name", "acronym"]
 
 
-class OrganizationListSerializer(serializers.Serializer):
+class OrganizationListSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)
@@ -92,6 +92,7 @@ class SessionListSerializer(serializers.ModelSerializer):
             "organizations",
             "join_code",
             "is_published",
+            "summary",
             "created_at",
             "updated_at",
             "closed_at",
@@ -152,3 +153,31 @@ class CreateSessionSerializer(serializers.Serializer):
             "context",
             "organizations",
         ]
+
+
+class UpdateSessionSerializer(serializers.ModelSerializer):
+    summary = CustomCharField(required=False)
+
+    class Meta:
+        model = PATSession
+        fields = ["summary"]
+
+    def update(self, instance, validated_data):
+        # Update the fields of the instance
+        instance = super().update(instance, validated_data)
+
+        # Check if there are any decisions with scores and
+        # close the session
+        if (
+            instance.session_decision.annotate(
+                participant_decision_count=Count("decision_participant")
+            ).filter(participant_decision_count__gt=0).count()
+        ):
+            instance.set_closed()  # Custom method to close the session
+
+        # Save the updated instance
+        instance.save()
+        return instance
+
+    def to_representation(self, instance):
+        return SessionListSerializer(instance).data
