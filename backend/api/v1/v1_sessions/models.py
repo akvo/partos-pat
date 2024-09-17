@@ -31,16 +31,12 @@ class PATSession(models.Model):
 
     objects = PATSessionManager()
 
-    def set_published(self, is_published=True):
-        self.is_published = is_published
-        self.save()
-
     def set_closed(self, closed_at=None):
         if not closed_at:
             closed_at = timezone.now()
-        if self.is_published:
-            self.closed_at = closed_at
-            self.save()
+        self.closed_at = closed_at
+        self.is_published = True
+        self.save()
 
     def __str__(self):
         return self.session_name
