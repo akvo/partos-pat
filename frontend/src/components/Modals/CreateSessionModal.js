@@ -21,10 +21,9 @@ import {
   SaveIcon,
 } from "../Icons";
 import { api } from "@/lib";
-import { redirect, useRouter } from "@/routing";
+import { useRouter } from "@/routing";
 import countryOptions from "../../../i18n/countries.json";
 import { SECTOR } from "@/static/config";
-// import { redirect } from "next/navigation";
 
 const { useForm } = Form;
 const { TextArea } = Input;
@@ -48,6 +47,7 @@ const CreateSessionModal = () => {
         date: dateSession,
       });
       if (dataID) {
+        form.resetFields();
         setOpen(false);
         router.replace(`/dashboard?session=${dataID}`);
       }
@@ -68,6 +68,8 @@ const CreateSessionModal = () => {
     value: k,
   }));
 
+  const sectorValue = Form.useWatch((values) => values.sector, form);
+
   return (
     <>
       <Button onClick={() => setOpen(true)} type="primary">
@@ -75,21 +77,21 @@ const CreateSessionModal = () => {
       </Button>
       <Modal
         open={open}
-        onOk={() => setOpen(false)}
+        onOk={() => {
+          form.submit();
+        }}
         onCancel={() => setOpen(false)}
         okText={t("save")}
         okButtonProps={{
           icon: <SaveIcon />,
           iconPosition: "end",
-          onClick: () => {
-            form.submit();
-          },
           loading,
         }}
         cancelText={t("cancel")}
         cancelButtonProps={{
           ghost: true,
         }}
+        maskClosable={false}
         closable
         width={1366}
       >
@@ -99,19 +101,6 @@ const CreateSessionModal = () => {
           layout="vertical"
           form={form}
           onFinish={onFinish}
-          className="space-y-4"
-          initialValues={{
-            session_name: "Example session #1",
-            countries: ["ID", "NL"],
-            sector: 2,
-            date: null,
-            organizations: [
-              { name: "Akvo Foundation", acronym: "Akvo" },
-              { name: "Partos Global Org", acronym: "PARTOS" },
-            ],
-            context:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum consequat laoreet. Donec sollicitudin venenatis ex at tempor. ",
-          }}
         >
           <h3 className="text-md font-bold">{t("sessionSection")}</h3>
           <Row>
@@ -196,6 +185,18 @@ const CreateSessionModal = () => {
               </Flex>
             </Col>
           </Row>
+          {sectorValue === "0" && (
+            <Form.Item
+              name="other_sector"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input placeholder={"Other sector"} variant="borderless" />
+            </Form.Item>
+          )}
           <Form.Item
             label={<h3 className="text-md font-bold">{t("orgSection")}</h3>}
           >
@@ -233,7 +234,8 @@ const CreateSessionModal = () => {
                       />
                     </Flex>
                   ))}
-                  <div className="w-64">
+                  <div className="py-1 mt-4 border-dashed border-t border-dark-2" />
+                  <div className="w-56 mb-4">
                     <Button
                       type="primary"
                       onClick={() => option.add()}
@@ -262,6 +264,7 @@ const CreateSessionModal = () => {
             <TextArea rows={4} placeholder={t("context")} />
           </Form.Item>
         </Form>
+        <div className="py-2 mt-8 border-dashed border-t border-dark-2" />
       </Modal>
     </>
   );
