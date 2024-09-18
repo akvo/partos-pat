@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Input } from "antd";
+import { Input } from "antd";
 import { Eye, EyeSlash } from "../Icons";
 
 const PasswordField = (props) => {
@@ -7,10 +7,10 @@ const PasswordField = (props) => {
   return (
     <Input
       type={visible ? "text" : "password"}
-      addonBefore={
-        <Button type="link" onClick={() => setVisible(!visible)}>
+      prefix={
+        <button type="button" onClick={() => setVisible(!visible)}>
           {visible ? <Eye /> : <EyeSlash />}
-        </Button>
+        </button>
       }
       {...props}
     />

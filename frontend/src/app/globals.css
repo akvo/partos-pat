@@ -26,10 +26,11 @@
     padding: 14px;
     background-color: rgba(var(--ant-input-affix-rgba));
     margin-inline-end: 0;
+    margin-right: 10px;
   }
   .ant-select-single,
   .ant-select {
-    height: auto;
+    height: 47px;
   }
   .ant-select .ant-select-arrow {
     background-color: rgba(var(--ant-input-affix-rgba));
@@ -40,14 +41,17 @@
   .ant-select .ant-select-arrow .anticon {
     padding: 14px;
   }
-  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector,
+  .ant-select-multiple .ant-select-selection-overflow,
+  .ant-picker .ant-picker-input {
     padding: 10px;
     border-bottom: 0.5px solid rgba(var(--border-input-rgba));
   }
-  .ant-input-affix-wrapper .ant-input,
-  .ant-input-group .ant-input {
-    padding: 10px;
+  .ant-input-borderless {
     border-bottom: 1px solid rgba(var(--border-input-rgba));
+  }
+  .ant-input-borderless {
+    min-height: 48px;
   }
   .ant-input-affix-wrapper .ant-input.ant-input-disabled {
     background-color: var(--input-bg-disabled);
@@ -78,7 +82,9 @@
     padding-bottom: 12px;
   }
 
-  .ant-btn:not(.ant-btn-link):not(.ant-btn-background-ghost):not(.ant-btn-text) {
+  .ant-btn:not(.ant-btn-link):not(.ant-btn-background-ghost):not(
+      .ant-btn-text
+    ) {
     box-shadow: 0px 4px 34px 0px rgba(var(--box-shadow-rgba));
   }
   .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
