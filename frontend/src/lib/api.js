@@ -3,13 +3,17 @@ import { getSession } from "./auth";
 
 export const api = (method, url, payload = {}) =>
   new Promise(async (resolve, reject) => {
-    const { token: authToken } = await getSession();
+    const _session = await getSession();
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    if (_session) {
+      const { token: authToken } = _session;
+      headers["Authorization"] = `Bearer ${authToken}`;
+    }
     const fetchProps = {
       method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
-      },
+      headers,
     };
     if (typeof payload === "object" && Object.keys(payload).length) {
       fetchProps["body"] = JSON.stringify(payload);
