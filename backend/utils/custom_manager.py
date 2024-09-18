@@ -36,17 +36,12 @@ class UserManager(BaseUserManager, SoftDeletesManager):
 
 class PATSessionManager(models.Manager):
     def create_session(
-        self, owner, name, countries, sector, date, context, join_code=None
+        self, owner, name, join_code=None, **extra_fields
     ):
         if not join_code:
             join_code = passcode_generator(word=4, number=4)
-        pat_session = self.create(
-            user=owner,
-            session_name=name,
-            countries=countries,
-            sector=sector,
-            date=date,
-            context=context,
-            join_code=join_code,
-        )
+        pat_session = self.model(user=owner, **extra_fields)
+        pat_session.session_name = name
+        pat_session.join_code = join_code
+        pat_session.save(using=self._db)
         return pat_session
