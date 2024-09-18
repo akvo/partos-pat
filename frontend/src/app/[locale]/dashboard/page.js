@@ -4,6 +4,7 @@ import {
   ActiveSessionList,
   ClosedSessionList,
   CreateSessionModal,
+  DetailSessionModal,
   JoinModal,
 } from "@/components";
 
@@ -67,7 +68,8 @@ const AboutCard = () => {
   );
 };
 
-const HomeDashboardPage = async () => {
+const HomeDashboardPage = async ({ searchParams }) => {
+  const { session: sessionID } = searchParams;
   const { data: activeSessions } = await api(
     "GET",
     `/sessions?page_size=${PAT_SESSION.pageSize}`
@@ -87,6 +89,7 @@ const HomeDashboardPage = async () => {
           <Space size="middle">
             <JoinModal />
             <CreateSessionModal />
+            <DetailSessionModal id={sessionID} />
           </Space>
         </Col>
       </Row>
