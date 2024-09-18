@@ -95,5 +95,27 @@
 		"viewingTab": "Viewing",
 		"participantsCount": "Participants:",
 		"active": "Active"
+	},
+	"CreateSession": {
+		"title": "Create New Session",
+		"sessionSection": "Partnership Details",
+		"name": "Name of the partnership",
+		"countries": "Countries",
+		"sector": "Sector",
+		"orgSection": "What are the partner organisations represented in this meeting? (Use acronyms)",
+		"orgName": "Organization Name",
+		"orgAcronym": "Acronym",
+		"addOrgButton": "Add Partner Organization",
+		"context": "Context and purpose of PAT Session",
+		"cancel": "Cancel",
+		"save": "Save"
+	},
+	"SessionDetails": {
+		"title": "PAT Session Details",
+		"partnerOrg": "Partner Organizations ",
+		"countries": "Countries",
+		"inviteCode": "Invite Code",
+		"context": "Session Context",
+		"copyCodeButton": "Copy session information"
 	}
 }

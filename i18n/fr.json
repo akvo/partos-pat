@@ -95,5 +95,27 @@
         "viewingTab": "Affichage",
         "participantsCount": "Participants :",
         "active": "Actif"
-    }
+    },
+	"CreateSession": {
+		"title": "Créer une nouvelle session",
+		"sessionSection": "Détails du partenariat",
+		"name": "Nom du partenariat",
+		"countries": "Pays",
+		"sector": "Secteur",
+		"orgSection": "Quelles sont les organisations partenaires représentées à cette réunion ? (Utilisez des acronymes)",
+		"orgName": "Nom de l'organisation",
+		"orgAcronym": "Acronyme",
+		"addOrgButton": "Ajouter une organisation partenaire",
+		"context": "Contexte et objectif de la session PAT",
+		"cancel": "Annuler",
+		"save": "Sauvegarder"
+	},
+	"SessionDetails": {
+		"title": "Détails de la session PAT",
+		"partnerOrg": "Organisations partenaires ",
+		"countries": "Pays",
+		"inviteCode": "Code d'invitation",
+		"context": "Contexte de la séance",
+		"copyCodeButton": "Copier les informations de la session"
+	}
 }
