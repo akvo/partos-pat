@@ -47,7 +47,10 @@
 		"passwordStrength": "Password Strength: {progress} criteria met",
 		"checkAgreementRequired": "Please review and check the agreement",
 		"logout": "Logout",
-		"submit": "Submit"
+		"submit": "Submit",
+		"search": "Search",
+		"previous": "Previous",
+		"next": "Next"
 	},
 	"Error": {
 		"invalidEmail": "Enter a valid email address.",
@@ -94,7 +97,14 @@
 		"facilitatingTab": "Facilitating",
 		"viewingTab": "Viewing",
 		"participantsCount": "Participants:",
-		"active": "Active"
+		"active": "Active",
+		"facilitated": "Facilitated",
+		"participated": "Participated",
+		"activeSessions": "Active Sessions",
+		"view": "View",
+		"downloadReport": "Download Report",
+		"details": "Details",
+		"delete": "Delete"
 	},
 	"CreateSession": {
 		"title": "Create New Session",
@@ -107,6 +117,8 @@
 		"orgAcronym": "Acronym",
 		"addOrgButton": "Add Partner Organization",
 		"context": "Context and purpose of PAT Session",
+		"otherSector": "Other Sector",
+		"date": "Date",
 		"cancel": "Cancel",
 		"save": "Save"
 	},
