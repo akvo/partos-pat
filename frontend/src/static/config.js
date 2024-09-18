@@ -54,3 +54,7 @@ export const SECTOR = {
   10: "Humanitarian emergency aid",
   0: "Other",
 };
+
+export const PAT_SESSION = {
+  pageSize: 7,
+};
