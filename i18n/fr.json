@@ -109,7 +109,7 @@
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
 		"sessionSection": "Détails du partenariat",
-		"name": "Nom du partenariat",
+		"session_name": "Nom du partenariat",
 		"countries": "Pays",
 		"sector": "Secteur",
 		"orgSection": "Quelles sont les organisations partenaires représentées à cette réunion ? (Utilisez des acronymes)",
@@ -120,7 +120,8 @@
 		"otherSector": "Autre secteur",
 		"date": "Date",
 		"cancel": "Annuler",
-		"save": "Sauvegarder"
+		"save": "Sauvegarder",
+		"orgMin2": "Ajoutez au moins 2 organisations"
 	},
 	"SessionDetails": {
 		"title": "Détails de la session PAT",
