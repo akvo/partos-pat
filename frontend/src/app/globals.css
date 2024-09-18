@@ -19,6 +19,8 @@
   --button-ghost-border: #1e1e1e;
   --button-ghost-color: #1e1e1e;
   --input-border-color: #8b8b8b;
+  --avatar-bg-color: #FFD249;
+  --avatar-color: #3C3C3C;
 
   .ant-input-affix-wrapper {
     padding: 0;
@@ -110,6 +112,8 @@
     color: var(--primary-dark);
     border-color: var(--primary-dark);
     border-width: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .ant-btn-link:not(:disabled):not(.ant-btn-disabled):hover {
     color: var(--button-text-hover);
@@ -136,6 +140,11 @@
   }
   .ant-list .ant-row > div {
     width: 50%;
+  }
+  .ant-avatar {
+    background-color: var(--avatar-bg-color);
+    color: var(--avatar-color);
+    font-weight: 900;
   }
 }
 
