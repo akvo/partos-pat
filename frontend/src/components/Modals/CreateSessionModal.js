@@ -9,7 +9,6 @@ import {
   Flex,
   Form,
   Input,
-  message,
   Modal,
   Row,
   Select,
@@ -20,10 +19,10 @@ import {
   PlusCircleIcon,
   SaveIcon,
 } from "../Icons";
-import { api } from "@/lib";
-import { useRouter } from "@/routing";
+import { api, errorsMapping } from "@/lib";
 import countryOptions from "../../../i18n/countries.json";
 import { SECTOR } from "@/static/config";
+import ProfileAvatar from "../ProfileAvatar";
 
 const { useForm } = Form;
 const { TextArea } = Input;
@@ -33,7 +32,6 @@ const CreateSessionModal = () => {
   const [loading, setLoading] = useState(false);
   const [dateSession, setDateSession] = useState(null);
   const [form] = useForm();
-  const router = useRouter();
 
   const t = useTranslations("CreateSession");
   const td = useTranslations("Dashboard");
@@ -45,17 +43,18 @@ const CreateSessionModal = () => {
       const { id: dataID, details } = await api("POST", "/sessions", {
         ...payload,
         date: dateSession,
+        organizations:
+          payload.organizations.length === 0 ? null : payload.organizations,
       });
       if (dataID) {
         form.resetFields();
         setOpen(false);
-        router.replace(`/dashboard?session=${dataID}`);
+        const url = new URL(window.location);
+        window.location.href = `${url}?session=${dataID}`;
       }
-
-      if (details) {
-        details.forEach((err) => {
-          message.error(err);
-        });
+      const _errors = errorsMapping(details);
+      if (_errors.length) {
+        form.setFields(_errors);
       }
       setLoading(false);
     } catch {
@@ -80,7 +79,10 @@ const CreateSessionModal = () => {
         onOk={() => {
           form.submit();
         }}
-        onCancel={() => setOpen(false)}
+        onCancel={() => {
+          form.resetFields();
+          setOpen(false);
+        }}
         okText={t("save")}
         okButtonProps={{
           icon: <SaveIcon />,
@@ -101,6 +103,12 @@ const CreateSessionModal = () => {
           layout="vertical"
           form={form}
           onFinish={onFinish}
+          initialValues={{
+            organizations: [
+              { name: null, acronym: null },
+              { name: null, acronym: null },
+            ],
+          }}
         >
           <h3 className="text-md font-bold">{t("sessionSection")}</h3>
           <Row>
@@ -110,11 +118,13 @@ const CreateSessionModal = () => {
                 rules={[
                   {
                     required: true,
-                    message: t_error("required", { field_title: t("name") }),
+                    message: t_error("required", {
+                      field_title: t("session_name"),
+                    }),
                   },
                 ]}
               >
-                <Input placeholder={t("name")} variant="borderless" />
+                <Input placeholder={t("session_name")} variant="borderless" />
               </Form.Item>
             </Col>
             <Col md={24} lg={14}>
@@ -167,7 +177,7 @@ const CreateSessionModal = () => {
                   rules={[
                     {
                       required: true,
-                      message: t_error("required", { field_title: "Date" }),
+                      message: t_error("required", { field_title: t("date") }),
                     },
                   ]}
                   className="w-full lg:w-1/5"
@@ -200,15 +210,34 @@ const CreateSessionModal = () => {
           <Form.Item
             label={<h3 className="text-md font-bold">{t("orgSection")}</h3>}
           >
-            <Form.List name={"organizations"}>
-              {(fields, option) => (
+            <Form.List
+              name={"organizations"}
+              rules={[
+                {
+                  validator: async (_, orgs) => {
+                    if (!orgs || orgs?.length < 2) {
+                      return Promise.reject(new Error(t("orgMin2")));
+                    }
+                  },
+                },
+              ]}
+            >
+              {(fields, option, { errors }) => (
                 <Flex gap={16} vertical>
-                  {fields.map((field) => (
-                    <Flex className="w-full" key={field.key} gap="middle">
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Flex className="w-full" key={key} gap="middle">
                       <Form.Item
-                        noStyle
-                        name={[field.name, "name"]}
+                        {...restField}
+                        name={[name, "name"]}
                         className="w-full md:w-1/2"
+                        rules={[
+                          {
+                            required: true,
+                            message: t_error("required", {
+                              field_title: t("orgName"),
+                            }),
+                          },
+                        ]}
                       >
                         <Input
                           placeholder={t("orgName")}
@@ -216,9 +245,17 @@ const CreateSessionModal = () => {
                         />
                       </Form.Item>
                       <Form.Item
-                        noStyle
-                        name={[field.name, "acronym"]}
+                        {...restField}
+                        name={[name, "acronym"]}
                         className="w-full md:w-1/2"
+                        rules={[
+                          {
+                            required: true,
+                            message: t_error("required", {
+                              field_title: t("orgAcronym"),
+                            }),
+                          },
+                        ]}
                       >
                         <Input
                           placeholder={t("orgAcronym")}
@@ -229,13 +266,14 @@ const CreateSessionModal = () => {
                         type="link"
                         icon={<MinusCircleIcon />}
                         onClick={() => {
-                          option.remove(field.name);
+                          option.remove(name);
                         }}
                       />
                     </Flex>
                   ))}
                   <div className="py-1 mt-4 border-dashed border-t border-dark-2" />
-                  <div className="w-56 mb-4">
+                  <Form.ErrorList errors={errors} />
+                  <div className="w-fit mb-4">
                     <Button
                       type="primary"
                       onClick={() => option.add()}
@@ -263,6 +301,9 @@ const CreateSessionModal = () => {
           >
             <TextArea rows={4} placeholder={t("context")} />
           </Form.Item>
+          <div className="pt-3">
+            <ProfileAvatar />
+          </div>
         </Form>
         <div className="py-2 mt-8 border-dashed border-t border-dark-2" />
       </Modal>
