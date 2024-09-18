@@ -18,6 +18,7 @@
   --input-color-disabled: #8b8b8b;
   --button-ghost-border: #1e1e1e;
   --button-ghost-color: #1e1e1e;
+  --input-border-color: #8b8b8b;
 
   .ant-input-affix-wrapper {
     padding: 0;
@@ -72,6 +73,10 @@
   .ant-input-group .ant-input-group-addon .ant-btn-link:active {
     color: var(--button-text);
   }
+  textarea.ant-input {
+    border-radius: 4px;
+    border: 0.5px solid var(--input-border-color);
+  }
   .ant-btn,
   .ant-btn.ant-btn-default {
     height: auto;
@@ -92,14 +97,19 @@
     font-weight: 700;
     border-color: transparent;
   }
-  .ant-btn.ant-btn-background-ghost {
+  .ant-btn.ant-btn-background-ghost:not(.ant-btn-primary) {
     color: var(--button-ghost-color);
     border-color: var(--button-ghost-border);
     border-width: 2px;
     border-radius: 2px;
   }
-  .ant-btn.ant-btn-background-ghost:hover {
+  .ant-btn.ant-btn-background-ghost:not(.ant-btn-primary):hover {
     border-color: var(--button-ghost-border) !important;
+  }
+  .ant-btn-primary.ant-btn-background-ghost {
+    color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    border-width: 2px;
   }
   .ant-btn-link:not(:disabled):not(.ant-btn-disabled):hover {
     color: var(--button-text-hover);
@@ -112,9 +122,6 @@
     color: var(--button-color-disabled);
     background-color: var(--button-bg-disabled);
   }
-  .ant-tabs-top > .ant-tabs-nav {
-    margin: 0;
-  }
   .ant-typography {
     margin-bottom: 2px;
   }
@@ -126,6 +133,9 @@
   }
   .ant-card .ant-card-body {
     padding: 16px;
+  }
+  .ant-list .ant-row > div {
+    width: 50%;
   }
 }
 
