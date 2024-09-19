@@ -40,3 +40,21 @@ export const DASHBOARD_MENU = [
     url: "/pat-resources",
   },
 ];
+
+export const SECTOR = {
+  1: "Policy coherence",
+  2: "International fair agreements",
+  3: "Equality, inclusion & diversity",
+  4: "Human rights",
+  5: "Global Citizen & Global Engagement",
+  6: "Collaborate on sustainable development",
+  7: "Promoting peace and stabilising conflict",
+  8: "Nature, environment & climate justice",
+  9: "Fair distribution & access to basic amenities",
+  10: "Humanitarian emergency aid",
+  0: "Other",
+};
+
+export const PAT_SESSION = {
+  pageSize: 7,
+};

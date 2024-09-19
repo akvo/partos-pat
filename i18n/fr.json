@@ -47,7 +47,10 @@
 		"passwordStrength": "Force du mot de passe : critères {progress} remplis",
 		"checkAgreementRequired": "Veuillez examiner et vérifier l'accord",
 		"logout": "Déconnexion",
-        "submit": "Soumettre"
+		"submit": "Soumettre",
+		"search": "Recherche",
+		"previous": "Précédent",
+		"next": "Suivant"
 	},
 	"Error": {
 		"invalidEmail": "Entrez une adresse e-mail valide.",
@@ -78,22 +81,54 @@
 		"requestNewLink": "Demander un nouveau lien",
 		"successReset": "Mot de passe réinitialisé avec succès"
 	},
-    "Dashboard": {
-        "dashboard": "Tableau de bord",
-        "support": "Soutien",
-        "faqs": "FAQ",
-        "resources": "Ressources",
-        "joinSession": "Rejoindre la session",
-        "newPATSession": "Nouvelle séance PAT",
-        "aboutTitle": "\u00c0 propos de l'outil de sensibilisation au pouvoir",
-        "aboutDescription": "L\u2019outil de sensibilisation au pouvoir aide les partenaires \u00e0 rendre les relations de pouvoir plus visibles. De cette mani\u00e8re, il devient plus facile pour les partenaires de réfléchir \u00e0 leurs relations de pouvoir et de convenir de changements si nécessaire. Il s\u2019agit de la premi\u00e8re mise \u00e0 jour majeure du Power Awareness Tool. La premi\u00e8re version, la PAT 1.0, a été lancée par Partos en février 2020. Depuis, plusieurs membres de Partos et leurs partenaires utilisent la PAT. En 2022, le PAT 1.0 a été évalué. L'évaluation a examiné les expériences des utilisateurs de l'outil de sensibilisation au pouvoir parmi les membres de Partos et leurs partenaires du Sud, principalement dans le contexte des partenariats établis dans le cadre du programme Power of Voices. Plus de 70 utilisateurs ont contribué \u00e0 l'évaluation. L'évaluation a examiné les expériences des utilisateurs de l'outil de sensibilisation au pouvoir parmi les membres de Partos et leurs partenaires du Sud, principalement dans le contexte des partenariats.",
-        "learnMore": "Apprendre encore plus",
-        "title": "Séances PAT",
-        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.",
-        "closedSessions": "Séances fermées",
-        "facilitatingTab": "Faciliter",
-        "viewingTab": "Affichage",
-        "participantsCount": "Participants :",
-        "active": "Actif"
-    }
+	"Dashboard": {
+		"dashboard": "Tableau de bord",
+		"support": "Soutien",
+		"faqs": "FAQ",
+		"resources": "Ressources",
+		"joinSession": "Rejoindre la session",
+		"newPATSession": "Nouvelle séance PAT",
+		"aboutTitle": "À propos de l'outil de sensibilisation au pouvoir",
+		"aboutDescription": "L’outil de sensibilisation au pouvoir aide les partenaires à rendre les relations de pouvoir plus visibles. De cette manière, il devient plus facile pour les partenaires de réfléchir à leurs relations de pouvoir et de convenir de changements si nécessaire. Il s’agit de la première mise à jour majeure du Power Awareness Tool. La première version, la PAT 1.0, a été lancée par Partos en février 2020. Depuis, plusieurs membres de Partos et leurs partenaires utilisent la PAT. En 2022, le PAT 1.0 a été évalué. L'évaluation a examiné les expériences des utilisateurs de l'outil de sensibilisation au pouvoir parmi les membres de Partos et leurs partenaires du Sud, principalement dans le contexte des partenariats établis dans le cadre du programme Power of Voices. Plus de 70 utilisateurs ont contribué à l'évaluation. L'évaluation a examiné les expériences des utilisateurs de l'outil de sensibilisation au pouvoir parmi les membres de Partos et leurs partenaires du Sud, principalement dans le contexte des partenariats.",
+		"learnMore": "Apprendre encore plus",
+		"title": "Séances PAT",
+		"subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis.",
+		"closedSessions": "Séances fermées",
+		"facilitatingTab": "Faciliter",
+		"viewingTab": "Affichage",
+		"participantsCount": "Participants :",
+		"active": "Actif",
+		"facilitated": "Facilité",
+		"participated": "Participé",
+		"activeSessions": "Séances actives",
+		"view": "Voir",
+		"downloadReport": "Télécharger le rapport",
+		"details": "Détails",
+		"delete": "Supprimer"
+	},
+	"CreateSession": {
+		"title": "Créer une nouvelle session",
+		"sessionSection": "Détails du partenariat",
+		"session_name": "Nom du partenariat",
+		"countries": "Pays",
+		"sector": "Secteur",
+		"orgSection": "Quelles sont les organisations partenaires représentées à cette réunion ? (Utilisez des acronymes)",
+		"orgName": "Nom de l'organisation",
+		"orgAcronym": "Acronyme",
+		"addOrgButton": "Ajouter une organisation partenaire",
+		"context": "Contexte et objectif de la session PAT",
+		"otherSector": "Autre secteur",
+		"date": "Date",
+		"cancel": "Annuler",
+		"save": "Sauvegarder",
+		"orgMin2": "Ajoutez au moins 2 organisations"
+	},
+	"SessionDetails": {
+		"title": "Détails de la session PAT",
+		"partnerOrg": "Organisations partenaires ",
+		"countries": "Pays",
+		"inviteCode": "Code d'invitation",
+		"context": "Contexte de la séance",
+		"copyCodeButton": "Copier les informations de la session"
+	}
 }

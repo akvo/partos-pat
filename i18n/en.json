@@ -47,7 +47,10 @@
 		"passwordStrength": "Password Strength: {progress} criteria met",
 		"checkAgreementRequired": "Please review and check the agreement",
 		"logout": "Logout",
-		"submit": "Submit"
+		"submit": "Submit",
+		"search": "Search",
+		"previous": "Previous",
+		"next": "Next"
 	},
 	"Error": {
 		"invalidEmail": "Enter a valid email address.",
@@ -94,6 +97,38 @@
 		"facilitatingTab": "Facilitating",
 		"viewingTab": "Viewing",
 		"participantsCount": "Participants:",
-		"active": "Active"
+		"active": "Active",
+		"facilitated": "Facilitated",
+		"participated": "Participated",
+		"activeSessions": "Active Sessions",
+		"view": "View",
+		"downloadReport": "Download Report",
+		"details": "Details",
+		"delete": "Delete"
+	},
+	"CreateSession": {
+		"title": "Create New Session",
+		"sessionSection": "Partnership Details",
+		"session_name": "Name of the partnership",
+		"countries": "Countries",
+		"sector": "Sector",
+		"orgSection": "What are the partner organisations represented in this meeting? (Use acronyms)",
+		"orgName": "Organization Name",
+		"orgAcronym": "Acronym",
+		"addOrgButton": "Add Partner Organization",
+		"context": "Context and purpose of PAT Session",
+		"otherSector": "Other Sector",
+		"date": "Date",
+		"cancel": "Cancel",
+		"save": "Save",
+		"orgMin2": "At least add 2 organizations"
+	},
+	"SessionDetails": {
+		"title": "PAT Session Details",
+		"partnerOrg": "Partner Organizations ",
+		"countries": "Countries",
+		"inviteCode": "Invite Code",
+		"context": "Session Context",
+		"copyCodeButton": "Copy session information"
 	}
 }
