@@ -1,13 +1,42 @@
 "use client";
 
 import { api } from "@/lib";
-import { Modal } from "antd";
+import { Avatar, Button, Flex, message, Modal, Tooltip } from "antd";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import ProfileAvatar from "../ProfileAvatar";
+import countryOptions from "../../../i18n/countries.json";
+import { CopyIcon } from "../Icons";
+import { useRouter } from "@/routing";
+import moment from "moment";
+
+const MAX_COUNTRIES = 5;
+
+const Section = ({ children }) => (
+  <div className="w-full py-3 space-y-5 border-b border-dark-2 text-base">
+    {children}
+  </div>
+);
 
 const DetailSessionModal = ({ id }) => {
   const [details, setDetails] = useState(null);
   const [preload, setPreload] = useState(true);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const t = useTranslations("SessionDetails");
+
+  const handleOnClose = () => {
+    setOpen(false);
+    router.push("/dashboard");
+  };
+
+  const handleOnCopy = () => {
+    if (details?.join_code) {
+      navigator.clipboard.writeText(details.join_code);
+      message.success(t("copySuccess"));
+    }
+  };
 
   const loadDetails = useCallback(async () => {
     if (preload && id) {
@@ -22,16 +51,124 @@ const DetailSessionModal = ({ id }) => {
     loadDetails();
   }, [loadDetails]);
 
+  const countries = countryOptions.filter((c) =>
+    details?.countries?.includes(c?.["alpha-2"])
+  );
+
   return (
     <Modal
-      title={details?.session_name || ""}
+      title={t("title")}
       open={open}
-      onOk={() => setOpen(false)}
-      onCancel={() => setOpen(false)}
+      onCancel={handleOnClose}
+      okButtonProps={{
+        style: {
+          display: "none",
+        },
+      }}
+      cancelButtonProps={{
+        style: {
+          display: "none",
+        },
+      }}
       maskClosable={false}
       width={1366}
       closable
-    />
+    >
+      <Section>
+        <Flex align="center" justify="space-between">
+          <div>
+            <h2 className="font-bold text-xl">{details?.session_name}</h2>
+          </div>
+          <div>
+            <strong className="font-bold">
+              {moment(details?.date, "DD-MM-YYYY").format("DD/MM/YYYY")}
+            </strong>
+          </div>
+        </Flex>
+      </Section>
+      <Section>
+        <h3 className="font-bold">{t("partnerOrg")}</h3>
+      </Section>
+      <div className="w-full pb-6 space-y-5 border-b border-dark-2 text-base">
+        <ul className="w-full flex flex-col flex-wrap md:flex-row border-b border-light-grey-5">
+          {details?.organizations?.map((item) => (
+            <li
+              className="w-full md:w-1/4 flex gap-3 px-3 py-2 odd:bg-light-grey-5 even:bg-light-1"
+              key={item?.id}
+            >
+              <Avatar className="org">{item?.name?.[0]}</Avatar>
+              <div>
+                <strong className="text-grey-900">{item?.acronym}</strong>
+                <p className="overflow-x-hidden text-sm text-ellipsis text-grey-600">
+                  {item?.name}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Section>
+        <Flex justify="space-between" align="center">
+          <strong className="font-bold">{t("countries")}</strong>
+          <div>
+            <ul>
+              {countries?.slice(0, 5)?.map((c) => (
+                <li
+                  key={c["alpha-2"]}
+                  className="inline mr-4 bg-light-4 border border-dark-7 text-dark-7 text-sm font-semibold py-1.5 px-5 rounded-full"
+                >
+                  {c?.name}
+                </li>
+              ))}
+              {countries?.length > MAX_COUNTRIES && (
+                <Tooltip
+                  title={
+                    <ul>
+                      {countries
+                        .slice(MAX_COUNTRIES, countries.length)
+                        .map((c, cx) => (
+                          <li key={cx}>{`* ${c?.name}`}</li>
+                        ))}
+                    </ul>
+                  }
+                >
+                  <li className="inline bg-light-4 border border-dark-7 text-dark-7 text-sm font-semibold py-1.5 px-2.5 rounded-full cursor-pointer">
+                    {`${countries?.length - MAX_COUNTRIES}+`}
+                  </li>
+                </Tooltip>
+              )}
+            </ul>
+          </div>
+        </Flex>
+      </Section>
+      <Section>
+        <strong className="font-bold">{t("inviteCode")}</strong>
+        <div className="text-center pt-6 pb-12">
+          <h4 className="font-bold text-5xl">{details?.join_code}</h4>
+        </div>
+      </Section>
+      <Section>
+        <strong className="font-bold">{t("context")}</strong>
+        <div className="pb-6">
+          <p className="text-dark-7">{details?.context}</p>
+        </div>
+      </Section>
+      <Flex className="mt-6" justify="space-between" align="center">
+        <div>
+          <ProfileAvatar />
+        </div>
+        <div>
+          <Button
+            type="primary"
+            onClick={handleOnCopy}
+            icon={<CopyIcon />}
+            iconPosition="end"
+          >
+            {t("copyCodeButton")}
+          </Button>
+        </div>
+      </Flex>
+    </Modal>
   );
 };
 
