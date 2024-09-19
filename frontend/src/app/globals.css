@@ -19,8 +19,8 @@
   --button-ghost-border: #1e1e1e;
   --button-ghost-color: #1e1e1e;
   --input-border-color: #8b8b8b;
-  --avatar-bg-color: #FFD249;
-  --avatar-color: #3C3C3C;
+  --avatar-bg-color: #ffd249;
+  --avatar-color: #3c3c3c;
 
   .ant-input-affix-wrapper {
     padding: 0;
@@ -145,6 +145,15 @@
     background-color: var(--avatar-bg-color);
     color: var(--avatar-color);
     font-weight: 900;
+  }
+  .ant-avatar.org:nth-child(odd) {
+    background-color: #eae2c9;
+  }
+  .ant-avatar.org:nth-child(odd) {
+    background-color: #fdedbb;
+  }
+  .ant-modal .ant-modal-content {
+    border-radius: 12px;
   }
 }
 
