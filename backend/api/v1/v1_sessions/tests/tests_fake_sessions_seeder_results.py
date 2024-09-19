@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.core.management import call_command
+from django.db.models import Count
 from api.v1.v1_sessions.models import PATSession
 
 
@@ -26,25 +27,27 @@ class FakeSessionSeederResultsTestCase(TestCase):
         total_org = pat_session.session_organization.count()
         self.assertNotEqual(total_org, 0)
 
-    def test_unpublished_session(self):
+    def test_open_session_start(self):
         pat_session = PATSession.objects.filter(
             is_published=False
-        ).order_by('?').first()
+        )\
+            .annotate(decision_count=Count("session_decision")) \
+            .filter(
+                decision_count=0
+            ) \
+            .order_by('?').first()
         total_participants = pat_session.session_participant.count()
-        self.assertEqual(total_participants, 0)
+        self.assertGreater(total_participants, 0)
+        total_decisions = pat_session.session_decision.count()
+        self.assertEqual(total_decisions, 0)
 
     def test_validate_joinable_session(self):
-        cannot_join_1 = PATSession.objects.filter(
-            is_published=False,
-        ).order_by('?').first()
-        self.assertIsNotNone(cannot_join_1)
-
-        cannot_join_2 = PATSession.objects.filter(
+        cannot_join = PATSession.objects.filter(
             is_published=True,
             join_code__isnull=False,
             closed_at__isnull=False,
         ).order_by('?').first()
-        self.assertIsNotNone(cannot_join_2)
+        self.assertIsNotNone(cannot_join)
 
         can_join = PATSession.objects.filter(
             is_published=False,
@@ -53,15 +56,22 @@ class FakeSessionSeederResultsTestCase(TestCase):
         ).order_by('?').first()
         self.assertIsNotNone(can_join)
 
-    def test_published_and_open_session(self):
+    def test_open_session_on_going(self):
         pat_session = PATSession.objects.filter(
-            is_published=True,
-            closed_at__isnull=True
-        ).order_by('?').first()
+            is_published=False,
+        ) \
+            .annotate(decision_count=Count("session_decision")) \
+            .filter(
+                decision_count__gt=0
+            ) \
+            .order_by('?').first()
         total_participants = pat_session.session_participant.count()
         self.assertNotEqual(total_participants, 0)
         total_decisions = pat_session.session_decision.count()
         self.assertNotEqual(total_decisions, 0)
+
+        # session summary should empty
+        self.assertIsNone(pat_session.summary)
 
     def test_published_and_closed_session(self):
         pat_session = PATSession.objects.filter(

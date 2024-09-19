@@ -22,9 +22,9 @@ MAX_ITEMS = 6
 def get_random_published_and_closed_status(n: int) -> List:
     # Define the possible statuses
     statuses = [
-        {"published": False, "closed": False},  # Unpublish
-        {"published": True, "closed": False},   # Publish
-        {"published": True, "closed": True}     # Closed
+        {"published": False, "has_decision": False},  # Initial
+        {"published": False, "has_decision": True},   # On Going
+        {"published": True, "has_decision": True}     # Closed
     ]
 
     # Ensure exactly one of each status
@@ -45,6 +45,9 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             "-t", "--test", nargs="?", const=False, default=False, type=bool
+        )
+        parser.add_argument(
+            "-u", "--user", nargs="?", const=False, default=None, type=int
         )
 
     def fake_sector(self):
@@ -84,6 +87,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         repeat = options.get("repeat")
         test = options.get("test")
+        user = options.get("user")
         users_count = SystemUser.objects.count()
         # minimum: 3 users
         # 1 owner 2 participants
@@ -92,12 +96,17 @@ class Command(BaseCommand):
                 print("please run fake_users_seeder first")
             exit()
         status_items = get_random_published_and_closed_status(n=repeat)
+        current_user = None
+        if user:
+            current_user = SystemUser.objects.get(pk=int(user))
         for r in range(repeat):
             sector = self.fake_sector()
             other_sector = None
             if sector == SectorTypes.sector_other:
                 other_sector = fake.catch_phrase()
             owner = SystemUser.objects.order_by('?').first()
+            if current_user:
+                owner = current_user
             user_participants = SystemUser.objects.exclude(
                 pk=owner.pk
             ).all()[:MAX_ITEMS]
@@ -122,41 +131,40 @@ class Command(BaseCommand):
                 pat_session=pat_session,
                 total=org_total
             )
-            if status_items[r]["published"]:
-                pat_session.set_published()
+            participants = []
+            for p in user_participants:
+                p_org = random.choice(orgs)
+                participant = Participant.objects.create(
+                    user=p,
+                    session=pat_session,
+                    organization=p_org,
+                )
+                participants.append(participant)
 
-                participants = []
-                for p in user_participants:
-                    p_org = random.choice(orgs)
-                    participant = Participant.objects.create(
-                        user=p,
-                        session=pat_session,
-                        organization=p_org,
-                    )
-                    participants.append(participant)
-
+            decisions = []
+            if status_items[r]["has_decision"]:
                 decisions = self.fake_decisions(pat_session=pat_session)
 
-                if status_items[r]["closed"]:
-                    spent_days = fake.random_int(min=0, max=7)
-                    score = fake.random_int(min=1, max=5)
-                    closed_at = pat_session.created_at + timedelta(
-                        days=spent_days
-                    )
+            if status_items[r]["published"]:
+                spent_days = fake.random_int(min=0, max=7)
+                score = fake.random_int(min=1, max=5)
+                closed_at = pat_session.created_at + timedelta(
+                    days=spent_days
+                )
 
-                    pat_session.set_closed(closed_at=closed_at)
-                    summary = "|".join([
-                        d.notes
-                        for d in decisions
-                    ])
-                    pat_session.summary = summary
-                    pat_session.save()
-                    for participant in participants:
-                        for decision in decisions:
-                            ParticipantDecision.objects.create(
-                                user=participant.user,
-                                decision=decision,
-                                score=score
-                            )
+                pat_session.set_closed(closed_at=closed_at)
+                summary = "|".join([
+                    d.notes
+                    for d in decisions
+                ])
+                pat_session.summary = summary
+                pat_session.save()
+                for participant in participants:
+                    for decision in decisions:
+                        ParticipantDecision.objects.create(
+                            user=participant.user,
+                            decision=decision,
+                            score=score
+                        )
         if not test:
             print(f"{repeat} PAT Sessions have been created successfully.")
