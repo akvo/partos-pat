@@ -129,6 +129,7 @@
 		"countries": "Pays",
 		"inviteCode": "Code d'invitation",
 		"context": "Contexte de la séance",
-		"copyCodeButton": "Copier les informations de la session"
+		"copyCodeButton": "Copier les informations de la session",
+		"copySuccess": "Le code de participation à la session a été copié dans le presse-papiers"
 	}
 }

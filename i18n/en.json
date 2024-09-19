@@ -129,6 +129,7 @@
 		"countries": "Countries",
 		"inviteCode": "Invite Code",
 		"context": "Session Context",
-		"copyCodeButton": "Copy session information"
+		"copyCodeButton": "Copy session information",
+		"copySuccess": "The session join code has been copied to the clipboard"
 	}
 }
