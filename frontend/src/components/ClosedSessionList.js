@@ -10,8 +10,9 @@ const { Title, Text } = Typography;
 const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
   const t = useTranslations("Dashboard");
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full pt-2">
       <h2 className="font-bold text-xl">{t("closedSessions")}</h2>
+      <br />
       <List
         pagination={
           totalClosed > PAT_SESSION.pageSize
