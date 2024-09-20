@@ -250,7 +250,7 @@ export const MinusCircleIcon = ({ size = 20 }) => (
   </svg>
 );
 
-export const SaveIcon = ({ size = 24 }) => (
+export const SaveIcon = ({ size = 19 }) => (
   <svg
     width={size}
     height={size}
