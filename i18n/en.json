@@ -104,7 +104,20 @@
 		"view": "View",
 		"downloadReport": "Download Report",
 		"details": "Details",
-		"delete": "Delete"
+		"delete": "Delete",
+		"gettingStarted": "Getting Started",
+		"createNewTitle": "Initiate New PAT Session",
+		"createStep1": "Create a New PAT Session",
+		"createStep2": "Add Partner Details",
+		"createStep3": "Facilitate PAT session",
+		"joinTitle": "Join PAT Session",
+		"joinStep1": "Enter Session Code : you will receive this code from the facilitator that initiates this PAT session",
+		"joinStep2": "Define Organization & Role",
+		"joinStep3": "PAT View only mode",
+		"enterCodePlaceholder": "Enter Session Code Received  from facilitator",
+		"enterCode": "Enter Code",
+		"selectOrg": "Organisation",
+		"selectRole": "Role in partnership"
 	},
 	"CreateSession": {
 		"title": "Create New Session",

@@ -104,7 +104,20 @@
 		"view": "Voir",
 		"downloadReport": "Télécharger le rapport",
 		"details": "Détails",
-		"delete": "Supprimer"
+		"delete": "Supprimer",
+		"gettingStarted": "Commencer",
+		"createNewTitle": "Lancer une nouvelle session PAT",
+		"createStep1": "Créer une nouvelle session PAT",
+		"createStep2": "Ajouter des détails sur le partenaire",
+		"createStep3": "Animer la séance PAT",
+		"joinTitle": "Rejoignez la session PAT",
+		"joinStep1": "Entrez le code de session : vous recevrez ce code de l'animateur qui initie cette session PAT",
+		"joinStep2": "Définir l'organisation et le rôle",
+		"joinStep3": "PAT Mode affichage uniquement",
+		"enterCodePlaceholder": "Entrez le code de session reçu du facilitateur",
+		"enterCode": "Entrez le code",
+		"selectOrg": "Organisation",
+		"selectRole": "Rôle dans le partenariat"
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
