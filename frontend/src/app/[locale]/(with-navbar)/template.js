@@ -1,7 +1,6 @@
-import { PATLogo } from "@/components";
-import { QuestionMarkIcon } from "@/components/Icons";
-import { Link } from "@/routing";
 import { Flex } from "antd";
+import { HelpButton, PATLogo } from "@/components";
+import { Link } from "@/routing";
 
 const WithNavbarTemplate = ({ children }) => {
   return (
@@ -14,11 +13,7 @@ const WithNavbarTemplate = ({ children }) => {
                 <PATLogo />
               </div>
             </Link>
-            <Link href="/dashboard">
-              <div className="border-2 border-[#3C3C3C] p-2 rounded-full text-dark-10">
-                <QuestionMarkIcon size={24} />
-              </div>
-            </Link>
+            <HelpButton />
           </Flex>
         </div>
       </div>
