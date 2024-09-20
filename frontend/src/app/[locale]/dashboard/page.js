@@ -79,7 +79,7 @@ const AboutCard = () => {
         <div className="mb-8">
           <p>{t("aboutDescription")}</p>
         </div>
-        <Link href="/learn-more">
+        <Link href="/dashboard/learn-more">
           <Button ghost>{t("learnMore")}</Button>
         </Link>
       </div>

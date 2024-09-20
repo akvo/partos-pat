@@ -39,7 +39,7 @@ const DashboardMenu = () => {
         <Button
           type="link"
           onClick={() => {
-            router.push("/support");
+            router.push("/dashboard/support");
           }}
           icon={<LifebuoyIcon />}
           size="large"

@@ -31,13 +31,13 @@ export const DASHBOARD_MENU = [
     id: 2,
     name: "faqs",
     icon: <DashboardIcon />,
-    url: "/faqs",
+    url: "/dashboard/faqs",
   },
   {
     id: 3,
     name: "resources",
     icon: <DashboardIcon />,
-    url: "/pat-resources",
+    url: "/dashboard/pat-resources",
   },
 ];
 
