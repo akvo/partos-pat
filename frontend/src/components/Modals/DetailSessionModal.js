@@ -41,9 +41,13 @@ const DetailSessionModal = ({ id }) => {
   const loadDetails = useCallback(async () => {
     if (preload && id) {
       setPreload(false);
-      setOpen(true);
-      const data = await api("GET", `/sessions?id=${id}`);
-      setDetails(data);
+      try {
+        const data = await api("GET", `/sessions?id=${id}`);
+        setDetails(data);
+        setOpen(true);
+      } catch {
+        router.push("/dashboard");
+      }
     }
   }, [id, preload]);
 
@@ -57,7 +61,7 @@ const DetailSessionModal = ({ id }) => {
 
   return (
     <Modal
-      title={t("title")}
+      title={<span className="font-normal">{t("title")}</span>}
       open={open}
       onCancel={handleOnClose}
       okButtonProps={{
@@ -74,18 +78,16 @@ const DetailSessionModal = ({ id }) => {
       width={1366}
       closable
     >
-      <Section>
-        <Flex align="center" justify="space-between">
-          <div>
-            <h2 className="font-bold text-xl">{details?.session_name}</h2>
-          </div>
-          <div>
-            <strong className="font-bold">
-              {moment(details?.date, "DD-MM-YYYY").format("DD/MM/YYYY")}
-            </strong>
-          </div>
-        </Flex>
-      </Section>
+      <Flex align="center" justify="space-between" className="pt-1.5 pb-3 border-b border-dark-2">
+        <div>
+          <h2 className="font-bold text-2xl">{details?.session_name}</h2>
+        </div>
+        <div>
+          <strong className="font-bold">
+            {moment(details?.date, "DD-MM-YYYY").format("DD/MM/YYYY")}
+          </strong>
+        </div>
+      </Flex>
       <Section>
         <h3 className="font-bold">{t("partnerOrg")}</h3>
       </Section>
