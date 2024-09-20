@@ -1,4 +1,4 @@
-import { DashboardIcon } from "@/components/Icons";
+import { BookIcon, DashboardIcon, LifebuoyIcon } from "@/components/Icons";
 
 export const GENDER = {
   male: 1,
@@ -29,15 +29,15 @@ export const DASHBOARD_MENU = [
   },
   {
     id: 2,
-    name: "faqs",
-    icon: <DashboardIcon />,
-    url: "/dashboard/faqs",
+    name: "resources",
+    icon: <BookIcon />,
+    url: "/dashboard/pat-resources",
   },
   {
     id: 3,
-    name: "resources",
-    icon: <DashboardIcon />,
-    url: "/dashboard/pat-resources",
+    name: "faqs",
+    icon: <LifebuoyIcon />,
+    url: "/dashboard/faqs",
   },
 ];
 
