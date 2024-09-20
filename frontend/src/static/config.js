@@ -57,4 +57,5 @@ export const SECTOR = {
 
 export const PAT_SESSION = {
   pageSize: 7,
+  maxActiveSession: 2,
 };

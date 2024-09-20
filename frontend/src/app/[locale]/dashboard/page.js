@@ -22,20 +22,39 @@ const PageTitle = () => {
   );
 };
 
-const PageContent = ({ activeSessions, closedSessions, totalClosed }) => {
+const PageContent = ({
+  activeSessions,
+  closedSessions,
+  totalClosed,
+  totalActive,
+}) => {
   const t = useTranslations("Dashboard");
   return (
-    <div className="w-full mb-8">
+    <div className="w-full mb-8 text-base">
       <Tabs
         items={[
           {
             key: "active",
-            label: t("activeSessions"),
+            label: (
+              <Space>
+                <span>{t("activeSessions")}</span>
+                <span className="badge-number py-px px-2 border border-dark-2 rounded-full">
+                  {totalActive}
+                </span>
+              </Space>
+            ),
             children: <ActiveSessionList data={activeSessions} />,
           },
           {
             key: "closed",
-            label: t("closedSessions"),
+            label: (
+              <Space>
+                <span>{t("closedSessions")}</span>
+                <span className="badge-number py-px px-2 border border-dark-2 rounded-full">
+                  {totalClosed}
+                </span>
+              </Space>
+            ),
             children: (
               <ClosedSessionList
                 data={closedSessions}
@@ -70,7 +89,7 @@ const AboutCard = () => {
 
 const HomeDashboardPage = async ({ searchParams }) => {
   const { session: sessionID } = searchParams;
-  const { data: activeSessions } = await api(
+  const { data: activeSessions, total: totalActive } = await api(
     "GET",
     `/sessions?page_size=${PAT_SESSION.pageSize}`
   );
@@ -88,7 +107,9 @@ const HomeDashboardPage = async ({ searchParams }) => {
         <Col lg={8} xl={6} className="text-right">
           <Space size="middle">
             <JoinModal />
-            <CreateSessionModal />
+            <CreateSessionModal
+              disabled={totalActive >= PAT_SESSION.maxActiveSession}
+            />
             <DetailSessionModal id={sessionID} />
           </Space>
         </Col>
@@ -100,6 +121,7 @@ const HomeDashboardPage = async ({ searchParams }) => {
               activeSessions,
               closedSessions,
               totalClosed,
+              totalActive,
             }}
           />
         </Col>

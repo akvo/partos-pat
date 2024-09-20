@@ -10,7 +10,7 @@ const ActiveSessionList = ({ data = [] }) => {
   const t = useTranslations("Dashboard");
 
   return (
-    <div className="w-full h-auto">
+    <div className="w-full h-auto pt-2">
       <h2 className="font-bold text-xl">{t("activeSessions")}</h2>
       <br />
       <List
@@ -18,7 +18,7 @@ const ActiveSessionList = ({ data = [] }) => {
         dataSource={data}
         renderItem={(item) => (
           <List.Item>
-            <Card className="w-full min-h-20" bordered={false}>
+            <Card className="w-full min-h-40" bordered={false}>
               <Flex justify="space-between" align="baseline">
                 <FolderIcon />
                 <p className="uppercase text-green-bold font-bold">
@@ -32,7 +32,7 @@ const ActiveSessionList = ({ data = [] }) => {
               >
                 <div className="text-left">
                   <Title level={3}>{item?.session_name}</Title>
-                  <Text>{item?.context}</Text>
+                  <Text className="line-clamp-3">{item?.context}</Text>
                 </div>
               </Flex>
             </Card>

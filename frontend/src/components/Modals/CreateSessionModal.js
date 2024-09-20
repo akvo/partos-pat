@@ -27,7 +27,7 @@ import ProfileAvatar from "../ProfileAvatar";
 const { useForm } = Form;
 const { TextArea } = Input;
 
-const CreateSessionModal = () => {
+const CreateSessionModal = ({ disabled = false }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dateSession, setDateSession] = useState(null);
@@ -71,7 +71,7 @@ const CreateSessionModal = () => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} type="primary">
+      <Button onClick={() => setOpen(true)} type="primary" disabled={disabled}>
         {td("newPATSession")} <FolderSimplePlus />
       </Button>
       <Modal
@@ -88,10 +88,18 @@ const CreateSessionModal = () => {
           icon: <SaveIcon />,
           iconPosition: "end",
           loading,
+          style: {
+            padding: "10px 20px",
+            fontSize: 16,
+          },
         }}
         cancelText={t("cancel")}
         cancelButtonProps={{
           ghost: true,
+          style: {
+            padding: "10px 20px",
+            fontSize: 16,
+          },
         }}
         maskClosable={false}
         closable
