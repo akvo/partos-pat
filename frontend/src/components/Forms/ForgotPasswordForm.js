@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Form, Input, message } from "antd";
+import { Form, Input, message } from "antd";
 import { useTranslations } from "next-intl";
-import { Envelope, LockIcon } from "@/components/Icons";
+import { Envelope } from "@/components/Icons";
 import SubmitButton from "../Buttons/SubmitButton";
 
 const { useForm } = Form;
@@ -18,7 +18,6 @@ const ForgotPasswordForm = () => {
   const tr = useTranslations("Error");
 
   const onFinish = async (values) => {
-    console.log(values);
     setLoading(true);
     try {
       const response = await fetch("/api/v1/users/forgot-password", {
@@ -32,9 +31,9 @@ const ForgotPasswordForm = () => {
         setSuccess(true);
         setLoading(false);
       } else {
+        setLoading(false);
         const error = await response.json();
         throw new Error(error.message);
-        setLoading(false);
       }
     } catch (error) {
       const errorKey = error.message.replace(/^Error:\s*/, "");

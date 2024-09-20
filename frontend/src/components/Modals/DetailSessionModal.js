@@ -49,7 +49,7 @@ const DetailSessionModal = ({ id }) => {
         router.push("/dashboard");
       }
     }
-  }, [id, preload]);
+  }, [id, preload, router]);
 
   useEffect(() => {
     loadDetails();
@@ -78,7 +78,11 @@ const DetailSessionModal = ({ id }) => {
       width={1366}
       closable
     >
-      <Flex align="center" justify="space-between" className="pt-1.5 pb-3 border-b border-dark-2">
+      <Flex
+        align="center"
+        justify="space-between"
+        className="pt-1.5 pb-3 border-b border-dark-2"
+      >
         <div>
           <h2 className="font-bold text-2xl">{details?.session_name}</h2>
         </div>
