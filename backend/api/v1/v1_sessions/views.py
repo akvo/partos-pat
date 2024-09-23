@@ -110,16 +110,17 @@ class PATSessionAddListView(APIView):
             )
         if code:
             instance = PATSession.objects.filter(
-                (
-                    Q(user=request.user) |
-                    Q(session_participant__user=request.user)
-                )
-                & Q(join_code=code)
+                join_code=code,
+                closed_at__isnull=True
             ).first()
             if not instance:
                 return Response(
-                    data=None,
-                    status=status.HTTP_403_FORBIDDEN,
+                    {
+                        "details": {
+                            "join_code": ["invalidJoinCode"]
+                        }
+                    },
+                    status=status.HTTP_404_NOT_FOUND,
                 )
             return Response(
                 data=SessionListSerializer(instance=instance).data,
