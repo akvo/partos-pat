@@ -13,6 +13,7 @@ from rest_framework.decorators import (
     permission_classes,
 )
 from django.db.models import Q
+from django.conf import settings
 from api.v1.v1_sessions.models import PATSession, Organization
 from api.v1.v1_sessions.serializers import (
     CreateSessionSerializer,
@@ -20,9 +21,12 @@ from api.v1.v1_sessions.serializers import (
     SessionCreatedSerializer,
     UpdateSessionSerializer,
     OrganizationListSerializer,
+    JoinSessionSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
+from utils.default_serializers import DefaultResponseSerializer
+from utils.email_helper import send_email, EmailTypes
 
 
 class PATSessionAddListView(APIView):
@@ -161,6 +165,17 @@ class PATSessionAddListView(APIView):
 
         serializer.save()
         data = SessionCreatedSerializer(instance=serializer.data).data
+        if not settings.TEST_ENV:
+            send_email(
+                type=EmailTypes.session_created,
+                context={
+                    "send_to": [request.user.email],
+                    "name": request.user.full_name,
+                    "session_name": data["session_name"],
+                    "date": data["date"],
+                    "join_code": data["join_code"],
+                },
+            )
         return Response(
             data=data,
             status=status.HTTP_201_CREATED
@@ -248,3 +263,29 @@ def organization_list(request, version):
         OrganizationListSerializer(instance, many=True).data
     )
     return response
+
+
+@extend_schema(
+    request=JoinSessionSerializer,
+    responses={201: DefaultResponseSerializer},
+    tags=["Participants"],
+    summary="Join PAT Session",
+)
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def participant_join_session(request, version):
+    serializer = JoinSessionSerializer(
+        data=request.data, context={
+            "user": request.user
+        }
+    )
+    if not serializer.is_valid():
+        return Response(
+            {
+                "message": validate_serializers_message(serializer.errors),
+                "details": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    serializer.save()
+    return Response({"message": "Ok"}, status=status.HTTP_201_CREATED)
