@@ -201,7 +201,9 @@ class JoinSessionSerializer(serializers.Serializer):
         super().__init__(**kwargs)
         self.fields.get(
             "session_id"
-        ).queryset = PATSession.objects.all()
+        ).queryset = PATSession.objects.filter(
+            closed_at__isnull=True
+        ).all()
         self.fields.get(
             "organization_id"
         ).queryset = Organization.objects.all()

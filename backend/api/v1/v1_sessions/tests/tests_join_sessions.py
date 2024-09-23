@@ -31,7 +31,9 @@ class JoinSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         )
 
     def test_successfully_join_session(self):
-        pat_session = PATSession.objects.exclude(
+        pat_session = PATSession.objects.filter(
+            closed_at__isnull=True
+        ).exclude(
             user=self.user
         ).order_by('?').first()
 
@@ -74,7 +76,9 @@ class JoinSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
 
     def test_rejoining_existing_participated_session(self):
         # first attempt
-        pat_session = PATSession.objects.exclude(
+        pat_session = PATSession.objects.filter(
+            closed_at__isnull=True
+        ).exclude(
             user=self.user
         ).order_by('?').first()
 
@@ -119,6 +123,25 @@ class JoinSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         )
         pat_session = PATSession.objects.filter(
             user=self.user
+        ).order_by('?').first()
+        org = pat_session.session_organization.order_by("?").first()
+        payload = {
+            "role": "IT",
+            "session_id": pat_session.id,
+            "organization_id": org.id
+        }
+        req = self.client.post(
+            "/api/v1/participants/join",
+            payload,
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 400)
+
+    def test_invalid_join_closed_session(self):
+        # find closed session
+        pat_session = PATSession.objects.filter(
+            closed_at__isnull=False
         ).order_by('?').first()
         org = pat_session.session_organization.order_by("?").first()
         payload = {
