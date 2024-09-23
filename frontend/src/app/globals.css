@@ -172,6 +172,9 @@
     border: 1px solid var(--primary-dark);
     background-color: #faf7eb;
   }
+  .ant-form-item .ant-form-item-control-input {
+    min-height: auto;
+  }
 }
 
 body {
