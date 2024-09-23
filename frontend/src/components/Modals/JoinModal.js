@@ -2,24 +2,65 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
 import VerticalLogo from "../VerticalLogo";
 import { PARTOS } from "@/static/config";
+import { api, errorsMapping } from "@/lib";
+import { useRouter } from "@/routing";
 
 const { useForm } = Form;
 
 const JoinModal = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [session, setSession] = useState(null);
+  const router = useRouter();
 
   const [form] = useForm();
 
-  const handleOnFinish = (values) => {
+  const handleOnFinish = async ({ join_code, ...values }) => {
     setLoading(true);
-    setTimeout(() => {
+    try {
+      if (join_code) {
+        const { details, ..._session } = await api(
+          "GET",
+          `/sessions?code=${join_code}`
+        );
+        if (details) {
+          const _errors = errorsMapping(details, (errKey) => t(errKey));
+          if (_errors.length) {
+            form.setFields(_errors);
+          }
+          setLoading(false);
+        }
+        if (_session?.id) {
+          setSession(_session);
+          setLoading(false);
+          form.resetFields();
+        }
+      }
+
+      if (session?.id) {
+        const { message, details } = await api("POST", "/participants/join/", {
+          ...values,
+          session_id: session.id,
+        });
+        if (message === "Ok") {
+          router.push(`/dashboard/sessions/${session.id}`);
+          setLoading(false);
+        }
+
+        if (details) {
+          const _errors = errorsMapping(details, (errKey) => t(errKey));
+          if (_errors.length) {
+            form.setFields(_errors);
+          }
+          setLoading(false);
+        }
+      }
+    } catch {
       setLoading(false);
-    }, 500);
-    console.log("values", values);
+    }
   };
 
   const t = useTranslations("Dashboard");
@@ -32,7 +73,10 @@ const JoinModal = () => {
       </Button>
       <Modal
         open={open}
-        onCancel={() => setOpen(false)}
+        onCancel={() => {
+          setSession(null);
+          setOpen(false);
+        }}
         okButtonProps={{
           style: {
             display: "none",
@@ -51,25 +95,79 @@ const JoinModal = () => {
           <div className="pb-8">
             <VerticalLogo />
           </div>
-          <Form form={form} onFinish={handleOnFinish} className="w-full space-y-4">
-            <Form.Item
-              name="join_code"
-              rules={[
-                {
-                  required: true,
-                  message: t_error("required", {
-                    field_title: t("enterCode"),
-                  }),
-                },
-              ]}
-            >
-              <Input
-                variant="borderless"
-                placeholder={t("enterCodePlaceholder")}
-              />
-            </Form.Item>
+          <Form
+            form={form}
+            onFinish={handleOnFinish}
+            className="w-full space-y-4"
+          >
+            {!session && (
+              <Form.Item
+                name="join_code"
+                rules={[
+                  {
+                    required: true,
+                    message: t_error("required", {
+                      field_title: t("enterCode"),
+                    }),
+                  },
+                ]}
+              >
+                <Input
+                  variant="borderless"
+                  placeholder={t("enterCodePlaceholder")}
+                />
+              </Form.Item>
+            )}
+            {session?.organizations?.length > 0 && (
+              <Form.Item
+                name="organization_id"
+                rules={[
+                  {
+                    required: true,
+                    message: t_error("required", {
+                      field_title: t("selectOrg"),
+                    }),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={t("selectOrg")}
+                  options={session.organizations}
+                  fieldNames={{ label: "name", value: "id" }}
+                  optionFilterProp="name"
+                  variant="borderless"
+                  showSearch
+                  allowClear
+                />
+              </Form.Item>
+            )}
+            {session?.id && (
+              <Form.Item
+                name="role"
+                rules={[
+                  {
+                    required: true,
+                    message: t_error("required", {
+                      field_title: t("selectRole"),
+                    }),
+                  },
+                ]}
+              >
+                <Input variant="borderless" placeholder={t("selectRole")} />
+              </Form.Item>
+            )}
+            {session?.id && (
+              <Form.Item name="session_id">
+                <Input
+                  variant="borderless"
+                  type="hidden"
+                  placeholder={t("selectRole")}
+                  htmlType="hidden"
+                />
+              </Form.Item>
+            )}
             <Button type="primary" htmlType="submit" loading={loading} block>
-              {t("enterCode")}
+              {session?.id ? t("joinSession") : t("enterCode")}
             </Button>
           </Form>
 
