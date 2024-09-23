@@ -117,7 +117,10 @@
 		"enterCodePlaceholder": "Enter Session Code Received  from facilitator",
 		"enterCode": "Enter Code",
 		"selectOrg": "Organisation",
-		"selectRole": "Role in partnership"
+		"selectRole": "Role in partnership",
+		"invalidJoinExists": "You have already joined.",
+		"invalidJoinCode": "Invalid Join code",
+		"invalidJoinOwner": "You are the owner and already part of the session."
 	},
 	"CreateSession": {
 		"title": "Create New Session",

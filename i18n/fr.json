@@ -117,7 +117,10 @@
 		"enterCodePlaceholder": "Entrez le code de session reçu du facilitateur",
 		"enterCode": "Entrez le code",
 		"selectOrg": "Organisation",
-		"selectRole": "Rôle dans le partenariat"
+		"selectRole": "Rôle dans le partenariat",
+		"invalidJoinExists": "Vous avez déjà rejoint.",
+		"invalidJoinCode": "Code d'adhésion invalide",
+		"invalidJoinOwner": "Vous êtes le propriétaire et faites déjà partie de la session."
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
