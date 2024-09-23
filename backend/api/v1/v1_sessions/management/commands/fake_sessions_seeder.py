@@ -138,6 +138,7 @@ class Command(BaseCommand):
                     user=p,
                     session=pat_session,
                     organization=p_org,
+                    role=fake.job(),
                 )
                 participants.append(participant)
 
