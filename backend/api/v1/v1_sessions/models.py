@@ -4,9 +4,10 @@ from django.utils import timezone
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_sessions.constants import SectorTypes
 from utils.custom_manager import PATSessionManager
+from utils.soft_deletes_model import SoftDeletes
 
 
-class PATSession(models.Model):
+class PATSession(SoftDeletes):
     user = models.ForeignKey(
         to=SystemUser,
         on_delete=models.PROTECT,
@@ -71,7 +72,7 @@ class Participant(models.Model):
     )
     session = models.ForeignKey(
         to=PATSession,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="session_participant",
     )
     organization = models.ForeignKey(
@@ -83,6 +84,8 @@ class Participant(models.Model):
         max_length=100, default=None, null=True
     )
     joined_at = models.DateTimeField(auto_now_add=True)
+    # Delete session from participant view
+    session_deleted_at = models.DateTimeField(default=None, null=True)
 
     def __str__(self):
         return self.user.email
@@ -94,7 +97,7 @@ class Participant(models.Model):
 class Decision(models.Model):
     session = models.ForeignKey(
         to=PATSession,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="session_decision",
     )
     name = models.CharField(max_length=255)
@@ -113,12 +116,12 @@ class Decision(models.Model):
 class ParticipantDecision(models.Model):
     user = models.ForeignKey(
         to=SystemUser,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="user_participant_decision",
     )
     decision = models.ForeignKey(
         to=Decision,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="decision_participant",
     )
     score = models.IntegerField()
