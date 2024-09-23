@@ -1,4 +1,4 @@
-export const errorsMapping = (errors = {}) =>
+export const errorsMapping = (errors = {}, errorTrans = null) =>
   Object.keys(errors).flatMap((dk) => {
     if (!Array.isArray(errors[dk])) {
       return Object.keys(errors[dk]).flatMap((_, k) => {
@@ -11,7 +11,10 @@ export const errorsMapping = (errors = {}) =>
     return [
       {
         name: dk,
-        errors: errors[dk],
+        errors:
+          typeof errorTrans === "function"
+            ? errors[dk]?.map((err) => errorTrans(err))
+            : errors[dk],
       },
     ];
   });
