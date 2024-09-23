@@ -215,14 +215,14 @@ class JoinSessionSerializer(serializers.Serializer):
         user = self.context.get("user")
         if pat_session.user == user:
             raise serializers.ValidationError(
-                "You are the owner and already part of the session."
+                "invalidJoinOwner"
             )
         exists = user.user_participant.filter(
             session=pat_session
         )
         if exists:
             raise serializers.ValidationError(
-                "You have already joined."
+                "invalidJoinExists"
             )
         return pat_session
 

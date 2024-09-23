@@ -74,7 +74,8 @@ class GetSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
 
     def test_get_session_by_code(self):
         pat_session = PATSession.objects.filter(
-            user=self.user
+            user=self.user,
+            closed_at__isnull=True
         ).order_by("?").first()
         req = self.client.get(
             f"/api/v1/sessions?code={pat_session.join_code}",
@@ -91,7 +92,7 @@ class GetSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Bearer {self.token}"
         )
-        self.assertEqual(req.status_code, 403)
+        self.assertEqual(req.status_code, 404)
 
     def test_get_session_by_non_participant(self):
         # create a new user
