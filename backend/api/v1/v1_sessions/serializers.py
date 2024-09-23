@@ -4,7 +4,9 @@ from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from django.db.models import Count
 from api.v1.v1_sessions.constants import SectorTypes
-from api.v1.v1_sessions.models import PATSession, Organization
+from api.v1.v1_sessions.models import (
+    PATSession, Organization, Participant
+)
 from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import (
     CustomCharField,
@@ -12,6 +14,7 @@ from utils.custom_serializer_fields import (
     CustomListField,
     CustomJSONField,
     CustomDateField,
+    CustomPrimaryKeyRelatedField,
 )
 
 
@@ -181,3 +184,49 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return SessionListSerializer(instance).data
+
+
+class JoinSessionSerializer(serializers.Serializer):
+    role = CustomCharField()
+    session_id = CustomPrimaryKeyRelatedField(
+        queryset=PATSession.objects.none()
+    )
+    organization_id = CustomPrimaryKeyRelatedField(
+        queryset=Organization.objects.none()
+    )
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields.get(
+            "session_id"
+        ).queryset = PATSession.objects.all()
+        self.fields.get(
+            "organization_id"
+        ).queryset = Organization.objects.all()
+
+    class Meta:
+        fields = ["role", "session_id", "organization_id"]
+
+    def validate_session_id(self, pat_session):
+        user = self.context.get("user")
+        if pat_session.user == user:
+            raise serializers.ValidationError(
+                "You are the owner and already part of the session."
+            )
+        exists = user.user_participant.filter(
+            session=pat_session
+        )
+        if exists:
+            raise serializers.ValidationError(
+                "You have already joined."
+            )
+        return pat_session
+
+    def create(self, validated_data):
+        participant = Participant.objects.create(
+            user=self.context.get("user"),
+            session=validated_data["session_id"],
+            organization=validated_data["organization_id"],
+            role=validated_data["role"]
+        )
+        return participant
