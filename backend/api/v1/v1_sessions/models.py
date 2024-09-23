@@ -79,6 +79,9 @@ class Participant(models.Model):
         on_delete=models.CASCADE,
         related_name="organization_participant",
     )
+    role = models.CharField(
+        max_length=100, default=None, null=True
+    )
     joined_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
