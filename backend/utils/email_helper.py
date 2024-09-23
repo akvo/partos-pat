@@ -10,10 +10,12 @@ from partos_pat.settings import EMAIL_FROM, WEBDOMAIN
 class EmailTypes:
     user_register = "user_register"
     forgot_password = "forgot_password"
+    session_created = "session_created"
 
     FieldStr = {
         user_register: "user_register",
         forgot_password: "forgot_password",
+        session_created: "session_created",
     }
 
 
@@ -61,6 +63,31 @@ def email_context(context: dict, type: str):
                 "cta_url": "{0}/en/reset-password?token={1}".format(
                     WEBDOMAIN, context["reset_password_code"]
                 ),
+            }
+        )
+    if type == EmailTypes.session_created:
+        context.update(
+            {
+                "subject": "PAT Session created",
+                "body": """
+                We are pleased to inform you that
+                a new PAT Session has been successfully created
+                with the following details:\n
+                Name of the Partnership: {0}\n
+                Date: {1}\n
+                Invite Code: {2}\n
+                """.format(
+                    context["session_name"],
+                    context["date"],
+                    context["join_code"]
+                ),
+                "cta_instruction": """
+                Please share this email with your desired participants.
+                They can join the session by using the invite code and
+                clicking the "Join" button in the PAT system.
+                """,
+                "cta_text": "Join",
+                "cta_url": WEBDOMAIN,
             }
         )
     return context
