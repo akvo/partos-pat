@@ -55,6 +55,7 @@ class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
                 "id",
                 "session_name",
                 "join_code",
+                "date",
                 "is_published",
             ],
         )

@@ -49,6 +49,7 @@ class SessionCreatedSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     session_name = serializers.CharField()
     join_code = serializers.CharField()
+    date = serializers.DateField()
     is_published = serializers.BooleanField()
 
     class Meta:
@@ -56,6 +57,7 @@ class SessionCreatedSerializer(serializers.Serializer):
             "id",
             "session_name",
             "join_code",
+            "date",
             "is_published",
         ]
 
