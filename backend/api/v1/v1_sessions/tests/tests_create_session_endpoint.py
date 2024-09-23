@@ -8,7 +8,7 @@ from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 
 
-@override_settings(USE_TZ=False)
+@override_settings(USE_TZ=False, TEST_ENV=True)
 class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
     def setUp(self):
         email = "john@test.com"
