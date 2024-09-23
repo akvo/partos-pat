@@ -68,14 +68,14 @@ def email_context(context: dict, type: str):
     if type == EmailTypes.session_created:
         context.update(
             {
-                "subject": "PAT Session created",
+                "subject": "Session created",
                 "body": """
                 We are pleased to inform you that
                 a new PAT Session has been successfully created
-                with the following details:\n
-                Name of the Partnership: {0}\n
-                Date: {1}\n
-                Invite Code: {2}\n
+                with the following details:<br/>
+                Name of the Partnership: {0}<br/>
+                Date: {1}<br/>
+                Invite Code: <strong>{2}</strong><br/>
                 """.format(
                     context["session_name"],
                     context["date"],
@@ -113,7 +113,6 @@ def send_email(
         msg.attach_alternative(email_html_message, "text/html")
         if path:
             msg.attach(Path(path).name, open(path).read(), content_type)
-        print("send", send)
         if send:
             msg.send()
         if not send:
