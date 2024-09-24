@@ -18,12 +18,12 @@ const ActiveSessionList = ({ data = [] }) => {
       <h2 className="font-bold text-xl">{t("activeSessions")}</h2>
       <br />
       <List
-        grid={{ gutter: 16, xs: 1, sm: 1, md: 2, lg: 2, xl: 3 }}
+        grid={{ gutter: 16, xs: 1, sm: 1, md: 1, lg: 2, xl: 2 }}
         dataSource={data}
         renderItem={(item) => (
           <List.Item>
             <Card
-              className="w-full min-h-40"
+              className="w-full min-h-48"
               bordered={false}
               onClick={() => {
                 router.push(`/dashboard/sessions/${item.id}`);
@@ -45,8 +45,8 @@ const ActiveSessionList = ({ data = [] }) => {
                 className="w-full min-h-20"
                 vertical
               >
-                <div className="text-left">
-                  <Title level={4}>{item?.session_name}</Title>
+                <div className="text-left space-y-2">
+                  <Title className="w-full lg:w-10/12" level={4}>{item?.session_name}</Title>
                   <Text className="line-clamp-3">{item?.context}</Text>
                 </div>
               </Flex>
