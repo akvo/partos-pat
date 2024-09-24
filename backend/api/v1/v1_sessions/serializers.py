@@ -5,7 +5,8 @@ from drf_spectacular.utils import extend_schema_field
 from django.db.models import Count
 from api.v1.v1_sessions.constants import SectorTypes
 from api.v1.v1_sessions.models import (
-    PATSession, Organization, Participant
+    PATSession, Organization, Participant,
+    Decision,
 )
 from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import (
@@ -234,3 +235,57 @@ class JoinSessionSerializer(serializers.Serializer):
             role=validated_data["role"]
         )
         return participant
+
+
+class DecisionListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Decision
+        fields = ["id", "session_id", "name", "created_at"]
+
+
+class CreateDecisionSerializer(serializers.ModelSerializer):
+    session_id = CustomPrimaryKeyRelatedField(
+        queryset=PATSession.objects.none()
+    )
+    decisions = CustomListField()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields.get(
+            "session_id"
+        ).queryset = PATSession.objects.filter(
+            closed_at__isnull=True
+        ).all()
+
+    class Meta:
+        model = Decision
+        fields = ["session_id", "decisions"]
+
+    def validate_session_id(self, pat_session):
+        user = self.context.get("user")
+        if pat_session.user != user:
+            raise serializers.ValidationError(
+                "You are not owner"
+            )
+        return pat_session
+
+    def create(self, validated_data):
+        decisions = []
+        for decision in validated_data["decisions"]:
+            d = Decision.objects.create(
+                session=validated_data["session_id"],
+                name=decision
+            )
+            decisions.append(d)
+        return decisions
+
+    def to_representation(self, instance):
+        return [
+            {
+                "id": decision.id,
+                "session_id": decision.session.id,
+                "name": decision.name,
+                "created_at": decision.created_at.isoformat()
+            }
+            for decision in instance
+        ]
