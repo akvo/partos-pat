@@ -2,7 +2,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { sourceSans } from "../fonts";
+import { sourceSansPro } from "../fonts";
 
 export const metadata = {
   title: "PARTOS-PAT",
@@ -16,7 +16,7 @@ export default async function LocaleLayout({ children, params: { locale } }) {
 
   return (
     <html lang={locale}>
-      <body className={sourceSans.className}>
+      <body className={sourceSansPro.className}>
         <NextIntlClientProvider messages={messages}>
           <AntdRegistry>
             <ConfigProvider
