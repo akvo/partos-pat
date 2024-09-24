@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row, Space, Tabs } from "antd";
+import { Button, Card, Space, Tabs } from "antd";
 import { useTranslations } from "next-intl";
 import {
   ActiveSessionList,
@@ -30,7 +30,7 @@ const PageContent = ({
 }) => {
   const t = useTranslations("Dashboard");
   return (
-    <div className="w-full mb-8 text-base">
+    <div className="w-full my-6 text-base">
       <Tabs
         items={[
           {
@@ -64,6 +64,43 @@ const PageContent = ({
           },
         ]}
       />
+      {totalActive === 0 && totalClosed === 0 && (
+        <Card>
+          <div className="w-full px-4 py-8">
+            <div className="w-full py-3 border-b border-b-dark-2 mb-6">
+              <h3 className="font-bold text-2xl">{t("gettingStarted")}</h3>
+            </div>
+            <div className="w-full flex">
+              <div className="w-full lg:w-1/2 space-y-3">
+                <h4 className="text-dark-2 text-xl font-bold">
+                  {t("createNewTitle")}
+                </h4>
+                <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
+                  <li>{t("createStep1")}</li>
+                  <li>{t("createStep2")}</li>
+                  <li>{t("createStep3")}</li>
+                </ol>
+                <div className="pt-16">
+                  <CreateSessionModal />
+                </div>
+              </div>
+              <div className="w-full lg:w-1/2 space-y-3">
+                <h4 className="text-dark-2 text-xl font-bold">
+                  {t("joinTitle")}
+                </h4>
+                <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
+                  <li>{t("joinStep1")}</li>
+                  <li>{t("joinStep2")}</li>
+                  <li>{t("joinStep3")}</li>
+                </ol>
+                <div className="pt-8">
+                  <JoinModal />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      )}
     </div>
   );
 };
@@ -71,13 +108,13 @@ const PageContent = ({
 const AboutCard = () => {
   const t = useTranslations("Dashboard");
   return (
-    <Card bordered={false}>
-      <div className="w-full p-1 md:px-4 md:py-2">
-        <h2 className="text-2xl text-dark-10 font-bold mb-6">
+    <Card className="w-full lg:w-10/12 max-w-[390px]" bordered={false}>
+      <div className="w-full p-1 lg:px-4 lg:py-2">
+        <h2 className="text-2xl text-dark-10 font-bold mb-6 whitespace-pre-line">
           {t("aboutTitle")}
         </h2>
-        <div className="mb-8">
-          <p>{t("aboutDescription")}</p>
+        <div className="mb-8 max-h-[450px] text-base overflow-y-scroll">
+          <p className="whitespace-pre-line">{t("aboutDescription")}</p>
         </div>
         <Link href="/dashboard/learn-more">
           <Button ghost>{t("learnMore")}</Button>
@@ -99,23 +136,10 @@ const HomeDashboardPage = async ({ searchParams }) => {
   );
 
   return (
-    <div className="w-full space-y-6">
-      <Row type="flex" justify="space-between" wrap>
-        <Col lg={16} xl={18}>
+    <div className="w-full px-5 py-8 space-y-6">
+      <div className="w-full flex md:max-lg:flex-col flex-row gap-12">
+        <div className="w-full lg:w-3/5">
           <PageTitle />
-        </Col>
-        <Col lg={8} xl={6} className="text-right">
-          <Space size="middle">
-            <JoinModal />
-            <CreateSessionModal
-              disabled={totalActive >= PAT_SESSION.maxActiveSession}
-            />
-            <DetailSessionModal id={sessionID} />
-          </Space>
-        </Col>
-      </Row>
-      <Row gutter={[24, 16]} type="flex" justify="space-between">
-        <Col lg={16} xl={18}>
           <PageContent
             {...{
               activeSessions,
@@ -124,11 +148,22 @@ const HomeDashboardPage = async ({ searchParams }) => {
               totalActive,
             }}
           />
-        </Col>
-        <Col lg={8} xl={6}>
+        </div>
+        <div className="w-full lg:w-2/5">
+          <Space
+            align="center"
+            size="middle"
+            className="w-full lg:w-10/12 max-w-[390px] mb-8 justify-end"
+          >
+            <JoinModal />
+            <CreateSessionModal
+              disabled={totalActive >= PAT_SESSION.maxActiveSession}
+            />
+            <DetailSessionModal id={sessionID} />
+          </Space>
           <AboutCard />
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   );
 };
