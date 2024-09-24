@@ -23,13 +23,6 @@ class FakeSessionSeederTestCase(TestCase):
         total = PATSession.objects.count()
         self.assertEqual(total, 0)
 
-    def test_no_users_no_sessions(self):
-        with self.assertRaises(SystemExit):
-            SystemUser.objects.delete()
-            call_command("fake_sessions_seeder", "--test", True)
-            total = PATSession.objects.count()
-            self.assertEqual(total, 0)
-
     def test_with_certain_user(self):
         user = SystemUser.objects.create_user(
             full_name="John Doe",

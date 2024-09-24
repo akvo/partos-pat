@@ -89,12 +89,6 @@ class Command(BaseCommand):
         test = options.get("test")
         user = options.get("user")
         users_count = SystemUser.objects.count()
-        # minimum: 3 users
-        # 1 owner 2 participants
-        if users_count < 3:
-            if not test:
-                print("please run fake_users_seeder first")
-            exit()
         status_items = get_random_published_and_closed_status(n=repeat)
         current_user = None
         if user:
@@ -107,13 +101,17 @@ class Command(BaseCommand):
             owner = SystemUser.objects.order_by('?').first()
             if current_user:
                 owner = current_user
-            user_participants = SystemUser.objects.exclude(
-                pk=owner.pk
-            ).all()[:MAX_ITEMS]
-            countries = [
-                p.country
-                for p in user_participants
-            ]
+            countries = ["NL", "ID", "KE"]
+            user_participants = []
+            if users_count >= 3:
+                user_participants = SystemUser.objects.exclude(
+                    pk=owner.pk
+                ).all()[:MAX_ITEMS]
+                countries = [
+                    p.country
+                    for p in user_participants
+                ]
+
             pat_session = PATSession.objects.create_session(
                 owner=owner,
                 name=fake.sentence(),
@@ -124,14 +122,18 @@ class Command(BaseCommand):
             )
             pat_session.other_sector = other_sector
             pat_session.save()
-            org_total = fake.random_int(
-                min=1, max=users_count-1
-            )
-            orgs = self.fake_organizations(
-                pat_session=pat_session,
-                total=org_total
-            )
+
             participants = []
+            orgs = []
+            if users_count >= 3:
+                org_total = fake.random_int(
+                    min=1, max=users_count-1
+                )
+                orgs = self.fake_organizations(
+                    pat_session=pat_session,
+                    total=org_total
+                )
+
             for p in user_participants:
                 p_org = random.choice(orgs)
                 participant = Participant.objects.create(
