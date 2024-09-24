@@ -22,6 +22,8 @@ from api.v1.v1_sessions.serializers import (
     UpdateSessionSerializer,
     OrganizationListSerializer,
     JoinSessionSerializer,
+    CreateDecisionSerializer,
+    DecisionListSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
@@ -101,7 +103,7 @@ class PATSessionAddListView(APIView):
             ).first()
             if not instance:
                 return Response(
-                    data=None,
+                    data={},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             return Response(
@@ -206,7 +208,7 @@ class PATSessionAddListView(APIView):
             ).first()
             if not instance:
                 return Response(
-                    data=None,
+                    data={},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
@@ -216,14 +218,14 @@ class PATSessionAddListView(APIView):
                 partial=True
             )
             if not serializer.is_valid():
-                return Response(data=None, status=status.HTTP_400_BAD_REQUEST)
+                return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
             serializer.save()
             return Response(
                 data=serializer.data,
                 status=status.HTTP_200_OK,
             )
         return Response(
-            data=None,
+            data={},
             status=status.HTTP_404_NOT_FOUND,
         )
 
@@ -290,3 +292,32 @@ def participant_join_session(request, version):
         )
     serializer.save()
     return Response({"message": "Ok"}, status=status.HTTP_201_CREATED)
+
+
+@extend_schema(
+    request=CreateDecisionSerializer,
+    responses={201: DecisionListSerializer},
+    tags=["Decisions"],
+    summary="Create decisions sessions",
+)
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def create_session_decisions(request, version):
+    serializer = CreateDecisionSerializer(
+        data=request.data, context={
+            "user": request.user
+        }
+    )
+    if not serializer.is_valid():
+        return Response(
+            {
+                "message": validate_serializers_message(serializer.errors),
+                "details": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    decisions = serializer.save()
+    return Response(
+        serializer.to_representation(decisions),
+        status=status.HTTP_201_CREATED
+    )
