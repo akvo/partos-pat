@@ -175,6 +175,9 @@
   .ant-form-item .ant-form-item-control-input {
     min-height: auto;
   }
+  .ant-list .ant-list-empty-text {
+    display: none;
+  }
 }
 
 body {

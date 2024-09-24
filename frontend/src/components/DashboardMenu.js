@@ -1,25 +1,20 @@
 "use client";
 
-import { Button, Flex, Modal } from "antd";
+import { Button, Flex } from "antd";
 import { useTranslations } from "next-intl";
 import { DASHBOARD_MENU } from "@/static/config";
-import { useRouter } from "@/routing";
+import { usePathname, useRouter } from "@/routing";
 import { LifebuoyIcon } from "./Icons";
 import { useState } from "react";
 import classNames from "classnames";
 import { HelpModal } from "./Modals";
 
 const DashboardMenu = () => {
-  const [activeKey, setActiveKey] = useState(1);
   const [open, setOpen] = useState(false);
+  const pathName = usePathname();
 
   const router = useRouter();
   const t = useTranslations("Dashboard");
-
-  const handleOnClick = ({ id, url }) => {
-    setActiveKey(id);
-    router.push(url);
-  };
 
   return (
     <Flex justify="space-between" className="w-full h-auto lg:h-full" vertical>
@@ -27,11 +22,17 @@ const DashboardMenu = () => {
         {DASHBOARD_MENU.map((m) => (
           <li
             className={classNames("font-bold hover:bg-primary-hover", {
-              "bg-primary-menu": activeKey === m.id,
+              "bg-primary-menu": pathName === m.url,
             })}
             key={m.id}
           >
-            <Button type="text" onClick={() => handleOnClick(m)} icon={m.icon}>
+            <Button
+              type="text"
+              onClick={() => {
+                router.push(m.url);
+              }}
+              icon={m.icon}
+            >
               {t(m.name)}
             </Button>
           </li>

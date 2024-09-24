@@ -4,6 +4,7 @@ import { Link } from "@/routing";
 const DashboardTemplate = ({ children }) => {
   return (
     <div className="w-full max-w-9xl h-screen bg-grey-100 flex flex-col md:flex-row text-base text-dark-10 overflow-y-auto lg:overflow-y-hidden">
+      <div className="w-1/2 lg:w-2/5 h-screen absolute bottom-0 right-0 bg-dashboard bg-no-repeat bg-contain bg-right-bottom" />
       <aside className="w-full h-auto md:w-64 lg:w-72 md:h-screen bg-light-1 shadow-lg flex flex-col justify-between">
         <div className="w-full h-auto lg:h-[calc(100vh-235px)] space-y-8 mt-8">
           <div className="px-4">
@@ -19,7 +20,7 @@ const DashboardTemplate = ({ children }) => {
           </li>
         </ul>
       </aside>
-      <div className="w-full md:w-4/5 px-5 py-8">{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 };

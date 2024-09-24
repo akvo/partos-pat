@@ -1,6 +1,4 @@
 import Image from "next/image";
-import classNames from "classnames";
-import { sourceSans } from "@/app/fonts";
 import { useTranslations } from "next-intl";
 import { PARTOS } from "@/static/config";
 import { Link } from "@/routing";
@@ -9,12 +7,7 @@ import { PartosLogo } from "@/components/Icons";
 const AuthTemplate = ({ children }) => {
   const t = useTranslations("common");
   return (
-    <div
-      className={classNames(
-        sourceSans.className,
-        "w-full max-w-9xl h-screen mx-auto flex flex-col md:flex-row gap-0 overflow-y-hidden",
-      )}
-    >
+    <div className="w-full max-w-9xl h-screen mx-auto flex flex-col md:flex-row gap-0 overflow-y-hidden">
       <div className="hidden lg:block w-full lg:w-1/2 xl:w-2/3">
         <Image
           width={800}

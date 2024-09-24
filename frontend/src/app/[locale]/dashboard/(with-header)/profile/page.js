@@ -1,12 +1,13 @@
 import { LogoutButton } from "@/components";
+import { Card } from "antd";
 
 const ProfilePage = () => {
   return (
-    <div className="w-full p-4 space-y-4">
-      <div className="w-full flex items-center justify-end">
+    <Card>
+      <div className="w-full px-5 py-3 flex justify-end">
         <LogoutButton />
       </div>
-    </div>
+    </Card>
   );
 };
 
