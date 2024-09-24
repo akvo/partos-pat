@@ -14,6 +14,19 @@ module.exports = {
         "profile-gradient":
           "linear-gradient(0deg, rgba(236, 241, 245, 0.90) 0%, rgba(236, 241, 245, 0.20) 108.91%)",
         "not-found": "url('/images/bg-image-404.png')",
+        dashboard: "url('/images/bg-image-dashboard.png')",
+        "dashboard-circle": "url('/images/partos-circle-graphic-white.png')",
+        "dashboard-header-gradient":
+          "linear-gradient(91deg, #FFC20E 35.98%, #00A392 110.43%)",
+      },
+      fontWeight: {
+        "extra-light": "200",
+        light: "300",
+        normal: "400",
+        medium: "400",
+        semibold: "500",
+        bold: "600",
+        "extra-bold": "700",
       },
     },
     maxWidth: {
