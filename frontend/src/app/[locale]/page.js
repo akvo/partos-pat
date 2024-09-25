@@ -1,117 +1,382 @@
+import {
+  AkvoIcon,
+  InstagramIcon,
+  LindkedInIcon,
+  QuoteIcon,
+  TwitterXIcon,
+} from "@/components/Icons";
 import { Link } from "@/routing";
+import { Button, Flex } from "antd";
+import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { openSans } from "../fonts";
+import { PARTOS } from "@/static/config";
+import { FAQCollapsible, LandingButton, PATLogo } from "@/components";
+import { getSession } from "@/lib/auth";
 
-export default function Home() {
-  const tr = useTranslations("Register");
+const FooterCreditSection = () => {
+  const t = useTranslations("Landing");
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <Link href="/register">
-          <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-            {tr("btnCreateAccount")}
-          </p>
-        </Link>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+    <div className="w-full py-3 bg-dark-10">
+      <div className="container mx-auto 2xl:px-4">
+        <Flex items="center" justify="space-between">
+          <div className="text-base text-light-1">{t("poweredBy")}</div>
+          <div>
+            <AkvoIcon />
+          </div>
+        </Flex>
+      </div>
+    </div>
+  );
+};
+
+const FooterCopySection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full pt-8 pb-8 text-base text-grey-800 font-bold">
+      <div className="container mx-auto 2xl:px-4">
+        <div className="w-fit flex flex-wrap items-center gap-5">
+          <span>&copy; Copyright 2024</span>
+          <span>
+            <Link href="/" className="hover:underline">
+              {t("cookies")}
+            </Link>
+          </span>
+          <span>
+            <Link href="/" className="hover:underline">
+              {t("termNConditions")}
+            </Link>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const FooterLinksSection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full pb-2 pt-8">
+      <div className="container mx-auto 2xl:px-4 flex">
+        <div className="w-full lg:w-11/12 flex flex-wrap">
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
+            <h3 className="font-bold text-xl text-grey-800">{t("topics")}</h3>
+            <ul className="text-base text-dark-7 leading-8">
+              <li>{t("topics1")}</li>
+              <li>{t("topics2")}</li>
+              <li>{t("topics3")}</li>
+              <li>{t("topics4")}</li>
+            </ul>
+          </div>
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
+            <h3 className="font-bold text-xl text-grey-800">
+              {t("forMembers")}
+            </h3>
+            <ul className="text-base text-dark-7 leading-8">
+              <li>{t("forMembers2")}</li>
+              <li>{t("forMembers3")}</li>
+              <li>{t("forMembers4")}</li>
+            </ul>
+          </div>
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
+            <h3 className="font-bold text-xl text-grey-800">
+              {t("mostVisited")}
+            </h3>
+            <ul className="text-base text-dark-7 leading-8">
+              <li>{t("mostVisited1")}</li>
+              <li>{t("mostVisited2")}</li>
+              <li>{t("mostVisited3")}</li>
+            </ul>
+          </div>
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
+            <h3 className="font-bold text-xl text-grey-800">{t("contact")}</h3>
+            <ul className="text-base text-dark-7 space-y-5">
+              <li className="whitespace-pre-line">{PARTOS.address}</li>
+              <li>
+                <a href={`tel:${PARTOS.phone}`}>
+                  <strong>{PARTOS.phone}</strong>
+                </a>
+                <br />
+                <a href={`mailto:${PARTOS.email}`}>
+                  <strong>{PARTOS.email}</strong>
+                </a>
+              </li>
+              <li className="whitespace-pre-line">{PARTOS.code}</li>
+            </ul>
+          </div>
+        </div>
+        <div className="w-full lg:w-1/12 flex gap-2 justify-end">
           <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://twitter.com/PartosNL"
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
+            <div className="p-2.5 bg-primary-normal rounded-sm">
+              <TwitterXIcon />
+            </div>
+          </a>
+          <a
+            href="https://nl.linkedin.com/company/partos"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="p-2.5 bg-primary-normal rounded-sm">
+              <LindkedInIcon />
+            </div>
+          </a>
+          <a
+            href="https://www.instagram.com/partosnl/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="p-2.5 bg-primary-normal rounded-sm">
+              <InstagramIcon />
+            </div>
           </a>
         </div>
       </div>
+    </div>
+  );
+};
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+const QuoteSection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full bg-primary-active py-16">
+      <div className="container mx-auto 2xl:px-4">
+        <div className="w-full flex gap-6 justify-center">
+          <div className="w-full relative lg:w-8/12 border-l-4 border-l-light-1 pl-6 px-4 md:pl-12">
+            <QuoteIcon className="w-8 md:w-10 lg:w-12 absolute top-[-10px] left-[-17px] md:top-[-5px] md:left-[-20px] lg:top-[-2px] lg:left-[-24px]" />
+            <em className="text-dark-10 text-md md:text-lg lg:text-xl leading-9">
+              {t("quotes")}
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const NewWaysSection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full py-16">
+      <div className="container mx-auto 2xl:px-4">
+        <div className="w-full bg-primary-active rounded-md flex flex-wrap items-center">
+          <div className="w-full md:w-1/2 py-12 flex flex-col items-center">
+            <Image
+              width={400}
+              height={400}
+              src="/images/new-ways-collaboration.png"
+              alt="New Ways Collaboration"
+              className="w-8/12"
+            />
+          </div>
+          <div className="w-full md:w-1/2 space-y-12 px-8 lg:pl-0 lg:pr-20 py-12 text-dark-10">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-extra-bold">
+                {t("newWaysTitle")}
+              </h2>
+            </div>
+            <div className="w-full md:w-10/12">
+              <strong className="text-xl font-bold">{t("newWaysDesc1")}</strong>
+            </div>
+            <p className="text-base font-semibold">{t("newWaysDesc2")}</p>
+            <div>
+              <a
+                href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button ghost>{t("learnMore")}</Button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const HowItWorkSection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full bg-light-1 py-16">
+      <div className="container mx-auto 2xl:px-4">
+        <div className="w-full relative">
+          <div className="w-full relative flex flex-col md:flex-row items-center gap-4">
+            <div className="w-full md:w-8/12 space-y-10 text-dark-10">
+              <h2 className="text-3xl font-extra-bold">{t("howItWork")}</h2>
+              <div className="pb-10">
+                <p className="text-base">{t("howItWorkDesc")}</p>
+              </div>
+              <a
+                href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button type="primary">{t("learnMore")}</Button>
+              </a>
+            </div>
+            <div className="w-full md:w-4/12 h-80 absolute top-0 right-[-5%]">
+              <div className="w-8/12 absolute z-10 top-0 left-0">
+                <Image
+                  src="/images/how-its-work-person.png"
+                  alt="How it Works person"
+                  width={300}
+                  height={300}
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="w-2/5 z-0 absolute top-[-50%] right-[-8rem]">
+            <Image
+              src="/images/partos-circle-multicolor.png"
+              alt="How it Works circle"
+              width={500}
+              height={500}
+              className="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const WhySection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full my-4">
+      <div className="container mx-auto 2xl:px-4 py-20 border-t border-t-dark-2">
+        <div className="w-full flex flex-wrap items-center">
+          <div className="w-full md:w-1/2 space-y-6">
+            <div>
+              <strong className="text-base text-primary-dark">
+                {t("features")}
+              </strong>
+              <h2 className="text-4xl text-grey-900 font-extra-bold">
+                {t("whyUsePAT")}
+              </h2>
+            </div>
+            <div className="w-full lg:w-9/12">
+              <p className="text-base text-grey-600">{t("whyUseSubtitle")}</p>
+            </div>
+          </div>
+          <div className="w-full md:w-1/2 text-base text-dark-7">
+            <p className="whitespace-pre-line">{t("whyUseDesc")}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PartnerSection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full py-16">
+      <div className="container mx-auto 2xl:px-4 space-y-12">
+        <div className="w-full text-center">
+          <strong className="text-base text-grey-600 font-semibold">
+            {t("madePossibleBy")}
+          </strong>
+        </div>
+        <ul className="w-full flex flex-wrap justify-between">
+          {Array.from({ length: 7 }).map((_, index) => {
+            return (
+              <li key={index}>
+                <Image
+                  src={`/images/logo${index + 1}.png`}
+                  alt={`Partner ${index + 1}`}
+                  width={151}
+                  height={151}
+                  className="w-full mb-3"
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export const HeroSection = () => {
+  const t = useTranslations("Landing");
+  return (
+    <div className="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4">
+      <h1 className="text-5xl font-extra-bold">{t("title")}</h1>
+      <div className="w-full lg:w-10/12 2xl:w-8/12 text-center">
+        <p className="text-xl text-dark-10 leading-8">{t("description")}</p>
+      </div>
+      <Link href="/register">
+        <Button type="primary" size="large">
+          {t("createAccount")}
+        </Button>
+      </Link>
+    </div>
+  );
+};
+
+const Home = async () => {
+  const session = await getSession();
+  return (
+    <main
+      className={classNames(
+        openSans.className,
+        openSans.variable,
+        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto"
+      )}
+    >
+      <div className="w-full relative bg-landing-gradient backdrop-blur">
+        <div className="w-2/6 h-full absolute top-0 left-0 bg-landing-circle bg-no-repeat bg-contain bg-left-top" />
+        <div className="container mx-auto 2xl:px-4">
+          <div className="w-full relative flex flex-col md:flex-row items-center py-6 justify-between">
+            <div className="z-10">
+              <PATLogo />
+            </div>
+            <LandingButton isLoggedIn={session?.user?.id ? true : false} />
+          </div>
+
+          <HeroSection />
+        </div>
+        <div className="w-full relative px-10">
+          <Image
+            src="/images/mockup-preview-pat.png"
+            alt="PARTOS PAT Preview"
+            width={1280}
+            height={448}
+            className="w-full z-10"
+          />
+        </div>
       </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+      <PartnerSection />
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+      <WhySection />
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+      <HowItWorkSection />
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <NewWaysSection />
+
+      <div className="w-full bg-light-1 py-16">
+        <div className="container mx-auto 2xl:px-4">
+          <FAQCollapsible />
+        </div>
       </div>
+
+      <QuoteSection />
+
+      <FooterLinksSection />
+
+      <FooterCopySection />
+
+      <FooterCreditSection />
     </main>
   );
-}
+};
+
+export default Home;
