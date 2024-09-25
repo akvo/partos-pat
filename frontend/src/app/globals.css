@@ -178,6 +178,26 @@
   .ant-list .ant-list-empty-text {
     display: none;
   }
+  .ant-collapse > .ant-collapse-item {
+    border-bottom-color: #e4e7ec;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+  .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    color: #101828;
+    font-family: var(--open-sans);
+    font-size: 18px;
+    font-weight: 700;
+    padding: 16px 0;
+  }
+  .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+    color: #475467;
+    font-family: var(--open-sans);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    padding: 16px 0;
+  }
 }
 
 body {

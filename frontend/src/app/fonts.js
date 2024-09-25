@@ -4,7 +4,10 @@ import localFont from "next/font/local";
 export const sourceSans = Source_Sans_3({
   subsets: ["latin"],
 });
-export const openSans = Open_Sans({ subsets: ["latin"] });
+export const openSans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--open-sans",
+});
 
 export const sourceSansPro = localFont({
   variable: "--font-sans-pro",
