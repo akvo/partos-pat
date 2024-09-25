@@ -18,7 +18,7 @@ const WithNavbarTemplate = ({ children }) => {
           </Flex>
         </div>
       </div>
-      <div className="container mx-auto px-4">{children}</div>
+      <main className="container mx-auto px-4">{children}</main>
     </div>
   );
 };
