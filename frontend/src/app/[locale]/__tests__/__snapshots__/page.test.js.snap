@@ -1,5 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Home renders correctly & match with the snapshot 1`] = `
+<div>
+  <div
+    class="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4"
+  >
+    <h1
+      class="text-5xl font-extra-bold"
+    >
+      The Power Awareness Tool
+    </h1>
+    <div
+      class="w-full lg:w-10/12 2xl:w-8/12 text-center"
+    >
+      <p
+        class="text-xl text-dark-10 leading-8"
+      >
+        The decision to develop the Power Awareness Tool is based on the assumption that if partners have a better understanding of the way power works in the partnership, they will be in a better position to work towards shifting power in accordance with their shared principles.
+      </p>
+    </div>
+    <a
+      href="/en/register"
+    >
+      <button
+        class="ant-btn css-dev-only-do-not-override-vn1oyg ant-btn-primary ant-btn-lg"
+        type="button"
+      >
+        <span>
+          Create Account
+        </span>
+      </button>
+    </a>
+  </div>
+</div>
+`;
+
 exports[`HomePage renders correctly & match with the snapshot 1`] = `
 <div>
   <main
@@ -154,5 +189,40 @@ exports[`HomePage renders correctly & match with the snapshot 1`] = `
       </a>
     </div>
   </main>
+</div>
+`;
+
+exports[`Login renders correctly & match with the snapshot 1`] = `
+<div>
+  <div
+    class="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4"
+  >
+    <h1
+      class="text-5xl font-extra-bold"
+    >
+      The Power Awareness Tool
+    </h1>
+    <div
+      class="w-full lg:w-10/12 2xl:w-8/12 text-center"
+    >
+      <p
+        class="text-xl text-dark-10 leading-8"
+      >
+        The decision to develop the Power Awareness Tool is based on the assumption that if partners have a better understanding of the way power works in the partnership, they will be in a better position to work towards shifting power in accordance with their shared principles.
+      </p>
+    </div>
+    <a
+      href="/en/register"
+    >
+      <button
+        class="ant-btn css-dev-only-do-not-override-vn1oyg ant-btn-primary ant-btn-lg"
+        type="button"
+      >
+        <span>
+          Create Account
+        </span>
+      </button>
+    </a>
+  </div>
 </div>
 `;

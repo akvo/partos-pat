@@ -2,32 +2,35 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 
-import Home from "../page";
+import { HeroSection } from "../page";
 
 const messages = {
-  Register: {
-    btnCreateAccount: "Create account",
+  Landing: {
+    title: "The Power Awareness Tool",
+    description:
+      "The decision to develop the Power Awareness Tool is based on the assumption that if partners have a better understanding of the way power works in the partnership, they will be in a better position to work towards shifting power in accordance with their shared principles.",
+    createAccount: "Create Account",
   },
 };
 
-describe("HomePage", () => {
-  it("renders a default page nextjs", () => {
+describe("Home", () => {
+  it("renders a PAT landing page", () => {
     render(
       <NextIntlClientProvider locale="en" messages={messages}>
-        <Home />
-      </NextIntlClientProvider>,
+        <HeroSection />
+      </NextIntlClientProvider>
     );
 
-    const nextjsLogo = screen.getByAltText("Next.js Logo");
+    const patTitle = screen.getByText(messages.Landing.title);
 
-    expect(nextjsLogo).toBeInTheDocument();
+    expect(patTitle).toBeInTheDocument();
   });
 
   it("renders correctly & match with the snapshot", () => {
     const { container } = render(
       <NextIntlClientProvider locale="en" messages={messages}>
-        <Home />
-      </NextIntlClientProvider>,
+        <HeroSection />
+      </NextIntlClientProvider>
     );
     expect(container).toMatchSnapshot();
   });
