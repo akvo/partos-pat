@@ -6,7 +6,7 @@ exports[`Home renders correctly & match with the snapshot 1`] = `
     class="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4"
   >
     <h1
-      class="text-5xl font-extra-bold"
+      class="text-4xl md:text-5xl text-center font-extra-bold"
     >
       The Power Awareness Tool
     </h1>

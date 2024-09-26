@@ -163,26 +163,30 @@ const NewWaysSection = () => {
   return (
     <div className="w-full py-16">
       <div className="container mx-auto 2xl:px-4">
-        <div className="w-full bg-primary-active rounded-md flex flex-wrap items-center">
-          <div className="w-full md:w-1/2 py-12 flex flex-col items-center">
+        <div className="w-full bg-primary-active rounded-md flex flex-col md:flex-row items-center">
+          <div className="w-full md:w-2/5 lg:w-1/2 flex flex-col items-center py-12">
             <Image
               width={400}
               height={400}
               src="/images/new-ways-collaboration.png"
               alt="New Ways Collaboration"
-              className="w-8/12"
+              className="w-10/12 lg:w-8/12"
             />
           </div>
-          <div className="w-full md:w-1/2 space-y-12 px-8 lg:pl-0 lg:pr-20 py-12 text-dark-10">
+          <div className="w-full md:w-3/5 lg:w-1/2 space-y-4 lg:space-y-12 px-4 lg:px-8 lg:pl-0 lg:pr-20 py-12 text-dark-10">
             <div>
-              <h2 className="text-4xl lg:text-5xl font-extra-bold">
+              <h2 className="text-3xl lg:text-5xl font-extra-bold">
                 {t("newWaysTitle")}
               </h2>
             </div>
             <div className="w-full md:w-10/12">
-              <strong className="text-xl font-bold">{t("newWaysDesc1")}</strong>
+              <strong className="text-md lg:text-xl font-bold">
+                {t("newWaysDesc1")}
+              </strong>
             </div>
-            <p className="text-base font-semibold">{t("newWaysDesc2")}</p>
+            <p className="text-sm lg:text-base font-semibold">
+              {t("newWaysDesc2")}
+            </p>
             <div>
               <a
                 href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
@@ -219,8 +223,8 @@ const HowItWorkSection = () => {
                 <Button type="primary">{t("learnMore")}</Button>
               </a>
             </div>
-            <div className="w-full md:w-4/12 h-80 absolute top-0 right-[-5%]">
-              <div className="w-8/12 absolute z-10 top-0 left-0">
+            <div className="w-full md:w-4/12 h-80 hidden md:block absolute top-[-1rem] right-0">
+              <div className="w-full lg:w-9/12 absolute z-10 top-0 right-0">
                 <Image
                   src="/images/how-its-work-person.png"
                   alt="How it Works person"
@@ -231,7 +235,7 @@ const HowItWorkSection = () => {
               </div>
             </div>
           </div>
-          <div className="w-2/5 z-0 absolute top-[-50%] right-[-8rem]">
+          <div className="w-6/12 lg:w-5/12 hidden md:block z-0 absolute top-[-5rem] right-[-6rem] lg:top-[-10rem] 2xl:top-[-12rem] lg:right-[-10rem]">
             <Image
               src="/images/partos-circle-multicolor.png"
               alt="How it Works circle"
@@ -249,7 +253,7 @@ const HowItWorkSection = () => {
 const WhySection = () => {
   const t = useTranslations("Landing");
   return (
-    <div className="w-full my-4">
+    <div className="w-full my-8">
       <div className="container mx-auto 2xl:px-4 py-20 border-t border-t-dark-2">
         <div className="w-full flex flex-wrap items-center">
           <div className="w-full md:w-1/2 space-y-6">
@@ -308,7 +312,9 @@ export const HeroSection = () => {
   const t = useTranslations("Landing");
   return (
     <div className="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4">
-      <h1 className="text-5xl font-extra-bold">{t("title")}</h1>
+      <h1 className="text-4xl md:text-5xl text-center font-extra-bold">
+        {t("title")}
+      </h1>
       <div className="w-full lg:w-10/12 2xl:w-8/12 text-center">
         <p className="text-xl text-dark-10 leading-8">{t("description")}</p>
       </div>
