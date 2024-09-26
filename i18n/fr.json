@@ -73,13 +73,8 @@
 	"ForgotPassword": {
 		"sendLink": "Envoyer le lien de réinitialisation",
 		"backToLogin": "Retour à la connexion",
-		"emailSent": "Un e-mail a été envoyé à votre adresse e-mail pour réinitialiser votre mot de passe.",
-		"emailSentDescription": "Veuillez vérifier votre boîte de réception et votre dossier de courrier indésirable pour réinitialiser votre mot de passe.",
-		"resetPassword": "Réinitialiser le mot de passe",
-		"invalidLinkTitle": "Lien invalide",
-		"invalidLinkMessage": "Le lien de réinitialisation du mot de passe est invalide ou a expiré. Veuillez demander un nouveau lien de réinitialisation.",
-		"requestNewLink": "Demander un nouveau lien",
-		"successReset": "Mot de passe réinitialisé avec succès"
+		"emailSent": "E-mail envoyé avec succès",
+		"emailSentDescription": "Veuillez vérifier votre courrier électronique pour réinitialiser votre mot de passe"
 	},
 	"Dashboard": {
 		"dashboard": "Tableau de bord",
@@ -147,5 +142,42 @@
 		"context": "Contexte de la séance",
 		"copyCodeButton": "Copier les informations de la session",
 		"copySuccess": "Le code de participation à la session a été copié dans le presse-papiers"
+	},
+	"Landing": {
+		"title": "L'outil de sensibilisation au pouvoir",
+		"description": "La décision de développer l’outil de sensibilisation au pouvoir repose sur l’hypothèse que si les partenaires comprennent mieux la manière dont le pouvoir fonctionne au sein du partenariat, ils seront dans une meilleure position pour œuvrer à un transfert de pouvoir conformément à leurs principes communs.",
+		"createAccount": "Créer un compte",
+		"madePossibleBy": "Rendu possible par",
+		"login": "Se connecter",
+		"features": "Caractéristiques",
+		"whyUsePAT": "Pourquoi utiliser l'outil de sensibilisation au pouvoir ?",
+		"whyUseSubtitle": "PAT sensibilise les partenaires aux relations de pouvoir dans les partenariats. Le PAT se concentre spécifiquement sur le pouvoir décisionnel dans les partenariats.",
+		"whyUseDesc": "Comme son nom l'indique, le PAT sensibilise les partenaires aux relations de pouvoir dans les partenariats. Alors que le pouvoir a de nombreuses dimensions, le PAT se concentre spécifiquement sur le pouvoir de décision dans les partenariats. La question centrale d’une séance PAT est de savoir qui, dans un partenariat, prend les décisions sur quoi. C’est important, car dans de nombreux partenariats, ce n’est pas très clair. Le pouvoir est souvent exercé de manière implicite. Des décisions sont prises alors que tout le monde ne le sait pas. Souvent, personne n’y trouve à redire. Peut-être que tout le monde est d’accord avec la décision ou convient que ceux qui ont pris la décision ont le mandat de le faire.\nCependant, il existe également des situations dans lesquelles certains partenaires se sentent mécontents de la manière dont une décision a été prise. Ils estiment qu’ils n’ont pas été impliqués de manière appropriée. Peut-être pensaient-ils qu’ils auraient dû prendre cette décision, ou qu’ils voulaient avoir un vote égal pour prendre la décision. Peut-être ont-ils le sentiment de ne pas avoir été correctement consultés. Si de telles situations se produisent fréquemment, cela peut conduire à des frictions qui minent le partenariat. Le PAT aide à anticiper de telles situations en sensibilisant les partenaires à la localisation du pouvoir de décision dans le partenariat. Le PAT rend le pouvoir visible, et lorsqu’il est visible, les partenaires sont en mesure de discuter et de se mettre d’accord sur qui devrait être impliqué et de quelle manière dans la prise de certaines décisions. De cette façon, le partenariat a plus de chances de rester sain.\nVeuillez noter que le PAT ne prescrit pas la manière dont les partenaires doivent être impliqués dans la prise de décision. C'est aux partenaires eux-mêmes de se mettre d'accord. Le PAT aide à avoir un dialogue franc et ouvert à ce sujet.",
+		"howItWorkDesc": "Il existe un large consensus selon lequel, dans les partenariats pour le développement, les donateurs et les ONG internationales ont trop de pouvoir, et les ONG locales du Sud trop peu. Malgré ce consensus, les déséquilibres de pouvoir persistent. Apparemment, il est difficile de mettre ces principes en pratique. Ceux qui ont le plus de pouvoir, généralement les donateurs et, dans une moindre mesure, les ONGI, ne sont pas toujours les mieux informés de la situation locale ou des changements nécessaires et de la manière dont ils le sont. Même s’il existe un large consensus sur ce point, les déséquilibres de pouvoir persistent. Nous pensons que cela est dû en partie au fait que le pouvoir est, à bien des égards, insaisissable. Par conséquent, Shift-The-Power-Lab a développé l'outil de sensibilisation au pouvoir ",
+		"howItWork": "Comment ça marche",
+		"learnMore": "Apprendre encore plus",
+		"newWaysTitle": "De nouvelles façons de collaborer",
+		"newWaysDesc1": "Partos facilite la transition vers des partenariats plus équitables au sein de la coopération au développement.",
+		"newWaysDesc2": "Nous y parvenons en abordant le problème des déséquilibres de pouvoir entre les organisations de la société civile, en passant de systèmes de développement international et de philanthropie hiérarchiques et descendants vers un paradigme plus plat et plus équitable de développement basé sur les personnes. \nDans le cadre du Shift the Power Lab 2.0, Partos intensifie ses efforts pour accélérer le changement de dynamique de pouvoir au sein de la coopération internationale au développement en co-créant des solutions pratiques pour le changement des systèmes.",
+		"faqTitle": "Questions fréquemment posées",
+		"faqSubtitle": "Tout ce que vous devez savoir sur l'outil de sensibilisation au pouvoir",
+		"quotes": "« Une crainte parfois évoquée parmi les OSC néerlandaises est que l’utilisation du PAT pourrait entraîner des frictions dans les relations entre les partenaires. La majorité des personnes interrogées n’ont cependant signalé aucune friction avec leur partenaire après avoir discuté des relations de pouvoir qui existaient entre eux à travers l’exercice PAT (67 %) tandis qu’un faible pourcentage (18 %) ont fait état de certaines frictions avec leur partenaire. - Citation de l'évaluation du Power Awareness Tool",
+		"topics": "Sujets",
+		"forMembers": "Pour les membres",
+		"mostVisited": "Les plus visités",
+		"contact": "Contact",
+		"topics1": "Actualités et médias",
+		"topics2": "Ordre du jour",
+		"topics3": "Postes vacants pour les membres",
+		"topics4": "Actualités",
+		"forMembers2": "Moniteur politique",
+		"forMembers3": "Code de conduite et d'intégrité",
+		"forMembers4": "Partos 9001",
+		"mostVisited1": "Au-dessus de Partos",
+		"mostVisited2": "Nos membres",
+		"mostVisited3": "Publications et résultats",
+		"cookies": "Cookies",
+		"termNConditions": "Conditions générales",
+		"poweredBy": "Alimenté par"
 	}
 }
