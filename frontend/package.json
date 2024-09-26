@@ -36,7 +36,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "util": "^0.12.5"
   },
   "resolutions": {
     "wrap-ansi": "7.0.0",

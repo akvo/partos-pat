@@ -20,7 +20,7 @@ const DashboardTemplate = ({ children }) => {
           </li>
         </ul>
       </aside>
-      <div className="w-full">{children}</div>
+      <main className="w-full">{children}</main>
     </div>
   );
 };

@@ -8,7 +8,6 @@ import {
   JoinModal,
 } from "@/components";
 
-import { Link } from "@/routing";
 import { api } from "@/lib";
 import { PAT_SESSION } from "@/static/config";
 
@@ -116,9 +115,13 @@ const AboutCard = () => {
         <div className="mb-8 max-h-[450px] text-base overflow-y-scroll">
           <p className="whitespace-pre-line">{t("aboutDescription")}</p>
         </div>
-        <Link href="/dashboard/learn-more">
+        <a
+          href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Button ghost>{t("learnMore")}</Button>
-        </Link>
+        </a>
       </div>
     </Card>
   );

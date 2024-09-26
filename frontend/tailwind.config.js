@@ -18,6 +18,10 @@ module.exports = {
         "dashboard-circle": "url('/images/partos-circle-graphic-white.png')",
         "dashboard-header-gradient":
           "linear-gradient(91deg, #FFC20E 35.98%, #00A392 110.43%)",
+        "landing-circle":
+          "url('/images/partos-circle-graphic-white-landing.png')",
+        "landing-gradient":
+          "linear-gradient(348deg, rgba(236, 241, 245, 0.50) 12.79%, #FFD249 95.83%)",
       },
       fontWeight: {
         "extra-light": "200",
@@ -68,6 +72,7 @@ module.exports = {
       grey: {
         100: "#ECF1F5",
         600: "#475467",
+        800: "#899FA8",
         900: "#101828",
       },
       primary: {
@@ -84,6 +89,13 @@ module.exports = {
     },
     container: {
       center: true,
+      padding: {
+        DEFAULT: "1rem",
+        sm: "2rem", // 640px
+        md: "3rem", // 768px
+        lg: "4rem", // 1024px
+        xl: "4rem", // 1280px
+      },
     },
   },
   plugins: [],

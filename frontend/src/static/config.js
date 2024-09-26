@@ -18,6 +18,9 @@ export const PURPOSE_OF_ACCOUNT = {
 export const PARTOS = {
   email: "niels@partos.nl",
   name: "Power Awareness Tool",
+  address: "Ellermanstraat 18B\n1114AK Amsterdam",
+  phone: "020 32 09 901",
+  code: "KVK 34214586\nRSIN 813990646",
 };
 
 export const DASHBOARD_MENU = [
@@ -59,3 +62,14 @@ export const PAT_SESSION = {
   pageSize: 7,
   maxActiveSession: 2,
 };
+
+export const PAT_LANGS = [
+  {
+    key: "en",
+    label: "EN",
+  },
+  {
+    key: "fr",
+    label: "FR",
+  },
+];
