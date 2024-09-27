@@ -8,6 +8,7 @@ from rest_framework import serializers, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import (
     api_view,
     permission_classes,
@@ -18,6 +19,7 @@ from django.conf import settings
 from api.v1.v1_sessions.models import (
     PATSession,
     Organization,
+    ParticipantComment
 )
 from api.v1.v1_sessions.serializers import (
     CreateSessionSerializer,
@@ -30,6 +32,9 @@ from api.v1.v1_sessions.serializers import (
     DecisionSerializer,
     BulkDecisionCreateSerializer,
     BulkDecisionUpdateSerializer,
+    BulkParticipantDecisionSerializer,
+    ParticipantDecisionSerializer,
+    ParticipantCommentSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
@@ -397,3 +402,79 @@ class BulkDecisionView(APIView):
             serializer.to_representation(updated_decisions),
             status=status.HTTP_200_OK
         )
+
+
+class BulkParticipantDecisionView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        request=BulkParticipantDecisionSerializer,
+        responses={201: ParticipantDecisionSerializer(many=True)},
+        tags=["ParticipantDecisions"],
+        summary="Bulk create participant decision scores",
+    )
+    def post(self, request, version):
+        serializer = BulkParticipantDecisionSerializer(
+            data=request.data,
+            context={
+                "user": request.user
+            }
+        )
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        data = serializer.save()
+        return Response(
+            data=data,
+            status=status.HTTP_201_CREATED
+        )
+
+    @extend_schema(
+        request=BulkParticipantDecisionSerializer,
+        responses={200: ParticipantDecisionSerializer(many=True)},
+        tags=["Decisions"],
+        summary="Bulk update participant decision scores",
+    )
+    def put(self, request, version):
+        serializer = BulkParticipantDecisionSerializer(
+            data=request.data,
+            context={
+                "user": request.user
+            }
+        )
+
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        data = serializer.update(
+            instance=None,
+            validated_data=serializer.validated_data
+        )
+        return Response(
+            data=data,
+            status=status.HTTP_200_OK
+        )
+
+
+@extend_schema(tags=["ParticipantComments"])
+class ParticipantCommentViewSet(ModelViewSet):
+    serializer_class = ParticipantCommentSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = Pagination
+
+    def get_queryset(self):
+        session_id = self.kwargs.get('session_id')
+        queryset = ParticipantComment.objects.filter(
+            session_id=session_id,
+        )
+        return queryset.order_by("id")
