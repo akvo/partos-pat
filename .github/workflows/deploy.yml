@@ -21,7 +21,7 @@ jobs:
           repository: akvo/composite-actions
           token: ${{ secrets.GH_PAT }}
           path: composite-actions
-          ref: main
+          ref: 0.0.7
 
       - name: Copy i18n
         run: |
@@ -53,6 +53,7 @@ jobs:
           app-name: "partos-pat"
           service-name: "nginx"
           dockerfile-location: "nginx"
+          cluster-name: "test"
 
       - name: Docker Build Frontend
         uses: ./composite-actions/.github/actions/docker-build
@@ -60,6 +61,7 @@ jobs:
           app-name: "partos-pat"
           service-name: "frontend"
           dockerfile-location: "frontend"
+          cluster-name: "test"
 
       - name: Docker Build Backend
         uses: ./composite-actions/.github/actions/docker-build
@@ -67,6 +69,7 @@ jobs:
           app-name: "partos-pat"
           service-name: "backend"
           dockerfile-location: "backend/Dockerfile.prod"
+          cluster-name: "test"
 
       - name: Docker Push Nginx
         uses: ./composite-actions/.github/actions/docker-push
@@ -108,7 +111,7 @@ jobs:
           repository: akvo/composite-actions
           token: ${{ secrets.GH_PAT }}
           path: composite-actions
-          ref: main
+          ref: 0.0.7
 
       - name: Rollout Nginx
         uses: ./composite-actions/.github/actions/k8s-rollout
