@@ -58,8 +58,8 @@ class CreateDecisionsEndpointTestCase(TestCase, ProfileTestHelperMixin):
                 "id",
                 "session_id",
                 "name",
+                "notes",
                 "agree",
-                "created_at",
             ],
         )
         self.assertEqual(len(res), 2)

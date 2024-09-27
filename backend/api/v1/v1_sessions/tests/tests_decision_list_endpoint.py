@@ -46,8 +46,8 @@ class DecisionListEndpointTestCase(TestCase, ProfileTestHelperMixin):
               "id",
               "session_id",
               "name",
+              "notes",
               "agree",
-              "created_at",
            ]
         )
         self.assertEqual(len(res), pat_session.session_decision.count())
