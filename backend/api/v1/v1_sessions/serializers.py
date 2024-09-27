@@ -2,10 +2,11 @@ from django.utils import timezone
 from rest_framework import serializers
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
-from django.db.models import Count
 from api.v1.v1_sessions.constants import SectorTypes
 from api.v1.v1_sessions.models import (
-    PATSession, Organization, Participant,
+    PATSession,
+    Organization,
+    Participant,
     Decision,
 )
 from api.v1.v1_users.models import SystemUser
@@ -16,6 +17,7 @@ from utils.custom_serializer_fields import (
     CustomJSONField,
     CustomDateField,
     CustomPrimaryKeyRelatedField,
+    CustomBooleanField,
 )
 
 
@@ -63,16 +65,14 @@ class SessionCreatedSerializer(serializers.Serializer):
         ]
 
 
-class SessionListSerializer(serializers.ModelSerializer):
+class SessionSerializer(serializers.ModelSerializer):
     facilitator = serializers.SerializerMethodField()
     sector = serializers.SerializerMethodField()
     organizations = serializers.SerializerMethodField()
 
     @extend_schema_field(UserFacilitatortSerializer())
     def get_facilitator(self, instance: PATSession):
-        return UserFacilitatortSerializer(
-            instance=instance.user
-        ).data
+        return UserFacilitatortSerializer(instance=instance.user).data
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_sector(self, instance: PATSession):
@@ -98,7 +98,29 @@ class SessionListSerializer(serializers.ModelSerializer):
             "organizations",
             "join_code",
             "is_published",
+            "notes",
             "summary",
+            "created_at",
+            "updated_at",
+            "closed_at",
+        ]
+
+
+class SessionListSerializer(serializers.ModelSerializer):
+    facilitator = serializers.SerializerMethodField()
+
+    @extend_schema_field(UserFacilitatortSerializer())
+    def get_facilitator(self, instance: PATSession):
+        return UserFacilitatortSerializer(instance=instance.user).data
+
+    class Meta:
+        model = PATSession
+        fields = [
+            "id",
+            "session_name",
+            "facilitator",
+            "date",
+            "context",
             "created_at",
             "updated_at",
             "closed_at",
@@ -138,7 +160,7 @@ class CreateSessionSerializer(serializers.Serializer):
             org_item = Organization.objects.create(
                 session=pat_session,
                 organization_name=org["name"],
-                acronym=org["acronym"]
+                acronym=org["acronym"],
             )
             org_items.append(org_item)
         return pat_session
@@ -147,7 +169,7 @@ class CreateSessionSerializer(serializers.Serializer):
     # to return the created session with related organizations
     def to_representation(self, instance):
         # Use the PATSessionSerializer to represent the instance
-        return SessionListSerializer(instance).data
+        return SessionSerializer(instance).data
 
     class Meta:
         fields = [
@@ -163,30 +185,22 @@ class CreateSessionSerializer(serializers.Serializer):
 
 class UpdateSessionSerializer(serializers.ModelSerializer):
     summary = CustomCharField(required=False)
+    notes = CustomCharField(required=False)
 
     class Meta:
         model = PATSession
-        fields = ["summary"]
+        fields = ["summary", "notes"]
 
     def update(self, instance, validated_data):
         # Update the fields of the instance
         instance = super().update(instance, validated_data)
-
-        # Check if there are any decisions with scores and
-        # close the session
-        if (
-            instance.session_decision.annotate(
-                participant_decision_count=Count("decision_participant")
-            ).filter(participant_decision_count__gt=0).count()
-        ):
-            instance.set_closed()  # Custom method to close the session
 
         # Save the updated instance
         instance.save()
         return instance
 
     def to_representation(self, instance):
-        return SessionListSerializer(instance).data
+        return SessionSerializer(instance).data
 
 
 class JoinSessionSerializer(serializers.Serializer):
@@ -215,16 +229,10 @@ class JoinSessionSerializer(serializers.Serializer):
     def validate_session_id(self, pat_session):
         user = self.context.get("user")
         if pat_session.user == user:
-            raise serializers.ValidationError(
-                "invalidJoinOwner"
-            )
-        exists = user.user_participant.filter(
-            session=pat_session
-        )
+            raise serializers.ValidationError("invalidJoinOwner")
+        exists = user.user_participant.filter(session=pat_session)
         if exists:
-            raise serializers.ValidationError(
-                "invalidJoinExists"
-            )
+            raise serializers.ValidationError("invalidJoinExists")
         return pat_session
 
     def create(self, validated_data):
@@ -232,60 +240,116 @@ class JoinSessionSerializer(serializers.Serializer):
             user=self.context.get("user"),
             session=validated_data["session_id"],
             organization=validated_data["organization_id"],
-            role=validated_data["role"]
+            role=validated_data["role"],
         )
         return participant
 
 
-class DecisionListSerializer(serializers.ModelSerializer):
+class DecisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Decision
-        fields = ["id", "session_id", "name", "created_at"]
+        fields = ["id", "session_id", "name", "agree", "created_at"]
 
 
-class CreateDecisionSerializer(serializers.ModelSerializer):
+class BaseDecisionSerializer(serializers.Serializer):
     session_id = CustomPrimaryKeyRelatedField(
         queryset=PATSession.objects.none()
     )
-    decisions = CustomListField()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.fields.get(
-            "session_id"
-        ).queryset = PATSession.objects.filter(
+        self.fields.get("session_id").queryset = PATSession.objects.filter(
             closed_at__isnull=True
         ).all()
-
-    class Meta:
-        model = Decision
-        fields = ["session_id", "decisions"]
 
     def validate_session_id(self, pat_session):
         user = self.context.get("user")
         if pat_session.user != user:
             raise serializers.ValidationError(
-                "You are not owner"
+                "You are not the owner"
             )
         return pat_session
+
+    def to_representation(self, instance):
+        return DecisionSerializer(instance=instance, many=True).data
+
+
+class DecisionCreateSerializer(serializers.Serializer):
+    name = CustomCharField()
+
+    class Meta:
+        fields = ["name"]
+
+
+class DecisionUpdateSerializer(serializers.Serializer):
+    id = CustomPrimaryKeyRelatedField(
+        queryset=Decision.objects.none()
+    )
+    agree = CustomBooleanField()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields.get(
+            "id"
+        ).queryset = Decision.objects.all()
+
+    class Meta:
+        fields = ["id", "agree"]
+
+    def update(self, instance, validated_data):
+        instance.agree = validated_data.get("agree", instance.agree)
+        instance.save()
+        return instance
+
+
+class BulkDecisionCreateSerializer(BaseDecisionSerializer):
+    decisions = CustomListField(
+        child=DecisionCreateSerializer(),
+        required=True,
+    )
+
+    class Meta:
+        fields = ["session_id", "decisions"]
 
     def create(self, validated_data):
         decisions = []
         for decision in validated_data["decisions"]:
             d = Decision.objects.create(
                 session=validated_data["session_id"],
-                name=decision
+                name=decision["name"]
             )
             decisions.append(d)
         return decisions
 
-    def to_representation(self, instance):
-        return [
-            {
-                "id": decision.id,
-                "session_id": decision.session.id,
-                "name": decision.name,
-                "created_at": decision.created_at.isoformat()
-            }
-            for decision in instance
-        ]
+
+class BulkDecisionUpdateSerializer(BaseDecisionSerializer):
+    decisions = CustomListField(
+        child=DecisionUpdateSerializer(),
+        required=True,
+    )
+
+    class Meta:
+        fields = ["session_id", "decisions"]
+
+    def update(self, instance, validated_data):
+        updated_decisions = []
+        for decision_data in validated_data["decisions"]:
+            # Retrieve the existing decision instance
+            decision_instance = decision_data["id"]
+
+            # Update the instance with the new data
+            serializer = DecisionUpdateSerializer(
+                instance=decision_instance,
+                data={
+                    "id": decision_instance.id,
+                    "agree": decision_data.get("agree")
+                },
+                partial=True
+            )
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+            # Append the updated decision to the list
+            updated_decisions.append(decision_instance)
+
+        return updated_decisions
