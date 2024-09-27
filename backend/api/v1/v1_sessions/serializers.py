@@ -190,14 +190,27 @@ class CreateSessionSerializer(serializers.Serializer):
 class UpdateSessionSerializer(serializers.ModelSerializer):
     summary = CustomCharField(required=False)
     notes = CustomCharField(required=False)
+    is_published = CustomBooleanField(
+        required=False,
+        allow_null=True,
+    )
 
     class Meta:
         model = PATSession
-        fields = ["summary", "notes"]
+        fields = ["summary", "notes", "is_published"]
 
     def update(self, instance, validated_data):
         # Update the fields of the instance
         instance = super().update(instance, validated_data)
+
+        if validated_data.get("is_published"):
+            total_scores = instance.session_decision \
+                .annotate(
+                    participant_decision_count=Count("decision_participant")
+                ).filter(participant_decision_count__gt=0) \
+                .count()
+            if total_scores:
+                instance.set_closed()
 
         # Save the updated instance
         instance.save()

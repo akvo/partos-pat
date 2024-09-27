@@ -57,6 +57,36 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(res["summary"], "Lorem ipsum dolor sit amet")
         self.assertEqual(res["notes"], "Well done")
 
+    def test_successfully_session_is_published(self):
+        pat_session = (
+            PATSession.objects.annotate(
+                participant_score_count=Count(
+                    "session_decision__decision_participant"
+                ),
+            )
+            .filter(
+                user=self.user,
+                participant_score_count__gt=0,
+                closed_at__isnull=True
+            )
+            .first()
+        )
+        payload = {
+            "is_published": True
+        }
+        req = self.client.put(
+            f"/api/v1/sessions?id={pat_session.id}",
+            payload,
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertTrue(res["is_published"])
+
+        updated = PATSession.objects.get(pk=pat_session.id)
+        self.assertIsNotNone(updated.closed_at)
+
     def test_invalid_update_by_different_owner(self):
         email = "jane@test.com"
         password = "Test#123"
