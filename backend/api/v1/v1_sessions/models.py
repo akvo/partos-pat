@@ -56,7 +56,7 @@ class Organization(models.Model):
         related_name="session_organization",
     )
     organization_name = models.CharField(max_length=255)
-    acronym = models.CharField(max_length=50, default=None, null=True)
+    acronym = models.CharField(max_length=25, default=None, null=True)
 
     def __str__(self):
         return self.organization_name
@@ -115,10 +115,11 @@ class Decision(models.Model):
 
 
 class ParticipantDecision(models.Model):
-    user = models.ForeignKey(
-        to=SystemUser,
+    organization = models.ForeignKey(
+        to=Organization,
         on_delete=models.CASCADE,
-        related_name="user_participant_decision",
+        related_name="organization_participant_decision",
+        default=None
     )
     decision = models.ForeignKey(
         to=Decision,
@@ -126,11 +127,34 @@ class ParticipantDecision(models.Model):
         related_name="decision_participant",
     )
     score = models.IntegerField()
+    desired = models.BooleanField(default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=None, null=True)
 
     def __str__(self):
-        return f"{self.user.email} | {self.decision.name}"
+        return f"{self.organization.acronym} | {self.decision.name}"
 
     class Meta:
         db_table = "participant_decisions"
+
+
+class ParticipantComment(models.Model):
+    session = models.ForeignKey(
+        to=PATSession,
+        on_delete=models.CASCADE,
+        related_name="session_participant_comment",
+    )
+    user = models.ForeignKey(
+        to=SystemUser,
+        on_delete=models.CASCADE,
+        related_name="user_participant_comment",
+    )
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(default=None, null=True)
+
+    def __str__(self):
+        return f"{self.user.email} | {self.comment}"
+
+    class Meta:
+        db_table = "participant_comments"
