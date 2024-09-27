@@ -10,6 +10,7 @@ from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 @override_settings(USE_TZ=False)
 class DecisionListEndpointTestCase(TestCase, ProfileTestHelperMixin):
     def setUp(self):
+        call_command("fake_users_seeder", "--test", True)
         email = "john@test.com"
         password = "Open1234"
         self.user = SystemUser.objects.create_user(
@@ -44,10 +45,40 @@ class DecisionListEndpointTestCase(TestCase, ProfileTestHelperMixin):
            list(res[0]),
            [
               "id",
-              "session_id",
               "name",
               "notes",
               "agree",
+              "scores",
            ]
         )
         self.assertEqual(len(res), pat_session.session_decision.count())
+
+    def test_successfully_get_decisions_list_with_scores(self):
+        pat_session = (
+            PATSession.objects.annotate(
+                participant_score_count=Count(
+                    "session_decision__decision_participant"
+                ),
+            )
+            .filter(
+                user=self.user,
+                participant_score_count__gt=0,
+                closed_at__isnull=True
+            )
+            .first()
+        )
+        req = self.client.get(
+            f"/api/v1/decisions?session_id={pat_session.id}",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertEqual(
+            list(res[0]["scores"][0]),
+            [
+                "id",
+                "acronym",
+                "score"
+            ]
+        )
