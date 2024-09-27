@@ -32,9 +32,10 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             password=password
         )
 
-    def test_successfully_update_n_published(self):
+    def test_successfully_update_notes_n_summary(self):
         payload = {
             "summary": "Lorem ipsum dolor sit amet",
+            "notes": "Well done",
         }
         pat_session = PATSession.objects.filter(
             user=self.user
@@ -54,8 +55,7 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(req.status_code, 200)
         res = req.json()
         self.assertEqual(res["summary"], "Lorem ipsum dolor sit amet")
-        self.assertTrue(res["is_published"])
-        self.assertIsNotNone(res["closed_at"])
+        self.assertEqual(res["notes"], "Well done")
 
     def test_invalid_update_by_different_owner(self):
         email = "jane@test.com"
