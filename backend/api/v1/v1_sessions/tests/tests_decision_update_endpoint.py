@@ -63,3 +63,46 @@ class DecisionUpdateEndpointTestCase(TestCase, ProfileTestHelperMixin):
         if len(res) > 1:
             ds2 = Decision.objects.filter(pk=res[1]["id"]).first()
             self.assertFalse(ds2.agree)
+
+    def test_successfully_update_decision_notes(self):
+        pat_session = PATSession.objects.annotate(
+            decision_count=Count("session_decision")
+        ).filter(
+            user=self.user,
+            decision_count__gt=0,
+            closed_at__isnull=True
+        ).first()
+
+        self.assertIsNotNone(pat_session)
+
+        decision = pat_session.session_decision.first()
+        notes = "Set Slack as the main communication"
+        decision_inputs = [{
+            "id": decision.id,
+            "notes": notes
+        }]
+        payload = {
+            "session_id": pat_session.id,
+            "decisions": decision_inputs
+        }
+        req = self.client.put(
+            "/api/v1/decisions/",
+            payload,
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertEqual(len(res), 1)
+        self.assertEqual(
+            list(res[0]),
+            [
+                "id",
+                "session_id",
+                "name",
+                "notes",
+                "agree",
+            ],
+        )
+        ds1 = Decision.objects.filter(pk=res[0]["id"]).first()
+        self.assertEqual(ds1.notes, notes)
