@@ -27,37 +27,39 @@ class CreateDecisionsEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.token = self.get_auth_token(email=email, password=password)
 
     def test_successfully_add_decisions(self):
-        pat_session = PATSession.objects.annotate(
-            decision_count=Count("session_decision")
-        ).filter(
-            user=self.user,
-            decision_count=0
-        ).first()
+        pat_session = (
+            PATSession.objects.annotate(
+                decision_count=Count("session_decision")
+            )
+            .filter(user=self.user, decision_count=0)
+            .first()
+        )
 
         self.assertIsNotNone(pat_session)
 
         payload = {
             "session_id": pat_session.id,
             "decisions": [
-                "Decision on budget allocation",
-                "Decision on resource distribution"
+                {"name": "Decision on budget allocation"},
+                {"name": "Decision on resource distribution"},
             ]
         }
         req = self.client.post(
             "/api/v1/decisions/",
             payload,
             content_type="application/json",
-            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+            HTTP_AUTHORIZATION=f"Bearer {self.token}",
         )
         self.assertEqual(req.status_code, 201)
         res = req.json()
         self.assertEqual(
-           list(res[0]),
-           [
-              "id",
-              "session_id",
-              "name",
-              "created_at",
-           ]
+            list(res[0]),
+            [
+                "id",
+                "session_id",
+                "name",
+                "agree",
+                "created_at",
+            ],
         )
         self.assertEqual(len(res), 2)
