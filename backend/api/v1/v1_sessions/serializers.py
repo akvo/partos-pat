@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.db.models import Count
 from rest_framework import serializers
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
@@ -8,6 +9,8 @@ from api.v1.v1_sessions.models import (
     Organization,
     Participant,
     Decision,
+    ParticipantDecision,
+    ParticipantComment,
 )
 from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import (
@@ -18,6 +21,7 @@ from utils.custom_serializer_fields import (
     CustomDateField,
     CustomPrimaryKeyRelatedField,
     CustomBooleanField,
+    CustomIntegerField,
 )
 
 
@@ -248,10 +252,10 @@ class JoinSessionSerializer(serializers.Serializer):
 class DecisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Decision
-        fields = ["id", "session_id", "name", "agree", "created_at"]
+        fields = ["id", "session_id", "name", "notes", "agree"]
 
 
-class BaseDecisionSerializer(serializers.Serializer):
+class BaseSessionFormSerializer(serializers.Serializer):
     session_id = CustomPrimaryKeyRelatedField(
         queryset=PATSession.objects.none()
     )
@@ -270,9 +274,6 @@ class BaseDecisionSerializer(serializers.Serializer):
             )
         return pat_session
 
-    def to_representation(self, instance):
-        return DecisionSerializer(instance=instance, many=True).data
-
 
 class DecisionCreateSerializer(serializers.Serializer):
     name = CustomCharField()
@@ -285,7 +286,11 @@ class DecisionUpdateSerializer(serializers.Serializer):
     id = CustomPrimaryKeyRelatedField(
         queryset=Decision.objects.none()
     )
-    agree = CustomBooleanField()
+    notes = CustomCharField(required=False)
+    agree = CustomBooleanField(
+        required=False,
+        allow_null=True,
+    )
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -294,15 +299,16 @@ class DecisionUpdateSerializer(serializers.Serializer):
         ).queryset = Decision.objects.all()
 
     class Meta:
-        fields = ["id", "agree"]
+        fields = ["id", "notes", "agree"]
 
     def update(self, instance, validated_data):
         instance.agree = validated_data.get("agree", instance.agree)
+        instance.notes = validated_data.get("notes", instance.notes)
         instance.save()
         return instance
 
 
-class BulkDecisionCreateSerializer(BaseDecisionSerializer):
+class BulkDecisionCreateSerializer(BaseSessionFormSerializer):
     decisions = CustomListField(
         child=DecisionCreateSerializer(),
         required=True,
@@ -321,8 +327,11 @@ class BulkDecisionCreateSerializer(BaseDecisionSerializer):
             decisions.append(d)
         return decisions
 
+    def to_representation(self, instance):
+        return DecisionSerializer(instance=instance, many=True).data
 
-class BulkDecisionUpdateSerializer(BaseDecisionSerializer):
+
+class BulkDecisionUpdateSerializer(BaseSessionFormSerializer):
     decisions = CustomListField(
         child=DecisionUpdateSerializer(),
         required=True,
@@ -334,22 +343,158 @@ class BulkDecisionUpdateSerializer(BaseDecisionSerializer):
     def update(self, instance, validated_data):
         updated_decisions = []
         for decision_data in validated_data["decisions"]:
-            # Retrieve the existing decision instance
             decision_instance = decision_data["id"]
-
-            # Update the instance with the new data
+            decision_data["id"] = decision_instance.id
             serializer = DecisionUpdateSerializer(
                 instance=decision_instance,
+                data=decision_data,
+                partial=True
+            )
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            updated_decisions.append(decision_instance)
+
+        return updated_decisions
+
+    def to_representation(self, instance):
+        return DecisionSerializer(instance=instance, many=True).data
+
+
+class ParticipantDecisionSerializer(serializers.ModelSerializer):
+    id = CustomPrimaryKeyRelatedField(
+        queryset=ParticipantDecision.objects.none(),
+        required=False,
+        allow_null=True,
+    )
+    organization_id = CustomPrimaryKeyRelatedField(
+        queryset=SystemUser.objects.none()
+    )
+    decision_id = CustomPrimaryKeyRelatedField(
+        queryset=Decision.objects.none()
+    )
+    score = CustomIntegerField()
+    desired = CustomBooleanField(
+        required=False,
+        allow_null=True,
+    )
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields.get(
+            "id"
+        ).queryset = ParticipantDecision.objects.all()
+
+        self.fields.get(
+            "organization_id"
+        ).queryset = Organization.objects.all()
+
+        self.fields.get(
+            "decision_id"
+        ).queryset = Decision.objects.all()
+
+    class Meta:
+        model = ParticipantDecision
+        fields = [
+            "id", "organization_id", "decision_id", "score", "desired"
+        ]
+
+    def create(self, validated_data):
+        organization = validated_data.pop("organization_id")
+        decision = validated_data.pop("decision_id")
+        instance = ParticipantDecision.objects.create(
+            organization=organization,
+            decision=decision,
+            **validated_data
+        )
+        return instance
+
+    def update(self, instance, validated_data):
+        instance.score = validated_data.get("score", instance.score)
+        instance.desired = validated_data.get("desired", instance.desired)
+        instance.save()
+        return instance
+
+
+class BulkParticipantDecisionSerializer(BaseSessionFormSerializer):
+    scores = CustomListField(
+        child=ParticipantDecisionSerializer(),
+        required=True,
+    )
+
+    class Meta:
+        fields = ["session_id", "scores"]
+
+    def create(self, validated_data):
+        serializer = ParticipantDecisionSerializer(
+            data=[
+                {
+                    "organization_id": v["organization_id"].id,
+                    "decision_id": v["decision_id"].id,
+                    "score": v["score"],
+                    "desired": v.get("desired"),
+                }
+                for v in validated_data["scores"]
+            ],
+            many=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return serializer.data
+
+    def update(self, instance, validated_data):
+        instances = []
+        for v in validated_data["scores"]:
+            serializer = ParticipantDecisionSerializer(
+                instance=v["id"],
                 data={
-                    "id": decision_instance.id,
-                    "agree": decision_data.get("agree")
+                    "organization_id": v["organization_id"].id,
+                    "decision_id": v["decision_id"].id,
+                    "score": v["score"],
+                    "desired": v.get("desired"),
+                    "id": v["id"].id
                 },
                 partial=True
             )
             serializer.is_valid(raise_exception=True)
             serializer.save()
 
-            # Append the updated decision to the list
-            updated_decisions.append(decision_instance)
+            instances.append(v["id"])
+        return ParticipantDecisionSerializer(
+            instance=instances, many=True
+        ).data
 
-        return updated_decisions
+
+class ParticipantCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ParticipantComment
+        fields = [
+            "id", "user_id", "session_id", "comment"
+        ]
+
+    def create(self, validated_data):
+        user = self.context.get("request").user
+        session_id = self.context.get("view").kwargs.get("session_id")
+
+        try:
+            session = PATSession.objects.get(id=session_id)
+            total_score = session.session_decision.annotate(
+                participant_decision_count=Count("decision_participant")
+            ).filter(participant_decision_count__gt=0).count()
+            if total_score == 0:
+                raise serializers.ValidationError(
+                    "Please complete the PAT scoring steps first"
+                )
+        except PATSession.DoesNotExist:
+            raise serializers.ValidationError("Invalid session_id.")
+
+        instance = ParticipantComment.objects.create(
+            user=user,
+            session_id=session_id,
+            **validated_data
+        )
+        return instance
+
+    def update(self, instance, validated_data):
+        instance.comment = validated_data["comment"]
+        instance.save()
+        return instance
