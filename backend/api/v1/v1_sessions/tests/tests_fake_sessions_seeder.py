@@ -11,7 +11,7 @@ class FakeSessionSeederTestCase(TestCase):
     def test_default_command(self):
         call_command("fake_sessions_seeder", "--test", True)
         total = PATSession.objects.count()
-        self.assertEqual(total, 3)
+        self.assertEqual(total, 4)
 
     def test_certain_number(self):
         call_command("fake_sessions_seeder", "--test", True, "--repeat", 1)

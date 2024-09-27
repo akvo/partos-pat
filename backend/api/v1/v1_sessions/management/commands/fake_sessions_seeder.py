@@ -1,6 +1,7 @@
 import random
 from datetime import timedelta
 from django.core.management import BaseCommand
+from django.db.models import Count, F
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_sessions.models import (
     PATSession,
@@ -8,6 +9,7 @@ from api.v1.v1_sessions.models import (
     Participant,
     Decision,
     ParticipantDecision,
+    ParticipantComment
 )
 from api.v1.v1_sessions.constants import SectorTypes
 from utils.custom_helper import generate_acronym
@@ -22,9 +24,14 @@ MAX_ITEMS = 6
 def get_random_published_and_closed_status(n: int) -> List:
     # Define the possible statuses
     statuses = [
-        {"published": False, "has_decision": False},  # Initial
-        {"published": False, "has_decision": True},   # On Going
-        {"published": True, "has_decision": True}     # Closed
+        # Initial
+        {"published": False, "has_decision": False, "has_score": False},
+        # On Going
+        {"published": False, "has_decision": True, "has_score": False},
+        # Closing soon
+        {"published": False, "has_decision": True, "has_score": True},
+        # Closed
+        {"published": True, "has_decision": True, "has_score": True}
     ]
 
     # Ensure exactly one of each status
@@ -41,7 +48,7 @@ def get_random_published_and_closed_status(n: int) -> List:
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
-            "-r", "--repeat", nargs="?", const=3, default=3, type=int
+            "-r", "--repeat", nargs="?", const=4, default=4, type=int
         )
         parser.add_argument(
             "-t", "--test", nargs="?", const=False, default=False, type=bool
@@ -98,7 +105,7 @@ class Command(BaseCommand):
             other_sector = None
             if sector == SectorTypes.sector_other:
                 other_sector = fake.catch_phrase()
-            owner = SystemUser.objects.order_by('?').first()
+            owner = SystemUser.objects.order_by("?").first()
             if current_user:
                 owner = current_user
             countries = ["NL", "ID", "KE"]
@@ -136,6 +143,7 @@ class Command(BaseCommand):
 
             for p in user_participants:
                 p_org = random.choice(orgs)
+                # User join session
                 participant = Participant.objects.create(
                     user=p,
                     session=pat_session,
@@ -148,9 +156,26 @@ class Command(BaseCommand):
             if status_items[r]["has_decision"]:
                 decisions = self.fake_decisions(pat_session=pat_session)
 
+                if status_items[r]["has_score"]:
+                    score = fake.random_int(min=0, max=4)
+                    unique_participants_by_organization = (
+                        Participant.objects.filter(session=pat_session)
+                        .annotate(org_id=F('organization__id'))
+                        .values('org_id')
+                        .annotate(
+                            unique_participants=Count('user', distinct=True)
+                        )
+                    )
+                    for p in unique_participants_by_organization:
+                        for decision in decisions:
+                            ParticipantDecision.objects.create(
+                                organization_id=p["org_id"],
+                                decision=decision,
+                                score=score
+                            )
+
             if status_items[r]["published"]:
                 spent_days = fake.random_int(min=0, max=7)
-                score = fake.random_int(min=1, max=5)
                 closed_at = pat_session.created_at + timedelta(
                     days=spent_days
                 )
@@ -162,12 +187,13 @@ class Command(BaseCommand):
                 ])
                 pat_session.summary = summary
                 pat_session.save()
-                for participant in participants:
-                    for decision in decisions:
-                        ParticipantDecision.objects.create(
-                            user=participant.user,
-                            decision=decision,
-                            score=score
-                        )
+
+                # create comment
+                for p in participants:
+                    ParticipantComment.objects.create(
+                        session=pat_session,
+                        user=p.user,
+                        comment=fake.sentence(nb_words=10)
+                    )
         if not test:
             print(f"{repeat} PAT Sessions have been created successfully.")
