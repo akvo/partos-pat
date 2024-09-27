@@ -20,6 +20,7 @@ class PATSession(SoftDeletes):
     date = models.DateField()
     context = models.TextField()
     summary = models.TextField(default=None, null=True)
+    notes = models.TextField(default=None, null=True)
     join_code = models.CharField(max_length=100, unique=True)
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
