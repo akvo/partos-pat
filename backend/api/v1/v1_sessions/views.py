@@ -30,6 +30,7 @@ from api.v1.v1_sessions.serializers import (
     OrganizationListSerializer,
     JoinSessionSerializer,
     DecisionSerializer,
+    DecisionListSerializer,
     BulkDecisionCreateSerializer,
     BulkDecisionUpdateSerializer,
     BulkParticipantDecisionSerializer,
@@ -309,7 +310,7 @@ class BulkDecisionView(APIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
-        responses={200: DecisionSerializer(many=True)},
+        responses={200: DecisionListSerializer(many=True)},
         parameters=[
             OpenApiParameter(
                 name="session_id",
@@ -339,7 +340,7 @@ class BulkDecisionView(APIView):
                 agree=agreed
             ).all()
 
-        serializer = DecisionSerializer(instance=decisions, many=True)
+        serializer = DecisionListSerializer(instance=decisions, many=True)
         return Response(
             data=serializer.data,
             status=status.HTTP_200_OK
