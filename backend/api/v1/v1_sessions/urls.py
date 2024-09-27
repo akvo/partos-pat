@@ -4,7 +4,7 @@ from api.v1.v1_sessions.views import (
     PATSessionAddListView,
     organization_list,
     participant_join_session,
-    create_session_decisions,
+    BulkDecisionView,
 )
 
 urlpatterns = [
@@ -22,6 +22,6 @@ urlpatterns = [
     ),
     re_path(
         r"^(?P<version>(v1))/decisions",
-        create_session_decisions
+        BulkDecisionView.as_view()
     ),
 ]
