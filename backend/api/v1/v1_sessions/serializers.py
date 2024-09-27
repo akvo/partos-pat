@@ -249,6 +249,34 @@ class JoinSessionSerializer(serializers.Serializer):
         return participant
 
 
+class ParticipantScoreSerializer(serializers.ModelSerializer):
+    acronym = serializers.SerializerMethodField()
+
+    def get_acronym(self, instance: ParticipantDecision):
+        return instance.organization.acronym
+
+    class Meta:
+        model = ParticipantDecision
+        fields = ["id", "acronym", "score"]
+
+
+class DecisionListSerializer(serializers.ModelSerializer):
+    scores = serializers.SerializerMethodField()
+
+    @extend_schema_field(ParticipantScoreSerializer(many=True))
+    def get_scores(self, instance: Decision):
+        return ParticipantScoreSerializer(
+            instance=instance.decision_participant.all(),
+            many=True
+        ).data
+
+    class Meta:
+        model = Decision
+        fields = [
+            "id", "name", "notes", "agree", "scores"
+        ]
+
+
 class DecisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Decision
