@@ -2,11 +2,13 @@
 
 import { Button } from "antd";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { QuestionMarkIcon } from "../Icons";
 import { HelpModal } from "../Modals";
 
-const HelpButton = ({ step = 1 }) => {
+const HelpButton = () => {
   const [open, setOpen] = useState(false);
+  const params = useSearchParams();
 
   return (
     <>
@@ -20,7 +22,7 @@ const HelpButton = ({ step = 1 }) => {
           <QuestionMarkIcon size={24} />
         </div>
       </Button>
-      <HelpModal {...{ open, setOpen, step }} />
+      <HelpModal {...{ open, setOpen }} step={params.get("step")} />
     </>
   );
 };
