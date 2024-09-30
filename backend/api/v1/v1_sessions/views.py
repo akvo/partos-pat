@@ -438,7 +438,7 @@ class BulkParticipantDecisionView(APIView):
     @extend_schema(
         request=BulkParticipantDecisionSerializer,
         responses={200: ParticipantDecisionSerializer(many=True)},
-        tags=["Decisions"],
+        tags=["ParticipantDecisions"],
         summary="Bulk update participant decision scores",
     )
     def put(self, request, version):
