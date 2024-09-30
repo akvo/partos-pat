@@ -61,6 +61,9 @@ export const SECTOR = {
 export const PAT_SESSION = {
   pageSize: 7,
   maxActiveSession: 2,
+  maxPartners: 10,
+  maxDecisions: 15,
+  totalSteps: 6,
 };
 
 export const PAT_LANGS = [
