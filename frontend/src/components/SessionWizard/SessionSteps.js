@@ -20,7 +20,7 @@ const SessionSteps = ({ children, current }) => {
               : "Not Started",
       };
     });
-  }, [current]);
+  }, [current, t]);
 
   return (
     <>

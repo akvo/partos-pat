@@ -85,7 +85,7 @@ const StepOne = ({ goToNext, patSession }, ref) => {
     ) {
       ref.current.setFieldValue("decisions", decisions);
     }
-  }, [patSession, ref, decisions, fetched]);
+  }, [patSession, ref, decisions, fetched, sessionDispatch]);
 
   useEffect(() => {
     loadDecisions();
