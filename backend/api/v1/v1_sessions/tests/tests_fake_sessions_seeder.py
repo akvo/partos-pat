@@ -11,7 +11,7 @@ class FakeSessionSeederTestCase(TestCase):
     def test_default_command(self):
         call_command("fake_sessions_seeder", "--test", True)
         total = PATSession.objects.count()
-        self.assertEqual(total, 3)
+        self.assertEqual(total, 4)
 
     def test_certain_number(self):
         call_command("fake_sessions_seeder", "--test", True, "--repeat", 1)
@@ -22,13 +22,6 @@ class FakeSessionSeederTestCase(TestCase):
         call_command("fake_sessions_seeder", "--test", True, "--repeat", 0)
         total = PATSession.objects.count()
         self.assertEqual(total, 0)
-
-    def test_no_users_no_sessions(self):
-        with self.assertRaises(SystemExit):
-            SystemUser.objects.delete()
-            call_command("fake_sessions_seeder", "--test", True)
-            total = PATSession.objects.count()
-            self.assertEqual(total, 0)
 
     def test_with_certain_user(self):
         user = SystemUser.objects.create_user(

@@ -57,6 +57,7 @@ class GetSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
                 "organizations",
                 "join_code",
                 "is_published",
+                "notes",
                 "summary",
                 "created_at",
                 "updated_at",
