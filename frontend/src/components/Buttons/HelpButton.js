@@ -5,7 +5,7 @@ import { useState } from "react";
 import { QuestionMarkIcon } from "../Icons";
 import { HelpModal } from "../Modals";
 
-const HelpButton = () => {
+const HelpButton = ({ step = 1 }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ const HelpButton = () => {
           <QuestionMarkIcon size={24} />
         </div>
       </Button>
-      <HelpModal {...{ open, setOpen }} />
+      <HelpModal {...{ open, setOpen, step }} />
     </>
   );
 };

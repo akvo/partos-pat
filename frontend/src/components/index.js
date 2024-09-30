@@ -14,3 +14,4 @@ export { default as ProfileAvatar } from "./ProfileAvatar";
 export { default as VerticalLogo } from "./VerticalLogo";
 export { default as BreadCrumb } from "./BreadCrumb";
 export { default as FAQCollapsible } from "./FAQCollapsible";
+export { default as SessionWizard } from "./SessionWizard";

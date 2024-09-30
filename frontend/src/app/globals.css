@@ -127,6 +127,9 @@
     color: var(--button-color-disabled);
     background-color: var(--button-bg-disabled);
   }
+  .ant-btn.bg-light-1 {
+    background-color: #ffffff;
+  }
   .ant-typography {
     margin-bottom: 2px;
   }
@@ -197,6 +200,18 @@
     font-style: normal;
     font-weight: 400;
     padding: 16px 0;
+  }
+  .ant-steps.ant-steps-vertical {
+    font-family: var(--open-sans);
+    gap: 16px;
+  }
+  .ant-steps.ant-steps-vertical
+    > .ant-steps-item
+    > .ant-steps-item-container
+    > .ant-steps-item-content
+    > .ant-steps-item-title {
+    line-height: 24px;
+    font-weight: 700;
   }
 }
 
