@@ -18,6 +18,7 @@ module.exports = {
         "dashboard-circle": "url('/images/partos-circle-graphic-white.png')",
         "dashboard-header-gradient":
           "linear-gradient(91deg, #FFC20E 35.98%, #00A392 110.43%)",
+        "dashboard-session": "linear-gradient(90deg, #FCFAF5 50%, #ffffff 50%)",
         "landing-circle":
           "url('/images/partos-circle-graphic-white-landing.png')",
         "landing-gradient":
@@ -64,6 +65,7 @@ module.exports = {
         10: "#1e1e1e",
       },
       ["light-grey"]: {
+        4: "#FCFAF5",
         5: "#FBF9F3",
         7: "#E1E0DA",
         8: "#EAE2C9",
