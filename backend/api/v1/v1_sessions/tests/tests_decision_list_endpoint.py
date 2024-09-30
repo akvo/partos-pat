@@ -78,6 +78,7 @@ class DecisionListEndpointTestCase(TestCase, ProfileTestHelperMixin):
             list(res[0]["scores"][0]),
             [
                 "id",
+                "organization_id",
                 "acronym",
                 "score"
             ]
