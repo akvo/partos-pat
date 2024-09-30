@@ -189,7 +189,7 @@ const NewWaysSection = () => {
             </p>
             <div>
               <a
-                href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
+                href="https://www.partos.nl/wat-we-doen/innovation-hub/new-ways-of-collaboration/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
