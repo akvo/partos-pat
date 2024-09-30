@@ -10,20 +10,18 @@ const DashboardLink = () => {
   return <Link href="/dashboard">{t("dashboard")}</Link>;
 };
 
-const StepTitle = ({ step }) => {
+const StepTitle = ({ step = 1 }) => {
   const t = useTranslations("Session");
   return (
     <div className="w-full container mx-auto">
-      <h2 className="font-bold text-lg">
-        {t(`titleStep${parseInt(step) + 1}`)}
-      </h2>
+      <h2 className="font-bold text-lg">{t(`titleStep${parseInt(step)}`)}</h2>
     </div>
   );
 };
 
 const SessionDetailsPage = async ({ params, searchParams }) => {
   const patSession = await api("GET", `/sessions?id=${params.id}`);
-  const { step } = searchParams;
+  const { step } = searchParams || { step: 1 };
   return (
     <div className="w-full space-y-4">
       <div className="container mx-auto pt-2">
