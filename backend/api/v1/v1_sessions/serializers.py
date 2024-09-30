@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.db.models import Count
+from django.db.models import Count, Q
 from rest_framework import serializers
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
@@ -270,7 +270,7 @@ class ParticipantScoreSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ParticipantDecision
-        fields = ["id", "acronym", "score"]
+        fields = ["id", "organization_id", "acronym", "score"]
 
 
 class DecisionListSerializer(serializers.ModelSerializer):
@@ -279,7 +279,9 @@ class DecisionListSerializer(serializers.ModelSerializer):
     @extend_schema_field(ParticipantScoreSerializer(many=True))
     def get_scores(self, instance: Decision):
         return ParticipantScoreSerializer(
-            instance=instance.decision_participant.all(),
+            instance=instance.decision_participant.filter(
+                Q(desired__isnull=True) | Q(desired=True)
+            ).all(),
             many=True
         ).data
 
@@ -346,6 +348,12 @@ class DecisionUpdateSerializer(serializers.Serializer):
         instance.agree = validated_data.get("agree", instance.agree)
         instance.notes = validated_data.get("notes", instance.notes)
         instance.save()
+        if instance.agree is False:
+            for score in instance.decision_participant.filter(
+                desired__isnull=True
+            ).all():
+                score.desired = False
+                score.save()
         return instance
 
 
@@ -506,10 +514,16 @@ class BulkParticipantDecisionSerializer(BaseSessionFormSerializer):
 
 
 class ParticipantCommentSerializer(serializers.ModelSerializer):
+    fullname = serializers.SerializerMethodField()
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_fullname(self, instance: ParticipantComment):
+        return instance.user.full_name
+
     class Meta:
         model = ParticipantComment
         fields = [
-            "id", "user_id", "session_id", "comment"
+            "id", "user_id", "fullname", "session_id", "comment"
         ]
 
     def create(self, validated_data):
