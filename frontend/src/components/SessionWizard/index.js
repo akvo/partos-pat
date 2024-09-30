@@ -63,7 +63,13 @@ const SessionWizard = ({ patSession, params, currentStep = 1 }) => {
             </Button>
           </div>
           <Space>
-            <Button className="w-32 bg-light-1" ghost>
+            <Button
+              className="w-32 bg-light-1"
+              onClick={() => {
+                router.push("/dashboard");
+              }}
+              ghost
+            >
               {t("saveNExit")}
             </Button>
             <div className="min-w-32">
