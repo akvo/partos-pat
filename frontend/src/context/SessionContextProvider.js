@@ -7,6 +7,7 @@ const SessionDispatchContext = createContext(null);
 const initialValues = {
   loading: false,
   saving: false,
+  step: 0,
   session: {
     fetched: false,
     summary: null,
@@ -59,6 +60,16 @@ const patSessionReducer = (state, action) => {
       };
     case "RESET":
       return initialValues;
+    case "STEP_NEXT":
+      return {
+        ...state,
+        step: state.step + 1,
+      };
+    case "STEP_BACK":
+      return {
+        ...state,
+        step: state.step - 1,
+      };
     default:
       throw Error(
         `Unknown action: ${action.type}. Remeber action type must be CAPITAL text.`

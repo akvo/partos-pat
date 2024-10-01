@@ -2,13 +2,13 @@
 
 import { Button } from "antd";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { QuestionMarkIcon } from "../Icons";
 import { HelpModal } from "../Modals";
+import { useSessionContext } from "@/context/SessionContextProvider";
 
 const HelpButton = () => {
   const [open, setOpen] = useState(false);
-  const params = useSearchParams();
+  const { step } = useSessionContext();
 
   return (
     <>
@@ -22,7 +22,7 @@ const HelpButton = () => {
           <QuestionMarkIcon size={24} />
         </div>
       </Button>
-      <HelpModal {...{ open, setOpen }} step={params.get("step")} />
+      <HelpModal {...{ open, setOpen }} step={step + 1} />
     </>
   );
 };
