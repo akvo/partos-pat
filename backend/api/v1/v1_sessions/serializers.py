@@ -263,14 +263,9 @@ class JoinSessionSerializer(serializers.Serializer):
 
 
 class ParticipantScoreSerializer(serializers.ModelSerializer):
-    acronym = serializers.SerializerMethodField()
-
-    def get_acronym(self, instance: ParticipantDecision):
-        return instance.organization.acronym
-
     class Meta:
         model = ParticipantDecision
-        fields = ["id", "organization_id", "acronym", "score"]
+        fields = ["id", "organization_id", "score", "desired"]
 
 
 class DecisionListSerializer(serializers.ModelSerializer):
@@ -278,10 +273,14 @@ class DecisionListSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(ParticipantScoreSerializer(many=True))
     def get_scores(self, instance: Decision):
-        return ParticipantScoreSerializer(
-            instance=instance.decision_participant.filter(
+        queryset = instance.decision_participant
+        if self.context.get("desired"):
+            queryset = queryset.filter(
                 Q(desired__isnull=True) | Q(desired=True)
-            ).all(),
+            )
+        queryset = queryset.all()
+        return ParticipantScoreSerializer(
+            instance=queryset,
             many=True
         ).data
 
@@ -348,12 +347,12 @@ class DecisionUpdateSerializer(serializers.Serializer):
         instance.agree = validated_data.get("agree", instance.agree)
         instance.notes = validated_data.get("notes", instance.notes)
         instance.save()
-        # if instance.agree is False:
-        #     for score in instance.decision_participant.filter(
-        #         desired__isnull=True
-        #     ).all():
-        #         score.desired = False
-        #         score.save()
+        if instance.agree is False:
+            for score in instance.decision_participant.filter(
+                desired__isnull=True
+            ).all():
+                score.desired = False
+                score.save()
         return instance
 
 
