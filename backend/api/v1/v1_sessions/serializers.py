@@ -348,12 +348,12 @@ class DecisionUpdateSerializer(serializers.Serializer):
         instance.agree = validated_data.get("agree", instance.agree)
         instance.notes = validated_data.get("notes", instance.notes)
         instance.save()
-        if instance.agree is False:
-            for score in instance.decision_participant.filter(
-                desired__isnull=True
-            ).all():
-                score.desired = False
-                score.save()
+        # if instance.agree is False:
+        #     for score in instance.decision_participant.filter(
+        #         desired__isnull=True
+        #     ).all():
+        #         score.desired = False
+        #         score.save()
         return instance
 
 
