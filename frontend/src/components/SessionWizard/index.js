@@ -18,23 +18,41 @@ import {
 
 const SessionWizard = ({ patSession }) => {
   const sessionDispatch = useSessionDispatch();
-  const { loading, step } = useSessionContext();
+  const { loading, saving, step } = useSessionContext();
 
   const router = useRouter();
   const formRef = useRef();
   const t = useTranslations("Session");
 
-  const goToNext = () => {
-    sessionDispatch({
-      type: "STEP_NEXT",
-    });
-  };
-
   const onClickNext = () => {
+    sessionDispatch({
+      type: "LOADING_TRUE",
+    });
     if (formRef?.current) {
       formRef.current.submit();
+      if (!loading) {
+        sessionDispatch({
+          type: "STEP_NEXT",
+        });
+      }
     } else {
-      goToNext();
+      sessionDispatch({
+        type: "STEP_NEXT",
+      });
+    }
+  };
+
+  const onClickSave = () => {
+    sessionDispatch({
+      type: "SAVING_TRUE",
+    });
+    if (formRef?.current) {
+      formRef.current.submit();
+      if (!saving) {
+        router.push("/dashboard");
+      }
+    } else {
+      router.push("/dashboard");
     }
   };
 
@@ -58,7 +76,7 @@ const SessionWizard = ({ patSession }) => {
           )}
         >
           <SessionSteps current={step}>
-            <SessionContent {...{ goToNext, step, patSession }} ref={formRef} />
+            <SessionContent {...{ step, patSession }} ref={formRef} />
           </SessionSteps>
         </div>
       </div>
@@ -84,9 +102,8 @@ const SessionWizard = ({ patSession }) => {
           <Space>
             <Button
               className="w-32 bg-light-1"
-              onClick={() => {
-                router.push("/dashboard");
-              }}
+              onClick={onClickSave}
+              loading={saving}
               ghost
             >
               {t("saveNExit")}
