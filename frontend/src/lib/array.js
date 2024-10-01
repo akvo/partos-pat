@@ -21,7 +21,7 @@ export const errorsMapping = (errors = {}, errorTrans = null) =>
 
 export const decisionsToTable = (items = [], orgs = []) =>
   items.map((item) => {
-    const scores = item.scores.length
+    const scores = item?.scores?.length
       ? item.scores
       : orgs?.map((o) => ({
           organization_id: o?.id,
