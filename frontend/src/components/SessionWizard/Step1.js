@@ -122,7 +122,7 @@ const StepOne = ({ goToNext, patSession }, ref) => {
           >
             {(fields, option, { errors }) => (
               <Flex gap={16} vertical>
-                <div className="w-full relative h-48 overflow-y-auto">
+                <div className="w-full relative">
                   {fields.map(({ key, name, ...restField }) => (
                     <Flex className="w-full" key={key} gap="middle">
                       <Form.Item
