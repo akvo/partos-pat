@@ -18,3 +18,23 @@ export const errorsMapping = (errors = {}, errorTrans = null) =>
       },
     ];
   });
+
+export const decisionsToTable = (items = [], orgs = []) =>
+  items.map((item) => {
+    const scores = item.scores.length
+      ? item.scores
+      : orgs?.map((o) => ({
+          organization_id: o?.id,
+          score: null,
+          id: null,
+        }));
+    const transformedScores = scores.reduce((acc, score) => {
+      acc[score.organization_id] = score.score;
+      acc[`id_${score.organization_id}`] = score.id;
+      return acc;
+    }, {});
+    return {
+      ...item,
+      ...transformedScores,
+    };
+  });
