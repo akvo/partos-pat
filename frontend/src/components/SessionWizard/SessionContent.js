@@ -9,7 +9,7 @@ import StepSix from "./Step6";
 const SessionContent = ({ goToNext, step, patSession }, ref) => {
   switch (step) {
     case 1:
-      return <StepTwo />;
+      return <StepTwo {...{ goToNext, patSession }} ref={ref} />;
     case 2:
       return <StepThree />;
     case 3:
