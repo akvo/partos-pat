@@ -13,7 +13,6 @@ const EditableCell = ({
   dataIndex,
   title,
   record,
-  index,
   children,
   editable,
   score,
@@ -23,7 +22,7 @@ const EditableCell = ({
     ? [record.id, dataIndex, score].join(".")
     : [record.id, dataIndex].join(".");
   return (
-    <td key={index} {...restProps}>
+    <td {...restProps}>
       {editable ? (
         <Form.Item
           name={fieldName}
@@ -193,6 +192,7 @@ const StepTwo = ({ patSession = {} }, ref) => {
             },
           }}
           bordered
+          rowKey="id"
           dataSource={dataSource}
           columns={columns}
           rowClassName="editable-row"
