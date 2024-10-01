@@ -31,7 +31,7 @@ export const decrypt = async (input) => {
     });
     return payload;
   } catch {
-    return null;
+    return {};
   }
 };
 
@@ -94,6 +94,9 @@ export const OptimisticCheck = async (locale, pathName, request) => {
   }
   // check expires
   const { token: authToken } = await decrypt(session);
+  if (!authToken) {
+    return false;
+  }
 
   const req = await fetch(
     `${process.env.WEBDOMAIN}/api/v1/users/me?format=json`,
