@@ -27,21 +27,26 @@ const patSessionReducer = (state, action) => {
         ...state,
         loading: true,
       };
-    case "LOADING_FALSE":
-      return {
-        ...state,
-        loading: false,
-      };
     case "SAVING_TRUE":
       return {
         ...state,
         saving: true,
       };
-    case "SAVING_FALSE":
-      return {
-        ...state,
-        saving: false,
-      };
+    case "STOP_LOADING":
+      if (state.saving) {
+        return {
+          ...state,
+          saving: false,
+        };
+      }
+      if (state.loading) {
+        return {
+          ...state,
+          loading: false,
+        };
+      }
+      return state;
+
     case "DECISION_FETCHED":
       return {
         ...state,
