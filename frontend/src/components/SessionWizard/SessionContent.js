@@ -6,10 +6,10 @@ import StepFour from "./Step4";
 import StepFive from "./Step5";
 import StepSix from "./Step6";
 
-const SessionContent = ({ goToNext, step, patSession }, ref) => {
+const SessionContent = ({ step, patSession }, ref) => {
   switch (step) {
     case 1:
-      return <StepTwo {...{ goToNext, patSession }} ref={ref} />;
+      return <StepTwo {...{ patSession }} ref={ref} />;
     case 2:
       return <StepThree />;
     case 3:
@@ -20,7 +20,7 @@ const SessionContent = ({ goToNext, step, patSession }, ref) => {
       return <StepSix />;
 
     default:
-      return <StepOne {...{ goToNext, patSession }} ref={ref} />;
+      return <StepOne {...{ patSession }} ref={ref} />;
   }
 };
 

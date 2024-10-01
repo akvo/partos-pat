@@ -23,7 +23,7 @@ const EditableCell = ({
     ? [record.id, dataIndex, score].join(".")
     : [record.id, dataIndex].join(".");
   return (
-    <td {...restProps}>
+    <td key={index} {...restProps}>
       {editable ? (
         <Form.Item
           name={fieldName}
@@ -53,7 +53,7 @@ const EditableCell = ({
   );
 };
 
-const StepTwo = ({ goToNext, patSession = {} }, ref) => {
+const StepTwo = ({ patSession = {} }, ref) => {
   const [preload, setPreload] = useState(true);
 
   const sessionContext = useSessionContext();
@@ -65,11 +65,13 @@ const StepTwo = ({ goToNext, patSession = {} }, ref) => {
       title: o?.acronym,
       dataIndex: o?.id,
       editable: true,
+      key: o?.id,
     }));
     return [
       {
         dataIndex: "name",
         editable: false,
+        key: "name",
       },
       ...orgs,
     ].map((col) => ({
@@ -90,14 +92,16 @@ const StepTwo = ({ goToNext, patSession = {} }, ref) => {
 
   const allScores = useMemo(() => {
     return decisions?.flatMap((d) =>
-      d?.scores?.map((s) => ({ ...s, decision_id: d?.id }))
+      d?.scores?.length
+        ? d.scores.map((s) => ({ ...s, decision_id: d?.id }))
+        : patSession?.organizations?.map((o) => ({
+            decision_id: d?.id,
+            organization_id: o?.id,
+          }))
     );
-  }, [decisions]);
+  }, [decisions, patSession]);
 
   const onFinish = async (values) => {
-    sessionDispatch({
-      type: "LOADING_TRUE",
-    });
     const scores = Object.keys(values).map((k) => {
       const [decision_id, organization_id, score_id] = k?.split(".");
       if (score_id) {
@@ -116,6 +120,7 @@ const StepTwo = ({ goToNext, patSession = {} }, ref) => {
     });
 
     const updateScores = scores.filter((s) => s?.id);
+    const newScores = scores.filter((s) => !s?.id);
 
     try {
       let resData = [];
@@ -124,11 +129,14 @@ const StepTwo = ({ goToNext, patSession = {} }, ref) => {
           session_id: patSession?.id,
           scores: updateScores,
         });
-      } else {
-        resData = await api("POST", "/participant-decisions", {
+      }
+
+      if (newScores.length) {
+        const newItems = await api("POST", "/participant-decisions", {
           session_id: patSession?.id,
-          scores,
+          scores: newScores,
         });
+        resData = [...resData, ...newItems];
       }
       const decisionPayload = decisions.map((d) => ({
         ...d,
@@ -141,13 +149,12 @@ const StepTwo = ({ goToNext, patSession = {} }, ref) => {
       });
 
       sessionDispatch({
-        type: "LOADING_FALSE",
+        type: "STOP_LOADING",
       });
-      goToNext();
     } catch (err) {
       console.error(err);
       sessionDispatch({
-        type: "LOADING_FALSE",
+        type: "STOP_LOADING",
       });
     }
   };

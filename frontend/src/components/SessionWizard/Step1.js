@@ -11,16 +11,14 @@ import {
 import { PAT_SESSION } from "@/static/config";
 import { api } from "@/lib";
 
-const StepOne = ({ goToNext, patSession }, ref) => {
+const StepOne = ({ patSession }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
 
   const { data: decisions, fetched } = sessionContext.decisions;
+  const { saving, loading } = sessionContext;
 
   const onFinish = async (values) => {
-    sessionDispatch({
-      type: "LOADING_TRUE",
-    });
     try {
       const newPayload = values?.decisions?.filter((d) => !d?.id);
       const updatePayload = values?.decisions?.filter((d) => d?.id);
@@ -44,15 +42,13 @@ const StepOne = ({ goToNext, patSession }, ref) => {
           payload: [...decisions, ...newItems],
         });
       }
-
       sessionDispatch({
-        type: "LOADING_FALSE",
+        type: "STOP_LOADING",
       });
-      goToNext();
     } catch (err) {
       console.error(err);
       sessionDispatch({
-        type: "LOADING_FALSE",
+        type: "STOP_LOADING",
       });
     }
   };
