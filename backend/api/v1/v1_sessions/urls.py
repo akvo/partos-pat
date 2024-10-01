@@ -2,11 +2,12 @@ from django.urls import re_path
 
 from api.v1.v1_sessions.views import (
     PATSessionAddListView,
-    organization_list,
-    participant_join_session,
     BulkDecisionView,
     BulkParticipantDecisionView,
     ParticipantCommentViewSet,
+    organization_list,
+    participant_join_session,
+    delete_decision,
 )
 
 urlpatterns = [
@@ -25,6 +26,10 @@ urlpatterns = [
     re_path(
         r"^(?P<version>(v1))/decisions",
         BulkDecisionView.as_view()
+    ),
+    re_path(
+        r"^(?P<version>(v1))/decision/(?P<decision_id>[0-9]+)",
+        delete_decision
     ),
     re_path(
         r"^(?P<version>(v1))/participant-decisions",

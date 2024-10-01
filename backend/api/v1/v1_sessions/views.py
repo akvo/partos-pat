@@ -19,7 +19,8 @@ from django.conf import settings
 from api.v1.v1_sessions.models import (
     PATSession,
     Organization,
-    ParticipantComment
+    ParticipantComment,
+    Decision,
 )
 from api.v1.v1_sessions.serializers import (
     CreateSessionSerializer,
@@ -479,3 +480,24 @@ class ParticipantCommentViewSet(ModelViewSet):
             session_id=session_id,
         )
         return queryset.order_by("id")
+
+
+@extend_schema(
+    responses={200: DecisionSerializer},
+    tags=["Decisions"],
+    summary="Delete PAT's decision",
+)
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def delete_decision(request, decision_id, version):
+    decision = get_object_or_404(Decision, pk=decision_id)
+    if (
+        decision.session.user.id != request.user.id
+    ):
+        return Response(
+            data={},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+    decision.delete()
+    data = DecisionSerializer(instance=decision).data
+    return Response(data=data, status=status.HTTP_200_OK)
