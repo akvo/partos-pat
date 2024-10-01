@@ -4,9 +4,11 @@ import { Button } from "antd";
 import { useState } from "react";
 import { QuestionMarkIcon } from "../Icons";
 import { HelpModal } from "../Modals";
+import { useSessionContext } from "@/context/SessionContextProvider";
 
-const HelpButton = ({ step = 1 }) => {
+const HelpButton = () => {
   const [open, setOpen] = useState(false);
+  const { step } = useSessionContext();
 
   return (
     <>
@@ -20,7 +22,7 @@ const HelpButton = ({ step = 1 }) => {
           <QuestionMarkIcon size={24} />
         </div>
       </Button>
-      <HelpModal {...{ open, setOpen, step }} />
+      <HelpModal {...{ open, setOpen }} step={step + 1} />
     </>
   );
 };

@@ -57,6 +57,17 @@ const StepOne = ({ goToNext, patSession }, ref) => {
     }
   };
 
+  const onDeleteDecision = async (option, { key, value }) => {
+    try {
+      option.remove(key);
+      if (value) {
+        await api("DELETE", `/decision/${value}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const loadDecisions = useCallback(async () => {
     if (!fetched) {
       try {
@@ -122,7 +133,7 @@ const StepOne = ({ goToNext, patSession }, ref) => {
           >
             {(fields, option, { errors }) => (
               <Flex gap={16} vertical>
-                <div className="w-full relative h-48 overflow-y-auto">
+                <div className="w-full relative">
                   {fields.map(({ key, name, ...restField }) => (
                     <Flex className="w-full" key={key} gap="middle">
                       <Form.Item
@@ -151,7 +162,14 @@ const StepOne = ({ goToNext, patSession }, ref) => {
                         type="link"
                         icon={<MinusCircleIcon />}
                         onClick={() => {
-                          option.remove(name);
+                          onDeleteDecision(option, {
+                            key: name,
+                            value: formInstance.getFieldValue([
+                              "decisions",
+                              name,
+                              "id",
+                            ]),
+                          });
                         }}
                       />
                     </Flex>

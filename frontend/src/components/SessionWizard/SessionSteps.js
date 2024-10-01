@@ -24,11 +24,11 @@ const SessionSteps = ({ children, current }) => {
 
   return (
     <>
-      <div className="w-full flex">
-        <aside className="w-full lg:w-4/12 py-6">
+      <div className="w-full 2xl:h-full flex">
+        <aside className="w-full 2xl:h-full lg:w-4/12 py-6">
           <Steps current={current} direction="vertical" items={items} />
         </aside>
-        <div className="w-full min-h-[500px] bg-light-1 px-8 py-6">
+        <div className="w-full 2xl:h-full bg-light-1 px-8 py-4 overflow-y-auto">
           {children}
         </div>
       </div>
