@@ -58,6 +58,7 @@ const StepTwo = ({ patSession = {} }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
   const { data: decisions } = sessionContext.decisions || { data: [] };
+  const { saving } = sessionContext;
 
   const columns = useMemo(() => {
     const orgs = patSession?.organizations?.map((o) => ({
@@ -65,7 +66,7 @@ const StepTwo = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: true,
       key: o?.id,
-      width: '80px',
+      width: "80px",
     }));
     return [
       {
@@ -156,12 +157,13 @@ const StepTwo = ({ patSession = {} }, ref) => {
         payload: decisionPayload,
       });
 
+      if (!saving) {
+        sessionDispatch({
+          type: "STEP_NEXT",
+        });
+      }
       sessionDispatch({
         type: "STOP_LOADING",
-      });
-
-      sessionDispatch({
-        type: "STEP_NEXT",
       });
     } catch (err) {
       console.error(err);
@@ -186,7 +188,7 @@ const StepTwo = ({ patSession = {} }, ref) => {
   const t = useTranslations("Session");
   return (
     <div className="w-full space-y-6">
-      <div className="w-full space-y-4 whitespace-pre-line">
+      <div className="w-full space-y-2 whitespace-pre-line">
         <strong>{t("step2Title")}</strong>
         <p>{t("step2Desc")}</p>
         <ul className="list-disc ml-4">

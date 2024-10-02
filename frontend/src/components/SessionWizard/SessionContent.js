@@ -15,7 +15,7 @@ const SessionContent = ({ step, patSession }, ref) => {
     case 3:
       return <StepFour {...{ patSession }} ref={ref} />;
     case 4:
-      return <StepFive />;
+      return <StepFive {...{ patSession }} ref={ref} />;
     case 5:
       return <StepSix />;
 
