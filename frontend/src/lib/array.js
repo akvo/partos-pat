@@ -20,21 +20,37 @@ export const errorsMapping = (errors = {}, errorTrans = null) =>
   });
 
 export const decisionsToTable = (items = [], orgs = []) =>
-  items.map((item) => {
-    const scores = item?.scores?.length
-      ? item.scores
+  items.map(({ scores, ...item }) => {
+    const decisionScores = scores?.length
+      ? scores
       : orgs?.map((o) => ({
           organization_id: o?.id,
           score: null,
           id: null,
+          desired: null,
         }));
-    const transformedScores = scores.reduce((acc, score) => {
-      acc[score.organization_id] = score.score;
-      acc[`id_${score.organization_id}`] = score.id;
-      return acc;
-    }, {});
+    const transformedScores = decisionScores
+      .filter((s) => s?.desired === false || !s?.desired)
+      .reduce((acc, score) => {
+        acc[score.organization_id] = score.score;
+        acc[`id_${score.organization_id}`] = score.id;
+        return acc;
+      }, {});
+
+    let transformedDesires = {};
+    if (scores?.length) {
+      transformedDesires = scores
+        .filter((s) => s?.desired)
+        .reduce((acc, curr) => {
+          acc[`desired.${curr.organization_id}`] = curr.score;
+          acc[`desired_id_${curr.organization_id}`] = curr.id;
+          return acc;
+        }, {});
+    }
+
     return {
       ...item,
       ...transformedScores,
+      ...transformedDesires,
     };
   });

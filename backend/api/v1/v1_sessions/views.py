@@ -327,6 +327,13 @@ class BulkDecisionView(APIView):
                 type=OpenApiTypes.BOOL,
                 location=OpenApiParameter.QUERY,
             ),
+            OpenApiParameter(
+                name="desired",
+                required=False,
+                default=None,
+                type=OpenApiTypes.BOOL,
+                location=OpenApiParameter.QUERY,
+            ),
         ],
         tags=["Decisions"],
         summary="Get all session decisions",
@@ -340,8 +347,17 @@ class BulkDecisionView(APIView):
             decisions = pat_session.session_decision.filter(
                 agree=agreed
             ).all()
+        is_desired = False
+        if request.GET.get("desired") in ["true", "1"]:
+            is_desired = True
 
-        serializer = DecisionListSerializer(instance=decisions, many=True)
+        serializer = DecisionListSerializer(
+            instance=decisions,
+            many=True,
+            context={
+                "desired": is_desired
+            }
+        )
         return Response(
             data=serializer.data,
             status=status.HTTP_200_OK

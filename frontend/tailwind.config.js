@@ -88,6 +88,12 @@ module.exports = {
         active: "#d4e7e3",
         bold: "#00A392",
       },
+      score: {
+        1: "#FDEDBB",
+        2: "#FFDE7B",
+        3: "#FBBB04",
+        4: "#D3A107",
+      },
     },
     container: {
       center: true,
