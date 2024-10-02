@@ -52,7 +52,8 @@
     border-bottom: 0.5px solid rgba(var(--border-input-rgba));
   }
   .ant-select.pat-score {
-    width: 100px;
+    width: 100%;
+    max-width: 80px;
   }
   .ant-input-borderless {
     border-bottom: 1px solid rgba(var(--border-input-rgba));
@@ -228,16 +229,20 @@
     font-weight: 700;
     font-size: 12px;
   }
-  .ant-table-cell.td-yes:last-child {
+  .ant-table-cell.td-yes:last-child,
+  .td-yes {
     background-color: #f7fffb;
   }
-  .ant-table-cell.td-yes:last-child .ant-select-selection-item {
+  .ant-table-cell.td-yes:last-child .ant-select-selection-item,
+  .td-yes {
     color: #025830;
   }
-  .ant-table-cell.td-no:last-child {
+  .ant-table-cell.td-no:last-child,
+  .td-no {
     background-color: #fff9f9;
   }
-  .ant-table-cell.td-no:last-child .ant-select-selection-item {
+  .ant-table-cell.td-no:last-child .ant-select-selection-item,
+  .td-no {
     color: #8e0000;
   }
 }
