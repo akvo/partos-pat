@@ -30,6 +30,8 @@ from api.v1.v1_sessions.serializers import (
     UpdateSessionSerializer,
     OrganizationListSerializer,
     JoinSessionSerializer,
+    JoinOrganizationsSerializer,
+    SessionDetailsSerializer,
     DecisionSerializer,
     DecisionListSerializer,
     BulkDecisionCreateSerializer,
@@ -120,7 +122,12 @@ class PATSessionAddListView(APIView):
                     status=status.HTTP_403_FORBIDDEN,
                 )
             return Response(
-                data=SessionSerializer(instance=instance).data,
+                data=SessionDetailsSerializer(
+                    instance=instance,
+                    context={
+                        "user": request.user
+                    }
+                ).data,
                 status=status.HTTP_200_OK,
             )
         if code:
@@ -138,7 +145,9 @@ class PATSessionAddListView(APIView):
                     status=status.HTTP_404_NOT_FOUND,
                 )
             return Response(
-                data=SessionSerializer(instance=instance).data,
+                data=JoinOrganizationsSerializer(
+                    instance=instance
+                ).data,
                 status=status.HTTP_200_OK,
             )
 
