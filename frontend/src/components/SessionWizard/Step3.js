@@ -83,6 +83,7 @@ const StepThree = ({ patSession = {} }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
   const { data: decisions } = sessionContext.decisions || { data: [] };
+  const { saving } = sessionContext;
 
   const columns = useMemo(() => {
     const orgs = patSession?.organizations?.map((o) => ({
@@ -143,11 +144,13 @@ const StepThree = ({ patSession = {} }, ref) => {
         })),
       });
 
+      if (!saving) {
+        sessionDispatch({
+          type: "STEP_NEXT",
+        });
+      }
       sessionDispatch({
         type: "STOP_LOADING",
-      });
-      sessionDispatch({
-        type: "STEP_NEXT",
       });
     } catch (err) {
       console.error(err);

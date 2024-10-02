@@ -16,6 +16,7 @@ const StepOne = ({ patSession }, ref) => {
   const sessionDispatch = useSessionDispatch();
 
   const { data: decisions, fetched } = sessionContext.decisions;
+  const { saving } = sessionContext;
 
   const onFinish = async (values) => {
     try {
@@ -41,11 +42,13 @@ const StepOne = ({ patSession }, ref) => {
           payload: [...decisions, ...newItems],
         });
       }
+      if (!saving) {
+        sessionDispatch({
+          type: "STEP_NEXT",
+        });
+      }
       sessionDispatch({
         type: "STOP_LOADING",
-      });
-      sessionDispatch({
-        type: "STEP_NEXT",
       });
     } catch (err) {
       console.error(err);

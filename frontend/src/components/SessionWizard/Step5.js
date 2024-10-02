@@ -17,6 +17,7 @@ const StepFive = ({ patSession = {} }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
   const { data: decisions } = sessionContext.decisions || { data: [] };
+  const { saving } = sessionContext;
 
   const inputDecisions = useMemo(() => {
     const orgs = patSession?.organizations;
@@ -46,12 +47,13 @@ const StepFive = ({ patSession = {} }, ref) => {
         }),
       });
 
+      if (!saving) {
+        sessionDispatch({
+          type: "STEP_NEXT",
+        });
+      }
       sessionDispatch({
         type: "STOP_LOADING",
-      });
-
-      sessionDispatch({
-        type: "STEP_NEXT",
       });
     } catch (err) {
       console.error(err);
