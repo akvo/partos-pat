@@ -5,7 +5,7 @@ const ScoreLegend = () => {
   const t = useTranslations("Session");
 
   return (
-    <ul className="space-y-2">
+    <ul className="space-y-2 text-sm">
       {Array.from({ length: 5 })
         .map((_, x) => x)
         .sort((a, b) => b - a)

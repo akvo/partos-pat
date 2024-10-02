@@ -41,6 +41,12 @@ export default async function LocaleLayout({ children, params: { locale } }) {
                     titleFontSizeLG: 20,
                     titleFontSizeSM: 16,
                   },
+                  Table: {
+                    headerBg: "#E1E0DA",
+                    headerColor: "#1E1E1E",
+                    cellPaddingInline: 8,
+                    cellPaddingBlock: 4,
+                  },
                 },
               }}
             >
