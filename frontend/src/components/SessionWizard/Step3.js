@@ -26,7 +26,7 @@ const EditableCell = ({
   if (typeof dataIndex === "number") {
     return (
       <td
-        className={classNames({
+        className={classNames("font-bold", {
           "bg-score-4": Object.values(children).includes(4),
           "bg-score-3": Object.values(children).includes(3),
           "bg-score-2": Object.values(children).includes(2),
@@ -40,7 +40,13 @@ const EditableCell = ({
     );
   }
   return (
-    <td className={className} {...restProps}>
+    <td
+      className={classNames(className, {
+        "td-yes": record?.agree === true,
+        "td-no": record?.agree === false,
+      })}
+      {...restProps}
+    >
       {editable ? (
         <Form.Item
           name={record.id}
@@ -60,7 +66,7 @@ const EditableCell = ({
               { value: 0, label: t("no") },
             ]}
             variant="borderless"
-            className="w-full"
+            className="pat-score"
           />
         </Form.Item>
       ) : (
@@ -84,12 +90,14 @@ const StepThree = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: false,
       key: o?.id,
+      width: "80px",
     }));
     return [
       {
         dataIndex: "name",
         editable: false,
         key: "name",
+        fixed: "left",
       },
       ...orgs,
       {
@@ -97,6 +105,7 @@ const StepThree = ({ patSession = {} }, ref) => {
         dataIndex: "agree",
         editable: true,
         key: "agree",
+        width: "80px",
       },
     ].map((col) => ({
       ...col,
@@ -175,7 +184,6 @@ const StepThree = ({ patSession = {} }, ref) => {
               cell: EditableCell,
             },
           }}
-          bordered
           rowKey="id"
           dataSource={dataSource}
           columns={columns}

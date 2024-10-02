@@ -42,7 +42,7 @@ const EditableCell = ({
               label: value,
             }))}
             variant="borderless"
-            className="w-full"
+            className="pat-score"
           />
         </Form.Item>
       ) : (
@@ -65,12 +65,14 @@ const StepTwo = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: true,
       key: o?.id,
+      width: '80px',
     }));
     return [
       {
         dataIndex: "name",
         editable: false,
         key: "name",
+        fixed: "left",
       },
       ...orgs,
     ].map((col) => ({
@@ -202,7 +204,6 @@ const StepTwo = ({ patSession = {} }, ref) => {
               cell: EditableCell,
             },
           }}
-          bordered
           rowKey="id"
           dataSource={dataSource}
           columns={columns}

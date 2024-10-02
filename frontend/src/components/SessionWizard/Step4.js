@@ -154,7 +154,7 @@ const StepFour = ({ patSession = {} }, ref) => {
                                     })
                                   )}
                                   variant="borderless"
-                                  className="w-full"
+                                  className="pat-score"
                                 />
                               </Form.Item>
                             </div>
