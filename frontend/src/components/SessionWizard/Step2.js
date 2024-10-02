@@ -19,8 +19,9 @@ const EditableCell = ({
   ...restProps
 }) => {
   const fieldName = score
-    ? [record.id, dataIndex, score].join(".")
-    : [record.id, dataIndex].join(".");
+    ? [record?.id, dataIndex, score].join(".")
+    : [record?.id, dataIndex].join(".");
+  const t_error = useTranslations("Error");
   return (
     <td {...restProps}>
       {editable ? (
@@ -32,7 +33,9 @@ const EditableCell = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
+              message: t_error("required", {
+                field_title: title,
+              }),
             },
           ]}
         >

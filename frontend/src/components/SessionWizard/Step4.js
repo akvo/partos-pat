@@ -96,6 +96,7 @@ const StepFour = ({ patSession = {} }, ref) => {
   };
 
   const t = useTranslations("Session");
+  const t_error = useTranslations("Error");
 
   return (
     <div className="w-full space-y-6">
@@ -179,6 +180,9 @@ const StepFour = ({ patSession = {} }, ref) => {
                                   rules={[
                                     {
                                       required: true,
+                                      message: t_error("required", {
+                                        field_title: t("score"),
+                                      }),
                                     },
                                   ]}
                                 >
