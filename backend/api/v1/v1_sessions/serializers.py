@@ -110,6 +110,56 @@ class SessionSerializer(serializers.ModelSerializer):
         ]
 
 
+class SessionDetailsSerializer(SessionSerializer):
+    is_owner = serializers.SerializerMethodField()
+
+    @extend_schema_field(OpenApiTypes.BOOL)
+    def get_is_owner(self, instance: PATSession):
+        current_user = self.context.get("user")
+        return instance.user.id == current_user.id
+
+    class Meta:
+        model = PATSession
+        fields = [
+            "id",
+            "session_name",
+            "facilitator",
+            "countries",
+            "sector",
+            "other_sector",
+            "date",
+            "context",
+            "organizations",
+            "join_code",
+            "is_published",
+            "notes",
+            "summary",
+            "created_at",
+            "updated_at",
+            "closed_at",
+            "is_owner",
+        ]
+
+
+class JoinOrganizationsSerializer(serializers.ModelSerializer):
+    organizations = serializers.SerializerMethodField()
+
+    @extend_schema_field(OrganizationListSerializer(many=True))
+    def get_organizations(self, instance: PATSession):
+        return OrganizationListSerializer(
+            instance=instance.session_organization.all(), many=True
+        ).data
+
+    class Meta:
+        model = PATSession
+        fields = [
+            "id",
+            "session_name",
+            "organizations",
+            "join_code",
+        ]
+
+
 class SessionListSerializer(serializers.ModelSerializer):
     facilitator = serializers.SerializerMethodField()
 

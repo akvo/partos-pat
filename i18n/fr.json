@@ -58,7 +58,8 @@
 		"blank": "{field_title} n'est peut-être pas vide",
 		"null": "{field_title} ne peut pas être nul.",
 		"500": "Erreur interne du serveur. Veuillez réessayer plus tard.",
-		"invalidLogin": "Identifiants de connexion invalides"
+		"invalidLogin": "Identifiants de connexion invalides",
+		"maxChar": "{field_title} doit contenir jusqu'à {number} caractères"
 	},
 	"Login": {
 		"loginText": "Se connecter",

@@ -15,6 +15,7 @@ import {
   useSessionContext,
   useSessionDispatch,
 } from "@/context/SessionContextProvider";
+import { PublishModal } from "../Modals";
 
 const SessionWizard = ({ patSession }) => {
   const sessionDispatch = useSessionDispatch();
@@ -25,7 +26,7 @@ const SessionWizard = ({ patSession }) => {
   const t = useTranslations("Session");
 
   const onClickNext = async () => {
-    if (formRef?.current) {
+    if (formRef?.current && patSession?.is_owner) {
       try {
         await formRef.current.validateFields();
         formRef.current.submit();
@@ -61,10 +62,6 @@ const SessionWizard = ({ patSession }) => {
     }
   };
 
-  const onClickPublish = () => {
-    console.info("fired!");
-  };
-
   return (
     <>
       <div className="w-full container mx-auto">
@@ -88,58 +85,114 @@ const SessionWizard = ({ patSession }) => {
       </div>
       <div className="w-full flex container mx-auto pt-4">
         <div className="w-full lg:w-4/12" />
-        <div className="w-full flex justify-between">
-          <div className="min-w-32">
-            <Button
-              icon={<ArrowFatIcon left />}
-              className="bg-light-1"
-              disabled={!step}
-              onClick={() => {
-                sessionDispatch({
-                  type: "STEP_BACK",
-                });
-              }}
-              block
-              ghost
-            >
-              {t("back")}
-            </Button>
-          </div>
-          <Space>
-            <Button
-              className="w-32 bg-light-1"
-              onClick={onClickSave}
-              loading={saving}
-              ghost
-            >
-              {t("saveNExit")}
-            </Button>
+
+        {patSession?.is_owner ? (
+          <div className="w-full flex justify-between">
             <div className="min-w-32">
-              {step === PAT_SESSION.totalSteps - 1 ? (
-                <Button
-                  type="primary"
-                  onClick={onClickPublish}
-                  icon={<FileArrowUpIcon />}
-                  iconPosition="end"
-                  block
-                >
-                  {t("publish")}
-                </Button>
-              ) : (
-                <Button
-                  type="primary"
-                  onClick={onClickNext}
-                  icon={<ArrowFatIcon />}
-                  iconPosition="end"
-                  loading={loading}
-                  block
-                >
-                  {t("next")}
-                </Button>
-              )}
+              <Button
+                icon={<ArrowFatIcon left />}
+                className="bg-light-1"
+                disabled={!step}
+                onClick={() => {
+                  sessionDispatch({
+                    type: "STEP_BACK",
+                  });
+                }}
+                block
+                ghost
+              >
+                {t("back")}
+              </Button>
             </div>
-          </Space>
-        </div>
+            <Space>
+              <Button
+                className="w-32 bg-light-1"
+                onClick={onClickSave}
+                loading={saving}
+                ghost
+              >
+                {t("saveNExit")}
+              </Button>
+              <div className="min-w-32">
+                {step === PAT_SESSION.totalSteps - 1 ? (
+                  <PublishModal onPublish={onClickSave} />
+                ) : (
+                  <Button
+                    type="primary"
+                    onClick={onClickNext}
+                    icon={<ArrowFatIcon />}
+                    iconPosition="end"
+                    loading={loading}
+                    block
+                  >
+                    {t("next")}
+                  </Button>
+                )}
+              </div>
+            </Space>
+          </div>
+        ) : (
+          <>
+            {step < PAT_SESSION.totalSteps - 1 ? (
+              <div className="w-full flex justify-between">
+                <div className="min-w-32">
+                  <Button
+                    icon={<ArrowFatIcon left />}
+                    className="bg-light-1"
+                    disabled={!step}
+                    onClick={() => {
+                      sessionDispatch({
+                        type: "STEP_BACK",
+                      });
+                    }}
+                    block
+                    ghost
+                  >
+                    {t("back")}
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    type="primary"
+                    onClick={onClickNext}
+                    icon={<ArrowFatIcon />}
+                    iconPosition="end"
+                    loading={loading}
+                    block
+                  >
+                    {t("next")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="w-full flex justify-end">
+                <Space>
+                  <Button
+                    icon={<ArrowFatIcon left />}
+                    className="bg-light-1"
+                    onClick={() => {
+                      sessionDispatch({
+                        type: "STEP_BACK",
+                      });
+                    }}
+                    block
+                    ghost
+                  >
+                    {t("back")}
+                  </Button>
+                  <Button
+                    type="primary"
+                    onClick={onClickSave}
+                    loading={saving}
+                    block
+                  >
+                    {t("submitComments")}
+                  </Button>
+                </Space>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </>
   );

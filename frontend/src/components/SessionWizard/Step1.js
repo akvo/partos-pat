@@ -189,7 +189,7 @@ const StepOne = ({ patSession }, ref) => {
                     size="small"
                     disabled={
                       formInstance.getFieldValue("decisions").length + 1 >
-                      PAT_SESSION.maxDecisions
+                        PAT_SESSION.maxDecisions || !patSession?.is_owner
                     }
                     block
                     ghost

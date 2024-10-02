@@ -22,6 +22,7 @@ const EditableCell = ({
   ...restProps
 }) => {
   const t = useTranslations("Session");
+  const t_error = useTranslations("Error");
 
   if (typeof dataIndex === "number") {
     return (
@@ -56,7 +57,9 @@ const EditableCell = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
+              message: t_error("required", {
+                field_title: title,
+              }),
             },
           ]}
         >
