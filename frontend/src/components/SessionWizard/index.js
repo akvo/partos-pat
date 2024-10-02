@@ -69,6 +69,7 @@ const SessionWizard = ({ patSession }) => {
     <>
       <div className="w-full container mx-auto">
         <h2 className="font-bold text-lg">
+          {`${step + 1}.  `}
           {t(`titleStep${parseInt(step + 1)}`)}
         </h2>
       </div>
