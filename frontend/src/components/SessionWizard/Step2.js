@@ -122,11 +122,18 @@ const StepTwo = ({ patSession = {} }, ref) => {
     const newScores = scores.filter((s) => !s?.id);
 
     try {
-      let resData = [];
+      let decisionScores = decisions?.flatMap((d) =>
+        d?.scores?.map((s) => ({ ...s, decision_id: d?.id }))
+      );
+
       if (updateScores.length) {
-        resData = await api("PUT", "/participant-decisions", {
+        await api("PUT", "/participant-decisions", {
           session_id: patSession?.id,
           scores: updateScores,
+        });
+        decisionScores = decisionScores.map((s) => {
+          const fs = updateScores.find((u) => u?.id === s?.id);
+          return fs ? { ...s, ...fs } : s;
         });
       }
 
@@ -135,11 +142,11 @@ const StepTwo = ({ patSession = {} }, ref) => {
           session_id: patSession?.id,
           scores: newScores,
         });
-        resData = [...resData, ...newItems];
+        decisionScores = [...decisionScores, ...newItems];
       }
       const decisionPayload = decisions.map((d) => ({
         ...d,
-        scores: resData.filter((r) => r?.decision_id === d?.id),
+        scores: decisionScores.filter((s) => s?.decision_id === d?.id),
       }));
 
       sessionDispatch({
@@ -149,6 +156,10 @@ const StepTwo = ({ patSession = {} }, ref) => {
 
       sessionDispatch({
         type: "STOP_LOADING",
+      });
+
+      sessionDispatch({
+        type: "STEP_NEXT",
       });
     } catch (err) {
       console.error(err);
