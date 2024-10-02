@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { Button, Space } from "antd";
+import { useRef, useState, useEffect } from "react";
+import { Button, Form, Space } from "antd";
 import { useTranslations } from "next-intl";
 import classNames from "classnames";
 import { useRouter } from "@/routing";
@@ -24,16 +24,16 @@ const SessionWizard = ({ patSession }) => {
   const formRef = useRef();
   const t = useTranslations("Session");
 
-  const onClickNext = () => {
-    sessionDispatch({
-      type: "LOADING_TRUE",
-    });
+  const onClickNext = async () => {
     if (formRef?.current) {
-      formRef.current.submit();
-      if (!loading) {
+      try {
+        await formRef.current.validateFields();
+        formRef.current.submit();
         sessionDispatch({
-          type: "STEP_NEXT",
+          type: "LOADING_TRUE",
         });
+      } catch ({ errorFields }) {
+        formRef.current.setFields(errorFields);
       }
     } else {
       sessionDispatch({
@@ -42,14 +42,19 @@ const SessionWizard = ({ patSession }) => {
     }
   };
 
-  const onClickSave = () => {
-    sessionDispatch({
-      type: "SAVING_TRUE",
-    });
-    if (formRef?.current) {
-      formRef.current.submit();
-      if (!saving) {
-        router.push("/dashboard");
+  const onClickSave = async () => {
+    if (formRef.current) {
+      try {
+        await formRef.current.validateFields();
+        formRef.current.submit();
+        sessionDispatch({
+          type: "SAVING_TRUE",
+        });
+        if (!saving) {
+          router.push("/dashboard");
+        }
+      } catch ({ errorFields }) {
+        formRef.current.setFields(errorFields);
       }
     } else {
       router.push("/dashboard");
