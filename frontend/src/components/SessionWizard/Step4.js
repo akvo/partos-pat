@@ -24,74 +24,67 @@ const StepFour = ({ patSession = {} }, ref) => {
   }, [decisions, patSession]);
 
   const onFinish = async (values) => {
+    const scores = values.scores.flatMap((v) => {
+      return Object.keys(v)
+        .filter((k) => k?.includes("desired."))
+        .map((k) => {
+          const [_, organization_id] = k.split(".");
+          const score_id = v[`desired_id_${organization_id}`];
+          const r = {
+            organization_id: parseInt(organization_id, 10),
+            decision_id: v["id"],
+            score: v[k],
+            desired: true,
+          };
+          if (score_id) {
+            return { id: score_id, ...r };
+          }
+          return r;
+        });
+    });
+    const updateScores = scores.filter((s) => s?.id);
+    const newScores = scores.filter((s) => !s?.id);
+
     try {
-      const scores = values.scores.flatMap((v) => {
-        return Object.keys(v)
-          .filter((k) => k?.includes("desired."))
-          .map((k) => {
-            const [_, organization_id] = k.split(".");
-            const score_id = v[`desired_id_${organization_id}`];
-            const r = {
-              organization_id: parseInt(organization_id, 10),
-              decision_id: v["id"],
-              score: v[k],
-              desired: true,
-            };
-            if (score_id) {
-              return { id: score_id, ...r };
-            }
-            return r;
-          });
-      });
-      const updateScores = scores.filter((s) => s?.id);
-      const newScores = scores.filter((s) => !s?.id);
+      let decisionScores = decisions?.flatMap((d) =>
+        d?.scores?.map((s) => ({ ...s, decision_id: d?.id }))
+      );
 
-      try {
-        let decisionScores = decisions?.flatMap((d) =>
-          d?.scores?.map((s) => ({ ...s, decision_id: d?.id }))
-        );
-
-        if (updateScores.length) {
-          await api("PUT", "/participant-decisions", {
-            session_id: patSession?.id,
-            scores: updateScores,
-          });
-          decisionScores = decisionScores.map((s) => {
-            const fs = updateScores.find((u) => u?.id === s?.id);
-            return fs ? { ...s, ...fs } : s;
-          });
-        }
-
-        if (newScores.length) {
-          const newItems = await api("POST", "/participant-decisions", {
-            session_id: patSession?.id,
-            scores: newScores,
-          });
-          decisionScores = [...decisionScores, ...newItems];
-        }
-        const decisionPayload = decisions.map((d) => ({
-          ...d,
-          scores: decisionScores.filter((s) => s?.decision_id === d?.id),
-        }));
-
-        sessionDispatch({
-          type: "DECISION_UPDATE",
-          payload: decisionPayload,
+      if (updateScores.length) {
+        await api("PUT", "/participant-decisions", {
+          session_id: patSession?.id,
+          scores: updateScores,
         });
-
-        sessionDispatch({
-          type: "STOP_LOADING",
-        });
-
-        sessionDispatch({
-          type: "STEP_NEXT",
-        });
-      } catch (err) {
-        console.error(err);
-        sessionDispatch({
-          type: "STOP_LOADING",
+        decisionScores = decisionScores.map((s) => {
+          const fs = updateScores.find((u) => u?.id === s?.id);
+          return fs ? { ...s, ...fs } : s;
         });
       }
+
+      if (newScores.length) {
+        const newItems = await api("POST", "/participant-decisions", {
+          session_id: patSession?.id,
+          scores: newScores,
+        });
+        decisionScores = [...decisionScores, ...newItems];
+      }
+      const decisionPayload = decisions.map((d) => ({
+        ...d,
+        scores: decisionScores.filter((s) => s?.decision_id === d?.id),
+      }));
+
+      sessionDispatch({
+        type: "DECISION_UPDATE",
+        payload: decisionPayload,
+      });
+
+      sessionDispatch({
+        type: "STOP_LOADING",
+      });
+
+      sessionDispatch({
+        type: "STEP_NEXT",
+      });
     } catch (err) {
       console.error(err);
       sessionDispatch({
@@ -103,7 +96,7 @@ const StepFour = ({ patSession = {} }, ref) => {
   const t = useTranslations("Session");
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-6">
       <p>{t("step4Desc")}</p>
       <Form
         ref={ref}
@@ -214,7 +207,7 @@ const StepFour = ({ patSession = {} }, ref) => {
           </Form.List>
         )}
       </Form>
-      <div className="pt-6">
+      <div className="pt-4">
         <div className="py-2 border-dashed border-t border-dark-2" />
       </div>
       <ScoreLegend />
