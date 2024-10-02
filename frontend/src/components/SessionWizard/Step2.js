@@ -186,7 +186,7 @@ const StepTwo = ({ patSession = {} }, ref) => {
   const t = useTranslations("Session");
   return (
     <div className="w-full space-y-6">
-      <div className="w-full space-y-4 whitespace-pre-line">
+      <div className="w-full space-y-2 whitespace-pre-line">
         <strong>{t("step2Title")}</strong>
         <p>{t("step2Desc")}</p>
         <ul className="list-disc ml-4">

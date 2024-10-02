@@ -117,7 +117,7 @@ const StepThree = ({ patSession = {} }, ref) => {
         score: col.editable ? record?.[`id_${col.dataIndex}`] : null,
       }),
     }));
-  }, [patSession]);
+  }, [patSession, t]);
 
   const dataSource = useMemo(() => {
     return decisionsToTable(decisions, patSession?.organizations);
@@ -168,7 +168,7 @@ const StepThree = ({ patSession = {} }, ref) => {
   }, [preload, ref, decisions]);
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-6">
       <p className="w-full whitespace-pre-line">{t("step3Desc")}</p>
       <Form
         ref={ref}
@@ -191,7 +191,7 @@ const StepThree = ({ patSession = {} }, ref) => {
           pagination={false}
         />
       </Form>
-      <div className="pt-6">
+      <div className="pt-4">
         <div className="py-2 border-dashed border-t border-dark-2" />
       </div>
       <ScoreLegend />

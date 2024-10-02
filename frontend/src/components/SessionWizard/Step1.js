@@ -105,7 +105,7 @@ const StepOne = ({ patSession }, ref) => {
 
   return (
     <div className="w-full space-y-6">
-      <div className="w-full space-y-4 whitespace-pre-line">
+      <div className="w-full space-y-2 whitespace-pre-line">
         <strong>{t("step1Title")}</strong>
         <p>{t("step1Desc")}</p>
       </div>
