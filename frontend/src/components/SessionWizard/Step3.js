@@ -191,6 +191,9 @@ const StepThree = ({ patSession = {} }, ref) => {
           pagination={false}
         />
       </Form>
+      <div className="pt-6">
+        <div className="py-2 border-dashed border-t border-dark-2" />
+      </div>
       <ScoreLegend />
     </div>
   );
