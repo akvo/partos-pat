@@ -230,19 +230,19 @@
     font-size: 12px;
   }
   .ant-table-cell.td-yes:last-child,
-  .td-yes {
+  div.td-yes {
     background-color: #f7fffb;
   }
   .ant-table-cell.td-yes:last-child .ant-select-selection-item,
-  .td-yes {
+  div.td-yes {
     color: #025830;
   }
   .ant-table-cell.td-no:last-child,
-  .td-no {
+  div.td-no {
     background-color: #fff9f9;
   }
   .ant-table-cell.td-no:last-child .ant-select-selection-item,
-  .td-no {
+  div.td-no {
     color: #8e0000;
   }
 }
