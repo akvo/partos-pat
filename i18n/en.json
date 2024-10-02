@@ -59,7 +59,7 @@
 		"null": "{field_title} may not be null.",
 		"500": "Internal Server Error. Please try again later.",
 		"invalidLogin": "Invalid login credentials",
-		"maxChar": "{field_title} must be {number} characters"
+		"maxChar": "{field_title} must be up to {number} characters"
 	},
 	"Login": {
 		"loginText": "Login",
