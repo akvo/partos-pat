@@ -137,6 +137,9 @@ const StepThree = ({ patSession = {} }, ref) => {
       sessionDispatch({
         type: "STOP_LOADING",
       });
+      sessionDispatch({
+        type: "STEP_NEXT",
+      });
     } catch (err) {
       console.error(err);
       sessionDispatch({
