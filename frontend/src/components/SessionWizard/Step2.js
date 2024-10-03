@@ -9,6 +9,7 @@ import {
 } from "@/context/SessionContextProvider";
 import { api, decisionsToTable } from "@/lib";
 import classNames from "classnames";
+import ScoreLegend from "./ScoreLegend";
 
 const EditableCell = ({
   dataIndex,
@@ -207,13 +208,9 @@ const StepTwo = ({ patSession = {} }, ref) => {
       <div className="w-full space-y-2 whitespace-pre-line">
         <strong>{t("step2Title")}</strong>
         <p>{t("step2Desc")}</p>
-        <ul className="list-disc ml-4">
-          <li>{t("score4")}</li>
-          <li>{t("score3")}</li>
-          <li>{t("score2")}</li>
-          <li>{t("score1")}</li>
-          <li>{t("score0")}</li>
-        </ul>
+        <div className="pt-3">
+          <ScoreLegend />
+        </div>
       </div>
       <Form ref={ref} component={false} onFinish={onFinish}>
         <Table
