@@ -162,7 +162,6 @@ const JoinModal = () => {
                   variant="borderless"
                   type="hidden"
                   placeholder={t("selectRole")}
-                  htmlType="hidden"
                 />
               </Form.Item>
             )}
