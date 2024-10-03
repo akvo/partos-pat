@@ -245,6 +245,19 @@
   div.td-no {
     color: #8e0000;
   }
+  .ant-alert {
+    gap: 12px;
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .ant-alert-error {
+    background-color: #faeded;
+    color: #370000;
+    border: none;
+  }
+  .ant-alert-error svg {
+    color: #a70000;
+  }
 }
 
 body {
