@@ -500,11 +500,14 @@ class ParticipantCommentViewSet(ModelViewSet):
     pagination_class = Pagination
 
     def get_queryset(self):
+        queryset = ParticipantComment.objects.order_by("-id")
+
         session_id = self.kwargs.get('session_id')
-        queryset = ParticipantComment.objects.filter(
-            session_id=session_id,
-        )
-        return queryset.order_by("id")
+        if session_id:
+            queryset = ParticipantComment.objects.filter(
+                session_id=session_id,
+            ).order_by("-id")
+        return queryset
 
 
 @extend_schema(

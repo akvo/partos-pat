@@ -70,26 +70,6 @@ const StepOne = ({ patSession }, ref) => {
   };
 
   const loadDecisions = useCallback(async () => {
-    if (!fetched) {
-      try {
-        const resData = await api(
-          "GET",
-          `/decisions?session_id=${patSession.id}`
-        );
-        ref.current.setFieldValue("decisions", resData);
-        sessionDispatch({
-          type: "DECISION_UPDATE",
-          payload: resData,
-        });
-        sessionDispatch({
-          type: "DECISION_FETCHED",
-        });
-      } catch {
-        sessionDispatch({
-          type: "DECISION_FETCHED",
-        });
-      }
-    }
     if (
       fetched &&
       decisions?.length &&
@@ -97,7 +77,7 @@ const StepOne = ({ patSession }, ref) => {
     ) {
       ref.current.setFieldValue("decisions", decisions);
     }
-  }, [patSession, ref, decisions, fetched, sessionDispatch]);
+  }, [ref, decisions, fetched]);
 
   useEffect(() => {
     loadDecisions();

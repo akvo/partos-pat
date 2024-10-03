@@ -1,13 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { Button, Form, Space } from "antd";
+import { useRef, useCallback, useEffect } from "react";
+import { Button, Space } from "antd";
 import { useTranslations } from "next-intl";
 import classNames from "classnames";
 import { useRouter } from "@/routing";
 import { openSans } from "@/app/fonts";
 
-import { ArrowFatIcon, FileArrowUpIcon } from "../Icons";
+import { ArrowFatIcon } from "../Icons";
 import SessionContent from "./SessionContent";
 import SessionSteps from "./SessionSteps";
 import { PAT_SESSION } from "@/static/config";
@@ -16,10 +16,14 @@ import {
   useSessionDispatch,
 } from "@/context/SessionContextProvider";
 import { PublishModal } from "../Modals";
+import { api } from "@/lib";
 
 const SessionWizard = ({ patSession }) => {
   const sessionDispatch = useSessionDispatch();
-  const { loading, saving, step } = useSessionContext();
+  const sessionContext = useSessionContext();
+  const { loading, saving, step } = sessionContext;
+  const { fetched } = sessionContext.decisions;
+  const { fetched: commentFetched } = sessionContext.comments;
 
   const router = useRouter();
   const formRef = useRef();
@@ -53,6 +57,9 @@ const SessionWizard = ({ patSession }) => {
         });
         if (!saving) {
           router.push("/dashboard");
+          sessionDispatch({
+            type: "RESET",
+          });
         }
       } catch ({ errorFields }) {
         formRef.current.setFields(errorFields);
@@ -61,6 +68,76 @@ const SessionWizard = ({ patSession }) => {
       router.push("/dashboard");
     }
   };
+
+  const onPublish = async () => {
+    if (formRef.current) {
+      try {
+        await formRef.current.validateFields();
+        formRef.current.submit();
+      } catch ({ errorFields }) {
+        formRef.current.setFields(errorFields);
+      }
+    }
+  };
+
+  const loadDecisions = useCallback(async () => {
+    if (!fetched && patSession?.id) {
+      try {
+        const resData = await api(
+          "GET",
+          `/decisions?session_id=${patSession.id}`
+        );
+        sessionDispatch({
+          type: "DECISION_UPDATE",
+          payload: resData,
+        });
+        sessionDispatch({
+          type: "DECISION_FETCHED",
+        });
+      } catch {
+        sessionDispatch({
+          type: "DECISION_FETCHED",
+        });
+      }
+    }
+  }, [patSession, fetched, sessionDispatch]);
+
+  const loadComments = useCallback(async () => {
+    if (!commentFetched && patSession?.id) {
+      try {
+        const { data: dataComments } = await api(
+          "GET",
+          `/session/${patSession.id}/comments`
+        );
+        sessionDispatch({
+          type: "COMMENT_UPDATE",
+          payload: dataComments,
+        });
+        sessionDispatch({
+          type: "COMMENT_FETCHED",
+        });
+      } catch (err) {
+        console.error(err);
+        sessionDispatch({
+          type: "COMMENT_FETCHED",
+        });
+      }
+    }
+  }, [patSession, commentFetched, sessionDispatch]);
+
+  /**
+   * Get all session decisions
+   */
+  useEffect(() => {
+    loadDecisions();
+  }, [loadDecisions]);
+
+  /**
+   * Get all session comments
+   */
+  useEffect(() => {
+    loadComments();
+  }, [loadComments]);
 
   return (
     <>
@@ -115,7 +192,7 @@ const SessionWizard = ({ patSession }) => {
               </Button>
               <div className="min-w-32">
                 {step === PAT_SESSION.totalSteps - 1 ? (
-                  <PublishModal onPublish={onClickSave} />
+                  <PublishModal onPublish={onPublish} patSession={patSession} />
                 ) : (
                   <Button
                     type="primary"

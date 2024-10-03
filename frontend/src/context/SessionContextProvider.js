@@ -12,7 +12,10 @@ const initialValues = {
     fetched: false,
     summary: null,
     notes: null,
-    comments: [],
+  },
+  comments: {
+    fetched: false,
+    data: [],
   },
   decisions: {
     fetched: false,
@@ -63,6 +66,25 @@ const patSessionReducer = (state, action) => {
           data: action?.payload || state.decisions.data,
         },
       };
+
+    case "COMMENT_FETCHED":
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          fetched: true,
+        },
+      };
+
+    case "COMMENT_UPDATE":
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          data: action?.payload || state.comments.data,
+        },
+      };
+
     case "RESET":
       return initialValues;
     case "STEP_NEXT":

@@ -28,7 +28,7 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
               <Flex align="center" justify="space-between">
                 <div>
                   <Title level={4}>{item?.session_name}</Title>
-                  <Text>{item?.context}</Text>
+                  <Text className="line-clamp-3">{item?.context}</Text>
                 </div>
                 <div>
                   <Button type="link">
