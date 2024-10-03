@@ -229,6 +229,10 @@
     font-weight: 700;
     font-size: 12px;
   }
+  .pat-publish-row td.ant-table-cell {
+    font-size: inherit;
+    padding: 10px;
+  }
   .ant-table-cell.td-yes:last-child,
   div.td-yes {
     background-color: #f7fffb;

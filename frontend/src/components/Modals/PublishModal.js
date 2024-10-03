@@ -27,6 +27,7 @@ const TableCell = ({
   record,
   children,
   className,
+  index,
   ...restProps
 }) => {
   const t = useTranslations("Session");
@@ -53,6 +54,9 @@ const TableCell = ({
       })}
       {...restProps}
     >
+      {dataIndex === "name" && (
+        <strong className="font-bold">{`${t("decision")} ${index + 1} : `}</strong>
+      )}
       {dataIndex === "agree" ? t("yes") : children}
     </td>
   );
@@ -96,7 +100,8 @@ const PublishModal = ({ patSession, onPublish }) => {
       },
     ].map((col) => ({
       ...col,
-      onCell: (record) => ({
+      onCell: (record, index) => ({
+        index,
         record,
         dataIndex: col.dataIndex,
       }),
@@ -209,7 +214,7 @@ const PublishModal = ({ patSession, onPublish }) => {
           onFinish={onFinish}
           form={form}
           layout="vertical"
-          className="space-y-6"
+          className="text-base space-y-6"
         >
           <h1 className="font-bold text-xl mb-6">{t("publishPAT")}</h1>
 
@@ -245,7 +250,7 @@ const PublishModal = ({ patSession, onPublish }) => {
               rowKey="id"
               dataSource={dataSource}
               columns={columns}
-              rowClassName="editable-row"
+              rowClassName="pat-publish-row"
               pagination={false}
             />
           </Skeleton>
