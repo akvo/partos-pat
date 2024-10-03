@@ -1,16 +1,32 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Form, Input } from "antd";
-import { useSessionDispatch } from "@/context/SessionContextProvider";
+import {
+  useSessionContext,
+  useSessionDispatch,
+} from "@/context/SessionContextProvider";
 import { api } from "@/lib";
+import { useUserContext } from "@/context/UserContextProvider";
 
 const { TextArea } = Input;
 
 const StepSix = ({ patSession }, ref) => {
   const t = useTranslations("Session");
   const sessionDispatch = useSessionDispatch();
+  const sessionContext = useSessionContext();
+  const userContext = useUserContext();
+  const { data: comments } = sessionContext?.comments || { data: [] };
+  const initialValues = useMemo(() => {
+    if (patSession?.is_owner) {
+      return {
+        notes: patSession?.notes,
+        summary: patSession?.summary,
+      };
+    }
+    return comments?.find((c) => c?.user_id === userContext?.id);
+  }, [patSession, userContext, comments]);
 
   const onFinish = async (values) => {
     try {
@@ -25,9 +41,16 @@ const StepSix = ({ patSession }, ref) => {
       }
 
       if (values?.comment) {
-        await api("POST", `/session/${patSession.id}/comments`, {
-          comment: values.comment,
-        });
+        if (values?.id) {
+          await api("PUT", `/comments/${values.id}`, {
+            comment: values.comment,
+          });
+        } else {
+          await api("POST", `/session/${patSession.id}/comments`, {
+            comment: values.comment,
+          });
+        }
+
         sessionDispatch({
           type: "STOP_LOADING",
         });
@@ -45,10 +68,7 @@ const StepSix = ({ patSession }, ref) => {
       {patSession?.is_owner && <strong>{t("step6Title")}</strong>}
       <Form
         layout="vertical"
-        initialValues={{
-          notes: patSession?.notes,
-          summary: patSession?.summary,
-        }}
+        initialValues={initialValues}
         onFinish={onFinish}
         ref={ref}
       >
@@ -58,6 +78,11 @@ const StepSix = ({ patSession }, ref) => {
             label={<div className="py-4">{t("step6Comment")}</div>}
           >
             <TextArea placeholder={t("step6CommentPlaceholder")} rows={6} />
+          </Form.Item>
+        )}
+        {!patSession?.is_owner && (
+          <Form.Item name="id">
+            <Input type="hidden" />
           </Form.Item>
         )}
         {patSession?.is_owner && (

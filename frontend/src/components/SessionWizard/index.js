@@ -56,10 +56,10 @@ const SessionWizard = ({ patSession }) => {
           type: "SAVING_TRUE",
         });
         if (!saving) {
+          router.push("/dashboard");
           sessionDispatch({
             type: "RESET",
           });
-          router.push("/dashboard");
         }
       } catch ({ errorFields }) {
         formRef.current.setFields(errorFields);
@@ -105,13 +105,13 @@ const SessionWizard = ({ patSession }) => {
   const loadComments = useCallback(async () => {
     if (!commentFetched && patSession?.id) {
       try {
-        const resComments = await api(
+        const { data: dataComments } = await api(
           "GET",
           `/session/${patSession.id}/comments`
         );
         sessionDispatch({
           type: "COMMENT_UPDATE",
-          payload: resComments,
+          payload: dataComments,
         });
         sessionDispatch({
           type: "COMMENT_FETCHED",
@@ -192,10 +192,7 @@ const SessionWizard = ({ patSession }) => {
               </Button>
               <div className="min-w-32">
                 {step === PAT_SESSION.totalSteps - 1 ? (
-                  <PublishModal
-                    onPublish={onPublish}
-                    patSession={patSession}
-                  />
+                  <PublishModal onPublish={onPublish} patSession={patSession} />
                 ) : (
                   <Button
                     type="primary"
