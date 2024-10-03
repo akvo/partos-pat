@@ -599,6 +599,5 @@ class ParticipantCommentSerializer(serializers.ModelSerializer):
         return instance
 
     def update(self, instance, validated_data):
-        instance.comment = validated_data["comment"]
-        instance.save()
+        instance = super().update(instance, validated_data)
         return instance

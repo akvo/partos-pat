@@ -37,6 +37,10 @@ urlpatterns = [
     ),
     re_path(
         r"^(?P<version>(v1))/session/(?P<session_id>[0-9]+)/comments",
-        ParticipantCommentViewSet.as_view({'get': 'list', 'post': 'create'})
+        ParticipantCommentViewSet.as_view({"get": "list", "post": "create"})
+    ),
+    re_path(
+        r"^(?P<version>(v1))/comments/(?P<pk>[0-9]+)",
+        ParticipantCommentViewSet.as_view({"put": "update"})
     ),
 ]
