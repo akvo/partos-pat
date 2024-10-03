@@ -8,6 +8,7 @@ import {
   useSessionDispatch,
 } from "@/context/SessionContextProvider";
 import { api, decisionsToTable } from "@/lib";
+import classNames from "classnames";
 
 const EditableCell = ({
   dataIndex,
@@ -16,14 +17,26 @@ const EditableCell = ({
   children,
   editable,
   score,
+  className,
   ...restProps
 }) => {
   const fieldName = score
     ? [record?.id, dataIndex, score].join(".")
     : [record?.id, dataIndex].join(".");
+  const actualValue = record?.[dataIndex] || null;
   const t_error = useTranslations("Error");
   return (
-    <td {...restProps}>
+    <td
+      className={classNames({
+        [className]: typeof dataIndex !== "number",
+        "bg-score-4": actualValue === 4,
+        "bg-score-3": actualValue === 3,
+        "bg-score-2": actualValue === 2,
+        "bg-score-1": actualValue === 1,
+        "bg-light-1": actualValue === 0,
+      })}
+      {...restProps}
+    >
       {editable ? (
         <Form.Item
           name={fieldName}
@@ -69,7 +82,7 @@ const StepTwo = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: true,
       key: o?.id,
-      width: "80px",
+      width: "100px",
     }));
     return [
       {
