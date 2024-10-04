@@ -8,7 +8,7 @@ const ProfileAvatar = ({ large = false }) => {
   const userContext = useUserContext();
 
   const { full_name, email } = userContext;
-  const [firstName, lastName] = full_name?.split(/\s/g);
+  const [firstName, lastName] = full_name ? full_name.split(/\s/g) : [];
 
   return (
     <Space size={large ? "large" : "small"}>
