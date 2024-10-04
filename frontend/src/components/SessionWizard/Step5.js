@@ -81,116 +81,116 @@ const StepFive = ({ patSession = {} }, ref) => {
         onFinish={onFinish}
       >
         {(_, formInstance) => (
-          <Form.List name="decisions">
-            {(fields) => (
-              <div className="w-full text-sm space-y-8">
-                {fields.map(({ key, name, ...restField }) => {
-                  return (
-                    <div key={key} className="w-full space-y-6">
-                      <div className="w-full flex items-end justify-between border-b border-b-grey-100">
-                        <div className="w-full lg:w-1/2 p-1">
-                          {formInstance.getFieldValue([
-                            "decisions",
-                            name,
-                            "name",
-                          ])}
+          <div className="w-full overflow-hidden">
+            <Form.List name="decisions">
+              {(fields) => (
+                <div className="w-full text-sm space-y-8">
+                  {fields.map(({ key, name, ...restField }) => {
+                    return (
+                      <div key={key} className="w-full space-y-6">
+                        <div className="w-full flex items-end justify-between border-b border-b-grey-100 relative overflow-x-auto">
+                          <div className="w-full lg:min-w-[432px] min-h-32 sticky left-0 z-20 bg-light-1 flex flex-col justify-end p-1">
+                            {formInstance.getFieldValue([
+                              "decisions",
+                              name,
+                              "name",
+                            ])}
+                          </div>
+                          <div className="w-fit flex flex-col">
+                            <div className="flex items-center justify-end font-bold bg-light-grey-7">
+                              {patSession?.organizations?.map((org) => {
+                                return (
+                                  <div
+                                    key={org.id}
+                                    className="w-24 p-2 border-x border-x-light-1"
+                                  >
+                                    {org.acronym}
+                                  </div>
+                                );
+                              })}
+                              <div className="w-24 p-2 border-x border-x-light-1">
+                                {t("agree")}
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-end font-bold">
+                              {patSession?.organizations?.map((org) => {
+                                const actualValue = formInstance.getFieldValue([
+                                  "decisions",
+                                  name,
+                                  org.id,
+                                ]);
+                                return (
+                                  <div
+                                    key={org.id}
+                                    className={classNames(
+                                      "w-24 p-2 border-x border-x-light-1",
+                                      {
+                                        "bg-score-4": actualValue === 4,
+                                        "bg-score-3": actualValue === 3,
+                                        "bg-score-2": actualValue === 2,
+                                        "bg-score-1": actualValue === 1,
+                                        "bg-light-1": actualValue === 0,
+                                      }
+                                    )}
+                                  >
+                                    {actualValue}
+                                  </div>
+                                );
+                              })}
+                              <div className="w-24 p-2 border-x border-x-light-1 td-no">
+                                {t("no")}
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-end">
+                              {patSession?.organizations?.map((org) => {
+                                const desiredValue = formInstance.getFieldValue(
+                                  ["decisions", name, `desired.${org.id}`]
+                                );
+                                return (
+                                  <div
+                                    key={org.id}
+                                    className={classNames(
+                                      "w-24 p-2 border-x border-x-light-1",
+                                      {
+                                        "bg-score-4": desiredValue === 4,
+                                        "bg-score-3": desiredValue === 3,
+                                        "bg-score-2": desiredValue === 2,
+                                        "bg-score-1": desiredValue === 1,
+                                        "bg-light-1": desiredValue === 0,
+                                      }
+                                    )}
+                                  >
+                                    {desiredValue}
+                                  </div>
+                                );
+                              })}
+                              <div className="w-24 p-2 border-x border-x-light-1 td-yes">
+                                {t("yes")}
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div className="w-fit flex flex-col">
-                          <div className="flex items-center justify-end font-bold bg-light-grey-7">
-                            {patSession?.organizations?.map((org) => {
-                              return (
-                                <div
-                                  key={org.id}
-                                  className="w-20 px-2 py-1 border-x border-x-light-1"
-                                >
-                                  {org.acronym}
-                                </div>
-                              );
-                            })}
-                            <div className="w-20 px-2 py-1 border-x border-x-light-1">
-                              {t("agree")}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-end font-bold">
-                            {patSession?.organizations?.map((org) => {
-                              const actualValue = formInstance.getFieldValue([
-                                "decisions",
-                                name,
-                                org.id,
-                              ]);
-                              return (
-                                <div
-                                  key={org.id}
-                                  className={classNames(
-                                    "w-20 px-2 py-1 border-x border-x-light-1",
-                                    {
-                                      "bg-score-4": actualValue === 4,
-                                      "bg-score-3": actualValue === 3,
-                                      "bg-score-2": actualValue === 2,
-                                      "bg-score-1": actualValue === 1,
-                                      "bg-light-1": actualValue === 0,
-                                    }
-                                  )}
-                                >
-                                  {actualValue}
-                                </div>
-                              );
-                            })}
-                            <div className="w-20 px-2 py-1 border-x border-x-light-1 td-no">
-                              {t("no")}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-end">
-                            {patSession?.organizations?.map((org) => {
-                              const desiredValue = formInstance.getFieldValue([
-                                "decisions",
-                                name,
-                                `desired.${org.id}`,
-                              ]);
-                              return (
-                                <div
-                                  key={org.id}
-                                  className={classNames(
-                                    "w-20 px-2 py-1 border-x border-x-light-1",
-                                    {
-                                      "bg-score-4": desiredValue === 4,
-                                      "bg-score-3": desiredValue === 3,
-                                      "bg-score-2": desiredValue === 2,
-                                      "bg-score-1": desiredValue === 1,
-                                      "bg-light-1": desiredValue === 0,
-                                    }
-                                  )}
-                                >
-                                  {desiredValue}
-                                </div>
-                              );
-                            })}
-                            <div className="w-20 px-2 py-1 border-x border-x-light-1 td-yes">
-                              {t("yes")}
-                            </div>
-                          </div>
-                        </div>
+                        <Form.Item
+                          {...restField}
+                          name={[name, "notes"]}
+                          rules={[
+                            {
+                              required: true,
+                              message: t_error("required", {
+                                field_title: t("notes"),
+                              }),
+                            },
+                          ]}
+                        >
+                          <TextArea rows={3} placeholder={t("notes")} />
+                        </Form.Item>
                       </div>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "notes"]}
-                        rules={[
-                          {
-                            required: true,
-                            message: t_error("required", {
-                              field_title: t("notes"),
-                            }),
-                          },
-                        ]}
-                      >
-                        <TextArea rows={3} placeholder={t("notes")} />
-                      </Form.Item>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </Form.List>
+                    );
+                  })}
+                </div>
+              )}
+            </Form.List>
+          </div>
         )}
       </Form>
       <div className="pt-4">
