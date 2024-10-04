@@ -11,16 +11,19 @@ import {
 import { api, decisionsToTable } from "@/lib";
 import ScoreLegend from "./ScoreLegend";
 
-const EditableCell = ({
-  dataIndex,
-  title,
-  record,
-  children,
-  editable,
-  score,
-  className,
-  ...restProps
-}) => {
+const EditableCell = (
+  {
+    dataIndex,
+    title,
+    record,
+    children,
+    editable,
+    score,
+    className,
+    ...restProps
+  },
+  formInstance
+) => {
   const t = useTranslations("Session");
   const t_error = useTranslations("Error");
 
@@ -40,11 +43,13 @@ const EditableCell = ({
       </td>
     );
   }
+
+  const agreeValue = formInstance.getFieldValue(record.id);
   return (
     <td
       className={classNames(className, {
-        "td-yes": record?.agree === true,
-        "td-no": record?.agree === false,
+        "td-yes": agreeValue === 1,
+        "td-no": agreeValue === 0,
       })}
       {...restProps}
     >
@@ -94,13 +99,14 @@ const StepThree = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: false,
       key: o?.id,
-      width: "80px",
+      className: "pat-org"
     }));
     return [
       {
         dataIndex: "name",
         editable: false,
         key: "name",
+        width: 432,
         fixed: "left",
       },
       ...orgs,
@@ -109,7 +115,7 @@ const StepThree = ({ patSession = {} }, ref) => {
         dataIndex: "agree",
         editable: true,
         key: "agree",
-        width: "80px",
+        width: "100px",
       },
     ].map((col) => ({
       ...col,
@@ -187,7 +193,7 @@ const StepThree = ({ patSession = {} }, ref) => {
         <Table
           components={{
             body: {
-              cell: EditableCell,
+              cell: (props) => EditableCell(props, ref.current),
             },
           }}
           rowKey="id"
@@ -195,6 +201,9 @@ const StepThree = ({ patSession = {} }, ref) => {
           columns={columns}
           rowClassName="editable-row"
           pagination={false}
+          scroll={{
+            x: "max-content",
+          }}
         />
       </Form>
       <div className="pt-4">
