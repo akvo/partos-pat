@@ -131,7 +131,7 @@ const StepOne = ({ patSession }, ref) => {
                         ]}
                       >
                         <Input
-                          placeholder={`${t("decision")} ${key + 1}`}
+                          placeholder={t("step1Placeholder")}
                           variant="borderless"
                         />
                       </Form.Item>
