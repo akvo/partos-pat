@@ -64,6 +64,7 @@ export const PAT_SESSION = {
   maxPartners: 10,
   maxDecisions: 15,
   totalSteps: 6,
+  maxAcronym: 16,
 };
 
 export const PAT_LANGS = [
