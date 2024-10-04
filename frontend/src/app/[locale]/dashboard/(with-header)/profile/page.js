@@ -7,7 +7,9 @@ import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 import { Button, Card, Form, Input, Select, Space } from "antd";
 import { useTranslations } from "next-intl";
 import countryOptions from "../../../../../../i18n/countries.json";
-import { useUserContext } from "@/context/UserContextProvider";
+import { useUserContext, useUserDispatch } from "@/context/UserContextProvider";
+import { useState } from "react";
+import { api } from "@/lib";
 
 const { useForm } = Form;
 
@@ -16,7 +18,10 @@ const ProfilePage = () => {
   const t_register = useTranslations("Register");
   const tc = useTranslations("common");
 
+  const [loading, setLoading] = useState(false);
+
   const userContext = useUserContext();
+  const userDispatch = useUserDispatch();
   const router = useRouter();
   const [form] = useForm();
 
@@ -30,8 +35,19 @@ const ProfilePage = () => {
     value: PURPOSE_OF_ACCOUNT?.[k],
   }));
 
-  const onFinish = (values) => {
-    console.log("val", values);
+  const onFinish = async (payload) => {
+    setLoading(true);
+    try {
+      await api("PUT", "/users/me", payload);
+      userDispatch({
+        type: "UPDATE",
+        payload,
+      });
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -134,6 +150,7 @@ const ProfilePage = () => {
               iconPosition="end"
               htmlType="submit"
               className="min-w-28"
+              loading={loading}
             >
               {t("save")}
             </Button>
