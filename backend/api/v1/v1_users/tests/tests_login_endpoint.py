@@ -30,7 +30,10 @@ class LoginTestCase(TestCase):
         )
         self.assertEqual(
             list(res["user"]),
-            ["id", "full_name", "email", "gender", "country"]
+            [
+                "id", "full_name", "email", "gender",
+                "country", "account_purpose"
+            ]
         )
 
     def test_all_inputs_are_required(self):

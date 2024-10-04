@@ -27,11 +27,14 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Bearer {self.token}"
         )
-        self.assertTrue(req.status_code, 200)
+        self.assertEqual(req.status_code, 200)
         res = req.json()
         self.assertEqual(
             list(res),
-            ["id", "full_name", "email", "gender", "country"]
+            [
+                "id", "full_name", "email", "gender",
+                "country", "account_purpose"
+            ]
         )
         self.assertEqual(res["full_name"], "John Doe")
 
@@ -42,7 +45,7 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Bearer {self.token}"
         )
-        self.assertTrue(req.status_code, 401)
+        self.assertEqual(req.status_code, 401)
         res = req.json()
         self.assertEqual(
             res,

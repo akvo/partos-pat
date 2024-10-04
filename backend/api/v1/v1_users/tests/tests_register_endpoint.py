@@ -33,7 +33,10 @@ class RegistrationTestCase(TestCase):
         res = req.json()
         self.assertEqual(
             list(res),
-            ["id", "full_name", "email", "gender", "country"],
+            [
+                "id", "full_name", "email", "gender",
+                "country", "account_purpose"
+            ],
         )
         self.assertEqual(res["full_name"], "Jane Doe")
         self.assertEqual(res["email"], "user1@example.com")
