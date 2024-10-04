@@ -255,10 +255,10 @@
   th.pat-org {
     width: 96px;
   }
-  .pat-table table {
+  /* .pat-table table {
     min-width: 0 !important;
     width: fit-content;
-  }
+  } */
   .pat-table table td:first-of-type {
     max-width: 432px;
   }
