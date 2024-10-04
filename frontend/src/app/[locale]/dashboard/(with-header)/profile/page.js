@@ -10,6 +10,7 @@ import countryOptions from "../../../../../../i18n/countries.json";
 import { useUserContext, useUserDispatch } from "@/context/UserContextProvider";
 import { useState } from "react";
 import { api } from "@/lib";
+import { updateProfile } from "@/lib/auth";
 
 const { useForm } = Form;
 
@@ -39,6 +40,7 @@ const ProfilePage = () => {
     setLoading(true);
     try {
       await api("PUT", "/users/me", payload);
+      updateProfile(payload);
       userDispatch({
         type: "UPDATE",
         payload,
