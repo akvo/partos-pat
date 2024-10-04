@@ -4,7 +4,7 @@ from drf_spectacular.utils import (
     OpenApiParameter,
 )
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from drf_spectacular.types import OpenApiTypes
 from django.utils import timezone
@@ -13,6 +13,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
 
 from api.v1.v1_users.serializers import (
     RegisterSerializer,
@@ -22,6 +23,7 @@ from api.v1.v1_users.serializers import (
     ForgotPasswordSerializer,
     VerifyPasswordTokenSerializer,
     ResetPasswordSerializer,
+    UpdateUserSerializer,
 )
 from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import validate_serializers_message
@@ -31,7 +33,7 @@ from utils.email_helper import send_email, EmailTypes
 
 @extend_schema(
     request=RegisterSerializer,
-    responses={201: UserSerializer, 401: DefaultResponseSerializer},
+    responses={201: UserSerializer, 400: DefaultResponseSerializer},
     tags=["Auth"],
 )
 @api_view(["POST"])
@@ -246,14 +248,37 @@ def reset_password(request, version):
     )
 
 
-@extend_schema(
-    responses={200: UserSerializer},
-    tags=["Auth"],
-    summary="Get user details from token",
-)
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_profile(request, version):
-    return Response(
-        UserSerializer(instance=request.user).data, status=status.HTTP_200_OK
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        responses={200: UserSerializer},
+        tags=["Profile"],
+        summary="Get user profile",
     )
+    def get(self, request, version):
+        return Response(
+            UserSerializer(instance=request.user).data,
+            status=status.HTTP_200_OK
+        )
+
+    @extend_schema(
+        request=UpdateUserSerializer,
+        responses={200: UserSerializer, 400: DefaultResponseSerializer},
+        tags=["Profile"],
+        summary="Update user profile",
+    )
+    def put(self, request, version):
+        serializer = UpdateUserSerializer(
+            instance=request.user,
+            data=request.data
+        )
+        if not serializer.is_valid():
+            return Response(
+                {"message": validate_serializers_message(serializer.errors)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        user = serializer.save()
+        return Response(
+            UserSerializer(instance=user).data, status=status.HTTP_200_OK
+        )
