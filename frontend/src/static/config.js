@@ -44,6 +44,16 @@ export const DASHBOARD_MENU = [
   },
 ];
 
+export const BREADCRUMB_MENU = [
+  ...DASHBOARD_MENU,
+  {
+    id: 4,
+    name: "userProfile",
+    icon: null,
+    url: "/dashboard/profile",
+  },
+]
+
 export const SECTOR = {
   1: "Policy coherence",
   2: "International fair agreements",

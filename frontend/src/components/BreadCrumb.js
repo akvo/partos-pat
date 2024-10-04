@@ -3,13 +3,14 @@
 import { Link, usePathname } from "@/routing";
 import { useTranslations } from "next-intl";
 import HorizontalDivider from "./HorizontalDivider";
-import { DASHBOARD_MENU } from "@/static/config";
+import { BREADCRUMB_MENU } from "@/static/config";
 
 const BreadCrumb = () => {
   const t = useTranslations("Dashboard");
   const pathName = usePathname();
 
-  const activePage = DASHBOARD_MENU.find((d) => d?.url === pathName);
+  const activePage = BREADCRUMB_MENU.find((d) => d?.url === pathName);
+
   return (
     <>
       <HorizontalDivider>
