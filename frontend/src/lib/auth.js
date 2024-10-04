@@ -52,10 +52,24 @@ export const signIn = async (formData) => {
     if (req.ok) {
       const expires = new Date(expirationTime);
       // Create the session
-      const currentUser = await encrypt({ user, token, expirationTime });
+      const currentUser = await encrypt({
+        user: { id: user?.id, email: user?.email },
+        token,
+        expirationTime,
+      });
 
       // Save the session in a cookie
       cookies().set("currentUser", currentUser, { expires, httpOnly: true });
+      cookies().set(
+        "profile",
+        JSON.stringify({
+          full_name: user?.full_name,
+          gender: user?.gender,
+          country: user?.country,
+          account_purpose: user?.account_purpose,
+        }),
+        { expires, httpOnly: true }
+      );
       return { message: "success", status: 200 };
     } else {
       return { message: "invalidLogin", status: 401 };
@@ -68,12 +82,25 @@ export const signIn = async (formData) => {
 export const signOut = async () => {
   // Destroy the session
   cookies().set("currentUser", "", { expires: new Date(0) });
+  cookies().set("profile", "", { expires: new Date(0) });
 };
 
 export const getSession = async () => {
   const session = cookies().get("currentUser")?.value;
   if (!session) return null;
   return await decrypt(session);
+};
+
+export const updateProfile = (payload) => {
+  cookies().set("profile", JSON.stringify(payload));
+};
+
+export const getProfile = () => {
+  try {
+    return JSON.parse(cookies().get("profile").value);
+  } catch {
+    return { full_name: "" };
+  }
 };
 
 export const OptimisticCheck = async (locale, pathName, request) => {

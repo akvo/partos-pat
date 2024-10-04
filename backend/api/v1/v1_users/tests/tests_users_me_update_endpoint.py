@@ -3,7 +3,7 @@ from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 
 
-class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
+class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
     def setUp(self):
         email = "john@test.com"
         password = "Open1234"
@@ -21,9 +21,16 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
             password=password
         )
 
-    def test_successfully_get_my_account(self):
-        req = self.client.get(
+    def test_successfully_update_my_profile(self):
+        payload = {
+            "full_name": "Jane Doe",
+            "gender": 2,
+            "country": "ID",
+            "account_purpose": 3
+        }
+        req = self.client.put(
             "/api/v1/users/me",
+            payload,
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Bearer {self.token}"
         )
@@ -32,22 +39,12 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(
             list(res),
             [
-                "id", "full_name", "email", "gender",
-                "country", "account_purpose"
+                "id", "full_name", "email",
+                "gender", "country", "account_purpose"
             ]
         )
-        self.assertEqual(res["full_name"], "John Doe")
-
-    def test_my_deleted_account(self):
-        self.user.soft_delete()
-        req = self.client.get(
-            "/api/v1/users/me",
-            content_type="application/json",
-            HTTP_AUTHORIZATION=f"Bearer {self.token}"
-        )
-        self.assertEqual(req.status_code, 401)
-        res = req.json()
-        self.assertEqual(
-            res,
-            {"detail": "User not found", "code": "user_not_found"}
-        )
+        updated_user = SystemUser.objects.get(pk=self.user.id)
+        self.assertEqual(res["full_name"], updated_user.full_name)
+        self.assertEqual(res["gender"], updated_user.gender)
+        self.assertEqual(res["country"], updated_user.country)
+        self.assertEqual(res["account_purpose"], updated_user.account_purpose)

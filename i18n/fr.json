@@ -121,7 +121,12 @@
 		"selectRole": "Rôle dans le partenariat",
 		"invalidJoinExists": "Vous avez déjà rejoint.",
 		"invalidJoinCode": "Code d'adhésion invalide",
-		"invalidJoinOwner": "Vous êtes le propriétaire et faites déjà partie de la session."
+		"invalidJoinOwner": "Vous êtes le propriétaire et faites déjà partie de la session.",
+		"userProfile": "Votre profil",
+		"userProfileTitle": "Informations personnelles",
+		"userProfileSubtitle": "Mettez à jour votre profil et vos informations personnelles",
+		"save": "Sauvegarder",
+		"cancel": "Annuler"
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",

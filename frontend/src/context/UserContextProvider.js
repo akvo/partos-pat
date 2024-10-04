@@ -10,9 +10,7 @@ const userReducer = (state, action) => {
     case "UPDATE":
       return {
         ...state,
-        id: action.payload.id,
-        full_name: action.payload.full_name,
-        email: action.payload.email,
+        ...action.payload
       };
     default:
       throw Error(

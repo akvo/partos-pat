@@ -131,6 +131,8 @@
   .ant-btn.ant-btn-background-ghost:disabled {
     color: var(--button-color-disabled);
     background-color: var(--button-bg-disabled);
+  }
+  .ant-btn.ant-btn-background-ghost:disabled {
     border-color: var(--button-color-disabled);
   }
   .ant-btn.bg-light-1 {

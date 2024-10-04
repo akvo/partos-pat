@@ -86,7 +86,28 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "gender",
             "country",
+            "account_purpose",
         ]
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    full_name = CustomCharField()
+    gender = CustomChoiceField(choices=Gender.FieldStr)
+    country = CustomCharField()
+    account_purpose = CustomChoiceField(choices=AccountPurpose.FieldStr)
+
+    class Meta:
+        model = SystemUser
+        fields = [
+            "full_name",
+            "gender",
+            "country",
+            "account_purpose",
+        ]
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        return instance
 
 
 class VerifyTokenSerializer(serializers.Serializer):

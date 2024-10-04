@@ -121,7 +121,12 @@
 		"selectRole": "Role in partnership",
 		"invalidJoinExists": "You have already joined.",
 		"invalidJoinCode": "Invalid Join code",
-		"invalidJoinOwner": "You are the owner and already part of the session."
+		"invalidJoinOwner": "You are the owner and already part of the session.",
+		"userProfile": "Your Profile",
+		"userProfileTitle": "Personal Info",
+		"userProfileSubtitle": "Update your profile and personal details",
+		"save": "Save",
+		"cancel": "Cancel"
 	},
 	"CreateSession": {
 		"title": "Create New Session",

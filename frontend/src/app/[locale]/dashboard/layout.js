@@ -1,10 +1,11 @@
 import { UserContextProvider } from "@/context";
-import { getSession } from "@/lib/auth";
+import { getProfile, getSession } from "@/lib/auth";
 
 const DashboardLayout = async ({ children }) => {
-  const _session = await getSession();
-  const initialValues = _session
-    ? _session.user
+  const { user } = await getSession();
+  const profile = await getProfile();
+  const initialValues = user
+    ? { ...user, ...profile }
     : {
         id: null,
         full_name: "",
