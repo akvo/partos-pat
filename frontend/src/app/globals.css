@@ -110,7 +110,7 @@
     border-width: 2px;
     border-radius: 2px;
   }
-  .ant-btn.ant-btn-background-ghost:not(.ant-btn-primary):hover {
+  .ant-btn.ant-btn-background-ghost:not(.ant-btn-primary):not(:disabled):hover {
     border-color: var(--button-ghost-border) !important;
   }
   .ant-btn-primary.ant-btn-background-ghost {
@@ -127,9 +127,11 @@
   .ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover {
     background-color: inherit;
   }
-  .ant-btn:disabled {
+  .ant-btn:disabled,
+  .ant-btn.ant-btn-background-ghost:disabled {
     color: var(--button-color-disabled);
     background-color: var(--button-bg-disabled);
+    border-color: var(--button-color-disabled);
   }
   .ant-btn.bg-light-1 {
     background-color: #ffffff;
@@ -252,6 +254,13 @@
   }
   th.pat-org {
     width: 96px;
+  }
+  .pat-table table {
+    min-width: 0 !important;
+    width: fit-content;
+  }
+  .pat-table table td:first-of-type {
+    max-width: 432px;
   }
   .ant-alert {
     gap: 12px;

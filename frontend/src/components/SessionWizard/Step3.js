@@ -106,7 +106,7 @@ const StepThree = ({ patSession = {} }, ref) => {
         dataIndex: "name",
         editable: false,
         key: "name",
-        width: 432,
+        // width: 432,
         fixed: "left",
       },
       ...orgs,
@@ -199,7 +199,7 @@ const StepThree = ({ patSession = {} }, ref) => {
           rowKey="id"
           dataSource={dataSource}
           columns={columns}
-          rowClassName="editable-row"
+          className="pat-table"
           pagination={false}
           scroll={{
             x: "max-content",
