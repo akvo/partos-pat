@@ -267,6 +267,9 @@
 		"notes": "Remarques"
 	},
 	"FAQ": {
+		"faqs": "FAQS",
+		"title": "Questions fréquemment posées",
+		"subTitle": "Tout ce que vous devez savoir sur l'outil de sensibilisation au pouvoir",
 		"question1": "Le PAT peut-il également être utilisé au sein des organisations pour analyser les relations de pouvoir entre les différentes parties de l’organisation ? Peut-il être utilisé, par exemple, par une ONG internationale ayant son siège dans un pays et des bureaux nationaux dans plusieurs pays ?",
 		"answer1": "C'est possible. Au lieu d'analyser les relations de pouvoir entre les partenaires, les participants analyseront les relations de pouvoir entre les différents bureaux, unités et gremia.",
 		"question2": "Le PAT devrait-il se dérouler en une seule session ininterrompue en personne (avec la présence physique des participants) ou en ligne ? ",
