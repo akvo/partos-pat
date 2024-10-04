@@ -33,7 +33,15 @@ const DetailSessionModal = ({ id }) => {
 
   const handleOnCopy = () => {
     if (details?.join_code) {
-      navigator.clipboard.writeText(details.join_code);
+      const detailsText = t("copyContent", {
+        session_name: details?.session_name,
+        organizations: details?.organizations
+          ?.map((o) => o?.acronym)
+          ?.join(", "),
+        context: details?.context,
+        join_code: details.join_code,
+      });
+      navigator.clipboard.writeText(detailsText);
       message.success(t("copySuccess"));
     }
   };
