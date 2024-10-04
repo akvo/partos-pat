@@ -183,7 +183,7 @@ const SessionWizard = ({ patSession }) => {
             </div>
             <Space>
               <Button
-                className="w-32 bg-light-1"
+                className="w-fit bg-light-1"
                 onClick={onClickSave}
                 loading={saving}
                 ghost
