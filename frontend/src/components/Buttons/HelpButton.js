@@ -18,7 +18,7 @@ const HelpButton = () => {
           setOpen(true);
         }}
       >
-        <div className="border-2 border-dark-7 p-2 rounded-full text-dark-10">
+        <div className="border-2 border-dark-7 p-2 rounded-full text-dark-10 hover:bg-primary-active">
           <QuestionMarkIcon size={24} />
         </div>
       </Button>

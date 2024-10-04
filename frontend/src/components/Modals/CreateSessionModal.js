@@ -271,10 +271,10 @@ const CreateSessionModal = ({ disabled = false }) => {
                                 }),
                               },
                               {
-                                max: 12,
+                                max: PAT_SESSION.maxAcronym,
                                 message: t_error("maxChar", {
                                   field_title: t("orgAcronym"),
-                                  number: 12,
+                                  number: PAT_SESSION.maxAcronym,
                                 }),
                               },
                             ]}

@@ -110,107 +110,129 @@ const StepFour = ({ patSession = {} }, ref) => {
         onFinish={onFinish}
       >
         {(_, formInstance) => (
-          <Form.List name="scores">
-            {(fields) => (
-              <div className="w-full text-sm space-y-8">
-                {fields.map(({ key, name, ...restField }) => {
-                  return (
-                    <div
-                      key={key}
-                      className="w-full flex items-end justify-between border-b border-b-grey-100"
-                    >
-                      <div className="w-full lg:w-1/2 p-1">
-                        {formInstance.getFieldValue(["scores", name, "name"])}
-                      </div>
-                      <div className="w-fit flex flex-col">
-                        <div className="flex items-center justify-end font-bold bg-light-grey-7">
-                          {patSession?.organizations?.map((org) => {
-                            return (
-                              <div
-                                key={org.id}
-                                className="w-20 px-2 py-1 border-x border-x-light-1"
-                              >
-                                {org.acronym}
-                              </div>
-                            );
-                          })}
-                          <div className="w-20 px-2 py-1 border-x border-x-light-1">
-                            {t("agree")}
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-end font-bold">
-                          {patSession?.organizations?.map((org) => {
-                            const actualValue = formInstance.getFieldValue([
+          <div className="w-full overflow-hidden">
+            <Form.List name="scores">
+              {(fields) => (
+                <div className="w-full bg-light-1 text-sm space-y-8 overflow-x-auto pb-8 relative">
+                  {fields.map(({ key, name, ...restField }) => {
+                    return (
+                      <div
+                        key={key}
+                        className="w-full h-full flex items-start justify-between"
+                      >
+                        <div className="w-full min-h-44 lg:min-w-[432px] sticky left-0 z-20 bg-light-1">
+                          <div className="w-full min-h-[84px] border-b border-b-grey-100 px-1 flex flex-col justify-end">
+                            {formInstance.getFieldValue([
                               "scores",
                               name,
-                              org.id,
-                            ]);
-                            return (
-                              <div
-                                key={org.id}
-                                className={classNames(
-                                  "w-20 px-2 py-1 border-x border-x-light-1",
-                                  {
-                                    "bg-score-4": actualValue === 4,
-                                    "bg-score-3": actualValue === 3,
-                                    "bg-score-2": actualValue === 2,
-                                    "bg-score-1": actualValue === 1,
-                                    "bg-light-1": actualValue === 0,
-                                  }
-                                )}
-                              >
-                                {actualValue}
-                              </div>
-                            );
-                          })}
-                          <div className="w-20 px-2 py-1 border-x border-x-light-1 td-no">
-                            {t("no")}
+                              "name",
+                            ])}
                           </div>
                         </div>
-                        <div className="flex items-center justify-end">
-                          {patSession?.organizations?.map((org) => {
-                            return (
-                              <div key={org.id} className="w-20">
-                                <Form.Item
-                                  {...restField}
-                                  name={[name, `desired.${org.id}`]}
-                                  style={{
-                                    margin: 0,
-                                  }}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: t_error("required", {
-                                        field_title: t("score"),
-                                      }),
-                                    },
-                                  ]}
+                        <div className="w-fit flex flex-col z-0">
+                          <div className="flex items-center justify-end font-bold bg-light-grey-7">
+                            {patSession?.organizations?.map((org) => {
+                              return (
+                                <div
+                                  key={org.id}
+                                  className="w-24 h-9 p-2 border-x border-x-light-1 truncate break-words text-ellipsis"
                                 >
-                                  <Select
-                                    options={Array.from({ length: 5 }).map(
-                                      (_, value) => ({
-                                        value,
-                                        label: value,
-                                      })
-                                    )}
-                                    variant="borderless"
-                                    className="w-full pat-score"
-                                  />
-                                </Form.Item>
-                              </div>
-                            );
-                          })}
-                          <div className="w-20 px-2 py-1 border-x border-x-light-1 td-yes">
-                            {t("yes")}
+                                  {org.acronym}
+                                </div>
+                              );
+                            })}
+                            <div className="w-24 p-2 border-x border-x-light-1">
+                              {t("agree")}
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-end font-bold">
+                            {patSession?.organizations?.map((org) => {
+                              const actualValue = formInstance.getFieldValue([
+                                "scores",
+                                name,
+                                org.id,
+                              ]);
+                              return (
+                                <div
+                                  key={org.id}
+                                  className={classNames(
+                                    "w-24 p-2 border-x border-x-light-1 min-h-12",
+                                    {
+                                      "bg-score-4": actualValue === 4,
+                                      "bg-score-3": actualValue === 3,
+                                      "bg-score-2": actualValue === 2,
+                                      "bg-score-1": actualValue === 1,
+                                      "bg-light-1": actualValue === 0,
+                                    }
+                                  )}
+                                >
+                                  {actualValue}
+                                </div>
+                              );
+                            })}
+                            <div className="w-24 p-2 border-x border-x-light-1 td-no">
+                              {t("no")}
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-end border-b border-b-grey-100">
+                            {patSession?.organizations?.map((org) => {
+                              const desiredValue = formInstance.getFieldValue([
+                                "scores",
+                                name,
+                                `desired.${org.id}`,
+                              ]);
+                              return (
+                                <div
+                                  key={org.id}
+                                  className={classNames("w-24 p-2 border-x border-x-light-1", {
+                                    "bg-score-4": desiredValue === 4,
+                                    "bg-score-3": desiredValue === 3,
+                                    "bg-score-2": desiredValue === 2,
+                                    "bg-score-1": desiredValue === 1,
+                                    "bg-light-1": desiredValue === 0,
+                                  })}
+                                >
+                                  <Form.Item
+                                    {...restField}
+                                    name={[name, `desired.${org.id}`]}
+                                    style={{
+                                      margin: 0,
+                                    }}
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message: t_error("required", {
+                                          field_title: t("score"),
+                                        }),
+                                      },
+                                    ]}
+                                  >
+                                    <Select
+                                      options={Array.from({ length: 5 }).map(
+                                        (_, value) => ({
+                                          value,
+                                          label: value,
+                                        })
+                                      )}
+                                      variant="borderless"
+                                      className="w-full pat-score"
+                                    />
+                                  </Form.Item>
+                                </div>
+                              );
+                            })}
+                            <div className="w-24 p-2 border-x border-x-light-1 td-yes">
+                              {t("yes")}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </Form.List>
+                    );
+                  })}
+                </div>
+              )}
+            </Form.List>
+          </div>
         )}
       </Form>
       <div className="pt-4">

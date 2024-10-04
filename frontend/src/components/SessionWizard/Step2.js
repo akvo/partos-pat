@@ -11,25 +11,29 @@ import { api, decisionsToTable } from "@/lib";
 import classNames from "classnames";
 import ScoreLegend from "./ScoreLegend";
 
-const EditableCell = ({
-  dataIndex,
-  title,
-  record,
-  children,
-  editable,
-  score,
-  className,
-  ...restProps
-}) => {
+const EditableCell = (
+  {
+    dataIndex,
+    title,
+    record,
+    children,
+    editable,
+    score,
+    className,
+    ...restProps
+  },
+  formInstance
+) => {
   const fieldName = score
     ? [record?.id, dataIndex, score].join(".")
     : [record?.id, dataIndex].join(".");
-  const actualValue = record?.[dataIndex] || null;
+  const actualValue = formInstance.getFieldValue(fieldName);
+
   const t_error = useTranslations("Error");
   return (
     <td
       className={classNames({
-        [className]: typeof dataIndex !== "number",
+        [className]: !editable,
         "bg-score-4": actualValue === 4,
         "bg-score-3": actualValue === 3,
         "bg-score-2": actualValue === 2,
@@ -83,13 +87,14 @@ const StepTwo = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: true,
       key: o?.id,
-      width: "100px",
+      className: "pat-org"
     }));
     return [
       {
         dataIndex: "name",
         editable: false,
         key: "name",
+        // width: 432,
         fixed: "left",
       },
       ...orgs,
@@ -216,14 +221,17 @@ const StepTwo = ({ patSession = {} }, ref) => {
         <Table
           components={{
             body: {
-              cell: EditableCell,
+              cell: (props) => EditableCell(props, ref.current),
             },
           }}
           rowKey="id"
           dataSource={dataSource}
           columns={columns}
-          rowClassName="editable-row"
+          className="pat-table"
           pagination={false}
+          scroll={{
+            x: "max-content",
+          }}
         />
       </Form>
     </div>
