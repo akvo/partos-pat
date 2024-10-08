@@ -20,6 +20,7 @@ const EditableCell = (
     editable,
     score,
     className,
+    patSession,
     ...restProps
   },
   formInstance
@@ -42,7 +43,7 @@ const EditableCell = (
       })}
       {...restProps}
     >
-      {editable ? (
+      {editable && patSession?.is_owner ? (
         <Form.Item
           name={fieldName}
           style={{
@@ -87,7 +88,7 @@ const StepTwo = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: true,
       key: o?.id,
-      className: "pat-org"
+      className: "pat-org",
     }));
     return [
       {
@@ -221,7 +222,8 @@ const StepTwo = ({ patSession = {} }, ref) => {
         <Table
           components={{
             body: {
-              cell: (props) => EditableCell(props, ref.current),
+              cell: (props) =>
+                EditableCell({ patSession, ...props }, ref.current),
             },
           }}
           rowKey="id"

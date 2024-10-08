@@ -84,17 +84,23 @@ const StepFive = ({ patSession = {} }, ref) => {
           <div className="w-full overflow-hidden">
             <Form.List name="decisions">
               {(fields) => (
-                <div className="w-full text-sm space-y-8">
+                <div className="w-full text-sm">
                   {fields.map(({ key, name, ...restField }) => {
                     return (
-                      <div key={key} className="w-full space-y-6">
+                      <div key={key} className="w-full">
                         <div className="w-full flex items-end justify-between border-b border-b-grey-100 relative overflow-x-auto">
-                          <div className="w-full lg:min-w-[432px] min-h-32 sticky left-0 z-20 bg-light-1 flex flex-col justify-end p-1">
-                            {formInstance.getFieldValue([
-                              "decisions",
-                              name,
-                              "name",
-                            ])}
+                          <div className="w-full lg:min-w-[432px] h-33 sticky left-0 z-20 bg-light-1 flex flex-col justify-end">
+                            <div
+                              className={classNames("w-full h-auto", {
+                                "py-2 px-2 bg-[#FFF8E4]": !patSession?.is_owner,
+                              })}
+                            >
+                              {formInstance.getFieldValue([
+                                "decisions",
+                                name,
+                                "name",
+                              ])}
+                            </div>
                           </div>
                           <div className="w-fit flex flex-col">
                             <div className="flex items-center justify-end font-bold bg-light-grey-7">
@@ -102,15 +108,12 @@ const StepFive = ({ patSession = {} }, ref) => {
                                 return (
                                   <div
                                     key={org.id}
-                                    className="w-24 p-2 border-x border-x-light-1"
+                                    className="w-24 h-9 p-2 border-x border-x-light-1 truncate break-words text-ellipsis"
                                   >
                                     {org.acronym}
                                   </div>
                                 );
                               })}
-                              <div className="w-24 p-2 border-x border-x-light-1">
-                                {t("agree")}
-                              </div>
                             </div>
                             <div className="flex items-center justify-end font-bold">
                               {patSession?.organizations?.map((org) => {
@@ -123,7 +126,7 @@ const StepFive = ({ patSession = {} }, ref) => {
                                   <div
                                     key={org.id}
                                     className={classNames(
-                                      "w-24 p-2 border-x border-x-light-1",
+                                      "w-24 h-12 p-2 border-x border-x-light-1",
                                       {
                                         "bg-score-4": actualValue === 4,
                                         "bg-score-3": actualValue === 3,
@@ -137,9 +140,6 @@ const StepFive = ({ patSession = {} }, ref) => {
                                   </div>
                                 );
                               })}
-                              <div className="w-24 p-2 border-x border-x-light-1 td-no">
-                                {t("no")}
-                              </div>
                             </div>
                             <div className="flex items-center justify-end">
                               {patSession?.organizations?.map((org) => {
@@ -150,7 +150,7 @@ const StepFive = ({ patSession = {} }, ref) => {
                                   <div
                                     key={org.id}
                                     className={classNames(
-                                      "w-24 p-2 border-x border-x-light-1",
+                                      "w-24 h-12 p-2 border-x border-x-light-1",
                                       {
                                         "bg-score-4": desiredValue === 4,
                                         "bg-score-3": desiredValue === 3,
@@ -164,26 +164,52 @@ const StepFive = ({ patSession = {} }, ref) => {
                                   </div>
                                 );
                               })}
-                              <div className="w-24 p-2 border-x border-x-light-1 td-yes">
-                                {t("yes")}
-                              </div>
+                            </div>
+                          </div>
+                          <div className="w-24 min-h-32 sticky right-0 z-20 bg-light-1">
+                            <div className="w-24 p-2 border-x border-x-light-1 font-bold bg-light-grey-7">
+                              {t("agree")}
+                            </div>
+                            <div className="w-24 h-12 p-2 border-x border-x-light-1 td-no">
+                              {t("no")}
+                            </div>
+                            <div className="w-24 h-12 p-2 border-x border-x-light-1 td-yes">
+                              {t("yes")}
                             </div>
                           </div>
                         </div>
-                        <Form.Item
-                          {...restField}
-                          name={[name, "notes"]}
-                          rules={[
-                            {
-                              required: true,
-                              message: t_error("required", {
-                                field_title: t("notes"),
-                              }),
-                            },
-                          ]}
-                        >
-                          <TextArea rows={3} placeholder={t("notes")} />
-                        </Form.Item>
+                        {patSession?.is_owner ? (
+                          <div className="w-full pt-4">
+                            <Form.Item
+                              {...restField}
+                              name={[name, "notes"]}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: t_error("required", {
+                                    field_title: t("notes"),
+                                  }),
+                                },
+                              ]}
+                            >
+                              <TextArea rows={3} placeholder={t("notes")} />
+                            </Form.Item>
+                          </div>
+                        ) : (
+                          <div className="w-full h-auto bg-[#FFF8E4] py-3 px-2 space-y-2">
+                            <strong>{`${t("notes")} : `}</strong>
+                            <p>
+                              {formInstance.getFieldValue([
+                                "decisions",
+                                name,
+                                "notes",
+                              ])}
+                            </p>
+                          </div>
+                        )}
+                        <div className="pt-4">
+                          <div className="py-2 border-dashed border-t border-dark-2" />
+                        </div>
                       </div>
                     );
                   })}
@@ -193,9 +219,6 @@ const StepFive = ({ patSession = {} }, ref) => {
           </div>
         )}
       </Form>
-      <div className="pt-4">
-        <div className="py-2 border-dashed border-t border-dark-2" />
-      </div>
       <ScoreLegend />
     </div>
   );

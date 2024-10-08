@@ -133,50 +133,55 @@ const StepOne = ({ patSession }, ref) => {
                         <Input
                           placeholder={t("step1Placeholder")}
                           variant="borderless"
+                          disabled={!patSession?.is_owner}
+                          className="pat-decision"
                         />
                       </Form.Item>
                       <Form.Item {...restField} name={[name, "id"]}>
                         <Input type="hidden" />
                       </Form.Item>
 
-                      <Button
-                        type="link"
-                        icon={<MinusCircleIcon />}
-                        onClick={() => {
-                          onDeleteDecision(option, {
-                            key: name,
-                            value: formInstance.getFieldValue([
-                              "decisions",
-                              name,
-                              "id",
-                            ]),
-                          });
-                        }}
-                      />
+                      {patSession?.is_owner && (
+                        <Button
+                          type="link"
+                          icon={<MinusCircleIcon />}
+                          onClick={() => {
+                            onDeleteDecision(option, {
+                              key: name,
+                              value: formInstance.getFieldValue([
+                                "decisions",
+                                name,
+                                "id",
+                              ]),
+                            });
+                          }}
+                        />
+                      )}
                     </Flex>
                   ))}
                 </div>
 
                 <div className="py-1 mt-4 border-dashed border-t border-dark-2" />
                 <Form.ErrorList errors={errors} />
-
-                <div className="w-fit mb-4">
-                  <Button
-                    type="primary"
-                    onClick={() => option.add()}
-                    icon={<PlusCircleIcon />}
-                    iconPosition="end"
-                    size="small"
-                    disabled={
-                      formInstance.getFieldValue("decisions").length + 1 >
-                        PAT_SESSION.maxDecisions || !patSession?.is_owner
-                    }
-                    block
-                    ghost
-                  >
-                    {t("addDecision")}
-                  </Button>
-                </div>
+                {patSession?.is_owner && (
+                  <div className="w-fit mb-4">
+                    <Button
+                      type="primary"
+                      onClick={() => option.add()}
+                      icon={<PlusCircleIcon />}
+                      iconPosition="end"
+                      size="small"
+                      disabled={
+                        formInstance.getFieldValue("decisions").length + 1 >
+                        PAT_SESSION.maxDecisions
+                      }
+                      block
+                      ghost
+                    >
+                      {t("addDecision")}
+                    </Button>
+                  </div>
+                )}
               </Flex>
             )}
           </Form.List>

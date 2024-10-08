@@ -20,6 +20,7 @@ const EditableCell = (
     editable,
     score,
     className,
+    patSession,
     ...restProps
   },
   formInstance
@@ -53,7 +54,7 @@ const EditableCell = (
       })}
       {...restProps}
     >
-      {editable ? (
+      {editable && patSession?.is_owner ? (
         <Form.Item
           name={record.id}
           style={{
@@ -78,7 +79,9 @@ const EditableCell = (
           />
         </Form.Item>
       ) : (
-        children
+        <>
+          {dataIndex === "agree" ? (agreeValue ? t("yes") : t("no")) : children}
+        </>
       )}
     </td>
   );
@@ -99,7 +102,7 @@ const StepThree = ({ patSession = {} }, ref) => {
       dataIndex: o?.id,
       editable: false,
       key: o?.id,
-      className: "pat-org"
+      className: "pat-org",
     }));
     return [
       {
@@ -116,6 +119,7 @@ const StepThree = ({ patSession = {} }, ref) => {
         editable: true,
         key: "agree",
         width: "100px",
+        fixed: "right",
       },
     ].map((col) => ({
       ...col,
@@ -193,7 +197,8 @@ const StepThree = ({ patSession = {} }, ref) => {
         <Table
           components={{
             body: {
-              cell: (props) => EditableCell(props, ref.current),
+              cell: (props) =>
+                EditableCell({ patSession, ...props }, ref.current),
             },
           }}
           rowKey="id"
