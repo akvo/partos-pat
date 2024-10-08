@@ -33,11 +33,14 @@ module.exports = {
         bold: "600",
         "extra-bold": "700",
       },
-    },
-    maxWidth: {
-      "8xl": "90rem",
-      "9xl": "120rem",
-      "10xl": "150rem",
+      maxWidth: {
+        "8xl": "90rem",
+        "9xl": "120rem",
+        "10xl": "150rem",
+      },
+      height: {
+        33: "8.25rem",
+      },
     },
     colors: {
       light: {
