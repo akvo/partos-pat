@@ -22,31 +22,36 @@ const ActiveSessionList = ({ data = [] }) => {
         dataSource={data}
         renderItem={(item) => (
           <List.Item>
-            <Card
-              className="w-full min-h-48"
-              bordered={false}
-              onClick={() => {
-                router.push(`/dashboard/sessions/${item.id}`);
-              }}
-              hoverable
-            >
+            <Card className="w-full min-h-48" bordered={false} hoverable>
               <Flex justify="space-between" align="baseline">
                 {item?.facilitator?.id === userContext?.id ? (
                   <FolderIcon />
                 ) : (
                   <FolderLockIcon />
                 )}
-                <p className="uppercase text-green-bold text-xs font-bold">
+                <p
+                  className="uppercase text-green-bold text-xs font-bold"
+                  role="link"
+                  onClick={() => {
+                    router.push(`/dashboard?session=${item.id}`);
+                  }}
+                >
                   {t("details")}
                 </p>
               </Flex>
               <Flex
                 justify="space-between"
                 className="w-full min-h-20"
+                role="link"
+                onClick={() => {
+                  router.push(`/dashboard/sessions/${item.id}`);
+                }}
                 vertical
               >
                 <div className="text-left space-y-2">
-                  <Title className="w-full lg:w-10/12" level={4}>{item?.session_name}</Title>
+                  <Title className="w-full lg:w-10/12" level={4}>
+                    {item?.session_name}
+                  </Title>
                   <Text className="line-clamp-3">{item?.context}</Text>
                 </div>
               </Flex>
