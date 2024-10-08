@@ -40,7 +40,7 @@ class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
             list(res),
             [
                 "id", "full_name", "email",
-                "gender", "country", "account_purpose"
+                "gender", "country", "account_purpose", "is_superuser"
             ]
         )
         updated_user = SystemUser.objects.get(pk=self.user.id)
