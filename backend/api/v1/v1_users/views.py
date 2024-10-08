@@ -14,6 +14,8 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+from .permissions import IsSuperuser
 
 from api.v1.v1_users.serializers import (
     RegisterSerializer,
@@ -24,11 +26,13 @@ from api.v1.v1_users.serializers import (
     VerifyPasswordTokenSerializer,
     ResetPasswordSerializer,
     UpdateUserSerializer,
+    ManageUserSerializer,
 )
 from api.v1.v1_users.models import SystemUser
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
+from utils.custom_pagination import Pagination
 
 
 @extend_schema(
@@ -281,4 +285,37 @@ class ProfileView(APIView):
         user = serializer.save()
         return Response(
             UserSerializer(instance=user).data, status=status.HTTP_200_OK
+        )
+
+
+@extend_schema(tags=["ManageUsers"])
+class ManageUsersViewSet(ModelViewSet):
+    serializer_class = ManageUserSerializer
+    permission_classes = [IsAuthenticated, IsSuperuser]
+    pagination_class = Pagination
+
+    def get_queryset(self):
+        queryset = SystemUser.objects.filter(
+            deleted_at__isnull=True
+        )
+        name = self.request.query_params.get("name")
+        if name:
+            queryset = queryset.filter(
+                full_name__icontains=name
+            )
+        return queryset.order_by("-id")
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        current_user = self.request.user
+        if current_user.id == instance.id:
+            return Response(
+                data={},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        else:
+            instance.soft_delete()
+        return Response(
+            data={},
+            status=status.HTTP_204_NO_CONTENT
         )
