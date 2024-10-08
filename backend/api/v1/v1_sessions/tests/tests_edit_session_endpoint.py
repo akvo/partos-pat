@@ -72,7 +72,8 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             .first()
         )
         payload = {
-            "is_published": True
+            "is_published": True,
+            "context": f"EDITED-{pat_session.context}"
         }
         req = self.client.put(
             f"/api/v1/sessions?id={pat_session.id}",
@@ -86,6 +87,7 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
 
         updated = PATSession.objects.get(pk=pat_session.id)
         self.assertIsNotNone(updated.closed_at)
+        self.assertEqual(res["context"], updated.context)
 
     def test_invalid_update_by_different_owner(self):
         email = "jane@test.com"

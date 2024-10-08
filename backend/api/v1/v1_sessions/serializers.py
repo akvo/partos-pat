@@ -240,6 +240,7 @@ class CreateSessionSerializer(serializers.Serializer):
 class UpdateSessionSerializer(serializers.ModelSerializer):
     summary = CustomCharField(required=False)
     notes = CustomCharField(required=False)
+    context = CustomCharField(required=False)
     is_published = CustomBooleanField(
         required=False,
         allow_null=True,
@@ -247,7 +248,7 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PATSession
-        fields = ["summary", "notes", "is_published"]
+        fields = ["summary", "notes", "context", "is_published"]
 
     def update(self, instance, validated_data):
         # Update the fields of the instance
