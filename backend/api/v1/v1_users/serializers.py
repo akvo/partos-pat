@@ -87,7 +87,38 @@ class UserSerializer(serializers.ModelSerializer):
             "gender",
             "country",
             "account_purpose",
+            "is_superuser",
         ]
+
+
+class ManageUserSerializer(UserSerializer):
+    full_name = CustomCharField(required=False)
+    country = CustomCharField(required=False)
+    email = CustomEmailField(required=False)
+    is_superuser = CustomBooleanField(
+        required=False,
+        allow_null=True,
+    )
+
+    class Meta:
+        model = SystemUser
+        fields = [
+            "id",
+            "full_name",
+            "email",
+            "gender",
+            "country",
+            "account_purpose",
+            "is_superuser",
+        ]
+
+    # def create(self, validated_data):
+    #     instance = super().create_user(validated_data)
+    #     return instance
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        return instance
 
 
 class UpdateUserSerializer(serializers.ModelSerializer):
