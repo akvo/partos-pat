@@ -28,7 +28,10 @@ const DetailSessionModal = ({ id }) => {
 
   const handleOnClose = () => {
     setOpen(false);
-    router.push("/dashboard");
+    router.replace("/dashboard");
+    setTimeout(() => {
+      setPreload(true);
+    }, 500);
   };
 
   const handleOnCopy = () => {

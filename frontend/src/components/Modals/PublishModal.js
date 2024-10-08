@@ -127,7 +127,7 @@ const PublishModal = ({ patSession, onPublish }) => {
     try {
       await api("PUT", `/sessions?id=${patSession.id}`, {
         session_name: values?.session_name || patSession?.session_name,
-        summary: values?.summary || patSession?.summary,
+        context: values?.context || patSession?.context,
         is_published: true,
       });
       router.push("/dashboard");
@@ -209,7 +209,7 @@ const PublishModal = ({ patSession, onPublish }) => {
         <Form
           initialValues={{
             session_name: patSession?.session_name,
-            summary: patSession?.summary,
+            context: patSession?.context,
           }}
           onFinish={onFinish}
           form={form}
@@ -223,7 +223,7 @@ const PublishModal = ({ patSession, onPublish }) => {
               <Input />
             </Form.Item>
           </div>
-          <Form.Item label={t("description")} name="summary">
+          <Form.Item label={t("description")} name="context">
             <TextArea rows={4} />
           </Form.Item>
           <p>{t("participatingOrg")}</p>
