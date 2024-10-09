@@ -9,6 +9,7 @@ import countryOptions from "../../../i18n/countries.json";
 import { CopyIcon } from "../Icons";
 import { useRouter } from "@/routing";
 import moment from "moment";
+import FacilitatorAvatar from "../FacilitatorAvatar";
 
 const MAX_COUNTRIES = 5;
 
@@ -172,7 +173,7 @@ const DetailSessionModal = ({ id }) => {
       </Section>
       <Flex className="mt-6" justify="space-between" align="center">
         <div>
-          <ProfileAvatar />
+          <FacilitatorAvatar {...details?.facilitator} />
         </div>
         <div>
           <Button
