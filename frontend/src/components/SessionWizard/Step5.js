@@ -13,7 +13,7 @@ import classNames from "classnames";
 
 const { TextArea } = Input;
 
-const StepFive = ({ patSession = {} }, ref) => {
+const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
   const { data: decisions } = sessionContext.decisions || { data: [] };
@@ -92,7 +92,7 @@ const StepFive = ({ patSession = {} }, ref) => {
                           <div className="w-full lg:min-w-[432px] h-33 sticky left-0 z-20 bg-light-1 flex flex-col justify-end">
                             <div
                               className={classNames("w-full h-auto", {
-                                "py-2 px-2 bg-[#FFF8E4]": !patSession?.is_owner,
+                                "py-2 px-2 bg-[#FFF8E4]": !isEditable,
                               })}
                             >
                               {formInstance.getFieldValue([
@@ -178,7 +178,7 @@ const StepFive = ({ patSession = {} }, ref) => {
                             </div>
                           </div>
                         </div>
-                        {patSession?.is_owner ? (
+                        {isEditable ? (
                           <div className="w-full pt-4">
                             <Form.Item
                               {...restField}

@@ -9,18 +9,48 @@ import StepSix from "./Step6";
 const SessionContent = ({ step, patSession }, ref) => {
   switch (step) {
     case 1:
-      return <StepTwo {...{ patSession }} ref={ref} />;
+      return (
+        <StepTwo
+          {...{ patSession }}
+          ref={ref}
+          isEditable={patSession?.is_owner}
+        />
+      );
     case 2:
-      return <StepThree {...{ patSession }} ref={ref} />;
+      return (
+        <StepThree
+          {...{ patSession }}
+          ref={ref}
+          isEditable={patSession?.is_owner}
+        />
+      );
     case 3:
-      return <StepFour {...{ patSession }} ref={ref} />;
+      return (
+        <StepFour
+          {...{ patSession }}
+          ref={ref}
+          isEditable={patSession?.is_owner}
+        />
+      );
     case 4:
-      return <StepFive {...{ patSession }} ref={ref} />;
+      return (
+        <StepFive
+          {...{ patSession }}
+          ref={ref}
+          isEditable={patSession?.is_owner}
+        />
+      );
     case 5:
       return <StepSix {...{ patSession }} ref={ref} />;
 
     default:
-      return <StepOne {...{ patSession }} ref={ref} />;
+      return (
+        <StepOne
+          {...{ patSession }}
+          ref={ref}
+          isEditable={patSession?.is_owner}
+        />
+      );
   }
 };
 
