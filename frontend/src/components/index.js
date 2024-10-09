@@ -16,3 +16,5 @@ export { default as BreadCrumb } from "./BreadCrumb";
 export { default as FAQCollapsible } from "./FAQCollapsible";
 export { default as SessionWizard } from "./SessionWizard";
 export { default as UsersTable } from "./UsersTable";
+export { default as SessionView } from "./SessionView";
+export { default as FacilitatorAvatar } from "./FacilitatorAvatar";
