@@ -50,7 +50,8 @@
 		"submit": "Soumettre",
 		"search": "Recherche",
 		"previous": "Précédent",
-		"next": "Suivant"
+		"next": "Suivant",
+		"facilitator": "Animateur"
 	},
 	"Error": {
 		"invalidEmail": "Entrez une adresse e-mail valide.",

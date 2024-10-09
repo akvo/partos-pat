@@ -50,7 +50,8 @@
 		"submit": "Submit",
 		"search": "Search",
 		"previous": "Previous",
-		"next": "Next"
+		"next": "Next",
+		"facilitator": "Facilitator"
 	},
 	"Error": {
 		"invalidEmail": "Enter a valid email address.",
