@@ -379,6 +379,7 @@ class DecisionUpdateSerializer(serializers.Serializer):
     id = CustomPrimaryKeyRelatedField(
         queryset=Decision.objects.none()
     )
+    name = CustomCharField(required=False)
     notes = CustomCharField(required=False)
     agree = CustomBooleanField(
         required=False,
@@ -392,9 +393,10 @@ class DecisionUpdateSerializer(serializers.Serializer):
         ).queryset = Decision.objects.all()
 
     class Meta:
-        fields = ["id", "notes", "agree"]
+        fields = ["id", "name", "notes", "agree"]
 
     def update(self, instance, validated_data):
+        instance.name = validated_data.get("name", instance.name)
         instance.agree = validated_data.get("agree", instance.agree)
         instance.notes = validated_data.get("notes", instance.notes)
         instance.save()
