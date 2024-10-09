@@ -8,10 +8,12 @@ import { LifebuoyIcon } from "./Icons";
 import { useState } from "react";
 import classNames from "classnames";
 import { HelpModal } from "./Modals";
+import { useUserContext } from "@/context/UserContextProvider";
 
 const DashboardMenu = () => {
   const [open, setOpen] = useState(false);
   const pathName = usePathname();
+  const userContext = useUserContext();
 
   const router = useRouter();
   const t = useTranslations("Dashboard");
@@ -19,7 +21,11 @@ const DashboardMenu = () => {
   return (
     <Flex justify="space-between" className="w-full h-auto lg:h-full" vertical>
       <ul>
-        {DASHBOARD_MENU.map((m) => (
+        {DASHBOARD_MENU.filter(
+          (m) =>
+            userContext?.is_superuser ||
+            (!userContext?.is_superuser && !m?.isAdmin)
+        ).map((m) => (
           <li
             className={classNames("font-bold hover:bg-primary-hover", {
               "bg-primary-menu": pathName === m.url,

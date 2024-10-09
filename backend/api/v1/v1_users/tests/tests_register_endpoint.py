@@ -35,7 +35,7 @@ class RegistrationTestCase(TestCase):
             list(res),
             [
                 "id", "full_name", "email", "gender",
-                "country", "account_purpose"
+                "country", "account_purpose", "is_superuser",
             ],
         )
         self.assertEqual(res["full_name"], "Jane Doe")

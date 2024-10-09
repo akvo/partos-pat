@@ -1,4 +1,10 @@
-import { BookIcon, DashboardIcon, LifebuoyIcon } from "@/components/Icons";
+import {
+  BookIcon,
+  ChartPieIcon,
+  DashboardIcon,
+  LifebuoyIcon,
+  UsersIcon,
+} from "@/components/Icons";
 
 export const GENDER = {
   male: 1,
@@ -29,18 +35,35 @@ export const DASHBOARD_MENU = [
     name: "dashboard",
     icon: <DashboardIcon />,
     url: "/dashboard",
+    isAdmin: false,
   },
   {
     id: 2,
     name: "resources",
     icon: <BookIcon />,
     url: "/dashboard/pat-resources",
+    isAdmin: false,
   },
   {
     id: 3,
     name: "faqs",
     icon: <LifebuoyIcon />,
     url: "/dashboard/faqs",
+    isAdmin: false,
+  },
+  {
+    id: 5,
+    name: "manageUsers",
+    icon: <UsersIcon />,
+    url: "/dashboard/users",
+    isAdmin: true,
+  },
+  {
+    id: 6,
+    name: "statistics",
+    icon: <ChartPieIcon />,
+    url: "/dashboard/statistics",
+    isAdmin: true,
   },
 ];
 
@@ -52,7 +75,7 @@ export const BREADCRUMB_MENU = [
     icon: null,
     url: "/dashboard/profile",
   },
-]
+];
 
 export const SECTOR = {
   1: "Policy coherence",

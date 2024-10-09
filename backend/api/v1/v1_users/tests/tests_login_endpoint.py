@@ -32,7 +32,7 @@ class LoginTestCase(TestCase):
             list(res["user"]),
             [
                 "id", "full_name", "email", "gender",
-                "country", "account_purpose"
+                "country", "account_purpose", "is_superuser",
             ]
         )
 

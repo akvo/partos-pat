@@ -8,6 +8,7 @@ from api.v1.v1_users.views import (
     verify_password_code,
     reset_password,
     ProfileView,
+    ManageUsersViewSet,
 )
 
 urlpatterns = [
@@ -20,4 +21,16 @@ urlpatterns = [
         r"^(?P<version>(v1))/users/verify-password-code", verify_password_code
     ),
     re_path(r"^(?P<version>(v1))/users/reset-password", reset_password),
+    re_path(
+        r"^(?P<version>(v1))/admin/users",
+        ManageUsersViewSet.as_view({"get": "list"})
+    ),
+    re_path(
+        r"^(?P<version>(v1))/admin/user/(?P<pk>[0-9]+)",
+        ManageUsersViewSet.as_view({
+            "get": "retrieve",
+            "put": "update",
+            "delete": "destroy"
+        })
+    ),
 ]

@@ -67,6 +67,7 @@ export const signIn = async (formData) => {
           gender: user?.gender,
           country: user?.country,
           account_purpose: user?.account_purpose,
+          is_superuser: user?.is_superuser
         }),
         { expires, httpOnly: true }
       );

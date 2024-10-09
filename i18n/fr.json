@@ -124,9 +124,11 @@
 		"invalidJoinOwner": "Vous êtes le propriétaire et faites déjà partie de la session.",
 		"userProfile": "Votre profil",
 		"userProfileTitle": "Informations personnelles",
-		"userProfileSubtitle": "Mettez à jour votre profil et vos informations personnelles",
 		"save": "Sauvegarder",
-		"cancel": "Annuler"
+		"cancel": "Annuler",
+		"userProfileSubtitle": "Mettez à jour votre profil et vos informations personnelles",
+		"manageUsers": "Gérer les utilisateurs",
+		"statistics": "Statistiques"
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
@@ -304,5 +306,19 @@
 		"greeting": "Salut {nom complet}",
 		"title": "Comment pouvons-nous vous aider ?",
 		"searchPlaceholder": "Recherche"
+	},
+	"ManageUsers": {
+		"accounts": "Comptes",
+		"totalUsers": "{total} utilisateurs",
+		"colName": "Nom",
+		"colCountry": "Pays",
+		"colEmail": "Adresse email",
+		"colRole": "Rôle",
+		"deleteText": "Supprimer le compte",
+		"deleteTitle": "Confirmer la suppression",
+		"deleteMessage": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée.",
+		"editText": "Modifier le compte",
+		"roleAdminValue": "Super administrateur",
+		"roleUserValue": "Utilisateur régulier"
 	}
 }
