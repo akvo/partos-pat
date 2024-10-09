@@ -103,7 +103,7 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Bearer {self.token}",
         )
-        self.assertEqual(req.status_code, 204)
+        self.assertEqual(req.status_code, 200)
         deleted_user = SystemUser.objects.filter(pk=user.id).first()
         self.assertIsNone(deleted_user)
 

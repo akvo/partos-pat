@@ -316,6 +316,6 @@ class ManageUsersViewSet(ModelViewSet):
         else:
             instance.soft_delete()
         return Response(
-            data={},
-            status=status.HTTP_204_NO_CONTENT
+            UserSerializer(instance=instance).data,
+            status=status.HTTP_200_OK
         )
