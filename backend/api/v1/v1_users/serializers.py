@@ -192,3 +192,16 @@ class VerifyPasswordTokenSerializer(serializers.Serializer):
         if not SystemUser.objects.filter(reset_password_code=value).exists():
             raise serializers.ValidationError("Invalid token")
         return value
+
+
+class UserStatisticsSerializer(serializers.Serializer):
+    total_users = serializers.IntegerField()
+    total_users_last_30_days = serializers.IntegerField()
+    total_users_per_account_purpose = serializers.DictField()
+
+    class Meta:
+        fields = [
+            "total_users",
+            "total_users_last_30_days",
+            "total_users_per_account_purpose",
+        ]
