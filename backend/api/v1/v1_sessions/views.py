@@ -21,6 +21,7 @@ from api.v1.v1_sessions.models import (
     Organization,
     ParticipantComment,
     Decision,
+    Participant,
 )
 from api.v1.v1_sessions.serializers import (
     CreateSessionSerializer,
@@ -39,6 +40,7 @@ from api.v1.v1_sessions.serializers import (
     BulkParticipantDecisionSerializer,
     ParticipantDecisionSerializer,
     ParticipantCommentSerializer,
+    ParticipantSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
@@ -529,3 +531,16 @@ def delete_decision(request, decision_id, version):
     decision.delete()
     data = DecisionSerializer(instance=decision).data
     return Response(data=data, status=status.HTTP_200_OK)
+
+
+@extend_schema(
+    responses={200: ParticipantSerializer(many=True)},
+    tags=["Participants"],
+    summary="Get participants list",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def participant_list(request, session_id, version):
+    queryset = Participant.objects.filter(session_id=session_id)
+    serializer = ParticipantSerializer(queryset, many=True)
+    return Response(data=serializer.data, status=status.HTTP_200_OK)

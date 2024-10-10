@@ -567,15 +567,27 @@ class BulkParticipantDecisionSerializer(BaseSessionFormSerializer):
 
 class ParticipantCommentSerializer(serializers.ModelSerializer):
     fullname = serializers.SerializerMethodField()
+    organization_name = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_fullname(self, instance: ParticipantComment):
         return instance.user.full_name
 
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_organization_name(self, instance: ParticipantComment):
+        participant = Participant.objects.filter(
+            user=instance.user,
+            session=instance.session
+        ).first()
+        if not participant:
+            return None
+        return participant.organization.organization_name
+
     class Meta:
         model = ParticipantComment
         fields = [
-            "id", "user_id", "fullname", "session_id", "comment"
+            "id", "user_id", "fullname", "organization_name",
+            "session_id", "comment"
         ]
 
     def create(self, validated_data):
@@ -605,10 +617,12 @@ class ParticipantCommentSerializer(serializers.ModelSerializer):
         instance = super().update(instance, validated_data)
         return instance
 
+
 class ParticipantSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     organization_name = serializers.SerializerMethodField()
+
     @extend_schema_field(OpenApiTypes.STR)
     def get_full_name(self, instance: Participant):
         return instance.user.full_name
