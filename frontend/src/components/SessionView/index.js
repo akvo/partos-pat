@@ -4,7 +4,7 @@ import { useRef, useCallback, useEffect } from "react";
 import { Button, Space } from "antd";
 import { useTranslations } from "next-intl";
 import classNames from "classnames";
-import { openSans } from "@/app/fonts";
+import { openSans, sourceSansPro } from "@/app/fonts";
 
 import { ArrowFatIcon, FileArrowDownIcon } from "../Icons";
 import SessionContent from "./SessionContent";
@@ -14,6 +14,7 @@ import {
   useSessionDispatch,
 } from "@/context/SessionContextProvider";
 import { api } from "@/lib";
+import { PAT_SESSION } from "@/static/config";
 
 const SessionView = ({ patSession }) => {
   const sessionDispatch = useSessionDispatch();
@@ -85,21 +86,16 @@ const SessionView = ({ patSession }) => {
   }, [loadComments]);
 
   return (
-    <>
-      <div className="w-full container mx-auto">
-        <h2 className="font-bold text-lg">
+    <div className={classNames(openSans.variable, openSans.className, "w-full h-full")}>
+      <div className="w-full container mx-auto mb-3">
+        <h2 className={classNames(sourceSansPro.className, "font-bold text-lg")}>
           {`${step + 1}.  `}
           {t(`titleStep${parseInt(step + 1)}`)}
         </h2>
       </div>
 
       <div className="w-full 2xl:h-[calc(100vh-315px)] bg-dashboard-session">
-        <div
-          className={classNames(
-            openSans.variable,
-            "w-full h-full container mx-auto"
-          )}
-        >
+        <div className="w-full h-full container mx-auto">
           <SessionSteps current={step}>
             <SessionContent {...{ step, patSession }} ref={formRef} />
           </SessionSteps>
@@ -109,48 +105,61 @@ const SessionView = ({ patSession }) => {
         <div className="w-full lg:w-4/12" />
         <div className="w-full flex justify-between">
           <div className="min-w-32">
-            <Button
-              icon={<FileArrowDownIcon />}
-              iconPosition="end"
-              className="bg-light-1"
-              block
-              ghost
-            >
-              {t("downloadPdf")}
-            </Button>
+            {step < PAT_SESSION.totalSteps - 1 && (
+              <Button
+                icon={<FileArrowDownIcon />}
+                iconPosition="end"
+                className="bg-light-1"
+                block
+                ghost
+              >
+                {t("downloadPdf")}
+              </Button>
+            )}
           </div>
           <Space>
             <Button
               icon={<ArrowFatIcon left />}
-              className="bg-light-1"
+              className="w-28 bg-light-1"
               onClick={() => {
                 sessionDispatch({
                   type: "STEP_BACK",
                 });
               }}
               disabled={!step}
-              block
               ghost
             >
               {t("back")}
             </Button>
-            <Button
-              type="primary"
-              onClick={() => {
-                sessionDispatch({
-                  type: "STEP_NEXT",
-                });
-              }}
-              icon={<ArrowFatIcon />}
-              iconPosition="end"
-              block
-            >
-              {t("next")}
-            </Button>
+            {step === PAT_SESSION.totalSteps - 1 && (
+              <Button
+                type="primary"
+                icon={<FileArrowDownIcon />}
+                iconPosition="end"
+                block
+              >
+                {t("downloadPdf")}
+              </Button>
+            )}
+            {step < PAT_SESSION.totalSteps - 1 && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  sessionDispatch({
+                    type: "STEP_NEXT",
+                  });
+                }}
+                icon={<ArrowFatIcon />}
+                iconPosition="end"
+                className="w-28"
+              >
+                {t("next")}
+              </Button>
+            )}
           </Space>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
