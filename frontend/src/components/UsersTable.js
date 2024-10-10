@@ -33,12 +33,11 @@ const DataDetail = ({ record, onClose, onUpdate }) => {
   const t = useTranslations("ManageUsers");
   const t_dashboard = useTranslations("Dashboard");
 
-  const onFinish = async ({ id, ...values }) => {
+  const onFinish = async ({ id, is_superuser }) => {
     setLoading(true);
     try {
       const apiData = await api("PUT", `/admin/user/${id}`, {
-        ...values,
-        is_superuser: values?.is_superuser === 1,
+        is_superuser: is_superuser === 1,
       });
       onUpdate(apiData);
       onClose(id);
