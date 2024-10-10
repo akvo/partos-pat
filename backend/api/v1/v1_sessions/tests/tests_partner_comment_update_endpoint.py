@@ -53,7 +53,14 @@ class ParticipantUpdateCommentEndpointTestCase(
         res = req.json()
         self.assertEqual(
             list(res),
-            ["id", "user_id", "fullname", "session_id", "comment"]
+            [
+                "id",
+                "user_id",
+                "fullname",
+                "organization_name",
+                "session_id",
+                "comment"
+            ]
         )
         comment_updated = ParticipantComment.objects.get(pk=comment.id)
         self.assertEqual(res["comment"], comment_updated.comment)

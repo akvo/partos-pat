@@ -63,7 +63,14 @@ class ParticipantCreateCommentEndpointTestCase(
         res = req.json()
         self.assertEqual(
             list(res),
-            ["id", "user_id", "fullname", "session_id", "comment"]
+            [
+                "id",
+                "user_id",
+                "fullname",
+                "organization_name",
+                "session_id",
+                "comment"
+            ]
         )
         total_comment = ParticipantComment.objects.filter(
             session=pat_session
