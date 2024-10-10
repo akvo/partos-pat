@@ -1,3 +1,4 @@
+from datetime import timedelta
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import (
     extend_schema,
@@ -14,7 +15,9 @@ from rest_framework.decorators import (
     permission_classes,
 )
 from rest_framework.generics import get_object_or_404
-from django.db.models import Q
+from django.utils import timezone
+from django.db.models import Q, Count, DateField
+from django.db.models.functions import TruncMonth
 from django.conf import settings
 from api.v1.v1_sessions.models import (
     PATSession,
@@ -41,11 +44,14 @@ from api.v1.v1_sessions.serializers import (
     ParticipantDecisionSerializer,
     ParticipantCommentSerializer,
     ParticipantSerializer,
+    TotalSessionPerMonthSerializer,
+    TotalSessionCompletedSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
+from api.v1.v1_users.permissions import IsSuperuser
 
 
 class PATSessionAddListView(APIView):
@@ -544,3 +550,54 @@ def participant_list(request, session_id, version):
     queryset = Participant.objects.filter(session_id=session_id)
     serializer = ParticipantSerializer(queryset, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+@extend_schema(
+    responses={200: TotalSessionPerMonthSerializer(many=True)},
+    tags=["Statistics"],
+    summary="Get total sessions per month",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def total_session_per_month(request, version):
+    queryset = PATSession.objects.all()
+    total_sessions_per_month = queryset.annotate(
+        month=TruncMonth(
+            "created_at", output_field=DateField()
+        )
+    ).values("month").annotate(
+        total_sessions=Count("id")
+    ).order_by("month")
+
+    serializer = TotalSessionPerMonthSerializer(
+        instance=total_sessions_per_month,
+        many=True
+    )
+    return Response(
+        data=serializer.data,
+        status=status.HTTP_200_OK
+    )
+
+
+@extend_schema(
+    responses={200: TotalSessionCompletedSerializer},
+    tags=["Statistics"],
+    summary="Get total sessions completed",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def total_session_completed(request, version):
+    total_completed = PATSession.objects.filter(
+        closed_at__isnull=False
+    ).count()
+    total_completed_last_30_days = PATSession.objects.filter(
+        closed_at__isnull=False,
+        closed_at__gte=timezone.now() - timedelta(days=30)
+    ).count()
+    return Response(
+        data={
+            "total_completed": total_completed,
+            "total_completed_last_30_days": total_completed_last_30_days
+        },
+        status=status.HTTP_200_OK
+    )
