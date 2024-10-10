@@ -2,6 +2,7 @@ import random
 from datetime import timedelta
 from django.core.management import BaseCommand
 from django.db.models import Count, F
+from django.utils import timezone
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_sessions.models import (
     PATSession,
@@ -125,8 +126,16 @@ class Command(BaseCommand):
                 countries=countries,
                 sector=sector,
                 date=fake.date_this_month(before_today=False),
-                context=fake.paragraph()
+                context=fake.paragraph(),
             )
+
+            created_at = timezone.make_aware(
+                timezone.datetime(
+                    timezone.now().year, (r % 12) + 1,
+                    random.randint(1, 28)
+                )
+            )
+            pat_session.created_at = created_at
             pat_session.other_sector = other_sector
             pat_session.save()
 

@@ -638,3 +638,19 @@ class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
         fields = ["id", "full_name", "email", "role", "organization_name"]
+
+
+class TotalSessionPerMonthSerializer(serializers.Serializer):
+    total_sessions = serializers.IntegerField()
+    month = serializers.DateField()
+
+    class Meta:
+        fields = ["total_sessions", "month"]
+
+
+class TotalSessionCompletedSerializer(serializers.Serializer):
+    total_completed = serializers.IntegerField()
+    total_completed_last_30_days = serializers.IntegerField()
+
+    class Meta:
+        fields = ["total_completed", "total_completed_last_30_days"]

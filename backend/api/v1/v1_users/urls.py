@@ -9,6 +9,7 @@ from api.v1.v1_users.views import (
     reset_password,
     ProfileView,
     ManageUsersViewSet,
+    get_users_statistics,
 )
 
 urlpatterns = [
@@ -32,5 +33,9 @@ urlpatterns = [
             "put": "update",
             "delete": "destroy"
         })
+    ),
+    re_path(
+        r"^(?P<version>(v1))/admin/statistics/users",
+        get_users_statistics
     ),
 ]
