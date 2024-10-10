@@ -5,7 +5,7 @@ import { Button, Space } from "antd";
 import { useTranslations } from "next-intl";
 import classNames from "classnames";
 import { useRouter } from "@/routing";
-import { openSans } from "@/app/fonts";
+import { openSans, sourceSansPro } from "@/app/fonts";
 
 import { ArrowFatIcon } from "../Icons";
 import SessionContent from "./SessionContent";
@@ -140,21 +140,16 @@ const SessionWizard = ({ patSession }) => {
   }, [loadComments]);
 
   return (
-    <>
-      <div className="w-full container mx-auto">
-        <h2 className="font-bold text-lg">
+    <div className={classNames(openSans.variable, openSans.className, "w-full h-full")}>
+      <div className="w-full container mx-auto mb-3">
+        <h2 className={classNames(sourceSansPro.className, "font-bold text-lg")}>
           {`${step + 1}.  `}
           {t(`titleStep${parseInt(step + 1)}`)}
         </h2>
       </div>
 
       <div className="w-full 2xl:h-[calc(100vh-315px)] bg-dashboard-session">
-        <div
-          className={classNames(
-            openSans.variable,
-            "w-full h-full container mx-auto"
-          )}
-        >
+        <div className="w-full h-full container mx-auto">
           <SessionSteps current={step}>
             <SessionContent {...{ step, patSession }} ref={formRef} />
           </SessionSteps>
@@ -168,14 +163,13 @@ const SessionWizard = ({ patSession }) => {
             <div className="min-w-32">
               <Button
                 icon={<ArrowFatIcon left />}
-                className="bg-light-1"
+                className="w-28 bg-light-1"
                 disabled={!step}
                 onClick={() => {
                   sessionDispatch({
                     type: "STEP_BACK",
                   });
                 }}
-                block
                 ghost
               >
                 {t("back")}
@@ -200,7 +194,7 @@ const SessionWizard = ({ patSession }) => {
                     icon={<ArrowFatIcon />}
                     iconPosition="end"
                     loading={loading}
-                    block
+                    className="w-28"
                   >
                     {t("next")}
                   </Button>
@@ -215,14 +209,13 @@ const SessionWizard = ({ patSession }) => {
                 <div className="min-w-32">
                   <Button
                     icon={<ArrowFatIcon left />}
-                    className="bg-light-1"
+                    className="w-28 bg-light-1"
                     disabled={!step}
                     onClick={() => {
                       sessionDispatch({
                         type: "STEP_BACK",
                       });
                     }}
-                    block
                     ghost
                   >
                     {t("back")}
@@ -235,7 +228,7 @@ const SessionWizard = ({ patSession }) => {
                     icon={<ArrowFatIcon />}
                     iconPosition="end"
                     loading={loading}
-                    block
+                    className="w-28"
                   >
                     {t("next")}
                   </Button>
@@ -246,13 +239,12 @@ const SessionWizard = ({ patSession }) => {
                 <Space>
                   <Button
                     icon={<ArrowFatIcon left />}
-                    className="bg-light-1"
+                    className="w-28 bg-light-1"
                     onClick={() => {
                       sessionDispatch({
                         type: "STEP_BACK",
                       });
                     }}
-                    block
                     ghost
                   >
                     {t("back")}
@@ -271,7 +263,7 @@ const SessionWizard = ({ patSession }) => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

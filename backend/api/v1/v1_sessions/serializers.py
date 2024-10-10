@@ -379,6 +379,7 @@ class DecisionUpdateSerializer(serializers.Serializer):
     id = CustomPrimaryKeyRelatedField(
         queryset=Decision.objects.none()
     )
+    name = CustomCharField(required=False)
     notes = CustomCharField(required=False)
     agree = CustomBooleanField(
         required=False,
@@ -392,9 +393,10 @@ class DecisionUpdateSerializer(serializers.Serializer):
         ).queryset = Decision.objects.all()
 
     class Meta:
-        fields = ["id", "notes", "agree"]
+        fields = ["id", "name", "notes", "agree"]
 
     def update(self, instance, validated_data):
+        instance.name = validated_data.get("name", instance.name)
         instance.agree = validated_data.get("agree", instance.agree)
         instance.notes = validated_data.get("notes", instance.notes)
         instance.save()
@@ -565,15 +567,27 @@ class BulkParticipantDecisionSerializer(BaseSessionFormSerializer):
 
 class ParticipantCommentSerializer(serializers.ModelSerializer):
     fullname = serializers.SerializerMethodField()
+    organization_name = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_fullname(self, instance: ParticipantComment):
         return instance.user.full_name
 
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_organization_name(self, instance: ParticipantComment):
+        participant = Participant.objects.filter(
+            user=instance.user,
+            session=instance.session
+        ).first()
+        if not participant:
+            return None
+        return participant.organization.organization_name
+
     class Meta:
         model = ParticipantComment
         fields = [
-            "id", "user_id", "fullname", "session_id", "comment"
+            "id", "user_id", "fullname", "organization_name",
+            "session_id", "comment"
         ]
 
     def create(self, validated_data):
@@ -602,3 +616,25 @@ class ParticipantCommentSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance = super().update(instance, validated_data)
         return instance
+
+
+class ParticipantSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
+    organization_name = serializers.SerializerMethodField()
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_full_name(self, instance: Participant):
+        return instance.user.full_name
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_email(self, instance: Participant):
+        return instance.user.email
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_organization_name(self, instance: Participant):
+        return instance.organization.organization_name
+
+    class Meta:
+        model = Participant
+        fields = ["id", "full_name", "email", "role", "organization_name"]

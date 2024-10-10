@@ -8,6 +8,7 @@ from api.v1.v1_sessions.views import (
     organization_list,
     participant_join_session,
     delete_decision,
+    participant_list,
 )
 
 urlpatterns = [
@@ -42,5 +43,9 @@ urlpatterns = [
     re_path(
         r"^(?P<version>(v1))/comments/(?P<pk>[0-9]+)",
         ParticipantCommentViewSet.as_view({"put": "update"})
+    ),
+    re_path(
+        r"^(?P<version>(v1))/session/(?P<session_id>[0-9]+)/participants",
+        participant_list
     ),
 ]

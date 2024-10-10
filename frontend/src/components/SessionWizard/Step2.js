@@ -20,7 +20,7 @@ const EditableCell = (
     editable,
     score,
     className,
-    patSession,
+    haveEditAccess,
     ...restProps
   },
   formInstance
@@ -43,7 +43,7 @@ const EditableCell = (
       })}
       {...restProps}
     >
-      {editable && patSession?.is_owner ? (
+      {editable && haveEditAccess ? (
         <Form.Item
           name={fieldName}
           style={{
@@ -74,7 +74,7 @@ const EditableCell = (
   );
 };
 
-const StepTwo = ({ patSession = {} }, ref) => {
+const StepTwo = ({ patSession = {}, isEditable = false }, ref) => {
   const [preload, setPreload] = useState(true);
 
   const sessionContext = useSessionContext();
@@ -223,7 +223,10 @@ const StepTwo = ({ patSession = {} }, ref) => {
           components={{
             body: {
               cell: (props) =>
-                EditableCell({ patSession, ...props }, ref.current),
+                EditableCell(
+                  { haveEditAccess: isEditable, ...props },
+                  ref.current
+                ),
             },
           }}
           rowKey="id"

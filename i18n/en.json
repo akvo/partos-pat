@@ -50,7 +50,8 @@
 		"submit": "Submit",
 		"search": "Search",
 		"previous": "Previous",
-		"next": "Next"
+		"next": "Next",
+		"facilitator": "Facilitator"
 	},
 	"Error": {
 		"invalidEmail": "Enter a valid email address.",
@@ -150,12 +151,15 @@
 	"SessionDetails": {
 		"title": "PAT Session Details",
 		"partnerOrg": "Partner Organizations ",
+		"participants": "Participants",
 		"countries": "Countries",
 		"inviteCode": "Invite Code",
 		"context": "Session Context",
 		"copyCodeButton": "Copy session information",
 		"copyContent": "You have been invited for a Power Awareness Session with the following details: \nTitle: {session_name}\nPartner organizations: {organizations}\nSession context: {context}\n\nPlease make an account or login at partos-pat.akvotext.org  and join the session using the following invite code: {join_code}",
-		"copySuccess": "The session join code has been copied to the clipboard"
+		"copySuccess": "The session join code has been copied to the clipboard",
+		"partnerOrgLong": "Partner organizations represented in this meeting",
+		"contextLong": "PAT Session Context"
 	},
 	"Landing": {
 		"title": "The Power Awareness Tool",
@@ -271,7 +275,9 @@
 		"helpStep4": "In step 4 we focus only on those decisions indicated with “no agreement”. Apparently, one or more partners believe that they and/or others should have been involved in a different way in taking these decisions. \n\nFor each of these decisions, the question needs to be answered: How do we want partner organisations in the future to be involved in taking such decisions?\n\nTo answer this question the facilitator needs to guide participants in a discussion that ideally should lead to consensus about the desired level of participation of each partner.\n\nIf consensus is achieved on the desired level of participation by each partner, the facilitator indicates the desired level of participation in the table.",
 		"helpStep5": "In the fifth and final step of the PAT exercise participants have to figure out what action needs to be taken in order to get to the desired level of participation. Of course, this is only applicable to types of decision making where the desired level of participation differs from the actual level of participation. ",
 		"helpStep6": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-		"notes": "Notes"
+		"notes": "Notes",
+		"notesLong": "Notes on the Decision making processes",
+		"summaryLong": "Closing Remarks"
 	},
 	"FAQ": {
 		"faqs": "FAQS",

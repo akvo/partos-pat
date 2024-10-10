@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test.utils import override_settings
+from django.core.management import call_command
 from api.v1.v1_users.models import SystemUser
 
 
@@ -168,3 +169,34 @@ class RegistrationTestCase(TestCase):
         self.assertEqual(req.status_code, 400)
         res = req.json()
         self.assertEqual(res, {"message": "checkAgreementRequired"})
+
+    def test_successfully_register_with_delete_account(self):
+        call_command("fake_users_seeder", "--test", True, "--repeat", 2)
+        deleted_user = SystemUser.objects.order_by("?").first()
+        deleted_user.is_verified = True
+        deleted_user.save()
+        deleted_user.soft_delete()
+
+        payload = {
+            "full_name": "User 1",
+            "gender": 1,
+            "country": "ID",
+            "account_purpose": 1,
+            "email": deleted_user.email,
+            "password": "Open1234",
+            "confirm_password": "Open1234",
+            "agreement": True,
+        }
+
+        req = self.client.post(
+            "/api/v1/register", payload, content_type="application/json"
+        )
+        self.assertEqual(req.status_code, 201)
+        res = req.json()
+        self.assertEqual(res["email"], deleted_user.email)
+
+        updated_user = SystemUser.objects.get(pk=deleted_user.id)
+
+        self.assertNotEqual(updated_user.full_name, deleted_user.full_name)
+        self.assertIsNone(updated_user.deleted_at)
+        self.assertTrue(updated_user.is_verified)

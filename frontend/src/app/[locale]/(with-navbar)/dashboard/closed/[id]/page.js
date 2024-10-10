@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/routing";
-import { HorizontalDivider, SessionWizard } from "@/components";
+import { HorizontalDivider, SessionView } from "@/components";
 import { api } from "@/lib";
 
 export const revalidate = 60;
@@ -10,7 +10,7 @@ const DashboardLink = () => {
   return <Link href="/dashboard">{t("dashboard")}</Link>;
 };
 
-const SessionDetailsPage = async ({ params }) => {
+const ClosedSessionPage = async ({ params }) => {
   const patSession = await api("GET", `/sessions?id=${params.id}`);
   return (
     <div className="w-full space-y-4">
@@ -20,13 +20,13 @@ const SessionDetailsPage = async ({ params }) => {
             <DashboardLink />
           </div>
           <div className="px-3">
-            <strong className="font-bold text-base">{patSession?.session_name}</strong>
+            <h1 className="font-bold text-base">{patSession?.session_name}</h1>
           </div>
         </HorizontalDivider>
       </div>
-      <SessionWizard {...{ patSession, params }} />
+      <SessionView {...{ patSession, params }} />
     </div>
   );
 };
 
-export default SessionDetailsPage;
+export default ClosedSessionPage;

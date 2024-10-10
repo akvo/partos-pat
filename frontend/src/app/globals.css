@@ -176,7 +176,7 @@
     color: var(--avatar-color);
     font-weight: 900;
   }
-  .ant-avatar.org:nth-child(odd) {
+  .ant-avatar.org:nth-child(odd), .ant-avatar.participant {
     background-color: #eae2c9;
   }
   .ant-avatar.org:nth-child(odd) {

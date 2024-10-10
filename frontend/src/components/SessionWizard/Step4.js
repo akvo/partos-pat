@@ -11,7 +11,7 @@ import { api, decisionsToTable } from "@/lib";
 import ScoreLegend from "./ScoreLegend";
 import classNames from "classnames";
 
-const StepFour = ({ patSession = {} }, ref) => {
+const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
   const { data: decisions } = sessionContext.decisions || { data: [] };
@@ -149,8 +149,8 @@ const StepFour = ({ patSession = {} }, ref) => {
                                   className={classNames(
                                     "w-24 h-12 border-x border-x-light-1 h-12",
                                     {
-                                      "p-2": !patSession?.is_owner,
-                                      "px-4 py-2": patSession?.is_owner,
+                                      "p-2": !isEditable,
+                                      "px-4 py-2": isEditable,
                                     },
                                     {
                                       "bg-score-4": actualValue === 4,
@@ -187,7 +187,7 @@ const StepFour = ({ patSession = {} }, ref) => {
                                     }
                                   )}
                                 >
-                                  {patSession?.is_owner ? (
+                                  {isEditable ? (
                                     <Form.Item
                                       {...restField}
                                       name={[name, `desired.${org.id}`]}

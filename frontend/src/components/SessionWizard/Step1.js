@@ -11,7 +11,7 @@ import {
 import { PAT_SESSION } from "@/static/config";
 import { api } from "@/lib";
 
-const StepOne = ({ patSession }, ref) => {
+const StepOne = ({ patSession, isEditable = false }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
 
@@ -25,7 +25,11 @@ const StepOne = ({ patSession }, ref) => {
       if (updatePayload.length) {
         await api("PUT", "/decisions", {
           session_id: patSession?.id,
-          decisions: updatePayload,
+          decisions: updatePayload.map(({ id, name, agree }) => ({
+            id,
+            name,
+            agree,
+          })),
         });
         sessionDispatch({
           type: "DECISION_UPDATE",
@@ -133,7 +137,7 @@ const StepOne = ({ patSession }, ref) => {
                         <Input
                           placeholder={t("step1Placeholder")}
                           variant="borderless"
-                          disabled={!patSession?.is_owner}
+                          disabled={!isEditable}
                           className="pat-decision"
                         />
                       </Form.Item>
@@ -141,7 +145,7 @@ const StepOne = ({ patSession }, ref) => {
                         <Input type="hidden" />
                       </Form.Item>
 
-                      {patSession?.is_owner && (
+                      {isEditable && (
                         <Button
                           type="link"
                           icon={<MinusCircleIcon />}
@@ -163,7 +167,7 @@ const StepOne = ({ patSession }, ref) => {
 
                 <div className="py-1 mt-4 border-dashed border-t border-dark-2" />
                 <Form.ErrorList errors={errors} />
-                {patSession?.is_owner && (
+                {isEditable && (
                   <div className="w-fit mb-4">
                     <Button
                       type="primary"

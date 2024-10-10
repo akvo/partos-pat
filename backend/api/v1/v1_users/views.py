@@ -48,7 +48,20 @@ def register(request, version):
             {"message": validate_serializers_message(serializer.errors)},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    user = serializer.save()
+
+    email = serializer.validated_data['email']
+    existing_user = SystemUser.objects_deleted.filter(email=email).first()
+
+    if existing_user and existing_user.deleted_at:
+        # If the user exists but is deleted, we'll restore and update it
+        existing_user.restore()
+        for attr, value in serializer.validated_data.items():
+            setattr(existing_user, attr, value)
+        existing_user.set_password(serializer.validated_data['password'])
+        user = existing_user
+    else:
+        # If the user doesn't exist or isn't deleted, create a new one
+        user = serializer.save()
 
     if not settings.TEST_ENV:
         send_email(
@@ -60,9 +73,10 @@ def register(request, version):
             },
         )
 
-    user = UserSerializer(instance=user).data
+    user.save()
+    user_data = UserSerializer(instance=user).data
     response = Response(
-        data=user,
+        data=user_data,
         status=status.HTTP_201_CREATED,
     )
     return response
