@@ -151,12 +151,15 @@
 	"SessionDetails": {
 		"title": "Détails de la session PAT",
 		"partnerOrg": "Organisations partenaires ",
+		"participants": "Participants",
 		"countries": "Pays",
 		"inviteCode": "Code d'invitation",
 		"context": "Contexte de la séance",
 		"copyCodeButton": "Copier les informations de la session",
 		"copyContent": "Vous avez été invité à une séance de sensibilisation au pouvoir avec les détails suivants : \nTitre : {session_name}\nOrganisations partenaires : {organizations}\nContexte de la session : {context}\n\nVeuillez créer un compte ou vous connecter à partos-pat.akvotext.org  et rejoindre la session en utilisant le code d'invitation suivant : {join_code}",
-		"copySuccess": "Le code de participation à la session a été copié dans le presse-papiers"
+		"copySuccess": "Le code de participation à la session a été copié dans le presse-papiers",
+		"partnerOrgLong": "Organisations partenaires représentées à cette réunion",
+		"contextLong": "Contexte de la session PAT"
 	},
 	"Landing": {
 		"title": "L'outil de sensibilisation au pouvoir",
@@ -272,7 +275,9 @@
 		"helpStep4": "À l'étape 4, nous nous concentrons uniquement sur les décisions indiquées par « pas d'accord ». Apparemment, un ou plusieurs partenaires estiment qu'eux-mêmes et/ou d'autres auraient dû être impliqués d'une manière différente dans la prise de ces décisions. \n\nPour chacune de ces décisions, il faut répondre à la question suivante : comment voulons-nous que les organisations partenaires à l’avenir soient impliquées dans la prise de telles décisions ?\n\nPour répondre à cette question, l'animateur doit guider les participants dans une discussion qui devrait idéalement conduire à un consensus sur le niveau de participation souhaité de chaque partenaire.\n\nSi un consensus est atteint sur le niveau de participation souhaité par chaque partenaire, l'animateur indique le niveau de participation souhaité dans le tableau.",
 		"helpStep5": "Dans la cinquième et dernière étape de l'exercice PAT, les participants doivent déterminer quelles mesures doivent être prises pour atteindre le niveau de participation souhaité. Bien entendu, cela ne s’applique qu’aux types de prise de décision dans lesquels le niveau de participation souhaité diffère du niveau de participation réel. ",
 		"helpStep6": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-		"notes": "Remarques"
+		"notes": "Remarques",
+		"notesLong": "Notes sur les processus de prise de décision",
+		"summaryLong": "Mot de clôture"
 	},
 	"FAQ": {
 		"faqs": "FAQS",

@@ -604,3 +604,23 @@ class ParticipantCommentSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance = super().update(instance, validated_data)
         return instance
+
+class ParticipantSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
+    organization_name = serializers.SerializerMethodField()
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_full_name(self, instance: Participant):
+        return instance.user.full_name
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_email(self, instance: Participant):
+        return instance.user.email
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_organization_name(self, instance: Participant):
+        return instance.organization.organization_name
+
+    class Meta:
+        model = Participant
+        fields = ["id", "full_name", "email", "role", "organization_name"]
