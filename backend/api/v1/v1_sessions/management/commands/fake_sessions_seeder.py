@@ -129,9 +129,12 @@ class Command(BaseCommand):
                 context=fake.paragraph(),
             )
 
+            current_year = timezone.now().year
+            years = [current_year, current_year - 1, current_year - 2]
             created_at = timezone.make_aware(
                 timezone.datetime(
-                    timezone.now().year, (r % 12) + 1,
+                    random.choice(years),
+                    random.randint(1, 12),
                     random.randint(1, 28)
                 )
             )
