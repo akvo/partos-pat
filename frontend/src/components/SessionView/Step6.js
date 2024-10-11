@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useSessionContext } from "@/context/SessionContextProvider";
 import { Avatar, List } from "antd";
 
-const StepSix = ({ patSession }) => {
+const StepSix = ({ patSession }, ref) => {
   const t = useTranslations("Session");
   const sessionContext = useSessionContext();
   const { data: comments } = sessionContext?.comments || { data: [] };
@@ -26,7 +26,7 @@ const StepSix = ({ patSession }) => {
   }, [comments]);
 
   return (
-    <div className="w-full space-y-12 pt-6">
+    <div className="w-full space-y-12 pt-6" ref={ref}>
       <div className="w-full space-y-2">
         <strong>{t("partnerComments")}</strong>
         <List
