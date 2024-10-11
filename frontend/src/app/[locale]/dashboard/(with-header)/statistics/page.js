@@ -61,10 +61,10 @@ const GridChartSection = ({
         <Card className="inherit">
           <div className="w-full min-h-28 flex flex-col justify-between">
             <strong className="font-extra-bold text-base">
-              {t("noSessionCompletedLast30")}
+              {t("noSessionCompleted")}
             </strong>
             <h1 className="font-extra-bold text-5xl">
-              {total_session_completed_last_30}
+              {total_session_completed}
             </h1>
           </div>
         </Card>
@@ -73,10 +73,10 @@ const GridChartSection = ({
         <Card className="inherit">
           <div className="w-full min-h-28 flex flex-col justify-between">
             <strong className="font-extra-bold text-base">
-              {t("noSessionCompleted")}
+              {t("noSessionCompletedLast30")}
             </strong>
             <h1 className="font-extra-bold text-5xl">
-              {total_session_completed}
+              {total_session_completed_last_30}
             </h1>
           </div>
         </Card>
