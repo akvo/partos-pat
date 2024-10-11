@@ -67,7 +67,9 @@ const ParticipantSection = ({ participants = [] }) => {
                   {lastName?.[0]?.toUpperCase() || ""}
                 </Avatar>
                 <div>
-                  <strong className="text-grey-900 font-semibold">{item?.full_name}</strong>
+                  <strong className="text-grey-900 font-semibold">
+                    {item?.full_name}
+                  </strong>
                   <p className="overflow-x-hidden text-sm text-ellipsis text-grey-600">
                     {item?.email}
                   </p>
@@ -76,7 +78,7 @@ const ParticipantSection = ({ participants = [] }) => {
                   </small>
                 </div>
               </li>
-            )
+            );
           })}
         </ul>
       </div>
@@ -86,9 +88,7 @@ const ParticipantSection = ({ participants = [] }) => {
 
 const PageTitle = () => {
   const t = useTranslations("SessionDetails");
-  return (
-    <span className="text-base font-normal">{t("title")}</span>
-  );
+  return <span className="text-base font-normal">{t("title")}</span>;
 };
 
 const ContextSection = ({ patSession }) => {
@@ -125,7 +125,7 @@ const OverviewSessionPage = async ({ params }) => {
   const patSession = await api("GET", `/sessions?id=${params.id}`);
   const participants = await api("GET", `/session/${params.id}/participants`);
   const countries = countryOptions?.filter((c) =>
-    patSession?.countries?.includes(c?.["alpha-2"])
+    patSession?.countries?.includes(c?.["alpha-2"]),
   );
   return (
     <div className="w-full space-y-4 overflow-y-auto">
@@ -135,7 +135,9 @@ const OverviewSessionPage = async ({ params }) => {
             <DashboardLink />
           </div>
           <div className="px-3">
-            <strong className="font-extra-bold text-base">{patSession?.session_name}</strong>
+            <strong className="font-extra-bold text-base">
+              {patSession?.session_name}
+            </strong>
           </div>
         </HorizontalDivider>
       </div>
@@ -150,7 +152,9 @@ const OverviewSessionPage = async ({ params }) => {
               className="pt-1.5 pb-3 border-b border-dark-2"
             >
               <div>
-                <h2 className="font-bold text-2xl">{patSession?.session_name}</h2>
+                <h2 className="font-bold text-2xl">
+                  {patSession?.session_name}
+                </h2>
               </div>
               <div>
                 <strong className="font-bold">

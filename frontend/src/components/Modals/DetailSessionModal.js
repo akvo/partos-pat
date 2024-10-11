@@ -68,7 +68,7 @@ const DetailSessionModal = ({ id }) => {
   }, [loadDetails]);
 
   const countries = countryOptions.filter((c) =>
-    details?.countries?.includes(c?.["alpha-2"])
+    details?.countries?.includes(c?.["alpha-2"]),
   );
 
   return (

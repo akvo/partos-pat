@@ -24,7 +24,7 @@ const DashboardMenu = () => {
         {DASHBOARD_MENU.filter(
           (m) =>
             userContext?.is_superuser ||
-            (!userContext?.is_superuser && !m?.isAdmin)
+            (!userContext?.is_superuser && !m?.isAdmin),
         ).map((m) => (
           <li
             className={classNames("font-bold hover:bg-primary-hover", {

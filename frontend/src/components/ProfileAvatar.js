@@ -30,7 +30,7 @@ const ProfileAvatar = ({ large = false }) => {
             {
               "text-sm": !large,
               "text-base": large,
-            }
+            },
           )}
         >
           {email}

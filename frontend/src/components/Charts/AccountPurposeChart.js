@@ -11,14 +11,14 @@ const AccountPurposeChart = ({ data = [] }) => {
   const rawConfig = useMemo(() => {
     const dataSource = data.map((d) => ({
       value: d.total,
-      name: t(d.account_purpose)
+      name: t(d.account_purpose),
     }));
     return {
       tooltip: {
-        trigger: "item"
+        trigger: "item",
       },
       legend: {
-        show: false
+        show: false,
       },
       series: [
         {
@@ -27,23 +27,21 @@ const AccountPurposeChart = ({ data = [] }) => {
           avoidLabelOverlap: false,
           itemStyle: {
             borderColor: "#fff",
-            borderWidth: 2
+            borderWidth: 2,
           },
           label: {
             show: false,
-            position: "center"
+            position: "center",
           },
           labelLine: {
-            show: false
+            show: false,
           },
-          data: dataSource
-        }
+          data: dataSource,
+        },
       ],
-      color: PAT_COLORS.ACCOUNT_PURPOSE
-    }
+      color: PAT_COLORS.ACCOUNT_PURPOSE,
+    };
   }, [data, t]);
-
-
 
   return (
     <div className="w-full account-purpose-chart">

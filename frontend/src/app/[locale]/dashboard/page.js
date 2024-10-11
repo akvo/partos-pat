@@ -131,11 +131,11 @@ const HomeDashboardPage = async ({ searchParams }) => {
   const { session: sessionID } = searchParams;
   const { data: activeSessions, total: totalActive } = await api(
     "GET",
-    `/sessions?page_size=${PAT_SESSION.pageSize}`
+    `/sessions?page_size=${PAT_SESSION.pageSize}`,
   );
   const { data: closedSessions, total: totalClosed } = await api(
     "GET",
-    `/sessions?published=true&page_size=${PAT_SESSION.pageSize}`
+    `/sessions?published=true&page_size=${PAT_SESSION.pageSize}`,
   );
 
   return (

@@ -176,7 +176,8 @@
     color: var(--avatar-color);
     font-weight: 900;
   }
-  .ant-avatar.org:nth-child(odd), .ant-avatar.participant {
+  .ant-avatar.org:nth-child(odd),
+  .ant-avatar.participant {
     background-color: #eae2c9;
   }
   .ant-avatar.org:nth-child(odd) {
@@ -357,6 +358,9 @@
   }
   .account-purpose-chart div[role="figure"] {
     height: 272px;
+  }
+  .session-last-3y-chart div[role="figure"] {
+    height: 320px;
   }
 }
 

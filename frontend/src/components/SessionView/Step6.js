@@ -35,17 +35,24 @@ const StepSix = ({ patSession }, ref) => {
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar>{item.organization_name[0]}</Avatar>}
-                title={<strong className="text-base font-extra-bold">{item.organization_name}</strong>}
-                description={(
+                title={
+                  <strong className="text-base font-extra-bold">
+                    {item.organization_name}
+                  </strong>
+                }
+                description={
                   <ul className="space-y-2 pt-3">
                     {item.comments.map((comment) => (
-                      <li key={comment.id} className="p-3 bg-[#F1F2F3E5] rounded-md text-dark-7">
+                      <li
+                        key={comment.id}
+                        className="p-3 bg-[#F1F2F3E5] rounded-md text-dark-7"
+                      >
                         <strong>{`${comment.fullname} :`}</strong>
                         <p>{comment.comment}</p>
                       </li>
                     ))}
                   </ul>
-                )}
+                }
               />
             </List.Item>
           )}
