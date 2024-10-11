@@ -56,7 +56,7 @@ class UsersStatisticsTestCase(TestCase, ProfileTestHelperMixin):
                 "total": total["total"]
             })
 
-        self.assertEqual(
+        self.assertCountEqual(
             res["total_users_per_account_purpose"],
             account_purpose_total
         )

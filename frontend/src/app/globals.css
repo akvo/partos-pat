@@ -31,17 +31,19 @@
     margin-inline-end: 0;
     margin-right: 10px;
   }
-  .ant-select-single:not(.pat-score),
-  .ant-select:not(.pat-score) {
+  .ant-select-single:not(.pat-score):not(.pat-filter-by-role),
+  .ant-select:not(.pat-score):not(.pat-filter-by-role) {
     height: 47px;
   }
-  .ant-select:not(.pat-score) .ant-select-arrow {
+  .ant-select:not(.pat-score):not(.pat-filter-by-role) .ant-select-arrow {
     background-color: rgba(var(--ant-input-affix-rgba));
     height: auto;
     top: 30%;
     right: 0;
   }
-  .ant-select:not(.pat-score) .ant-select-arrow .anticon {
+  .ant-select:not(.pat-score):not(.pat-filter-by-role)
+    .ant-select-arrow
+    .anticon {
     padding: 14px;
   }
   .ant-select-single:not(.ant-select-customize-input):not(.pat-score)
@@ -99,6 +101,10 @@
     > .ant-input-group-addon:last-child
     .ant-input-search-button {
     background-color: rgba(var(--ant-input-affix-rgba));
+  }
+  input#search,
+  .ant-input-search input {
+    min-height: 32px;
   }
   .ant-btn,
   .ant-btn.ant-btn-default {

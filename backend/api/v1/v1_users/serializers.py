@@ -117,7 +117,11 @@ class ManageUserSerializer(UserSerializer):
     #     return instance
 
     def update(self, instance, validated_data):
-        instance = super().update(instance, validated_data)
+        instance.is_superuser = validated_data.get(
+            "is_superuser",
+            instance.is_superuser
+        )
+        instance.save()
         return instance
 
 

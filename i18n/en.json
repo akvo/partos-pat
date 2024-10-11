@@ -129,7 +129,8 @@
 		"cancel": "Cancel",
 		"userProfileSubtitle": "Update your profile and personal details",
 		"manageUsers": "Manage Users",
-		"statistics": "Statistics"
+		"statistics": "Statistics",
+		"filterByRole": "Filter by Role"
 	},
 	"CreateSession": {
 		"title": "Create New Session",
@@ -334,5 +335,15 @@
 		"noSessionCompletedLast30": "Number of sessions completed in last 30 days",
 		"noAccountPurpose": "Number of users in each purpose of account category",
 		"noSessionCreated": "Number of cases created per month grouped by year"
+	},
+	"DeleteSession": {
+		"title": "Delete PAT Session",
+		"labelText": "Title",
+		"facilitatorText": "Are you sure you want to delete your PAT Session? it will no longer be available for participants as well. This action cannot be undone",
+		"checkboxText": "Yes, I want to delete this item",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"participantText": "Are you sure you want to delete your PAT Session? it will no longer be available for for you but will still be accessible to other participants. This action cannot be undone",
+		"archive": "Archive"
 	}
 }

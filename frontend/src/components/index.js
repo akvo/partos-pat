@@ -19,3 +19,4 @@ export { default as SessionWizard } from "./SessionWizard";
 export { default as UsersTable } from "./UsersTable";
 export { default as SessionView } from "./SessionView";
 export { default as FacilitatorAvatar } from "./FacilitatorAvatar";
+export { TotalClosedLabel } from "./TotalClosedLabel";

@@ -53,6 +53,7 @@ from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
 from api.v1.v1_users.permissions import IsSuperuser
+from api.v1.v1_sessions.constants import RoleTypes
 from collections import defaultdict
 
 
@@ -107,6 +108,20 @@ class PATSessionAddListView(APIView):
                 type=OpenApiTypes.BOOL,
                 location=OpenApiParameter.QUERY,
             ),
+            OpenApiParameter(
+                name="search",
+                required=False,
+                default=None,
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+            ),
+            OpenApiParameter(
+                name="role",
+                required=False,
+                enum=RoleTypes.FieldStr.keys(),
+                type=OpenApiTypes.NUMBER,
+                location=OpenApiParameter.QUERY,
+            ),
         ],
         summary="To get list of PAT Sessions",
     )
@@ -114,6 +129,8 @@ class PATSessionAddListView(APIView):
         id = request.GET.get("id")
         code = request.GET.get("code")
         published_param = request.GET.get("published")
+        role_param = request.GET.get("role")
+        search_param = request.GET.get("search")
 
         published = False
         if published_param is not None:
@@ -162,12 +179,39 @@ class PATSessionAddListView(APIView):
             )
 
         queryset = PATSession.objects.filter(
-            (
+            is_published=published
+        )
+        if published:
+            if role_param:
+                role = int(role_param)
+                if role == RoleTypes.facilitated:
+                    queryset = queryset.filter(
+                        user=request.user
+                    )
+                elif role == RoleTypes.participated:
+                    queryset = queryset.filter(
+                        session_participant__user=request.user,
+                        session_participant__session_deleted_at__isnull=True
+                    )
+            else:
+                queryset = queryset.filter(
+                    Q(user=request.user) |
+                    Q(
+                        session_participant__user=request.user,
+                        session_participant__session_deleted_at__isnull=True
+                    )
+                )
+        else:
+            queryset = queryset.filter(
                 Q(user=request.user) |
                 Q(session_participant__user=request.user)
             )
-            & Q(is_published=published)
-        ).order_by("-created_at").distinct()
+        if search_param:
+            queryset = queryset.filter(
+                Q(session_name__icontains=search_param) |
+                Q(context__icontains=search_param)
+            )
+        queryset = queryset.order_by("-created_at").distinct()
         paginator = Pagination()
         if request.GET.get("page_size"):
             paginator.page_size = int(request.GET.get("page_size"))
@@ -259,6 +303,42 @@ class PATSessionAddListView(APIView):
         return Response(
             data={},
             status=status.HTTP_404_NOT_FOUND,
+        )
+
+    @extend_schema(
+        request=None,
+        responses={200: SessionSerializer},
+        tags=["Session"],
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                required=True,
+                type=OpenApiTypes.NUMBER,
+                location=OpenApiParameter.QUERY,
+            ),
+        ],
+        summary="Delete PAT Session",
+    )
+    def delete(self, request, version):
+        id = request.GET.get("id")
+        instance = get_object_or_404(PATSession, pk=id)
+        if instance.user.id != request.user.id:
+            participant = instance.session_participant.filter(
+                user=request.user
+            ).first()
+            if not participant:
+                return Response(
+                    data={},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            participant.session_deleted_at = timezone.now()
+            participant.save()
+        if instance.user.id == request.user.id:
+            instance.soft_delete()
+        serializer = SessionSerializer(instance)
+        return Response(
+            data=serializer.data,
+            status=status.HTTP_200_OK
         )
 
 
