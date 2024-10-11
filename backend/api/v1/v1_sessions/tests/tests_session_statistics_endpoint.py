@@ -42,7 +42,7 @@ class SessionStatisticsEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(res["total_completed"], total_completed)
         total_completed_last_30_days = PATSession.objects.filter(
             closed_at__isnull=False,
-            created_at__gte=timezone.now() - timedelta(days=30)
+            closed_at__gte=timezone.now() - timedelta(days=30)
         ).count()
         self.assertEqual(
             res["total_completed_last_30_days"],
