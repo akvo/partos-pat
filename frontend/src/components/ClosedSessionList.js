@@ -144,7 +144,6 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
                 onChange: onPaginationChange,
                 responsive: true,
                 align: "center",
-                position: ["bottomCenter"],
               }
             : false
         }
