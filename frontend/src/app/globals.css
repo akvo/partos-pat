@@ -102,6 +102,10 @@
     .ant-input-search-button {
     background-color: rgba(var(--ant-input-affix-rgba));
   }
+  input#search,
+  .ant-input-search input {
+    min-height: 32px;
+  }
   .ant-btn,
   .ant-btn.ant-btn-default {
     height: auto;
