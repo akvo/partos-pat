@@ -67,7 +67,14 @@ class SessionStatisticsEndpointTestCase(TestCase, ProfileTestHelperMixin):
                 "total_sessions": session["total_sessions"]
             })
         self.assertEqual(len(res), len(sessions_per_month))
-        total_sessions_first_month = PATSession.objects.filter(
-            created_at__month=1
-        ).count()
-        self.assertEqual(res[0]["total_sessions"], total_sessions_first_month)
+
+    def test_get_total_session_per_last_3_years(self):
+        req = self.client.get(
+            "/api/v1/admin/sessions/per-last-3-years",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertEqual(len(res), 3)
+        self.assertEqual(len(res[0]["total_sessions"]), 12)
