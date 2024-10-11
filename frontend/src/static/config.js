@@ -126,3 +126,8 @@ export const PAT_COLORS = {
     ["rgba(247, 207, 86, 0.3)", "rgba(247, 207, 86, 1)"],
   ],
 };
+
+export const FILTER_BY_ROLE = {
+  facilitated: 1,
+  participated: 2,
+};
