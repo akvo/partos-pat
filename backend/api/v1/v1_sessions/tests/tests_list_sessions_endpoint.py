@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.core.management import call_command
 from django.db.models import Q
 from django.test.utils import override_settings
+from django.utils import timezone
 from api.v1.v1_sessions.models import PATSession, Participant
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
@@ -152,3 +153,56 @@ class ListSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(req.status_code, 200)
         res = req.json()
         self.assertEqual(res["total"], 0)
+
+    def test_deleted_closed_session_is_not_shown_as_participant(self):
+        pat_session = PATSession.objects.filter(
+            is_published=True,
+            closed_at__isnull=False,
+            session_participant__user=self.user
+        ).first()
+
+        self.assertIsNotNone(pat_session)
+
+        participant = Participant.objects.filter(
+            user=self.user,
+            session=pat_session,
+        ).first()
+        participant.session_deleted_at = timezone.now()
+        participant.save()
+
+        req = self.client.get(
+            "/api/v1/sessions?published=true",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        res_ids = [
+            d["id"]
+            for d in res["data"]
+        ]
+        self.assertTrue(pat_session.id not in res_ids)
+
+    def test_deleted_closed_session_is_not_shown_as_facilitator(self):
+        pat_session = PATSession.objects.filter(
+            is_published=True,
+            closed_at__isnull=False,
+            user=self.user,
+        ).first()
+
+        self.assertIsNotNone(pat_session)
+
+        pat_session.soft_delete()
+
+        req = self.client.get(
+            "/api/v1/sessions?published=true",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        res_ids = [
+            d["id"]
+            for d in res["data"]
+        ]
+        self.assertTrue(pat_session.id not in res_ids)
