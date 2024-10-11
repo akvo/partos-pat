@@ -67,7 +67,12 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
         loading={loading}
         renderItem={(item) => (
           <div className="mb-3">
-            <Card hoverable>
+            <Card
+              onClick={() => {
+                router.push(`/dashboard/overview/${item?.id}`);
+              }}
+              hoverable
+            >
               <Flex align="center" justify="space-between">
                 <div>
                   <Title level={4}>{item?.session_name}</Title>
