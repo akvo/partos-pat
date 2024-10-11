@@ -58,6 +58,7 @@ class ListSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
                 "created_at",
                 "updated_at",
                 "closed_at",
+                "is_owner",
             ]
         )
 

@@ -162,10 +162,16 @@ class JoinOrganizationsSerializer(serializers.ModelSerializer):
 
 class SessionListSerializer(serializers.ModelSerializer):
     facilitator = serializers.SerializerMethodField()
+    is_owner = serializers.SerializerMethodField()
 
     @extend_schema_field(UserFacilitatortSerializer())
     def get_facilitator(self, instance: PATSession):
         return UserFacilitatortSerializer(instance=instance.user).data
+
+    @extend_schema_field(OpenApiTypes.BOOL)
+    def get_is_owner(self, instance: PATSession):
+        current_user = self.context.get("user")
+        return instance.user.id == current_user.id
 
     class Meta:
         model = PATSession
@@ -178,6 +184,7 @@ class SessionListSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "closed_at",
+            "is_owner",
         ]
 
 

@@ -217,7 +217,11 @@ class PATSessionAddListView(APIView):
             paginator.page_size = int(request.GET.get("page_size"))
         instance = paginator.paginate_queryset(queryset, request)
         response = paginator.get_paginated_response(
-            SessionListSerializer(instance, many=True).data
+            SessionListSerializer(
+                instance,
+                many=True,
+                context={"user": request.user}
+            ).data
         )
         return response
 
