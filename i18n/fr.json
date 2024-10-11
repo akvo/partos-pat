@@ -334,5 +334,15 @@
 		"noSessionCompletedLast30": "Nombre de séances réalisées au cours des 30 derniers jours",
 		"noAccountPurpose": "Nombre d'utilisateurs dans chaque objectif de la catégorie de compte",
 		"noSessionCreated": "Nombre de dossiers créés par mois regroupés par année"
+	},
+	"DeleteSession": {
+		"title": "Supprimer la session PAT",
+		"labelText": "Titre",
+		"facilitatorText": "Êtes-vous sûr de vouloir supprimer votre session PAT ? il ne sera plus disponible non plus pour les participants. Cette action ne peut pas être annulée",
+		"checkboxText": "Oui, je souhaite supprimer cet élément",
+		"cancel": "Annuler",
+		"delete": "Supprimer",
+		"participantText": "Êtes-vous sûr de vouloir supprimer votre session PAT ? il ne sera plus disponible pour vous mais sera toujours accessible aux autres participants. Cette action ne peut pas être annulée",
+		"archive": "Archive"
 	}
 }
