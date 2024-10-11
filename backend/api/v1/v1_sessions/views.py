@@ -17,7 +17,7 @@ from rest_framework.decorators import (
 from rest_framework.generics import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q, Count, DateField
-from django.db.models.functions import TruncMonth
+from django.db.models.functions import TruncMonth, ExtractYear
 from django.conf import settings
 from api.v1.v1_sessions.models import (
     PATSession,
@@ -46,12 +46,14 @@ from api.v1.v1_sessions.serializers import (
     ParticipantSerializer,
     TotalSessionPerMonthSerializer,
     TotalSessionCompletedSerializer,
+    TotalSessionPerLast3YearsSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
 from api.v1.v1_users.permissions import IsSuperuser
+from collections import defaultdict
 
 
 class PATSessionAddListView(APIView):
@@ -599,5 +601,44 @@ def total_session_completed(request, version):
             "total_completed": total_completed,
             "total_completed_last_30_days": total_completed_last_30_days
         },
+        status=status.HTTP_200_OK
+    )
+
+
+@extend_schema(
+    responses={200: TotalSessionPerLast3YearsSerializer(many=True)},
+    tags=["Statistics"],
+    summary="Get total sessions per last 3 years",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def total_session_per_last_3_years(request, version):
+    queryset = PATSession.objects.all()
+    current_year = timezone.now().year
+    three_years_ago = current_year - 2
+
+    dataset = queryset.filter(created_at__year__gte=three_years_ago) \
+        .annotate(
+            month=TruncMonth("created_at"),
+            year=ExtractYear("created_at")
+        ).values("year", "month") \
+        .annotate(total_sessions=Count("id")) \
+        .order_by("year", "month")
+
+    years_data = defaultdict(lambda: {"year": 0, "total_sessions": [0] * 12})
+
+    for entry in dataset:
+        year = entry["year"]
+        month = entry["month"].month - 1  # Adjust to 0-based index
+        total = entry["total_sessions"]
+
+        years_data[year]["year"] = year
+        years_data[year]["total_sessions"][month] = total
+
+    result = sorted(years_data.values(), key=lambda x: x["year"])
+
+    serializer = TotalSessionPerLast3YearsSerializer(instance=result, many=True)
+    return Response(
+        data=serializer.data,
         status=status.HTTP_200_OK
     )

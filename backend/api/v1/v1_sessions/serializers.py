@@ -654,3 +654,11 @@ class TotalSessionCompletedSerializer(serializers.Serializer):
 
     class Meta:
         fields = ["total_completed", "total_completed_last_30_days"]
+
+
+class TotalSessionPerLast3YearsSerializer(serializers.Serializer):
+    total_sessions = serializers.ListField()
+    year = serializers.IntegerField()
+
+    class Meta:
+        fields = ["total_sessions", "year"]

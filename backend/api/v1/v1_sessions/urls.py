@@ -11,6 +11,7 @@ from api.v1.v1_sessions.views import (
     participant_list,
     total_session_completed,
     total_session_per_month,
+    total_session_per_last_3_years,
 )
 
 urlpatterns = [
@@ -57,5 +58,9 @@ urlpatterns = [
     re_path(
         r"^(?P<version>(v1))/admin/sessions/per-month",
         total_session_per_month
+    ),
+    re_path(
+        r"^(?P<version>(v1))/admin/sessions/per-last-3-years",
+        total_session_per_last_3_years
     ),
 ]
