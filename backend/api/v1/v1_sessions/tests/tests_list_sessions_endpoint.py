@@ -161,6 +161,11 @@ class ListSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         ).first()
         participant = None
         if not pat_session:
+            pat_session = PATSession.objects.exclude(
+                user=self.user,
+                is_published=True,
+                closed_at__isnull=False,
+            ).first()
             participant = Participant.objects.create(
                 user=self.user,
                 session=pat_session,
@@ -219,7 +224,12 @@ class ListSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         )
         self.assertEqual(req.status_code, 200)
         res = req.json()
-        self.assertGreater(res["total"], 0)
+        facilitated_count = PATSession.objects.filter(
+            user=self.user,
+            is_published=True,
+            closed_at__isnull=False,
+        ).count()
+        self.assertEqual(res["total"], facilitated_count)
         res_ids = [
             d["id"]
             for d in res["data"]
@@ -238,7 +248,12 @@ class ListSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         )
         self.assertEqual(req.status_code, 200)
         res = req.json()
-        self.assertGreater(res["total"], 0)
+        participated_count = PATSession.objects.filter(
+            session_participant__user=self.user,
+            is_published=True,
+            closed_at__isnull=False,
+        ).count()
+        self.assertEqual(res["total"], participated_count)
         res_ids = [
             d["id"]
             for d in res["data"]
