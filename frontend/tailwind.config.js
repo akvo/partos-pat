@@ -68,6 +68,7 @@ module.exports = {
         10: "#1e1e1e",
       },
       ["light-grey"]: {
+        3: "#FDFBF8",
         4: "#FCFAF5",
         5: "#FBF9F3",
         7: "#E1E0DA",
