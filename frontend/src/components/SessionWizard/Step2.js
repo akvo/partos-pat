@@ -23,7 +23,7 @@ const EditableCell = (
     haveEditAccess,
     ...restProps
   },
-  formInstance
+  formInstance,
 ) => {
   const fieldName = score
     ? [record?.id, dataIndex, score].join(".")
@@ -122,7 +122,7 @@ const StepTwo = ({ patSession = {}, isEditable = false }, ref) => {
         : patSession?.organizations?.map((o) => ({
             decision_id: d?.id,
             organization_id: o?.id,
-          }))
+          })),
     );
   }, [decisions, patSession]);
 
@@ -149,7 +149,7 @@ const StepTwo = ({ patSession = {}, isEditable = false }, ref) => {
 
     try {
       let decisionScores = decisions?.flatMap((d) =>
-        d?.scores?.map((s) => ({ ...s, decision_id: d?.id }))
+        d?.scores?.map((s) => ({ ...s, decision_id: d?.id })),
       );
 
       if (updateScores.length) {
@@ -202,7 +202,7 @@ const StepTwo = ({ patSession = {}, isEditable = false }, ref) => {
       allScores.forEach((s) => {
         ref.current.setFieldValue(
           `${s.decision_id}.${s.organization_id}.${s.id}`,
-          s.score
+          s.score,
         );
       });
     }
@@ -225,7 +225,7 @@ const StepTwo = ({ patSession = {}, isEditable = false }, ref) => {
               cell: (props) =>
                 EditableCell(
                   { haveEditAccess: isEditable, ...props },
-                  ref.current
+                  ref.current,
                 ),
             },
           }}

@@ -51,7 +51,7 @@
 		"search": "Recherche",
 		"previous": "Précédent",
 		"next": "Suivant",
-		"facilitator": "Animateur"
+		"facilitator": "Facilitateur"
 	},
 	"Error": {
 		"invalidEmail": "Entrez une adresse e-mail valide.",
@@ -326,5 +326,13 @@
 		"editText": "Modifier le compte",
 		"roleAdminValue": "Super administrateur",
 		"roleUserValue": "Utilisateur régulier"
+	},
+	"Statistics": {
+		"noAccounts": "Nombre de comptes",
+		"noAccountsLast30": "Nouveaux comptes au cours des 30 derniers jours",
+		"noSessionCompleted": "Nombre de séances complétées",
+		"noSessionCompletedLast30": "Nombre de séances réalisées au cours des 30 derniers jours",
+		"noAccountPurpose": "Nombre d'utilisateurs dans chaque objectif de la catégorie de compte",
+		"noSessionCreated": "Nombre de dossiers créés par mois regroupés par année"
 	}
 }

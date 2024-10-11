@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useSessionContext } from "@/context/SessionContextProvider";
 import { Avatar, List } from "antd";
 
-const StepSix = ({ patSession }) => {
+const StepSix = ({ patSession }, ref) => {
   const t = useTranslations("Session");
   const sessionContext = useSessionContext();
   const { data: comments } = sessionContext?.comments || { data: [] };
@@ -26,7 +26,7 @@ const StepSix = ({ patSession }) => {
   }, [comments]);
 
   return (
-    <div className="w-full space-y-12 pt-6">
+    <div className="w-full space-y-12 pt-6" ref={ref}>
       <div className="w-full space-y-2">
         <strong>{t("partnerComments")}</strong>
         <List
@@ -35,17 +35,24 @@ const StepSix = ({ patSession }) => {
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar>{item.organization_name[0]}</Avatar>}
-                title={<strong className="text-base font-extra-bold">{item.organization_name}</strong>}
-                description={(
+                title={
+                  <strong className="text-base font-extra-bold">
+                    {item.organization_name}
+                  </strong>
+                }
+                description={
                   <ul className="space-y-2 pt-3">
                     {item.comments.map((comment) => (
-                      <li key={comment.id} className="p-3 bg-[#F1F2F3E5] rounded-md text-dark-7">
+                      <li
+                        key={comment.id}
+                        className="p-3 bg-[#F1F2F3E5] rounded-md text-dark-7"
+                      >
                         <strong>{`${comment.fullname} :`}</strong>
                         <p>{comment.comment}</p>
                       </li>
                     ))}
                   </ul>
-                )}
+                }
               />
             </List.Item>
           )}

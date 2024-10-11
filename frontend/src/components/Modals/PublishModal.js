@@ -156,7 +156,7 @@ const PublishModal = ({ patSession, onPublish }) => {
         setPreload(false);
         const resData = await api(
           "GET",
-          `/decisions?session_id=${patSession.id}&desired=true`
+          `/decisions?session_id=${patSession.id}&desired=true`,
         );
         if (Array.isArray(resData)) {
           setDecisions(resData);

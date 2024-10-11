@@ -1,15 +1,19 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiParameter,
 )
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import (
+    api_view,
+    permission_classes,
+)
 from rest_framework.response import Response
 from drf_spectacular.types import OpenApiTypes
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.db.models import Count
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -27,8 +31,10 @@ from api.v1.v1_users.serializers import (
     ResetPasswordSerializer,
     UpdateUserSerializer,
     ManageUserSerializer,
+    UserStatisticsSerializer,
 )
 from api.v1.v1_users.models import SystemUser
+from api.v1.v1_users.constants import AccountPurpose
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
@@ -333,3 +339,38 @@ class ManageUsersViewSet(ModelViewSet):
             UserSerializer(instance=instance).data,
             status=status.HTTP_200_OK
         )
+
+
+@extend_schema(
+    responses={200: UserStatisticsSerializer},
+    tags=["Statistics"],
+    summary="Get user statistics",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def get_users_statistics(request, version):
+    queryset = SystemUser.objects.all()
+    total_users = queryset.count()
+    total_users_last_30_days = queryset.filter(
+        date_joined__gte=timezone.now() - timedelta(days=30)
+    ).count()
+    total_users_per_account_purpose = queryset.values(
+        "account_purpose"
+    ).annotate(
+        total=Count("account_purpose")
+    ).order_by("account_purpose")
+
+    total_users_per_account_purpose = [
+        {
+            "account_purpose": AccountPurpose.FieldStr[item["account_purpose"]],
+            "total": item["total"],
+        } for item in total_users_per_account_purpose
+    ]
+    return Response(
+        data={
+            "total_users": total_users,
+            "total_users_last_30_days": total_users_last_30_days,
+            "total_users_per_account_purpose": total_users_per_account_purpose,
+        },
+        status=status.HTTP_200_OK
+    )

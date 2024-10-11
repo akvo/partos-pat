@@ -99,7 +99,7 @@ const patSessionReducer = (state, action) => {
       };
     default:
       throw Error(
-        `Unknown action: ${action.type}. Remeber action type must be CAPITAL text.`
+        `Unknown action: ${action.type}. Remeber action type must be CAPITAL text.`,
       );
   }
 };

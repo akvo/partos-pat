@@ -20,7 +20,9 @@ const SessionDetailsPage = async ({ params }) => {
             <DashboardLink />
           </div>
           <div className="px-3">
-            <strong className="font-bold text-base">{patSession?.session_name}</strong>
+            <strong className="font-bold text-base">
+              {patSession?.session_name}
+            </strong>
           </div>
         </HorizontalDivider>
       </div>

@@ -24,7 +24,7 @@ const JoinModal = () => {
       if (join_code) {
         const { details, ..._session } = await api(
           "GET",
-          `/sessions?code=${join_code}`
+          `/sessions?code=${join_code}`,
         );
         if (details) {
           const _errors = errorsMapping(details, (errKey) => t(errKey));

@@ -10,11 +10,11 @@ const userReducer = (state, action) => {
     case "UPDATE":
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     default:
       throw Error(
-        `Unknown action: ${action.type}. Remeber action type must be CAPITAL text.`
+        `Unknown action: ${action.type}. Remeber action type must be CAPITAL text.`,
       );
   }
 };

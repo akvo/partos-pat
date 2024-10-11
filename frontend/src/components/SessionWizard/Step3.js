@@ -23,7 +23,7 @@ const EditableCell = (
     haveEditAccess,
     ...restProps
   },
-  formInstance
+  formInstance,
 ) => {
   const t = useTranslations("Session");
   const t_error = useTranslations("Error");
@@ -200,7 +200,7 @@ const StepThree = ({ patSession = {}, isEditable = false }, ref) => {
               cell: (props) =>
                 EditableCell(
                   { haveEditAccess: isEditable, ...props },
-                  ref.current
+                  ref.current,
                 ),
             },
           }}

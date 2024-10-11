@@ -85,7 +85,7 @@ const SessionWizard = ({ patSession }) => {
       try {
         const resData = await api(
           "GET",
-          `/decisions?session_id=${patSession.id}`
+          `/decisions?session_id=${patSession.id}`,
         );
         sessionDispatch({
           type: "DECISION_UPDATE",
@@ -107,7 +107,7 @@ const SessionWizard = ({ patSession }) => {
       try {
         const { data: dataComments } = await api(
           "GET",
-          `/session/${patSession.id}/comments`
+          `/session/${patSession.id}/comments`,
         );
         sessionDispatch({
           type: "COMMENT_UPDATE",
@@ -140,9 +140,17 @@ const SessionWizard = ({ patSession }) => {
   }, [loadComments]);
 
   return (
-    <div className={classNames(openSans.variable, openSans.className, "w-full h-full")}>
+    <div
+      className={classNames(
+        openSans.variable,
+        openSans.className,
+        "w-full h-full",
+      )}
+    >
       <div className="w-full container mx-auto mb-3">
-        <h2 className={classNames(sourceSansPro.className, "font-bold text-lg")}>
+        <h2
+          className={classNames(sourceSansPro.className, "font-bold text-lg")}
+        >
           {`${step + 1}.  `}
           {t(`titleStep${parseInt(step + 1)}`)}
         </h2>

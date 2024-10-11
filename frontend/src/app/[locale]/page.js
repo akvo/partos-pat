@@ -334,7 +334,7 @@ const Home = async () => {
       className={classNames(
         openSans.className,
         openSans.variable,
-        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto"
+        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto",
       )}
     >
       <div className="w-full relative bg-landing-gradient backdrop-blur">

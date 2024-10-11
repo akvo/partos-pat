@@ -133,7 +133,7 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                                         "bg-score-2": actualValue === 2,
                                         "bg-score-1": actualValue === 1,
                                         "bg-light-1": actualValue === 0,
-                                      }
+                                      },
                                     )}
                                   >
                                     {actualValue}
@@ -144,7 +144,7 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                             <div className="flex items-center justify-end">
                               {patSession?.organizations?.map((org) => {
                                 const desiredValue = formInstance.getFieldValue(
-                                  ["decisions", name, `desired.${org.id}`]
+                                  ["decisions", name, `desired.${org.id}`],
                                 );
                                 return (
                                   <div
@@ -157,7 +157,7 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                                         "bg-score-2": desiredValue === 2,
                                         "bg-score-1": desiredValue === 1,
                                         "bg-light-1": desiredValue === 0,
-                                      }
+                                      },
                                     )}
                                   >
                                     {desiredValue}

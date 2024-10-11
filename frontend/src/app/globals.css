@@ -176,7 +176,8 @@
     color: var(--avatar-color);
     font-weight: 900;
   }
-  .ant-avatar.org:nth-child(odd), .ant-avatar.participant {
+  .ant-avatar.org:nth-child(odd),
+  .ant-avatar.participant {
     background-color: #eae2c9;
   }
   .ant-avatar.org:nth-child(odd) {
@@ -349,6 +350,17 @@
     color: #475467;
     background-color: #f9fafb;
     padding: 12px 24px;
+  }
+  div[role="figure"] {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .account-purpose-chart div[role="figure"] {
+    height: 272px;
+  }
+  .session-last-3y-chart div[role="figure"] {
+    height: 320px;
   }
 }
 
