@@ -129,7 +129,8 @@
 		"cancel": "Annuler",
 		"userProfileSubtitle": "Mettez à jour votre profil et vos informations personnelles",
 		"manageUsers": "Gérer les utilisateurs",
-		"statistics": "Statistiques"
+		"statistics": "Statistiques",
+		"filterByRole": "Filtrer par rôle"
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",

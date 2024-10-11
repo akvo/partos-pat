@@ -129,7 +129,8 @@
 		"cancel": "Cancel",
 		"userProfileSubtitle": "Update your profile and personal details",
 		"manageUsers": "Manage Users",
-		"statistics": "Statistics"
+		"statistics": "Statistics",
+		"filterByRole": "Filter by Role"
 	},
 	"CreateSession": {
 		"title": "Create New Session",
