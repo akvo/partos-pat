@@ -1,4 +1,4 @@
-import { UserContextProvider } from "@/context";
+import { SessionContextProvider, UserContextProvider } from "@/context";
 import { getProfile, getSession } from "@/lib/auth";
 
 const DashboardLayout = async ({ children }) => {
@@ -13,7 +13,7 @@ const DashboardLayout = async ({ children }) => {
       };
   return (
     <UserContextProvider initialValues={initialValues}>
-      {children}
+      <SessionContextProvider>{children}</SessionContextProvider>
     </UserContextProvider>
   );
 };
