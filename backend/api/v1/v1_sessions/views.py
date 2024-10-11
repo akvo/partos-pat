@@ -53,6 +53,7 @@ from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
 from api.v1.v1_users.permissions import IsSuperuser
+from api.v1.v1_sessions.constants import RoleTypes
 from collections import defaultdict
 
 
@@ -107,6 +108,20 @@ class PATSessionAddListView(APIView):
                 type=OpenApiTypes.BOOL,
                 location=OpenApiParameter.QUERY,
             ),
+            OpenApiParameter(
+                name="search",
+                required=False,
+                default=None,
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+            ),
+            OpenApiParameter(
+                name="role",
+                required=False,
+                enum=RoleTypes.FieldStr.keys(),
+                type=OpenApiTypes.NUMBER,
+                location=OpenApiParameter.QUERY,
+            ),
         ],
         summary="To get list of PAT Sessions",
     )
@@ -114,6 +129,8 @@ class PATSessionAddListView(APIView):
         id = request.GET.get("id")
         code = request.GET.get("code")
         published_param = request.GET.get("published")
+        role_param = request.GET.get("role")
+        search_param = request.GET.get("search")
 
         published = False
         if published_param is not None:
@@ -165,17 +182,34 @@ class PATSessionAddListView(APIView):
             is_published=published
         )
         if published:
-            queryset = queryset.filter(
-                Q(user=request.user) |
-                Q(
-                    session_participant__user=request.user,
-                    session_participant__session_deleted_at__isnull=True
+            if role_param:
+                role = int(role_param)
+                if role == RoleTypes.facilitated:
+                    queryset = queryset.filter(
+                        user=request.user
+                    )
+                elif role == RoleTypes.participated:
+                    queryset = queryset.filter(
+                        session_participant__user=request.user,
+                        session_participant__session_deleted_at__isnull=True
+                    )
+            else:
+                queryset = queryset.filter(
+                    Q(user=request.user) |
+                    Q(
+                        session_participant__user=request.user,
+                        session_participant__session_deleted_at__isnull=True
+                    )
                 )
-            )
         else:
             queryset = queryset.filter(
                 Q(user=request.user) |
                 Q(session_participant__user=request.user)
+            )
+        if search_param:
+            queryset = queryset.filter(
+                Q(session_name__icontains=search_param) |
+                Q(context__icontains=search_param)
             )
         queryset = queryset.order_by("-created_at").distinct()
         paginator = Pagination()
