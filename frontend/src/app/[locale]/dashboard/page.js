@@ -6,6 +6,7 @@ import {
   CreateSessionModal,
   DetailSessionModal,
   JoinModal,
+  TotalClosedLabel,
 } from "@/components";
 
 import { api } from "@/lib";
@@ -46,14 +47,7 @@ const PageContent = ({
           },
           {
             key: "closed",
-            label: (
-              <Space>
-                <span>{t("closedSessions")}</span>
-                <span className="badge-number py-px px-2 border border-dark-2 rounded-full">
-                  {totalClosed}
-                </span>
-              </Space>
-            ),
+            label: <TotalClosedLabel initialTotalClosed={totalClosed} />,
             children: (
               <ClosedSessionList
                 data={closedSessions}
