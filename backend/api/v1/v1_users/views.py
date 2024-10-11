@@ -34,6 +34,7 @@ from api.v1.v1_users.serializers import (
     UserStatisticsSerializer,
 )
 from api.v1.v1_users.models import SystemUser
+from api.v1.v1_users.constants import AccountPurpose
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
@@ -357,8 +358,14 @@ def get_users_statistics(request, version):
         "account_purpose"
     ).annotate(
         total=Count("account_purpose")
-    )
+    ).order_by("account_purpose")
 
+    total_users_per_account_purpose = [
+        {
+            "account_purpose": AccountPurpose.FieldStr[item["account_purpose"]],
+            "total": item["total"],
+        } for item in total_users_per_account_purpose
+    ]
     return Response(
         data={
             "total_users": total_users,

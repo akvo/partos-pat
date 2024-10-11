@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.db.models import Count
 from datetime import timedelta
 from api.v1.v1_users.models import SystemUser
+from api.v1.v1_users.constants import AccountPurpose
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 
 
@@ -49,8 +50,9 @@ class UsersStatisticsTestCase(TestCase, ProfileTestHelperMixin):
         )
         account_purpose_total = []
         for total in total_users_per_account_purpose:
+            category_name = AccountPurpose.FieldStr[total["account_purpose"]]
             account_purpose_total.append({
-                "account_purpose": total["account_purpose"],
+                "account_purpose": category_name,
                 "total": total["total"]
             })
 
