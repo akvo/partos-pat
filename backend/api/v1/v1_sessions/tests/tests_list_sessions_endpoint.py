@@ -206,3 +206,60 @@ class ListSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             for d in res["data"]
         ]
         self.assertTrue(pat_session.id not in res_ids)
+
+    def test_filter_by_role(self):
+        req = self.client.get(
+            "/api/v1/sessions?role=1&published=true",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertGreater(res["total"], 0)
+        res_ids = [
+            d["id"]
+            for d in res["data"]
+        ]
+        for res_id in res_ids:
+            self.assertTrue(PATSession.objects.filter(
+                id=res_id,
+                user=self.user
+            ).exists())
+
+    def test_filter_by_role_participated(self):
+        req = self.client.get(
+            "/api/v1/sessions?role=2&published=true",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertGreater(res["total"], 0)
+        res_ids = [
+            d["id"]
+            for d in res["data"]
+        ]
+        for res_id in res_ids:
+            self.assertTrue(PATSession.objects.filter(
+                id=res_id,
+                session_participant__user=self.user
+            ).exists())
+
+    def test_filter_by_search(self):
+        pat_session = PATSession.objects.filter(
+            is_published=True,
+        ).first()
+        keyword = pat_session.session_name[:3]
+        req = self.client.get(
+            f"/api/v1/sessions?search={keyword}&published=true",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertGreater(res["total"], 0)
+        res_ids = [
+            d["id"]
+            for d in res["data"]
+        ]
+        self.assertTrue(pat_session.id in res_ids)
