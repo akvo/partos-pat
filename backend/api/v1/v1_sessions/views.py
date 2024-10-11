@@ -162,12 +162,22 @@ class PATSessionAddListView(APIView):
             )
 
         queryset = PATSession.objects.filter(
-            (
+            is_published=published
+        )
+        if published:
+            queryset = queryset.filter(
+                Q(user=request.user) |
+                Q(
+                    session_participant__user=request.user,
+                    session_participant__session_deleted_at__isnull=True
+                )
+            )
+        else:
+            queryset = queryset.filter(
                 Q(user=request.user) |
                 Q(session_participant__user=request.user)
             )
-            & Q(is_published=published)
-        ).order_by("-created_at").distinct()
+        queryset = queryset.order_by("-created_at").distinct()
         paginator = Pagination()
         if request.GET.get("page_size"):
             paginator.page_size = int(request.GET.get("page_size"))
@@ -259,6 +269,42 @@ class PATSessionAddListView(APIView):
         return Response(
             data={},
             status=status.HTTP_404_NOT_FOUND,
+        )
+
+    @extend_schema(
+        request=None,
+        responses={200: SessionSerializer},
+        tags=["Session"],
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                required=True,
+                type=OpenApiTypes.NUMBER,
+                location=OpenApiParameter.QUERY,
+            ),
+        ],
+        summary="Delete PAT Session",
+    )
+    def delete(self, request, version):
+        id = request.GET.get("id")
+        instance = get_object_or_404(PATSession, pk=id)
+        if instance.user.id != request.user.id:
+            participant = instance.session_participant.filter(
+                user=request.user
+            ).first()
+            if not participant:
+                return Response(
+                    data={},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            participant.session_deleted_at = timezone.now()
+            participant.save()
+        if instance.user.id == request.user.id:
+            instance.soft_delete()
+        serializer = SessionSerializer(instance)
+        return Response(
+            data=serializer.data,
+            status=status.HTTP_200_OK
         )
 
 
