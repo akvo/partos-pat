@@ -110,3 +110,14 @@ export const PAT_LANGS = [
     label: "FR",
   },
 ];
+
+export const PAT_COLORS = {
+  ACCOUNT_PURPOSE: [
+    "#d9a300",
+    "#dfb340",
+    "#e7c264",
+    "#eed184",
+    "#f4dfa0",
+    "#6a4e00"
+  ]
+}
