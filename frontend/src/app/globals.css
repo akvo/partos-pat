@@ -106,6 +106,9 @@
   .ant-input-search input {
     min-height: 32px;
   }
+  .ant-input-search .ant-input-affix-wrapper > input {
+    padding: 0 10px;
+  }
   .ant-btn,
   .ant-btn.ant-btn-default {
     height: auto;
