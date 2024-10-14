@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import classNames from "classnames";
 import { openSans, sourceSansPro } from "@/app/fonts";
 
-import { ArrowFatIcon, FileArrowDownIcon } from "../Icons";
+import { ArrowFatIcon } from "../Icons";
 import SessionContent from "./SessionContent";
 import SessionSteps from "../SessionWizard/SessionSteps";
 import {
@@ -15,6 +15,7 @@ import {
 } from "@/context/SessionContextProvider";
 import { api } from "@/lib";
 import { PAT_SESSION } from "@/static/config";
+import { PrintButton } from "../Buttons";
 
 const SessionView = ({ patSession }) => {
   const sessionDispatch = useSessionDispatch();
@@ -114,15 +115,7 @@ const SessionView = ({ patSession }) => {
         <div className="w-full flex justify-between">
           <div className="min-w-32">
             {step < PAT_SESSION.totalSteps - 1 && (
-              <Button
-                icon={<FileArrowDownIcon />}
-                iconPosition="end"
-                className="bg-light-1"
-                block
-                ghost
-              >
-                {t("downloadPdf")}
-              </Button>
+              <PrintButton patSession={patSession} />
             )}
           </div>
           <Space>
@@ -140,14 +133,7 @@ const SessionView = ({ patSession }) => {
               {t("back")}
             </Button>
             {step === PAT_SESSION.totalSteps - 1 && (
-              <Button
-                type="primary"
-                icon={<FileArrowDownIcon />}
-                iconPosition="end"
-                block
-              >
-                {t("downloadPdf")}
-              </Button>
+              <PrintButton patSession={patSession} />
             )}
             {step < PAT_SESSION.totalSteps - 1 && (
               <Button
