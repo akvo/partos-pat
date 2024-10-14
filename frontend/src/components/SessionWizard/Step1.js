@@ -74,11 +74,7 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
   };
 
   const loadDecisions = useCallback(async () => {
-    if (
-      fetched &&
-      decisions?.length &&
-      ref.current?.getFieldValue("decisions").length !== decisions.length
-    ) {
+    if (fetched) {
       ref.current.setFieldValue("decisions", decisions);
     }
   }, [ref, decisions, fetched]);
@@ -109,9 +105,10 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
             rules={[
               {
                 validator: async (_, rows) => {
-                  if (!rows || rows?.length < 1) {
+                  if ((!rows || rows?.length < 1) && isEditable) {
                     return Promise.reject(new Error(t("decisionMin2")));
                   }
+                  return Promise.resolve();
                 },
               },
             ]}
