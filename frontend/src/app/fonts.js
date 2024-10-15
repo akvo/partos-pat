@@ -1,5 +1,10 @@
-import { Source_Sans_3, Open_Sans } from "next/font/google";
+import { Source_Sans_3, Open_Sans, Inter } from "next/font/google";
 import localFont from "next/font/local";
+
+export const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const sourceSans = Source_Sans_3({
   subsets: ["latin"],
