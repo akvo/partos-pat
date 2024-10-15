@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Flex, Form, Input } from "antd";
-import { forwardRef, useCallback, useEffect } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import { MinusCircleIcon, PlusCircleIcon } from "../Icons";
 import { useTranslations } from "next-intl";
 import {
@@ -14,6 +14,7 @@ import { api } from "@/lib";
 const StepOne = ({ patSession, isEditable = false }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
+  const [preload, setPreload] = useState(true);
 
   const { data: decisions, fetched } = sessionContext.decisions;
   const { saving } = sessionContext;
@@ -67,6 +68,10 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
       option.remove(key);
       if (value) {
         await api("DELETE", `/decision/${value}`);
+        sessionDispatch({
+          type: "DECISION_UPDATE",
+          payload: decisions.filter((d) => d?.id !== value),
+        });
       }
     } catch (err) {
       console.error(err);
@@ -74,10 +79,15 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
   };
 
   const loadDecisions = useCallback(async () => {
-    if (fetched) {
-      ref.current.setFieldValue("decisions", decisions);
+    if (fetched && preload) {
+      setPreload(false);
+      if (decisions.length) {
+        ref.current.setFieldValue("decisions", decisions);
+      } else {
+        ref.current.setFieldValue("decisions", [{ name: null }]);
+      }
     }
-  }, [ref, decisions, fetched]);
+  }, [ref, decisions, fetched, preload]);
 
   useEffect(() => {
     loadDecisions();
@@ -92,13 +102,7 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
         <strong>{t("step1Title")}</strong>
         <p>{t("step1Desc")}</p>
       </div>
-      <Form
-        ref={ref}
-        initialValues={{
-          decisions: [{ name: null }],
-        }}
-        onFinish={onFinish}
-      >
+      <Form ref={ref} onFinish={onFinish}>
         {(_, formInstance) => (
           <Form.List
             name="decisions"
@@ -173,7 +177,7 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
                       iconPosition="end"
                       size="small"
                       disabled={
-                        formInstance.getFieldValue("decisions").length + 1 >
+                        formInstance.getFieldValue("decisions")?.length + 1 >
                         PAT_SESSION.maxDecisions
                       }
                       block
