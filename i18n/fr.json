@@ -311,7 +311,7 @@
 		"answer9End": "Il existe également un risque de devenir trop spécifique et de créer trop de sous-catégories. Gardez à l’esprit que chaque sous-catégorie a tendance à être discutée. Si la sous-catégorisation est trop détaillée, de telles discussions peuvent aboutir à des discussions fastidieuses et chronophages. Évitez cela en vous concentrant sur les gros problèmes."
 	},
 	"HelpModal": {
-		"greeting": "Salut {nom complet}",
+		"greeting": "Salut {fullname}",
 		"title": "Comment pouvons-nous vous aider ?",
 		"searchPlaceholder": "Recherche"
 	},
