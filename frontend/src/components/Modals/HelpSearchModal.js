@@ -4,8 +4,10 @@ import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { Modal, Button, Form, Input } from "antd";
 import { useTranslations } from "next-intl";
-import { CaretRight, LifebuoyIcon } from "../Icons";
+import classNames from "classnames";
+import { CaretRight, LifebuoyIcon, WaveHandIcon } from "../Icons";
 import { Link } from "@/routing";
+import { inter, openSans } from "@/app/fonts";
 import enLang from "../../../i18n/en.json";
 import frLang from "../../../i18n/fr.json";
 
@@ -68,18 +70,23 @@ const HelpSearchModal = ({ full_name }) => {
             display: "none",
           },
         }}
-        width={768}
+        width={640}
         closable
       >
         <div className="w-full space-y-6 px-6 py-4">
-          <div>
-            <h2 className="text-4xl text-[#7F7A79] font-bold">
-              {t_modal("greeting", {
-                fullname: full_name,
-              })}
-              👋
-              <br />
-              <span className="text-4xl text-dark-7 font-bold">
+          <div className={inter.className}>
+            <h2 className="text-4xl font-[900]">
+              <div className="flex flex-row items-center">
+                <span className="text-[#7F7A79]">
+                  {t_modal("greeting", {
+                    fullname: full_name,
+                  })}
+                </span>
+                <span>
+                  <WaveHandIcon />
+                </span>
+              </div>
+              <span className="text-4xl text-dark-7">
                 {t_modal("title")}
               </span>
             </h2>
@@ -99,7 +106,7 @@ const HelpSearchModal = ({ full_name }) => {
                 />
               </Form.Item>
             </Form>
-            <ul className="w-full space-y-4">
+            <ul className={classNames("w-full space-y-4", openSans.className)}>
               {questionList?.map((question) => (
                 <li key={question?.id}>
                   <Link
