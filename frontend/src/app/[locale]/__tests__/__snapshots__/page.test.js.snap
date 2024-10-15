@@ -23,7 +23,7 @@ exports[`Home renders correctly & match with the snapshot 1`] = `
       href="/en/register"
     >
       <button
-        class="ant-btn css-dev-only-do-not-override-vn1oyg ant-btn-primary ant-btn-lg"
+        class="ant-btn css-dev-only-do-not-override-vn1oyg ant-btn-primary ant-btn-lg w-36"
         type="button"
       >
         <span>
