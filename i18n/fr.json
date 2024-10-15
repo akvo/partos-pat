@@ -158,7 +158,7 @@
 		"inviteCode": "Code d'invitation",
 		"context": "Contexte de la séance",
 		"copyCodeButton": "Copier les informations de la session",
-		"copyContent": "Vous avez été invité à une séance de sensibilisation au pouvoir avec les détails suivants : \nTitre : {session_name}\nOrganisations partenaires : {organizations}\nContexte de la session : {context}\n\nVeuillez créer un compte ou vous connecter à partos-pat.akvotext.org  et rejoindre la session en utilisant le code d'invitation suivant : {join_code}",
+		"copyContent": "Vous avez été invité à une séance de sensibilisation au pouvoir avec les détails suivants : \n\nTitre: <name>nom_session</name>\nOrganisations partenaires: <org>organisation</org>\nContexte de session: <context>context_text</context>\n\nVeuillez créer un compte ou vous connecter à <url>domain</url>  et rejoindre la session en utilisant le code d'invitation suivant: <code>join_code</code>",
 		"copySuccess": "Le code de participation à la session a été copié dans le presse-papiers",
 		"partnerOrgLong": "Organisations partenaires représentées à cette réunion",
 		"contextLong": "Contexte de la session PAT"
