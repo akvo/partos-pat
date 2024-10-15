@@ -133,6 +133,7 @@ const HomeDashboardPage = async ({ searchParams }) => {
   );
   const myActiveSession = activeSessions?.find((s) => s?.is_owner);
   const newButtonDisabled = myActiveSession ? true : false;
+  const webdomain = process.env.WEBDOMAIN;
 
   return (
     <div className="w-full px-5 py-8 space-y-6">
@@ -156,7 +157,7 @@ const HomeDashboardPage = async ({ searchParams }) => {
           >
             <JoinModal />
             <CreateSessionModal disabled={newButtonDisabled} />
-            <DetailSessionModal id={sessionID} />
+            <DetailSessionModal id={sessionID} webdomain={webdomain} />
           </Space>
           <AboutCard />
         </div>
