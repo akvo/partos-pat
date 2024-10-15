@@ -131,6 +131,8 @@ const HomeDashboardPage = async ({ searchParams }) => {
     "GET",
     `/sessions?published=true&page_size=${PAT_SESSION.pageSize}`,
   );
+  const myActiveSession = activeSessions?.find((s) => s?.is_owner);
+  const newButtonDisabled = myActiveSession ? true : false;
 
   return (
     <div className="w-full px-5 py-8 space-y-6">
@@ -153,9 +155,7 @@ const HomeDashboardPage = async ({ searchParams }) => {
             className="w-full lg:w-10/12 max-w-[390px] mb-8 justify-end"
           >
             <JoinModal />
-            <CreateSessionModal
-              disabled={totalActive >= PAT_SESSION.maxActiveSession}
-            />
+            <CreateSessionModal disabled={newButtonDisabled} />
             <DetailSessionModal id={sessionID} />
           </Space>
           <AboutCard />
