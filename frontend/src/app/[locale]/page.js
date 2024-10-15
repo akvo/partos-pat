@@ -308,7 +308,7 @@ const PartnerSection = () => {
   );
 };
 
-export const HeroSection = () => {
+export const HeroSection = ({ isLoggedIn = false }) => {
   const t = useTranslations("Landing");
   return (
     <div className="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4">
@@ -318,8 +318,8 @@ export const HeroSection = () => {
       <div className="w-full lg:w-10/12 2xl:w-8/12 text-center">
         <p className="text-xl text-dark-10 leading-8">{t("description")}</p>
       </div>
-      <Link href="/register">
-        <Button type="primary" size="large">
+      <Link href={isLoggedIn ? "/dashboard" : "/register"}>
+        <Button type="primary" size="large" className="w-36">
           {t("createAccount")}
         </Button>
       </Link>
@@ -347,7 +347,7 @@ const Home = async () => {
             <LandingButton isLoggedIn={session?.user?.id ? true : false} />
           </div>
 
-          <HeroSection />
+          <HeroSection isLoggedIn={session?.user?.id ? true : false} />
         </div>
         <div className="w-full relative px-10">
           <Image
