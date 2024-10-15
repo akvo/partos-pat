@@ -45,7 +45,7 @@ const EditableCell = (
     );
   }
 
-  const agreeValue = formInstance.getFieldValue(record.id);
+  const agreeValue = record?.id ? formInstance.getFieldValue(record.id) : null;
   return (
     <td
       className={classNames(className, {
