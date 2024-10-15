@@ -86,9 +86,7 @@ const HelpSearchModal = ({ full_name }) => {
                   <WaveHandIcon />
                 </span>
               </div>
-              <span className="text-4xl text-dark-7">
-                {t_modal("title")}
-              </span>
+              <span className="text-4xl text-dark-7">{t_modal("title")}</span>
             </h2>
           </div>
           <div className="w-full border border-light-grey-9 rounded-lg px-4 py-8 space-y-6">
