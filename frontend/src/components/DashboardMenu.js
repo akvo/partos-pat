@@ -4,14 +4,11 @@ import { Button, Flex } from "antd";
 import { useTranslations } from "next-intl";
 import { DASHBOARD_MENU } from "@/static/config";
 import { usePathname, useRouter } from "@/routing";
-import { LifebuoyIcon } from "./Icons";
-import { useState } from "react";
 import classNames from "classnames";
-import { HelpModal } from "./Modals";
+import { HelpSearchModal } from "./Modals";
 import { useUserContext } from "@/context/UserContextProvider";
 
 const DashboardMenu = () => {
-  const [open, setOpen] = useState(false);
   const pathName = usePathname();
   const userContext = useUserContext();
 
@@ -45,17 +42,7 @@ const DashboardMenu = () => {
         ))}
       </ul>
       <div className="w-full text-left">
-        <Button
-          type="link"
-          onClick={() => {
-            setOpen(true);
-          }}
-          icon={<LifebuoyIcon />}
-          size="large"
-        >
-          {t("support")}
-        </Button>
-        <HelpModal {...{ open, setOpen }} />
+        <HelpSearchModal full_name={userContext?.full_name} />
       </div>
     </Flex>
   );
