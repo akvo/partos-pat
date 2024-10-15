@@ -651,7 +651,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
         model = Participant
         fields = [
             "id", "full_name", "email", "role", "organization_name",
-            "organization_acronym"
+            "organization_acronym", "organization_id"
         ]
 
 
