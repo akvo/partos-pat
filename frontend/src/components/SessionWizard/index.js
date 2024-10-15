@@ -18,7 +18,7 @@ import {
 import { PublishModal } from "../Modals";
 import { api } from "@/lib";
 
-const SessionWizard = ({ patSession }) => {
+const SessionWizard = ({ patSession, setPending }) => {
   const sessionDispatch = useSessionDispatch();
   const sessionContext = useSessionContext();
   const { loading, saving, step } = sessionContext;
@@ -56,6 +56,7 @@ const SessionWizard = ({ patSession }) => {
           type: "SAVING_TRUE",
         });
         if (!saving) {
+          setPending(false);
           router.push("/dashboard");
           sessionDispatch({
             type: "RESET",
@@ -74,6 +75,7 @@ const SessionWizard = ({ patSession }) => {
       try {
         await formRef.current.validateFields();
         formRef.current.submit();
+        setPending(false);
       } catch ({ errorFields }) {
         formRef.current.setFields(errorFields);
       }

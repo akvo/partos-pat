@@ -629,6 +629,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     organization_name = serializers.SerializerMethodField()
+    organization_acronym = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_full_name(self, instance: Participant):
@@ -642,9 +643,16 @@ class ParticipantSerializer(serializers.ModelSerializer):
     def get_organization_name(self, instance: Participant):
         return instance.organization.organization_name
 
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_organization_acronym(self, instance: Participant):
+        return instance.organization.acronym
+
     class Meta:
         model = Participant
-        fields = ["id", "full_name", "email", "role", "organization_name"]
+        fields = [
+            "id", "full_name", "email", "role", "organization_name",
+            "organization_acronym"
+        ]
 
 
 class TotalSessionPerMonthSerializer(serializers.Serializer):

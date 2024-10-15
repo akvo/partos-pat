@@ -51,7 +51,8 @@
 		"search": "Recherche",
 		"previous": "Précédent",
 		"next": "Suivant",
-		"facilitator": "Facilitateur"
+		"facilitator": "Facilitateur",
+		"joinHelpText": "Si vous n'avez pas reçu un code de session, veuillez contacter le facilitateur de la session. Pour toute autre question, visitez notre page <faq>faq</faq>"
 	},
 	"Error": {
 		"invalidEmail": "Entrez une adresse e-mail valide.",

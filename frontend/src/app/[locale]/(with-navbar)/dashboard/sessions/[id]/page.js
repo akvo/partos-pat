@@ -1,23 +1,50 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/routing";
 import { HorizontalDivider, SessionWizard } from "@/components";
 import { api } from "@/lib";
+import { useParams } from "next/navigation";
 
-export const revalidate = 60;
-
-const DashboardLink = () => {
+const SessionDetailsPage = () => {
+  const [patSession, setPatSession] = useState(null);
+  const [pending, setPending] = useState(true);
+  const params = useParams();
   const t = useTranslations("Dashboard");
-  return <Link href="/dashboard">{t("dashboard")}</Link>;
-};
 
-const SessionDetailsPage = async ({ params }) => {
-  const patSession = await api("GET", `/sessions?id=${params.id}`);
+  const loadPatSession = useCallback(async () => {
+    try {
+      const response = await api("GET", `/sessions?id=${params.id}`);
+      setPatSession(response);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [params.id]);
+
+  useEffect(() => {
+    loadPatSession();
+  }, [loadPatSession]);
+
+  useEffect(() => {
+    if (!pending) return;
+
+    function beforeUnload(e) {
+      e.preventDefault();
+    }
+
+    window.addEventListener("beforeunload", beforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnload);
+    };
+  }, [pending]);
+
   return (
     <div className="w-full space-y-4">
       <div className="container mx-auto pt-2">
         <HorizontalDivider>
           <div className="pr-3">
-            <DashboardLink />
+            <a href={`/${params.locale}/dashboard`}>{t("dashboard")}</a>
           </div>
           <div className="px-3">
             <strong className="font-bold text-base">
@@ -26,7 +53,7 @@ const SessionDetailsPage = async ({ params }) => {
           </div>
         </HorizontalDivider>
       </div>
-      <SessionWizard {...{ patSession, params }} />
+      <SessionWizard {...{ patSession, params, setPending }} />
     </div>
   );
 };

@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Form, Input, Modal, Select } from "antd";
 import VerticalLogo from "../VerticalLogo";
-import { PARTOS } from "@/static/config";
 import { api, errorsMapping } from "@/lib";
-import { useRouter } from "@/routing";
+import { Link, useRouter } from "@/routing";
 
 const { useForm } = Form;
 
@@ -171,14 +170,14 @@ const JoinModal = () => {
           </Form>
 
           <p className="text-base text-dark-10">
-            {tc.rich("contactText", {
-              email: () => (
-                <a
-                  href={`mailto:${PARTOS.email}`}
-                  className="text-blue underline"
+            {tc.rich("joinHelpText", {
+              faq: () => (
+                <Link
+                  href={"/dashboard/faqs"}
+                  className="text-blue underline font-bold"
                 >
-                  {PARTOS.email}
-                </a>
+                  {t("faqs")}
+                </Link>
               ),
             })}
           </p>
