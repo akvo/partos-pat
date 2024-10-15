@@ -6,6 +6,7 @@ import { api } from "@/lib";
 import moment from "moment";
 import countryOptions from "../../../../../../../i18n/countries.json";
 import { ArrowFatIcon } from "@/components/Icons";
+import classNames from "classnames";
 
 export const revalidate = 60;
 
@@ -17,71 +18,113 @@ const Section = ({ children }) => (
   </div>
 );
 
-const PartnerSection = ({ patSession }) => {
-  const t = useTranslations("SessionDetails");
+const PartnerWrapper = ({ children }) => {
   return (
-    <>
-      <Section>
-        <h3 className="font-bold">{t("partnerOrgLong")}</h3>
-      </Section>
-      <div className="w-full pb-6 space-y-5 border-b border-dark-2 text-base">
-        <ul className="w-full flex flex-col flex-wrap md:flex-row border-b border-light-grey-5">
-          {patSession?.organizations?.map((item) => (
-            <li
-              className="w-full md:w-1/4 flex gap-3 px-3 py-2 odd:bg-light-grey-5 even:bg-light-1 border-b border-light-grey-7"
-              key={item?.id}
-            >
-              <Avatar className="org">{item?.name?.[0]}</Avatar>
-              <div>
-                <strong className="text-grey-900">{item?.acronym}</strong>
-                <p className="overflow-x-hidden text-sm text-ellipsis text-grey-600">
-                  {item?.name}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+    <div className="w-full pb-6 space-y-5 border-b border-dark-2 text-base">
+      <ul className="w-full min-h-20 flex flex-col flex-wrap md:flex-row border-b border-light-grey-5">
+        {children}
+      </ul>
+    </div>
   );
 };
 
-const ParticipantSection = ({ participants = [] }) => {
+const PartnerItem = ({ children, vertical = false }) => {
+  return (
+    <li
+      className={classNames(
+        "w-full md:w-1/4 flex flex-row gap-3 odd:bg-light-grey-5 even:bg-light-1 border-b border-light-grey-7",
+        {
+          "items-start p-0": vertical,
+          "items-center px-3 py-2": !vertical,
+        },
+      )}
+    >
+      {children}
+    </li>
+  );
+};
+
+const PartnerSection = ({ patSession, participants = [] }) => {
   const t = useTranslations("SessionDetails");
+  const groupedOrgPer4 = patSession?.organizations
+    ?.map((o) => {
+      const pl = participants?.filter((p) => p?.organization_id === o?.id);
+      return {
+        ...o,
+        participants: pl,
+      };
+    })
+    /* ?.filter((o) => o?.participants?.length > 0) */
+    ?.reduce((acc, item) => {
+      const index = acc.findIndex((i) => i.length < 4);
+      if (index !== -1) {
+        acc[index].push(item);
+      } else {
+        acc.push([item]);
+      }
+      return acc;
+    }, []);
   return (
     <>
-      <Section>
-        <h3 className="font-bold">{t("participants")}</h3>
-      </Section>
-      <div className="w-full pb-6 space-y-5 border-b border-dark-2 text-base">
-        <ul className="w-full flex flex-col flex-wrap md:flex-row border-b border-light-grey-5">
-          {participants?.map((item) => {
-            const [firstName, lastName] = item?.full_name?.split(/\s/g);
-            return (
-              <li
-                className="w-full md:w-1/4 flex flex-row items-center gap-3 px-3 py-2 odd:bg-light-grey-5 even:bg-light-1 border-b border-light-grey-7"
-                key={item?.id}
-              >
-                <Avatar size={40} className="participant">
-                  {firstName?.[0]?.toUpperCase() || ""}
-                  {lastName?.[0]?.toUpperCase() || ""}
-                </Avatar>
+      {groupedOrgPer4?.map((organizations, index) => (
+        <div key={index}>
+          <Section>
+            <h3 className="font-bold">{t("partnerOrgLong")}</h3>
+          </Section>
+          <PartnerWrapper>
+            {organizations.map((item) => (
+              <PartnerItem key={item?.id}>
+                <Avatar className="org">{item?.name?.[0]}</Avatar>
                 <div>
-                  <strong className="text-grey-900 font-semibold">
-                    {item?.full_name}
-                  </strong>
+                  <strong className="text-grey-900">{item?.acronym}</strong>
                   <p className="overflow-x-hidden text-sm text-ellipsis text-grey-600">
-                    {item?.email}
+                    {item?.name}
                   </p>
-                  <small className="overflow-x-hidden text-sm text-ellipsis text-grey-600">
-                    {item?.role}
-                  </small>
                 </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+              </PartnerItem>
+            ))}
+          </PartnerWrapper>
+          <Section>
+            <h3 className="font-bold">{t("participants")}</h3>
+          </Section>
+          <PartnerWrapper>
+            {organizations.map((item) => (
+              <PartnerItem key={item?.id} vertical>
+                <div className="w-full flex flex-col gap-3">
+                  {item?.participants?.map((p, px) => {
+                    const [firstName, lastName] = p?.full_name?.split(/\s/g);
+                    return (
+                      <div
+                        key={p?.id}
+                        className={classNames(
+                          "w-full flex flex-row items-center gap-3 px-3 py-2",
+                          {
+                            "border-b border-light-grey-7":
+                              px < item?.participants?.length - 1,
+                          },
+                        )}
+                      >
+                        <Avatar className="org">{`${firstName?.[0]?.toUpperCase() || ""}${lastName?.[0]?.toUpperCase() || ""}`}</Avatar>
+                        <div>
+                          <strong className="text-grey-900">
+                            {p?.full_name}
+                          </strong>
+                          <p className="overflow-x-hidden text-sm text-ellipsis text-grey-600">
+                            {p?.email}
+                          </p>
+                          <small className="overflow-x-hidden text-sm text-ellipsis text-grey-600">
+                            {p?.role}
+                          </small>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </PartnerItem>
+            ))}
+          </PartnerWrapper>
+        </div>
+      ))}
     </>
   );
 };
@@ -163,9 +206,7 @@ const OverviewSessionPage = async ({ params }) => {
               </div>
             </Flex>
 
-            <PartnerSection patSession={patSession} />
-
-            <ParticipantSection participants={participants} />
+            <PartnerSection {...{ patSession, participants }} />
 
             <ContextSection patSession={patSession} />
 
