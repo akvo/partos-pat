@@ -18,6 +18,10 @@ const style = {
     width: "100%",
     height: "auto",
   },
+  title: {
+    fontWeight: "bold",
+    color: "#164e63",
+  },
 };
 
 const PrintButton = ({ patSession }) => {
@@ -83,7 +87,7 @@ const PrintButton = ({ patSession }) => {
             </span>
           </div>
           <div style={{ breakAfter: "page" }}></div>
-          <h3>PAT session details</h3>
+          <h3 style={style.title}>PAT session details</h3>
           <p>Participants:</p>
           <PrintTable>
             <thead>
@@ -110,9 +114,15 @@ const PrintButton = ({ patSession }) => {
             </tbody>
           </PrintTable>
           <p>PAT session context</p>
-          <div>{patSession?.context}</div>
+          <PrintTable>
+            <tbody>
+              <tr>
+                <PrintTable.TD>{patSession?.context}</PrintTable.TD>
+              </tr>
+            </tbody>
+          </PrintTable>
           <div style={{ breakAfter: "page" }}></div>
-          <h3>PAT session content</h3>
+          <h3 style={style.title}>PAT session content</h3>
           <p>
             List of important (types of) decisions that were reflected on in
             this PAT session.
@@ -202,6 +212,23 @@ const PrintButton = ({ patSession }) => {
                 })}
             </tbody>
           </PrintTable>
+          <br />
+          {patSession?.notes?.length > 0 && (
+            <div>
+              <p>
+                Notes on decision-making processes on which there was no
+                agreement.
+              </p>
+              <PrintTable>
+                <tbody>
+                  <tr>
+                    <PrintTable.TD>{patSession.notes}</PrintTable.TD>
+                  </tr>
+                </tbody>
+              </PrintTable>
+            </div>
+          )}
+          <br />
           <p>
             {`After discussion, participants agreed that in these decisions partner organisations need to be involved in a different way. The desired level of participation for partner organisations is indicated in the table below:`}
           </p>
@@ -261,10 +288,17 @@ const PrintButton = ({ patSession }) => {
                 })}
             </tbody>
           </PrintTable>
+          <div style={{ breakAfter: "page" }}></div>
           {patSession?.summary?.length > 0 && (
             <div>
               <p>Concluding remarks</p>
-              <div>{patSession.summary}</div>
+              <PrintTable>
+                <tbody>
+                  <tr>
+                    <PrintTable.TD>{patSession.summary}</PrintTable.TD>
+                  </tr>
+                </tbody>
+              </PrintTable>
             </div>
           )}
         </div>
