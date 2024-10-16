@@ -15,10 +15,49 @@ import { PAT_SESSION } from "@/static/config";
 const PageTitle = () => {
   const t = useTranslations("Dashboard");
   return (
-    <>
-      <h1 className="font-bold text-2xl">{t("title")}</h1>
-      <p>{t("subtitle")}</p>
-    </>
+    <div className="w-full space-y-2">
+      <h1 className="font-bold text-xl xl:text-2xl">{t("title")}</h1>
+      <p className="w-11/12 text-sm xl:text-base">{t("subtitle")}</p>
+    </div>
+  );
+};
+
+const GettingStartedCard = () => {
+  const t = useTranslations("Dashboard");
+  return (
+    <Card>
+      <div className="w-full px-4 py-8">
+        <div className="w-full py-3 border-b border-b-dark-2 mb-6">
+          <h3 className="font-bold text-2xl">{t("gettingStarted")}</h3>
+        </div>
+        <div className="w-full flex">
+          <div className="w-full lg:w-1/2 space-y-3">
+            <h4 className="text-dark-2 text-xl font-bold">
+              {t("createNewTitle")}
+            </h4>
+            <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
+              <li>{t("createStep1")}</li>
+              <li>{t("createStep2")}</li>
+              <li>{t("createStep3")}</li>
+            </ol>
+            <div className="pt-16">
+              <CreateSessionModal />
+            </div>
+          </div>
+          <div className="w-full lg:w-1/2 space-y-3">
+            <h4 className="text-dark-2 text-xl font-bold">{t("joinTitle")}</h4>
+            <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
+              <li>{t("joinStep1")}</li>
+              <li>{t("joinStep2")}</li>
+              <li>{t("joinStep3")}</li>
+            </ol>
+            <div className="pt-8">
+              <JoinModal />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 };
 
@@ -43,56 +82,45 @@ const PageContent = ({
                 </span>
               </Space>
             ),
-            children: <ActiveSessionList data={activeSessions} />,
+            children: (
+              <div className="w-full flex md:max-lg:flex-col flex-row gap-4 2xl:gap-12">
+                <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">
+                  <ActiveSessionList data={activeSessions} />
+                </div>
+                <div className="w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5">
+                  <AboutCard />
+                </div>
+              </div>
+            ),
           },
           {
             key: "closed",
             label: <TotalClosedLabel initialTotalClosed={totalClosed} />,
             children: (
-              <ClosedSessionList
-                data={closedSessions}
-                totalClosed={totalClosed}
-              />
+              <div className="w-full flex md:max-lg:flex-col flex-row gap-4 xl:gap-12">
+                <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">
+                  <ClosedSessionList
+                    data={closedSessions}
+                    totalClosed={totalClosed}
+                  />
+                </div>
+                <div className="w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5">
+                  <AboutCard />
+                </div>
+              </div>
             ),
           },
         ]}
       />
       {totalActive === 0 && totalClosed === 0 && (
-        <Card>
-          <div className="w-full px-4 py-8">
-            <div className="w-full py-3 border-b border-b-dark-2 mb-6">
-              <h3 className="font-bold text-2xl">{t("gettingStarted")}</h3>
-            </div>
-            <div className="w-full flex">
-              <div className="w-full lg:w-1/2 space-y-3">
-                <h4 className="text-dark-2 text-xl font-bold">
-                  {t("createNewTitle")}
-                </h4>
-                <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
-                  <li>{t("createStep1")}</li>
-                  <li>{t("createStep2")}</li>
-                  <li>{t("createStep3")}</li>
-                </ol>
-                <div className="pt-16">
-                  <CreateSessionModal />
-                </div>
-              </div>
-              <div className="w-full lg:w-1/2 space-y-3">
-                <h4 className="text-dark-2 text-xl font-bold">
-                  {t("joinTitle")}
-                </h4>
-                <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
-                  <li>{t("joinStep1")}</li>
-                  <li>{t("joinStep2")}</li>
-                  <li>{t("joinStep3")}</li>
-                </ol>
-                <div className="pt-8">
-                  <JoinModal />
-                </div>
-              </div>
-            </div>
+        <div className="w-full flex md:max-lg:flex-col flex-row gap-4 xl:gap-12">
+          <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">
+            <GettingStartedCard />
           </div>
-        </Card>
+          <div className="w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5">
+            <AboutCard />
+          </div>
+        </div>
       )}
     </div>
   );
@@ -101,23 +129,25 @@ const PageContent = ({
 const AboutCard = () => {
   const t = useTranslations("Dashboard");
   return (
-    <Card className="w-full lg:w-10/12 max-w-[390px]" bordered={false}>
-      <div className="w-full p-1 lg:px-4 lg:py-2">
-        <h2 className="text-2xl text-dark-10 font-bold mb-6 whitespace-pre-line">
-          {t("aboutTitle")}
-        </h2>
-        <div className="mb-8 max-h-[450px] text-base overflow-y-scroll">
-          <p className="whitespace-pre-line">{t("aboutDescription")}</p>
+    <div className="w-full 2xl:w-10/12 max-w-[390px] pt-0 lg:pt-14 xl:pt-0">
+      <Card bordered={false}>
+        <div className="w-full p-1 xl:px-4 xl:py-2">
+          <h2 className="text-xl xl:text-2xl text-dark-10 font-bold mb-6 whitespace-pre-line">
+            {t("aboutTitle")}
+          </h2>
+          <div className="mb-8 max-h-[450px] text-sm xl:text-base overflow-y-scroll">
+            <p className="whitespace-pre-line">{t("aboutDescription")}</p>
+          </div>
+          <a
+            href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button ghost>{t("learnMore")}</Button>
+          </a>
         </div>
-        <a
-          href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button ghost>{t("learnMore")}</Button>
-        </a>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 };
 
@@ -137,31 +167,24 @@ const HomeDashboardPage = async ({ searchParams }) => {
 
   return (
     <div className="w-full px-5 py-8 space-y-6">
-      <div className="w-full flex md:max-lg:flex-col flex-row gap-12">
-        <div className="w-full lg:w-3/5">
+      <div className="w-full flex md:max-lg:flex-col flex-row gap-4 xl:gap-6 2xl:gap-12">
+        <div className="w-full xl:w-4/6 2xl:w-3/5">
           <PageTitle />
-          <PageContent
-            {...{
-              activeSessions,
-              closedSessions,
-              totalClosed,
-              totalActive,
-            }}
-          />
         </div>
-        <div className="w-full lg:w-2/5">
-          <Space
-            align="center"
-            size="middle"
-            className="w-full lg:w-10/12 max-w-[390px] mb-8 justify-end"
-          >
-            <JoinModal />
-            <CreateSessionModal disabled={newButtonDisabled} />
-            <DetailSessionModal id={sessionID} webdomain={webdomain} />
-          </Space>
-          <AboutCard />
+        <div className="w-72 xl:w-2/6 2xl:w-2/5 flex flex-row items-center justify-start gap-4">
+          <JoinModal />
+          <CreateSessionModal disabled={newButtonDisabled} />
+          <DetailSessionModal id={sessionID} webdomain={webdomain} />
         </div>
       </div>
+      <PageContent
+        {...{
+          activeSessions,
+          closedSessions,
+          totalClosed,
+          totalActive,
+        }}
+      />
     </div>
   );
 };
