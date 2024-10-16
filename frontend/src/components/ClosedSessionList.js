@@ -100,11 +100,11 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
   const router = useRouter();
 
   return (
-    <div className="w-full pt-2 space-y-2">
+    <div className="w-full pt-4 space-y-2">
       <h2 className="font-bold text-xl">{t("closedSessions")}</h2>
       <Form form={form} onFinish={onFinish}>
-        <div className="w-full flex flex-row gap-2 items-center justify-between">
-          <div className="w-1/2 lg:w-4/12">
+        <div className="w-full flex flex-row gap-4 items-center justify-between">
+          <div className="w-1/2 max-w-80">
             <Form.Item name="search">
               <Search
                 placeholder={tc("search")}
@@ -116,7 +116,7 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
               />
             </Form.Item>
           </div>
-          <div className="w-1/2 lg:w-4/12 2xl:w-3/12">
+          <div className="w-56 2xl:w-80">
             <Form.Item name="role">
               <Select
                 placeholder={t("filterByRole")}

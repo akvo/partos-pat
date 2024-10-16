@@ -210,7 +210,7 @@ const HowItWorkSection = () => {
       <div className="container mx-auto 2xl:px-4">
         <div className="w-full relative">
           <div className="w-full relative flex flex-col md:flex-row items-center gap-4">
-            <div className="w-full md:w-8/12 space-y-10 text-dark-10">
+            <div className="w-full lg:w-1/2 xl:w-8/12 space-y-10 text-dark-10">
               <h2 className="text-3xl font-extra-bold">{t("howItWork")}</h2>
               <div className="pb-10">
                 <p className="text-base">{t("howItWorkDesc")}</p>
@@ -223,8 +223,8 @@ const HowItWorkSection = () => {
                 <Button type="primary">{t("learnMore")}</Button>
               </a>
             </div>
-            <div className="w-full md:w-4/12 h-80 hidden md:block absolute top-[-1rem] right-0">
-              <div className="w-full lg:w-9/12 absolute z-10 top-0 right-0">
+            <div className="w-full lg:w-1/2 xl:w-4/12 h-80 hidden md:block absolute top-[5rem] xl:top-[-1rem] right-0">
+              <div className="w-full lg:w-8/12 absolute z-10 top-0 right-0">
                 <Image
                   src="/images/how-its-work-person.png"
                   alt="How it Works person"
@@ -235,7 +235,7 @@ const HowItWorkSection = () => {
               </div>
             </div>
           </div>
-          <div className="w-6/12 lg:w-5/12 hidden md:block z-0 absolute top-[-5rem] right-[-6rem] lg:top-[-10rem] 2xl:top-[-12rem] lg:right-[-10rem]">
+          <div className="w-6/12 xl:w-5/12 hidden md:block z-0 absolute top-[-5rem] right-[-6rem] lg:top-0 lg:right-[-4rem] xl:top-[-10rem] 2xl:top-[-12rem] xl:right-[-10rem]">
             <Image
               src="/images/partos-circle-multicolor.png"
               alt="How it Works circle"
@@ -297,7 +297,7 @@ const PartnerSection = () => {
                   alt={`Partner ${index + 1}`}
                   width={151}
                   height={151}
-                  className="w-full mb-3"
+                  className="w-24 xl:w-full mb-3"
                 />
               </li>
             );

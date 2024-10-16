@@ -120,8 +120,14 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                         key={key}
                         className="w-full h-full flex items-start justify-between border-b border-b-grey-100"
                       >
-                        <div className="w-full lg:min-w-[432px] h-33 sticky left-0 z-20 bg-light-1 flex flex-col justify-end p-2">
-                          {formInstance.getFieldValue(["scores", name, "name"])}
+                        <div className="w-full lg:min-w-[432px] h-28 sticky left-0 z-20 bg-light-1">
+                          <p className="p-2 mt-9 border-t border-t-grey-100">
+                            {formInstance.getFieldValue([
+                              "scores",
+                              name,
+                              "name",
+                            ])}
+                          </p>
                         </div>
                         <div className="w-fit flex flex-col z-0">
                           <div className="flex items-center justify-end font-bold bg-light-grey-7">

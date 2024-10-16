@@ -14,7 +14,7 @@ const ActiveSessionList = ({ data = [] }) => {
   const userContext = useUserContext();
 
   return (
-    <div className="w-full h-auto pt-2">
+    <div className="w-full h-auto pt-4">
       <h2 className="font-bold text-xl">{t("activeSessions")}</h2>
       <br />
       <List
@@ -22,7 +22,11 @@ const ActiveSessionList = ({ data = [] }) => {
         dataSource={data}
         renderItem={(item) => (
           <List.Item>
-            <Card className="w-full min-h-48" bordered={false} hoverable>
+            <Card
+              className="w-full min-h-48 space-y-4"
+              bordered={false}
+              hoverable
+            >
               <Flex justify="space-between" align="baseline">
                 {item?.facilitator?.id === userContext?.id ? (
                   <FolderIcon />
@@ -49,7 +53,7 @@ const ActiveSessionList = ({ data = [] }) => {
                 vertical
               >
                 <div className="text-left space-y-2">
-                  <Title className="w-full lg:w-10/12" level={4}>
+                  <Title className="w-full xl:w-10/12 lg:text-sm" level={4}>
                     {item?.session_name}
                   </Title>
                   <Text className="line-clamp-3">{item?.context}</Text>
