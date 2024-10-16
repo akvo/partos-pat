@@ -271,6 +271,7 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
                 instance.set_closed()
 
         # Save the updated instance
+        instance.updated_at = timezone.now()
         instance.save()
         return instance
 
@@ -406,6 +407,9 @@ class DecisionUpdateSerializer(serializers.Serializer):
         instance.name = validated_data.get("name", instance.name)
         instance.agree = validated_data.get("agree", instance.agree)
         instance.notes = validated_data.get("notes", instance.notes)
+        instance.session.updated_at = timezone.now()
+        instance.session.save()
+        instance.updated_at = timezone.now()
         instance.save()
         if instance.agree is False:
             for score in instance.decision_participant.filter(
@@ -519,6 +523,11 @@ class ParticipantDecisionSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.score = validated_data.get("score", instance.score)
         instance.desired = validated_data.get("desired", instance.desired)
+
+        instance.decision.session.updated_at = timezone.now()
+        instance.decision.session.save()
+
+        instance.updated_at = timezone.now()
         instance.save()
         return instance
 
