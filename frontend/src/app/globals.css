@@ -292,6 +292,12 @@
   .pat-table table td:first-of-type {
     max-width: 432px;
   }
+  .pat-table th {
+    height: 36px;
+  }
+  .pat-table td {
+    height: 40px;
+  }
   .ant-alert {
     gap: 12px;
     border-radius: 8px;

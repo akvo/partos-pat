@@ -232,7 +232,9 @@ const StepTwo = ({ patSession = {}, isEditable = false }, ref) => {
           rowKey="id"
           dataSource={dataSource}
           columns={columns}
-          className="pat-table"
+          className={classNames("pat-table", {
+            "pat-table-editable": isEditable,
+          })}
           pagination={false}
           scroll={{
             x: "max-content",

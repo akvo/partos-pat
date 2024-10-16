@@ -147,12 +147,10 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                 <div
                                   key={org.id}
                                   className={classNames(
-                                    "w-24 h-12 border-x border-x-light-1 h-12",
+                                    "w-24 h-10 border-x border-x-light-1",
                                     {
                                       "p-2": !isEditable,
                                       "px-4 py-2": isEditable,
-                                    },
-                                    {
                                       "bg-score-4": actualValue === 4,
                                       "bg-score-3": actualValue === 3,
                                       "bg-score-2": actualValue === 2,
@@ -177,7 +175,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                 <div
                                   key={org.id}
                                   className={classNames(
-                                    "w-24 h-12 p-2 border-x border-x-light-1",
+                                    "w-24 h-10 p-2 border-x border-x-light-1",
                                     {
                                       "bg-score-4": desiredValue === 4,
                                       "bg-score-3": desiredValue === 3,
@@ -232,10 +230,10 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                           <div className="w-24 p-2 border-x border-x-light-1 font-bold bg-light-grey-7">
                             {t("agree")}
                           </div>
-                          <div className="w-24 h-12 p-2 border-x border-x-light-1 td-no">
+                          <div className="w-24 h-10 p-2 border-x border-x-light-1 td-no">
                             {t("no")}
                           </div>
-                          <div className="w-24 h-12 p-2 border-x border-x-light-1 td-yes">
+                          <div className="w-24 h-10 p-2 border-x border-x-light-1 td-yes">
                             {t("yes")}
                           </div>
                         </div>
