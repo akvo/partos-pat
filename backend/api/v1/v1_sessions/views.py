@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from django.db.models.functions import Coalesce
 from rest_framework.decorators import (
     api_view,
     permission_classes,
@@ -211,10 +212,10 @@ class PATSessionAddListView(APIView):
                 Q(session_name__icontains=search_param) |
                 Q(context__icontains=search_param)
             )
-        if published:
-            queryset = queryset.order_by("-closed_at").distinct()
-        else:
-            queryset = queryset.order_by("-created_at").distinct()
+        queryset = queryset.annotate(last_updated_at=Coalesce(
+            "closed_at", "updated_at", "created_at"
+        ))
+        queryset = queryset.order_by("-last_updated_at").distinct()
         paginator = Pagination()
         if request.GET.get("page_size"):
             paginator.page_size = int(request.GET.get("page_size"))
