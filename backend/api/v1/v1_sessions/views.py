@@ -211,7 +211,10 @@ class PATSessionAddListView(APIView):
                 Q(session_name__icontains=search_param) |
                 Q(context__icontains=search_param)
             )
-        queryset = queryset.order_by("-created_at").distinct()
+        if published:
+            queryset = queryset.order_by("-closed_at").distinct()
+        else:
+            queryset = queryset.order_by("-created_at").distinct()
         paginator = Pagination()
         if request.GET.get("page_size"):
             paginator.page_size = int(request.GET.get("page_size"))
