@@ -9,13 +9,13 @@ const tableStyles = {
     fontSize: "12px",
   },
   th: {
-    border: "1px solid #000",
+    border: "1.5px solid #777777",
     padding: "8px",
     textAlign: "left",
     backgroundColor: "#f2f2f2",
   },
   td: {
-    border: "1px solid #000",
+    border: "1.5px solid #777777",
     padding: "8px",
     textAlign: "left",
   },
