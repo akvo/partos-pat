@@ -164,23 +164,25 @@ const DetailSessionModal = ({ id, webdomain }) => {
         <div className="text-center pt-6 pb-12">
           <h4 className="font-bold text-5xl">{details?.join_code}</h4>
         </div>
-        <div id={`copy-content-${id}`} className="hidden whitespace-pre-line">
-          {t.rich("copyContent", {
-            name: () => <p>{details?.session_name}</p>,
-            org: () => (
-              <i>
-                {details?.organizations?.map((o) => o?.acronym)?.join(", ")}
-              </i>
-            ),
-            context: () => <p>{details?.context}</p>,
-            code: () => <b>{details.join_code}</b>,
-            url: () => (
-              <a href={webdomain} target="_blank">
-                {webdomain}
-              </a>
-            ),
-          })}
-        </div>
+        {details?.join_code && (
+          <div id={`copy-content-${id}`} className="hidden whitespace-pre-line">
+            {t.rich("copyContent", {
+              name: () => <p>{details?.session_name}</p>,
+              org: () => (
+                <i>
+                  {details?.organizations?.map((o) => o?.acronym)?.join(", ")}
+                </i>
+              ),
+              context: () => <p>{details?.context}</p>,
+              code: () => <b>{details.join_code}</b>,
+              url: () => (
+                <a href={webdomain} target="_blank">
+                  {webdomain}
+                </a>
+              ),
+            })}
+          </div>
+        )}
       </Section>
       <Section>
         <strong className="font-bold">{t("context")}</strong>
