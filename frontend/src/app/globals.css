@@ -264,6 +264,7 @@
     > .ant-steps-item-title {
     line-height: 24px;
     font-weight: 700;
+    font-size: 16px;
   }
   th.ant-table-cell.ant-table-cell-fix-left:first-child {
     background-color: #ffffff;
@@ -393,6 +394,9 @@
   .session-last-3y-chart div[role="figure"] {
     height: 320px;
   }
+  p {
+    font-size: 16px;
+  }
 }
 
 body {
@@ -420,6 +424,21 @@ body {
     .ant-avatar.profile-avatar {
       width: 40px !important;
       height: 40px !important;
+    }
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+      font-size: 16px;
+    }
+    p,
+    .ant-steps.ant-steps-vertical
+      > .ant-steps-item
+      > .ant-steps-item-container
+      > .ant-steps-item-content
+      > .ant-steps-item-title,
+    .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+      font-size: 14px;
+    }
+    .ant-steps .ant-steps-item-description {
+      font-size: 12px;
     }
   }
 }

@@ -11,6 +11,7 @@ import {
 
 import { api } from "@/lib";
 import { PAT_SESSION } from "@/static/config";
+import classNames from "classnames";
 
 const PageTitle = () => {
   const t = useTranslations("Dashboard");
@@ -26,32 +27,42 @@ const GettingStartedCard = () => {
   const t = useTranslations("Dashboard");
   return (
     <Card>
-      <div className="w-full px-4 py-8">
+      <div className="w-full px-2 lg:px-4 py-8">
         <div className="w-full py-3 border-b border-b-dark-2 mb-6">
-          <h3 className="font-bold text-2xl">{t("gettingStarted")}</h3>
+          <h3 className="font-bold text-xl xl:text-2xl">
+            {t("gettingStarted")}
+          </h3>
         </div>
-        <div className="w-full flex">
-          <div className="w-full lg:w-1/2 space-y-3">
-            <h4 className="text-dark-2 text-xl font-bold">
-              {t("createNewTitle")}
-            </h4>
-            <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
-              <li>{t("createStep1")}</li>
-              <li>{t("createStep2")}</li>
-              <li>{t("createStep3")}</li>
-            </ol>
-            <div className="pt-16">
+        <div className="w-full flex flex-col lg:flex-row items-start justify-between gap-4">
+          <div className="w-full h-64 flex flex-col justify-between lg:w-1/2 space-y-3">
+            <div className="w-full">
+              <h4 className="text-dark-2 text-lg xl:text-xl font-bold">
+                {t("createNewTitle")}
+              </h4>
+              <ol className="list-decimal ml-4 text-sm xl:text-base text-dark-10 leading-6 xl:leading-8">
+                <li>{t("createStep1")}</li>
+                <li>{t("createStep2")}</li>
+                <li>{t("createStep3")}</li>
+              </ol>
+            </div>
+
+            <div className="w-8/12 2xl:max-w-64">
               <CreateSessionModal />
             </div>
           </div>
-          <div className="w-full lg:w-1/2 space-y-3">
-            <h4 className="text-dark-2 text-xl font-bold">{t("joinTitle")}</h4>
-            <ol className="list-decimal ml-4 text-base text-dark-10 leading-8">
-              <li>{t("joinStep1")}</li>
-              <li>{t("joinStep2")}</li>
-              <li>{t("joinStep3")}</li>
-            </ol>
-            <div className="pt-8">
+          <div className="w-full h-64 flex flex-col justify-between lg:w-1/2 space-y-3">
+            <div className="w-full">
+              <h4 className="text-dark-2 text-lg xl:text-xl font-bold">
+                {t("joinTitle")}
+              </h4>
+              <ol className="list-decimal ml-4 text-sm xl:text-base text-dark-10 leading-6 xl:leading-8">
+                <li>{t("joinStep1")}</li>
+                <li>{t("joinStep2")}</li>
+                <li>{t("joinStep3")}</li>
+              </ol>
+            </div>
+
+            <div className="w-8/12 2xl:max-w-40">
               <JoinModal />
             </div>
           </div>
@@ -87,7 +98,11 @@ const PageContent = ({
                 <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">
                   <ActiveSessionList data={activeSessions} />
                 </div>
-                <div className="w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5">
+                <div
+                  className={classNames("w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5", {
+                    hidden: totalActive === 0,
+                  })}
+                >
                   <AboutCard />
                 </div>
               </div>
@@ -104,7 +119,11 @@ const PageContent = ({
                     totalClosed={totalClosed}
                   />
                 </div>
-                <div className="w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5">
+                <div
+                  className={classNames("w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5", {
+                    hidden: totalClosed === 0 && totalActive === 0,
+                  })}
+                >
                   <AboutCard />
                 </div>
               </div>
@@ -118,7 +137,7 @@ const PageContent = ({
             <GettingStartedCard />
           </div>
           <div className="w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5">
-            <AboutCard />
+            <AboutCard isEmpty={true} />
           </div>
         </div>
       )}
@@ -126,10 +145,14 @@ const PageContent = ({
   );
 };
 
-const AboutCard = () => {
+const AboutCard = ({ isEmpty = false }) => {
   const t = useTranslations("Dashboard");
   return (
-    <div className="w-full 2xl:w-10/12 max-w-[390px] pt-0 lg:pt-14 xl:pt-0">
+    <div
+      className={classNames("w-full 2xl:w-10/12 max-w-[390px] pt-0", {
+        "lg:pt-14 xl:pt-0": !isEmpty,
+      })}
+    >
       <Card bordered={false}>
         <div className="w-full p-1 xl:px-4 xl:py-2">
           <h2 className="text-xl xl:text-2xl text-dark-10 font-bold mb-6 whitespace-pre-line">
@@ -171,7 +194,7 @@ const HomeDashboardPage = async ({ searchParams }) => {
         <div className="w-full xl:w-4/6 2xl:w-3/5">
           <PageTitle />
         </div>
-        <div className="w-72 xl:w-2/6 2xl:w-2/5 flex flex-row items-center justify-start gap-4">
+        <div className="w-96 xl:w-2/6 2xl:w-2/5 flex flex-row items-center justify-start gap-4">
           <JoinModal />
           <CreateSessionModal disabled={newButtonDisabled} />
           <DetailSessionModal id={sessionID} webdomain={webdomain} />

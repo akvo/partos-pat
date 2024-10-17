@@ -6,7 +6,7 @@ exports[`Home renders correctly & match with the snapshot 1`] = `
     class="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4"
   >
     <h1
-      class="text-4xl md:text-5xl text-center font-extra-bold"
+      class="text-4xl xl:text-5xl text-center font-extra-bold"
     >
       The Power Awareness Tool
     </h1>
@@ -14,7 +14,7 @@ exports[`Home renders correctly & match with the snapshot 1`] = `
       class="w-full lg:w-10/12 2xl:w-8/12 text-center"
     >
       <p
-        class="text-xl text-dark-10 leading-8"
+        class="text-lg xl:text-xl text-dark-10 leading-8"
       >
         The decision to develop the Power Awareness Tool is based on the assumption that if partners have a better understanding of the way power works in the partnership, they will be in a better position to work towards shifting power in accordance with their shared principles.
       </p>
@@ -23,7 +23,7 @@ exports[`Home renders correctly & match with the snapshot 1`] = `
       href="/en/register"
     >
       <button
-        class="ant-btn css-dev-only-do-not-override-vn1oyg ant-btn-primary ant-btn-lg w-36"
+        class="ant-btn css-dev-only-do-not-override-vn1oyg ant-btn-primary ant-btn-lg w-fit min-w-36"
         type="button"
       >
         <span>
