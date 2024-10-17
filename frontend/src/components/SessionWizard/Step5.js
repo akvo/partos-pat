@@ -89,7 +89,7 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                     return (
                       <div key={key} className="w-full">
                         <div className="w-full flex items-start justify-between border-b border-b-grey-100 relative overflow-x-auto">
-                          <div className="w-full lg:min-w-[432px] h-[116px] sticky left-0 z-20 bg-light-1 flex flex-col justify-end">
+                          <div className="w-full lg:min-w-[348px] 2xl:min-w-[432px] h-[116px] sticky left-0 z-20 bg-light-1 flex flex-col justify-end">
                             <div
                               className={classNames(
                                 "w-full min-h-10 px-2 pt-2",

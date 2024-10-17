@@ -106,7 +106,7 @@ module.exports = {
         DEFAULT: "1rem",
         sm: "2rem", // 640px
         md: "3rem", // 768px
-        lg: "4rem", // 1024px
+        lg: "3rem", // 1024px
         xl: "4rem", // 1280px
       },
     },

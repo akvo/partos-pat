@@ -18,8 +18,8 @@ const HelpButton = () => {
           setOpen(true);
         }}
       >
-        <div className="border-2 border-dark-7 p-2 rounded-full text-dark-10 hover:bg-primary-active">
-          <QuestionMarkIcon size={24} />
+        <div className="w-9 h-9 2xl:w-10 2xl:h-10 border-2 border-dark-7 p-2 rounded-full text-dark-10 hover:bg-primary-active">
+          <QuestionMarkIcon size={"100%"} />
         </div>
       </Button>
       <HelpModal {...{ open, setOpen }} step={step + 1} />

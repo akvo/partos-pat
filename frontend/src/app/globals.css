@@ -397,6 +397,9 @@
   p {
     font-size: 16px;
   }
+  .pat-dashboard-buttons a {
+    color: var(--button-text) !important;
+  }
 }
 
 body {
@@ -434,7 +437,8 @@ body {
       > .ant-steps-item-container
       > .ant-steps-item-content
       > .ant-steps-item-title,
-    .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+    .ant-collapse .ant-collapse-content > .ant-collapse-content-box,
+    .ant-btn {
       font-size: 14px;
     }
     .ant-steps .ant-steps-item-description {
