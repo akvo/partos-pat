@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { PARTOS } from "@/static/config";
 import { Link } from "@/routing";
 import { PartosLogo } from "@/components/Icons";
 
@@ -24,20 +23,6 @@ const AuthTemplate = ({ children }) => {
           </Link>
         </div>
         {children}
-        <div className="w-full py-3">
-          <p className="text-base text-dark-10">
-            {t.rich("contactText", {
-              email: () => (
-                <a
-                  href={`mailto:${PARTOS.email}`}
-                  className="text-blue underline"
-                >
-                  {PARTOS.email}
-                </a>
-              ),
-            })}
-          </p>
-        </div>
       </div>
     </div>
   );
