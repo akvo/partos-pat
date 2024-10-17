@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "@/routing";
 import classNames from "classnames";
 import { HelpSearchModal } from "./Modals";
 import { useUserContext } from "@/context/UserContextProvider";
+import { LangButton } from "./Buttons";
 
 const DashboardMenu = () => {
   const pathName = usePathname();
@@ -42,8 +43,9 @@ const DashboardMenu = () => {
           </li>
         ))}
       </ul>
-      <div className="w-full text-left">
+      <div className="w-full flex flex-col gap-0 items-start justify-between">
         <HelpSearchModal full_name={userContext?.full_name} />
+        <LangButton placement="top" className="ml-4" inherit={false} long />
       </div>
     </Flex>
   );
