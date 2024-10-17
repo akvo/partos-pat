@@ -1,27 +1,17 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
-import { Link, useRouter } from "@/routing";
-import { Dropdown, Space } from "antd";
-import { GlobeIcon, UserCircle } from "../Icons";
-import { PAT_LANGS } from "@/static/config";
+import { useTranslations } from "next-intl";
+import { Link } from "@/routing";
+import { Space } from "antd";
+import { UserCircle } from "../Icons";
+import LangButton from "./LangButton";
 
 const LandingButton = ({ isLoggedIn = false }) => {
-  const router = useRouter();
-
-  const locale = useLocale();
-
-  const onClick = ({ key }) => {
-    router.replace("/", { locale: key });
-  };
-
   const t = useTranslations("Landing");
   const t_dash = useTranslations("Dashboard");
 
-  const localeLabel = PAT_LANGS.find((l) => l.key === locale);
-
   return (
-    <div className="w-fit px-6 py-2.5 text-light-1 bg-[#1E1E1E99]">
+    <div className="w-fit px-6 py-2.5 text-sm xl:text-base text-light-1 bg-[#1E1E1E99]">
       <Space size="middle">
         <Link href={isLoggedIn ? "/dashboard" : "/login"}>
           <Space>
@@ -32,19 +22,7 @@ const LandingButton = ({ isLoggedIn = false }) => {
           </Space>
         </Link>
 
-        <Dropdown
-          menu={{
-            items: PAT_LANGS,
-            onClick,
-          }}
-        >
-          <a onClick={(e) => e.preventDefault()}>
-            <Space>
-              <GlobeIcon />
-              <span className="font-bold">{localeLabel?.label || "EN"}</span>
-            </Space>
-          </a>
-        </Dropdown>
+        <LangButton />
       </Space>
     </div>
   );
