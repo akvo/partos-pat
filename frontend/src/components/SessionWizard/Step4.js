@@ -120,7 +120,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                         key={key}
                         className="w-full h-full flex items-start justify-between border-b border-b-grey-100"
                       >
-                        <div className="w-full lg:min-w-[348px] 2xl:min-w-[432px] h-32 sticky left-0 z-20 bg-light-1">
+                        <div className="w-full h-40 lg:min-w-[348px] 2xl:min-w-[432px] sticky left-0 z-20 bg-light-1">
                           <p className="p-2 mt-9 border-t border-t-grey-100">
                             {formInstance.getFieldValue([
                               "scores",
@@ -232,7 +232,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                             })}
                           </div>
                         </div>
-                        <div className="w-24 sticky right-0 z-20 bg-light-1">
+                        <div className="w-24 h-40 sticky right-0 z-20 bg-light-1">
                           <div className="w-24 p-2 border-x border-x-light-1 font-bold bg-light-grey-7">
                             {t("agree")}
                           </div>
