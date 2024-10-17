@@ -104,10 +104,12 @@ export const PAT_LANGS = [
   {
     key: "en",
     label: "EN",
+    long: "English",
   },
   {
     key: "fr",
     label: "FR",
+    long: "French",
   },
 ];
 
