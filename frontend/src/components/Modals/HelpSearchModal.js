@@ -75,7 +75,7 @@ const HelpSearchModal = ({ full_name }) => {
       >
         <div className="w-full space-y-6 px-6 py-4">
           <div className={inter.className}>
-            <h2 className="text-4xl font-[900]">
+            <h2 className="text-3xl xl:text-4xl font-[900]">
               <div className="flex flex-row items-center">
                 <span className="text-[#7F7A79]">
                   {t_modal("greeting", {
@@ -86,7 +86,9 @@ const HelpSearchModal = ({ full_name }) => {
                   <WaveHandIcon />
                 </span>
               </div>
-              <span className="text-4xl text-dark-7">{t_modal("title")}</span>
+              <span className="text-3xl xl:text-4xl text-dark-7">
+                {t_modal("title")}
+              </span>
             </h2>
           </div>
           <div className="w-full border border-light-grey-9 rounded-lg px-4 py-8 space-y-6">
@@ -110,7 +112,7 @@ const HelpSearchModal = ({ full_name }) => {
                   <Link
                     href={`/dashboard/faqs?question=${question?.id}`}
                     onClick={() => setOpen(false)}
-                    className="w-full px-4 py-2 flex flex-row items-center justify-between text-base text-dark-10 hover:bg-light-grey-5 hover:text-dark-7"
+                    className="w-full px-4 py-2 flex flex-row items-center justify-between text-sm xl:text-base text-dark-10 hover:bg-light-grey-5 hover:text-dark-7"
                   >
                     <span className="w-full md:w-11/12">
                       <strong>{question?.name}</strong>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Flex } from "antd";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { DASHBOARD_MENU } from "@/static/config";
 import { usePathname, useRouter } from "@/routing";
 import classNames from "classnames";
@@ -11,6 +11,7 @@ import { useUserContext } from "@/context/UserContextProvider";
 const DashboardMenu = () => {
   const pathName = usePathname();
   const userContext = useUserContext();
+  const locale = useLocale();
 
   const router = useRouter();
   const t = useTranslations("Dashboard");
@@ -36,7 +37,7 @@ const DashboardMenu = () => {
               }}
               icon={m.icon}
             >
-              {t(m.name)}
+              {m.name === "faqs" && locale === "fr" ? "FAQ" : t(m.name)}
             </Button>
           </li>
         ))}

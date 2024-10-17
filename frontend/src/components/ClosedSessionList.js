@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib";
 import { DeleteSessionModal } from "./Modals";
 import { useSessionDispatch } from "@/context/SessionContextProvider";
+import classNames from "classnames";
 
 const { Title, Text } = Typography;
 const { Search } = Input;
@@ -100,10 +101,18 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
   const router = useRouter();
 
   return (
-    <div className="w-full pt-4 space-y-2">
+    <div className="w-full pt-2 xl:pt-4 space-y-2">
       <h2 className="font-bold text-xl">{t("closedSessions")}</h2>
+      {totalClosed === 0 && <br />}
       <Form form={form} onFinish={onFinish}>
-        <div className="w-full flex flex-row gap-4 items-center justify-between">
+        <div
+          className={classNames(
+            "w-full flex flex-row gap-4 items-center justify-between",
+            {
+              hidden: totalClosed === 0,
+            },
+          )}
+        >
           <div className="w-1/2 max-w-80">
             <Form.Item name="search">
               <Search

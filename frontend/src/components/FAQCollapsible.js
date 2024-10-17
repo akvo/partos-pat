@@ -105,8 +105,8 @@ const FAQCollapsible = ({
           "text-center": center,
         })}
       >
-        <h2 className="text-4xl font-extra-bold">{t("title")}</h2>
-        <p className="text-lg">{t("subTitle")}</p>
+        <h2 className="text-3xl xl:text-4xl font-extra-bold">{t("title")}</h2>
+        <p className="text-base xl:text-lg">{t("subTitle")}</p>
       </div>
       <Collapse
         className={contentClass}
