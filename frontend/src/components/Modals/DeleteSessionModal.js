@@ -32,10 +32,10 @@ const DeleteSessionModal = ({ open, setOpen, patSession, onDeleteSession }) => {
       maskClosable={false}
       width={768}
       onOk={() => form.submit()}
-      okText={patSession?.is_owner ? t("delete") : t("archive")}
+      okText={t("delete")}
       okButtonProps={{
         loading: deleting,
-        icon: patSession?.is_owner ? <TrashIcon /> : <FileArchiveIcon />,
+        icon: <TrashIcon />,
         iconPosition: "end",
       }}
       cancelButtonProps={{
