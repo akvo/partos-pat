@@ -245,6 +245,7 @@ class CreateSessionSerializer(serializers.Serializer):
 
 
 class UpdateSessionSerializer(serializers.ModelSerializer):
+    session_name = CustomCharField(required=False)
     summary = CustomCharField(required=False)
     notes = CustomCharField(required=False)
     context = CustomCharField(required=False)
@@ -255,7 +256,7 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PATSession
-        fields = ["summary", "notes", "context", "is_published"]
+        fields = ["session_name", "summary", "notes", "context", "is_published"]
 
     def update(self, instance, validated_data):
         # Update the fields of the instance
