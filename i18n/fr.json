@@ -229,7 +229,7 @@
 		"decision": "Décision",
 		"addDecision": "Ajouter une décision",
 		"step2Title": "Déterminer le niveau réel de participation à la prise de décision",
-		"step2Desc": "Pour chaque décision répertoriée dans la première colonne de la matrice, le niveau réel de participation à la prise de cette décision est évalué et noté pour chaque organisation partenaire. Pour cela, nous utilisons l'échelle de participation à la prise de décision. Selon le niveau de participation, la note sera comprise entre 0 (non impliqué) et 4 (le partenaire décide).",
+		"step2Desc": "Pour chaque décision répertoriée, le niveau réel de participation à la prise de cette décision est évalué et noté pour chaque organisation partenaire. Pour cela, nous utilisons l'échelle de participation à la prise de décision. Selon le niveau de participation, la note sera comprise entre 0 (non impliqué) et 4 (le partenaire décide).",
 		"score": "Score",
 		"step3Desc": "À l’étape 3, le facilitateur présente au groupe la liste des décisions, une par une. Concernant chacune de ces décisions, le facilitateur pose la question : Sommes-nous d'accord avec la manière dont les organisations partenaires sont impliquées dans la prise de ce type de décisions ?\\n Si tout le monde est d’accord, le facilitateur note « d’accord ». \\n Dans le cas où un ou plusieurs partenaires ne sont pas d'accord, le facilitateur note « Pas d'accord ».\\nToutes les décisions marquées d'un « Non » sont le type de décisions qui nécessitent une approche différente. Ceux-ci passeront à l’étape suivante 4.",
 		"agree": "Accepter?",
