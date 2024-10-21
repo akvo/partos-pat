@@ -98,6 +98,7 @@ export const PAT_SESSION = {
   maxDecisions: 15,
   totalSteps: 6,
   maxAcronym: 16,
+  prefixFileName: "PAT session",
 };
 
 export const PAT_LANGS = [

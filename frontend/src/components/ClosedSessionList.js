@@ -20,11 +20,13 @@ import {
 import { useTranslations } from "next-intl";
 import { FILTER_BY_ROLE, PAT_SESSION } from "@/static/config";
 import { useRouter } from "@/routing";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { api } from "@/lib";
 import { DeleteSessionModal } from "./Modals";
 import { useSessionDispatch } from "@/context/SessionContextProvider";
 import classNames from "classnames";
+import { PrintDocument } from "./PrintDocument";
+import PrintPage from "./PrintDocument/PrintPage";
 
 const { Title, Text } = Typography;
 const { Search } = Input;
@@ -36,9 +38,13 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
   const [loading, setLoading] = useState(false);
   const [patSession, setPatSession] = useState(null);
   const [preload, setPreload] = useState(true);
+  const [participants, setParticipants] = useState([]);
+  const [decisions, setDecisions] = useState([]);
+
   const sessionDispatch = useSessionDispatch();
 
   const [form] = Form.useForm();
+  const printButtonRef = useRef(null);
 
   const onPaginationChange = async (page) => {
     setLoading(true);
@@ -84,6 +90,24 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
   const onDeleteSession = (id) => {
     const updatedDataSource = dataSource.filter((item) => item.id !== id);
     setDataSource(updatedDataSource);
+  };
+
+  const onDownload = async (id) => {
+    try {
+      const resPatSession = await api("GET", `/sessions/?id=${id}`);
+      setPatSession(resPatSession);
+      const resParticipants = await api("GET", `/session/${id}/participants`);
+      const resDecisions = await api("GET", `/decisions/?session_id=${id}`);
+      setParticipants(resParticipants);
+      setDecisions(resDecisions);
+      printButtonRef.current.click();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onClickPrintButton = (onPrint) => {
+    onPrint(`${PAT_SESSION.prefixFileName} ${patSession?.session_name}`);
   };
 
   useEffect(() => {
@@ -144,93 +168,111 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
           </div>
         </div>
       </Form>
-      <List
-        pagination={
-          totalData > PAT_SESSION.pageSize
-            ? {
-                pageSize: PAT_SESSION.pageSize,
-                total: totalData,
-                onChange: onPaginationChange,
-                responsive: true,
-                align: "center",
-              }
-            : false
-        }
-        dataSource={dataSource}
-        loading={loading}
-        renderItem={(item) => (
-          <div className="mb-3">
-            <Card hoverable>
-              <Flex align="center" justify="space-between">
-                <div
-                  role="button"
-                  onClick={() => {
-                    router.push(`/dashboard/overview/${item?.id}`);
-                  }}
-                >
-                  <Title level={4}>{item?.session_name}</Title>
-                  <Text className="line-clamp-1">{item?.context}</Text>
-                </div>
-                <div>
-                  <Dropdown
-                    trigger={["click"]}
-                    menu={{
-                      items: [
-                        {
-                          label: (
-                            <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
-                              <span className="w-10/12 text-right">
-                                {t("view")}
-                              </span>
-                              <Eye />
-                            </div>
-                          ),
-                          key: "view",
-                          onClick: () => {
-                            router.push(`/dashboard/overview/${item?.id}`);
-                          },
-                        },
-                        {
-                          label: (
-                            <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
-                              <span className="w-10/12 text-right">
-                                {t("downloadReport")}
-                              </span>
-                              <DownloadSimpleIcon />
-                            </div>
-                          ),
-                          key: "downloadReport",
-                        },
-                        {
-                          label: (
-                            <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
-                              <span className="w-10/12 text-right">
-                                {t("delete")}
-                              </span>
-                              <TrashIcon />
-                            </div>
-                          ),
-                          key: "delete",
-                          danger: true,
-                          onClick: () => {
-                            setPatSession(item);
-                            setOpenDeleteModal(true);
-                          },
-                        },
-                      ],
+      <PrintDocument>
+        <List
+          pagination={
+            totalData > PAT_SESSION.pageSize
+              ? {
+                  pageSize: PAT_SESSION.pageSize,
+                  total: totalData,
+                  onChange: onPaginationChange,
+                  responsive: true,
+                  align: "center",
+                }
+              : false
+          }
+          dataSource={dataSource}
+          loading={loading}
+          renderItem={(item) => (
+            <div className="mb-3">
+              <Card hoverable>
+                <Flex align="center" justify="space-between">
+                  <div
+                    role="button"
+                    onClick={() => {
+                      router.push(`/dashboard/overview/${item?.id}`);
                     }}
-                    placement="top"
                   >
-                    <Button type="link">
-                      <DotsTreeVerticalIcon />
-                    </Button>
-                  </Dropdown>
-                </div>
-              </Flex>
-            </Card>
-          </div>
-        )}
-      />
+                    <Title level={4}>{item?.session_name}</Title>
+                    <Text className="line-clamp-1">{item?.context}</Text>
+                  </div>
+                  <div>
+                    <Dropdown
+                      trigger={["click"]}
+                      menu={{
+                        items: [
+                          {
+                            label: (
+                              <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
+                                <span className="w-10/12 text-right">
+                                  {t("view")}
+                                </span>
+                                <Eye />
+                              </div>
+                            ),
+                            key: "view",
+                            onClick: () => {
+                              router.push(`/dashboard/overview/${item?.id}`);
+                            },
+                          },
+                          {
+                            label: (
+                              <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
+                                <span className="w-10/12 text-right">
+                                  {t("downloadReport")}
+                                </span>
+                                <DownloadSimpleIcon />
+                              </div>
+                            ),
+                            key: "downloadReport",
+                            onClick: () => {
+                              onDownload(item?.id);
+                            },
+                          },
+                          {
+                            label: (
+                              <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
+                                <span className="w-10/12 text-right">
+                                  {t("delete")}
+                                </span>
+                                <TrashIcon />
+                              </div>
+                            ),
+                            key: "delete",
+                            danger: true,
+                            onClick: () => {
+                              setPatSession(item);
+                              setOpenDeleteModal(true);
+                            },
+                          },
+                        ],
+                      }}
+                      placement="top"
+                    >
+                      <Button type="link">
+                        <DotsTreeVerticalIcon />
+                      </Button>
+                    </Dropdown>
+                  </div>
+                </Flex>
+              </Card>
+            </div>
+          )}
+        />
+        <PrintDocument.Button
+          ref={printButtonRef}
+          onClick={onClickPrintButton}
+          className="w-full absolute inset-x-1/2"
+          type="link"
+        />
+        <PrintDocument.Area>
+          <PrintPage
+            patSession={patSession}
+            participants={participants}
+            decisions={decisions}
+          />
+        </PrintDocument.Area>
+      </PrintDocument>
       <DeleteSessionModal
         {...{
           open: openDeleteModal,
