@@ -20,6 +20,7 @@ const LangButton = ({ inherit = true, long = false, ...props }) => {
 
   return (
     <Dropdown
+      trigger={["click"]}
       menu={{
         items: PAT_LANGS.map((l) => ({
           key: l.key,
