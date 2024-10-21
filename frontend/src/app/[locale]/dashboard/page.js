@@ -186,7 +186,8 @@ const HomeDashboardPage = async ({ searchParams }) => {
   );
   const myActiveSession = activeSessions?.filter((s) => s?.is_owner);
   const newButtonDisabled =
-    myActiveSession?.length >= PAT_SESSION.maxActiveSession;
+    myActiveSession?.length >= PAT_SESSION.maxActiveSession ||
+    totalActive >= PAT_SESSION.pageSize;
   const webdomain = process.env.WEBDOMAIN;
 
   return (

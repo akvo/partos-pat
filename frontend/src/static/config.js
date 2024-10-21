@@ -92,7 +92,7 @@ export const SECTOR = {
 };
 
 export const PAT_SESSION = {
-  pageSize: 7,
+  pageSize: 8,
   maxActiveSession: 2,
   maxPartners: 10,
   maxDecisions: 15,
