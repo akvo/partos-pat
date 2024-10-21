@@ -177,7 +177,7 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
                       iconPosition="end"
                       size="small"
                       disabled={
-                        formInstance.getFieldValue("decisions")?.length + 1 >
+                        formInstance.getFieldValue("decisions")?.length >
                         PAT_SESSION.maxDecisions
                       }
                       block
