@@ -27,7 +27,7 @@ const ProfileAvatar = ({ large = false }) => {
         </strong>
         <p
           className={classNames(
-            "w-full md:w-32 overflow-x-hidden text-ellipsis",
+            "w-full md:min-w-32 overflow-x-hidden text-ellipsis",
             {
               "text-sm": !large,
               "text-base": large,

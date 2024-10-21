@@ -7,7 +7,7 @@ const WithHeaderTemplate = ({ children }) => {
         <div className="w-[420px] h-44 absolute top-0 left-[280px] bg-dashboard-circle bg-no-repeat bg-cover bg-center" />
         <BreadCrumb />
       </div>
-      <div className="w-full h-screen lg:w-10/12 px-5 py-8">{children}</div>
+      <div className="w-full h-screen 2xl:w-10/12 px-5 py-8">{children}</div>
     </>
   );
 };

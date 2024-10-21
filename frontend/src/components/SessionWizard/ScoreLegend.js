@@ -13,7 +13,7 @@ const ScoreLegend = () => {
           return (
             <li key={s} className="flex gap-2.5">
               <span
-                className={classNames("px-2.5 py-1.5", {
+                className={classNames("w-5 h-5 rounded-sm", {
                   "bg-light-1 border border-dark-2": s === 0,
                   "bg-score-4": s === 4,
                   "bg-score-3": s === 3,
