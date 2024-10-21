@@ -94,13 +94,13 @@ const PageContent = ({
               </Space>
             ),
             children: (
-              <div className="w-full flex md:max-lg:flex-col flex-row gap-4 2xl:gap-12">
+              <div className="w-full flex flex-col md:flex-row gap-4 xl:gap-12">
                 <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">
                   <ActiveSessionList data={activeSessions} />
                 </div>
                 <div
                   className={classNames("w-full lg:w-2/6 xl:w-2/6 2xl:w-2/5", {
-                    hidden: totalActive === 0,
+                    hidden: totalActive === 0 && totalClosed === 0,
                   })}
                 >
                   <AboutCard />
@@ -112,7 +112,7 @@ const PageContent = ({
             key: "closed",
             label: <TotalClosedLabel initialTotalClosed={totalClosed} />,
             children: (
-              <div className="w-full flex md:max-lg:flex-col flex-row gap-4 xl:gap-12">
+              <div className="w-full flex flex-col md:flex-row gap-4 xl:gap-12">
                 <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">
                   <ClosedSessionList
                     data={closedSessions}
@@ -132,7 +132,7 @@ const PageContent = ({
         ]}
       />
       {totalActive === 0 && totalClosed === 0 && (
-        <div className="w-full flex md:max-lg:flex-col flex-row gap-4 xl:gap-12">
+        <div className="w-full flex flex-col md:flex-row gap-4 xl:gap-12">
           <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">
             <GettingStartedCard />
           </div>
@@ -184,13 +184,14 @@ const HomeDashboardPage = async ({ searchParams }) => {
     "GET",
     `/sessions?published=true&page_size=${PAT_SESSION.pageSize}`,
   );
-  const myActiveSession = activeSessions?.find((s) => s?.is_owner);
-  const newButtonDisabled = myActiveSession ? true : false;
+  const myActiveSession = activeSessions?.filter((s) => s?.is_owner);
+  const newButtonDisabled =
+    myActiveSession?.length >= PAT_SESSION.maxActiveSession;
   const webdomain = process.env.WEBDOMAIN;
 
   return (
     <div className="w-full px-5 py-8 space-y-6">
-      <div className="w-full flex md:max-lg:flex-col flex-row gap-4 xl:gap-6 2xl:gap-12">
+      <div className="w-full flex flex-col md:flex-row gap-4 xl:gap-6 2xl:gap-12">
         <div className="w-full xl:w-4/6 2xl:w-3/5">
           <PageTitle />
         </div>
