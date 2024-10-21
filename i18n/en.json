@@ -229,7 +229,7 @@
 		"decision": "Decision",
 		"addDecision": "Add Decision",
 		"step2Title": "Determining the actual level of participation in decision making",
-		"step2Desc": "For each of the decisions listed in the first column of the matrix, the actual level of participation in taking this decision is assessed and scored for each partner organisation. For this we use the ladder of participation in decision-making. Depending on the level of participation, the score will range between 0 (not involved) and 4 (partner decides).",
+		"step2Desc": "For each listed decision in the first column of the matrix, the actual level of participation in taking this decision is assessed and scored for each partner organisation. For this we use the ladder of participation in decision-making. Depending on the level of participation, the score will range between 0 (not involved) and 4 (partner decides).",
 		"score": "Score",
 		"step3Desc": "In step 3 the facilitator takes the group through the list of decisions, one by one. With regard to each of these decisions the facilitator asks the question: Do we agree with the way partner organsiation are involved in taking these type of decisions?\n In case everyone agrees the facilitator notes “agree\". \n In case one or more partners does not agree, the facilitator notes “No agreement\".\nAll decisions marked with a \"No\" are the type of decisions that require a different approach. These will be taken to the next step 4.",
 		"agree": "Agree?",
@@ -279,7 +279,8 @@
 		"helpStep6": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
 		"notes": "Notes",
 		"notesLong": "Notes on the Decision making processes",
-		"summaryLong": "Closing Remarks"
+		"summaryLong": "Closing Remarks",
+		"step6Desc": "Before concluding the session, the facilitator is prompted to provide additional insights or details about the discussions. Ensure that all participants have submitted their comments from their accounts before publishing the session."
 	},
 	"FAQ": {
 		"faqs": "FAQS",
@@ -344,7 +345,7 @@
 		"checkboxText": "Yes, I want to delete this item",
 		"cancel": "Cancel",
 		"delete": "Delete",
-		"participantText": "Are you sure you want to delete your PAT Session? it will no longer be available for for you but will still be accessible to other participants. This action cannot be undone",
+		"participantText": "Are you sure you want to delete your PAT Session? it will no longer be available for you but will still be accessible to other participants. This action cannot be undone",
 		"archive": "Archive"
 	}
 }
