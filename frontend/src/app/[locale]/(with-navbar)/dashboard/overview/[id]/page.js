@@ -210,7 +210,12 @@ const OverviewSessionPage = async ({ params }) => {
 
             <ContextSection patSession={patSession} />
 
-            <Flex className="mt-6" justify="space-between" align="center">
+            <Flex
+              className="mt-6"
+              justify="space-between"
+              align="center"
+              wrap="wrap"
+            >
               <div>
                 <FacilitatorAvatar
                   full_name={patSession?.facilitator?.full_name}

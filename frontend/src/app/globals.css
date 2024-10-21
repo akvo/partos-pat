@@ -307,7 +307,7 @@
     width: fit-content;
   } */
   .pat-table table td:first-of-type {
-    max-width: 432px;
+    max-width: 348px;
   }
   .pat-table th {
     height: 36px;
@@ -443,6 +443,9 @@ body {
     }
     .ant-steps .ant-steps-item-description {
       font-size: 12px;
+    }
+    .pat-table table td:first-of-type {
+      max-width: 248px;
     }
   }
 }
