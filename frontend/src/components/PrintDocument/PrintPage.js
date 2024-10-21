@@ -20,7 +20,7 @@ const style = {
   },
 };
 
-const MAX_ORG_PER_PAGE = 3;
+const MAX_ORG_PER_PAGE = 6;
 
 const PrintPage = ({ patSession, decisions, participants }) => {
   const groupedOrgPer3 = patSession?.organizations?.reduce((acc, item) => {
