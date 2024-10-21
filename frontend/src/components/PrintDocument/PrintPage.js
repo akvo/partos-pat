@@ -20,7 +20,19 @@ const style = {
   },
 };
 
+const MAX_ORG_PER_PAGE = 3;
+
 const PrintPage = ({ patSession, decisions, participants }) => {
+  const groupedOrgPer3 = patSession?.organizations?.reduce((acc, item) => {
+    const index = acc.findIndex((i) => i.length < MAX_ORG_PER_PAGE);
+    if (index !== -1) {
+      acc[index].push(item);
+    } else {
+      acc.push([item]);
+    }
+    return acc;
+  }, []);
+
   return (
     <div style={style.container}>
       <Image
@@ -78,7 +90,6 @@ const PrintPage = ({ patSession, decisions, participants }) => {
           </tr>
         </tbody>
       </PrintTable>
-      <div style={{ breakAfter: "page" }}></div>
       <h3 style={style.title}>PAT session content</h3>
       <p>
         List of important (types of) decisions that were reflected on in this
@@ -95,75 +106,93 @@ const PrintPage = ({ patSession, decisions, participants }) => {
           })}
         </tbody>
       </PrintTable>
-      <p>
-        {`On the following decisions there was agreement on the way partner organizations (PO) are/have been involved in the decision-making process.`}
-      </p>
-      <PrintTable>
-        <thead>
-          <tr>
-            <PrintTable.TH>(Types of) Decisions</PrintTable.TH>
-            {patSession?.organizations?.map((o) => {
-              return <PrintTable.TH key={o?.id}>{o?.acronym}</PrintTable.TH>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {decisions
-            ?.filter((d) => d?.agree)
-            ?.map((d) => {
-              return (
-                <tr key={d?.id}>
-                  <PrintTable.TD>{d?.name}</PrintTable.TD>
-                  {patSession?.organizations?.map((o) => {
-                    const actualValue = d?.scores?.find(
-                      (s) => s?.organization_id === o?.id,
-                    );
-                    return (
-                      <PrintTable.TD key={`${d?.id}-${o?.id}`}>
-                        {actualValue?.score}
-                      </PrintTable.TD>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-        </tbody>
-      </PrintTable>
-      <p>
-        {`On the following decisions there was no agreement on the way partner organizations PO) are/have been involved in the decision-making process.`}
-      </p>
-      <PrintTable>
-        <thead>
-          <tr>
-            <PrintTable.TH>(Types of) Decisions</PrintTable.TH>
-            {patSession?.organizations?.map((o) => {
-              return <PrintTable.TH key={o?.id}>{o?.acronym}</PrintTable.TH>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {decisions
-            ?.filter((d) => !d?.agree)
-            ?.map((d) => {
-              return (
-                <tr key={d?.id}>
-                  <PrintTable.TD>{d?.name}</PrintTable.TD>
-                  {patSession?.organizations?.map((o) => {
-                    const actualValue = d?.scores?.find(
-                      (s) =>
-                        s?.organization_id === o?.id && s?.desired === false,
-                    );
-                    return (
-                      <PrintTable.TD key={`${d?.id}-${o?.id}`}>
-                        {actualValue?.score}
-                      </PrintTable.TD>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-        </tbody>
-      </PrintTable>
+      <div style={{ breakAfter: "page" }}></div>
+      {groupedOrgPer3?.map((organizations, index) => (
+        <div key={index}>
+          <p>
+            {`On the following decisions there was agreement on the way partner organizations (PO) are/have been involved in the decision-making process.`}
+          </p>
+          <PrintTable>
+            <thead>
+              <tr>
+                <PrintTable.TH>(Types of) Decisions</PrintTable.TH>
+                {organizations?.map((o) => {
+                  return (
+                    <PrintTable.TH key={o?.id}>{o?.acronym}</PrintTable.TH>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {decisions
+                ?.filter((d) => d?.agree)
+                ?.map((d) => {
+                  return (
+                    <tr key={d?.id}>
+                      <PrintTable.TD>{d?.name}</PrintTable.TD>
+                      {organizations?.map((o) => {
+                        const actualValue = d?.scores?.find(
+                          (s) => s?.organization_id === o?.id,
+                        );
+                        return (
+                          <PrintTable.TD key={`${d?.id}-${o?.id}`}>
+                            {actualValue?.score}
+                          </PrintTable.TD>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </PrintTable>
+          <div style={{ breakAfter: "page" }}></div>
+        </div>
+      ))}
+      {groupedOrgPer3?.map((organizations, index) => (
+        <div key={index}>
+          <p>
+            On the following decisions there was <b>no agreement</b> on the way
+            partner organizations PO) are/have been involved in the
+            decision-making process.
+          </p>
+          <PrintTable>
+            <thead>
+              <tr>
+                <PrintTable.TH>(Types of) Decisions</PrintTable.TH>
+                {organizations?.map((o) => {
+                  return (
+                    <PrintTable.TH key={o?.id}>{o?.acronym}</PrintTable.TH>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {decisions
+                ?.filter((d) => !d?.agree)
+                ?.map((d) => {
+                  return (
+                    <tr key={d?.id}>
+                      <PrintTable.TD>{d?.name}</PrintTable.TD>
+                      {organizations?.map((o) => {
+                        const actualValue = d?.scores?.find(
+                          (s) =>
+                            s?.organization_id === o?.id &&
+                            s?.desired === false,
+                        );
+                        return (
+                          <PrintTable.TD key={`${d?.id}-${o?.id}`}>
+                            {actualValue?.score}
+                          </PrintTable.TD>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </PrintTable>
+          <div style={{ breakAfter: "page" }}></div>
+        </div>
+      ))}
       <br />
       {patSession?.notes?.length > 0 && (
         <div>
@@ -180,40 +209,47 @@ const PrintPage = ({ patSession, decisions, participants }) => {
         </div>
       )}
       <br />
-      <p>
-        {`After discussion, participants agreed that in these decisions partner organisations need to be involved in a different way. The desired level of participation for partner organisations is indicated in the table below:`}
-      </p>
-      <PrintTable>
-        <thead>
-          <tr>
-            <PrintTable.TH>(Types of) Decisions</PrintTable.TH>
-            {patSession?.organizations?.map((o) => {
-              return <PrintTable.TH key={o?.id}>{o?.acronym}</PrintTable.TH>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {decisions?.map((d) => {
-            return (
-              <tr key={d?.id}>
-                <PrintTable.TD>{d?.name}</PrintTable.TD>
-                {patSession?.organizations?.map((o) => {
-                  const actualValue = d?.scores?.find(
-                    (s) =>
-                      s?.organization_id === o?.id &&
-                      (s?.desired === true || s?.desired === null),
-                  );
+      {groupedOrgPer3?.map((organizations, index) => (
+        <div key={index}>
+          <p>
+            {`After discussion, participants agreed that in these decisions partner organisations need to be involved in a different way. The desired level of participation for partner organisations is indicated in the table below:`}
+          </p>
+          <PrintTable>
+            <thead>
+              <tr>
+                <PrintTable.TH>(Types of) Decisions</PrintTable.TH>
+                {organizations?.map((o) => {
                   return (
-                    <PrintTable.TD key={`${d?.id}-${o?.id}`}>
-                      {actualValue?.score}
-                    </PrintTable.TD>
+                    <PrintTable.TH key={o?.id}>{o?.acronym}</PrintTable.TH>
                   );
                 })}
               </tr>
-            );
-          })}
-        </tbody>
-      </PrintTable>
+            </thead>
+            <tbody>
+              {decisions?.map((d) => {
+                return (
+                  <tr key={d?.id}>
+                    <PrintTable.TD>{d?.name}</PrintTable.TD>
+                    {organizations?.map((o) => {
+                      const actualValue = d?.scores?.find(
+                        (s) =>
+                          s?.organization_id === o?.id &&
+                          (s?.desired === true || s?.desired === null),
+                      );
+                      return (
+                        <PrintTable.TD key={`${d?.id}-${o?.id}`}>
+                          {actualValue?.score}
+                        </PrintTable.TD>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </PrintTable>
+          <div style={{ breakAfter: "page" }}></div>
+        </div>
+      ))}
       <p>
         {`In order to achieve the desired level of participation of all partner organisations, the participants agree that the following needs to be done:`}
       </p>

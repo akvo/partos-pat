@@ -93,6 +93,7 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
   };
 
   const onDownload = async (id) => {
+    setLoading(true);
     try {
       const resPatSession = await api("GET", `/sessions/?id=${id}`);
       setPatSession(resPatSession);
@@ -103,11 +104,14 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
       printButtonRef.current.click();
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const onClickPrintButton = (onPrint) => {
     onPrint(`${PAT_SESSION.prefixFileName} ${patSession?.session_name}`);
+    setLoading(false);
   };
 
   useEffect(() => {
