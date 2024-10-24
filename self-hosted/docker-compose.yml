@@ -1,0 +1,79 @@
+---
+services:
+  mainnetwork:
+    image: alpine:3.14
+    command: ["tail", "-f", "/dev/null"]
+    ports:
+      - 8000:8000 # backend port
+      - 5050:5050 # pgAdmin port
+      - 80:80 # traefik port http
+      - 443:443 # traefik port https
+      - 81:81 # frontend port
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    env_file: "./app.env"
+    restart: unless-stopped
+    environment:
+      - TRAEFIK_PROVIDERS_FILE_FILENAME=/traefik-config/dynamic.yml
+      - TRAEFIK_PROVIDERS_FILE_WATCH=true
+      - TRAEFIK_ENTRYPOINTS_WEB_ADDRESS=:80
+      - TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS=:443
+      - TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_STORAGE=/letsencrypt/acme.json
+      - TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_TLSCHALLENGE=true
+      - TRAEFIK_LOG_LEVEL=DEBUG
+      - TRAEFIK_LOG=true
+      - TRAEFIK_LOG_FORMAT=common
+      - TRAEFIK_ACCESSLOG=false
+      - TRAEFIK_ACCESSLOG_FILEPATH=/var/log/traefik/access.log
+      - TRAEFIK_ACCESSLOG_FORMAT=common
+    entrypoint: ["sh", "-c", "/generate_dynamic_config.sh && traefik"]
+    volumes:
+      - "traefik-certificates:/letsencrypt"
+      - "./generate_dynamic_config.sh:/generate_dynamic_config.sh:ro"
+      - "/traefik-config"
+    network_mode: service:mainnetwork
+
+  db:
+    env_file: "./app.env"
+    image: postgres:12-alpine
+    container_name: db
+    restart: unless-stopped
+    volumes:
+      - ../db/docker-entrypoint-initdb.d.prod:/docker-entrypoint-initdb.d
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+    network_mode: service:mainnetwork
+
+  backend:
+    container_name: backend
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.prod
+    env_file: "./app.env"
+    restart: unless-stopped
+    working_dir: /app
+    depends_on:
+      db:
+        condition: service_healthy
+    network_mode: service:mainnetwork
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    env_file: "./app.env"
+    restart: unless-stopped
+    working_dir: /app
+    network_mode: service:mainnetwork
+    depends_on:
+      - backend
+
+volumes:
+  traefik-certificates:
+  pg-data:
