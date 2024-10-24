@@ -24,3 +24,13 @@ class SectorTypes:
         sector10: "Humanitarian emergency aid",
         sector_other: "Other"
     }
+
+
+class RoleTypes:
+    facilitated = 1
+    participated = 2
+
+    FieldStr = {
+        facilitated: "Facilitated",
+        participated: "Participated",
+    }

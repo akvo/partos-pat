@@ -51,7 +51,8 @@
 		"search": "Search",
 		"previous": "Previous",
 		"next": "Next",
-		"facilitator": "Facilitator"
+		"facilitator": "Facilitator",
+		"joinHelpText": "If you have not received a session code, please contact the session facilitator. For any other questions, visit our <faq>faq</faq> page"
 	},
 	"Error": {
 		"invalidEmail": "Enter a valid email address.",
@@ -129,7 +130,8 @@
 		"cancel": "Cancel",
 		"userProfileSubtitle": "Update your profile and personal details",
 		"manageUsers": "Manage Users",
-		"statistics": "Statistics"
+		"statistics": "Statistics",
+		"filterByRole": "Filter by Role"
 	},
 	"CreateSession": {
 		"title": "Create New Session",
@@ -156,7 +158,7 @@
 		"inviteCode": "Invite Code",
 		"context": "Session Context",
 		"copyCodeButton": "Copy session information",
-		"copyContent": "You have been invited for a Power Awareness Session with the following details: \nTitle: {session_name}\nPartner organizations: {organizations}\nSession context: {context}\n\nPlease make an account or login at partos-pat.akvotext.org  and join the session using the following invite code: {join_code}",
+		"copyContent": "You have been invited for a Power Awareness Session with the following details:\n\nTitle: <name>session_name</name>\nPartner organizations: <org>organization</org>\nSession context: <context>context_text</context>\n\nPlease make an account or login at <url>domain</url>  and join the session using the following invite code: <code>join_code</code>",
 		"copySuccess": "The session join code has been copied to the clipboard",
 		"partnerOrgLong": "Partner organizations represented in this meeting",
 		"contextLong": "PAT Session Context"
@@ -164,7 +166,7 @@
 	"Landing": {
 		"title": "The Power Awareness Tool",
 		"description": "The decision to develop the Power Awareness Tool is based on the assumption that if partners have a better understanding of the way power works in the partnership, they will be in a better position to work towards shifting power in accordance with their shared principles.",
-		"createAccount": "Create Account",
+		"createAccount": "Start now",
 		"madePossibleBy": "Made possible by",
 		"login": "Login",
 		"features": "Features",
@@ -176,7 +178,7 @@
 		"learnMore": "Learn More",
 		"newWaysTitle": "New ways of Collaboration",
 		"newWaysDesc1": "Partos facilitates the transition towards more equitable partnerships within development cooperation.",
-		"newWaysDesc2": "We do this by tackling the problem of power imbalances between civil society organisations, moving from top-heavy and top-down systems of international development and philanthropy towards a flatter and more equitable paradigm of people-based development.\nUnder the Shift the Power Lab 2.0, Partos is scaling its efforts to accelerate the power dynamics shift within international development cooperation by co-creating practical solutions for systems change.",
+		"newWaysDesc2": "We do this by tackling the problem of power imbalances between civil society organisations, moving from top-heavy and top-down systems of international development and philanthropy towards a flatter and more equitable paradigm of people-based development.\n\nUnder the Shift the Power Lab 2.0, Partos is scaling its efforts to accelerate the power dynamics shift within international development cooperation by co-creating practical solutions for systems change.",
 		"faqTitle": "Frequently asked questions",
 		"faqSubtitle": "Everything you need to know about the Power Awareness Tool",
 		"quotes": "“A sometimes mentioned fear amongst Dutch CSO’s, is that using the PAT could result in friction in the relationship between partners. The majority of the respondents, however, reported no friction with their partners after having a discussion on the power relations that existed between them through the PAT exercise(67%) while a small percentage (18%) reported some friction with their partners.\" - Quote from the evaluation of the Power Awareness Tool",
@@ -227,7 +229,7 @@
 		"decision": "Decision",
 		"addDecision": "Add Decision",
 		"step2Title": "Determining the actual level of participation in decision making",
-		"step2Desc": "For each of the decisions listed in the first column of the matrix, the actual level of participation in taking this decision is assessed and scored for each partner organisation. For this we use the ladder of participation in decision-making. Depending on the level of participation, the score will range between 0 (not involved) and 4 (partner decides).",
+		"step2Desc": "For each listed decision, the actual level of participation in taking this decision is assessed and scored for each partner organisation. For this we use the ladder of participation in decision-making. Depending on the level of participation, the score will range between 0 (not involved) and 4 (partner decides).",
 		"score": "Score",
 		"step3Desc": "In step 3 the facilitator takes the group through the list of decisions, one by one. With regard to each of these decisions the facilitator asks the question: Do we agree with the way partner organsiation are involved in taking these type of decisions?\n In case everyone agrees the facilitator notes “agree\". \n In case one or more partners does not agree, the facilitator notes “No agreement\".\nAll decisions marked with a \"No\" are the type of decisions that require a different approach. These will be taken to the next step 4.",
 		"agree": "Agree?",
@@ -245,9 +247,9 @@
 		"step6CommentPlaceholder": "Closing comments & Feedback",
 		"step6Title": "To be filled in by facilitator:",
 		"step6Notes": "Notes on decision-making processes on which there was no agreement (optional):",
-		"step6NotesPlaceholder": "PAT Session summary",
+		"step6NotesPlaceholder": "Write summary here",
 		"step6Summary": "Concluding remarks (optional): ",
-		"step6SummaryPlaceholder": "PAT Session summary",
+		"step6SummaryPlaceholder": "Write summary here",
 		"partnerComments": "Partner Comments",
 		"closingRemarks": "Closing Remarks:",
 		"getPdfTitle": "Get a PDF Copy:",
@@ -277,7 +279,8 @@
 		"helpStep6": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
 		"notes": "Notes",
 		"notesLong": "Notes on the Decision making processes",
-		"summaryLong": "Closing Remarks"
+		"summaryLong": "Closing Remarks",
+		"step6Desc": "Before concluding the session, the facilitator is prompted to provide additional insights or details about the discussions. Ensure that all participants have submitted their comments from their accounts before publishing the session."
 	},
 	"FAQ": {
 		"faqs": "FAQS",
@@ -326,5 +329,23 @@
 		"editText": "Edit account",
 		"roleAdminValue": "Super Admin",
 		"roleUserValue": "Regular User"
+	},
+	"Statistics": {
+		"noAccounts": "Number of accounts",
+		"noAccountsLast30": "New accounts in the last 30 days",
+		"noSessionCompleted": "Number of sessions completed",
+		"noSessionCompletedLast30": "Number of sessions completed in last 30 days",
+		"noAccountPurpose": "Number of users in each purpose of account category",
+		"noSessionCreated": "Number of cases created per month grouped by year"
+	},
+	"DeleteSession": {
+		"title": "Delete PAT Session",
+		"labelText": "Title",
+		"facilitatorText": "Are you sure you want to delete your PAT Session? it will no longer be available for participants as well. This action cannot be undone",
+		"checkboxText": "Yes, I want to delete this item",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"participantText": "Are you sure you want to delete your PAT Session? it will no longer be available for you but will still be accessible to other participants. This action cannot be undone",
+		"archive": "Archive"
 	}
 }

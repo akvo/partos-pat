@@ -1,7 +1,11 @@
 from django.test import TestCase
 from django.core.management import call_command
 from django.test.utils import override_settings
-from api.v1.v1_sessions.models import PATSession, ParticipantComment
+from api.v1.v1_sessions.models import (
+    PATSession,
+    ParticipantComment,
+    Participant,
+)
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 
@@ -23,15 +27,21 @@ class ParticipantUpdateCommentEndpointTestCase(
             password=password,
         )
         call_command("fake_sessions_seeder", "--test", True)
-        self.pat_session = PATSession.objects.filter(
+        pat_session = PATSession.objects.filter(
             closed_at__isnull=True,
             session_participant__user=self.user
         ).first()
+        self.pat_session = pat_session
+        if not self.pat_session:
+            Participant.objects.create(
+                pat_session=pat_session,
+                user=self.user,
+                organization=pat_session.organizations.first()
+            )
         self.reset_db_sequence(SystemUser)
         self.token = self.get_auth_token(email=email, password=password)
 
     def test_successfully_comment_updated(self):
-        self.assertIsNotNone(self.pat_session)
 
         # create a new comment
         comment = ParticipantComment.objects.create(

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Collapse, Image } from "antd";
 import { MinusCircleIcon, PlusCircleIcon } from "./Icons";
@@ -9,7 +10,9 @@ const FAQCollapsible = ({
   wrapClass = "w-full flex flex-col items-center justify-center",
   contentClass = "w-full lg:w-8/12",
   center = true,
+  defaultActiveKey = ["1"],
 }) => {
+  const [activeKey, setActiveKey] = useState(defaultActiveKey);
   const t = useTranslations("FAQ");
 
   const items = [
@@ -89,6 +92,12 @@ const FAQCollapsible = ({
     },
   ];
 
+  useEffect(() => {
+    if (defaultActiveKey?.[0] !== activeKey?.[0]) {
+      setActiveKey(defaultActiveKey);
+    }
+  }, [activeKey, defaultActiveKey]);
+
   return (
     <div className={wrapClass}>
       <div
@@ -96,18 +105,19 @@ const FAQCollapsible = ({
           "text-center": center,
         })}
       >
-        <h2 className="text-4xl font-extra-bold">{t("title")}</h2>
-        <p className="text-lg">{t("subTitle")}</p>
+        <h2 className="text-3xl xl:text-4xl font-extra-bold">{t("title")}</h2>
+        <p className="text-base xl:text-lg">{t("subTitle")}</p>
       </div>
       <Collapse
         className={contentClass}
         items={items}
         bordered={false}
-        defaultActiveKey={["1"]}
+        activeKey={activeKey}
         expandIcon={({ isActive }) =>
           isActive ? <MinusCircleIcon /> : <PlusCircleIcon />
         }
         expandIconPosition="end"
+        onChange={(key) => setActiveKey(key)}
         ghost
       />
     </div>

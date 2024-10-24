@@ -65,7 +65,7 @@ const StepSix = ({ patSession }, ref) => {
 
   return (
     <div className="w-full space-y-6">
-      {patSession?.is_owner && <strong>{t("step6Title")}</strong>}
+      {patSession?.is_owner && <strong>{t("step6Desc")}</strong>}
       <Form
         layout="vertical"
         initialValues={initialValues}

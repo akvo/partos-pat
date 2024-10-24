@@ -21,6 +21,8 @@ const initialValues = {
     fetched: false,
     data: [],
   },
+  totalClosed: 0,
+  filterSubmitted: false,
 };
 
 const patSessionReducer = (state, action) => {
@@ -85,6 +87,16 @@ const patSessionReducer = (state, action) => {
         },
       };
 
+    case "TOTAL_CLOSED_UPDATE":
+      return {
+        ...state,
+        totalClosed: action?.payload,
+      };
+    case "FILTER_SUBMITTED":
+      return {
+        ...state,
+        filterSubmitted: true,
+      };
     case "RESET":
       return initialValues;
     case "STEP_NEXT":
@@ -99,7 +111,7 @@ const patSessionReducer = (state, action) => {
       };
     default:
       throw Error(
-        `Unknown action: ${action.type}. Remeber action type must be CAPITAL text.`
+        `Unknown action: ${action.type}. Remeber action type must be CAPITAL text.`,
       );
   }
 };

@@ -14,11 +14,12 @@ const ProfileAvatar = ({ large = false }) => {
     <Space size={large ? "large" : "small"}>
       <Avatar
         size={large ? 96 : 48}
+        className="profile-avatar"
       >{`${firstName ? firstName[0].toUpperCase() : ""}${lastName ? lastName?.[0]?.toUpperCase() : ""}`}</Avatar>
       <div>
         <strong
           className={classNames({
-            "text-base": !large,
+            "text-sm xl:text-base": !large,
             "text-2xl": large,
           })}
         >
@@ -26,11 +27,11 @@ const ProfileAvatar = ({ large = false }) => {
         </strong>
         <p
           className={classNames(
-            "w-full md:w-48 overflow-x-hidden text-ellipsis",
+            "w-full md:min-w-32 overflow-x-hidden text-ellipsis",
             {
               "text-sm": !large,
               "text-base": large,
-            }
+            },
           )}
         >
           {email}

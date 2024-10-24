@@ -74,7 +74,7 @@ const StepHelpText = ({ step }) => {
   }
 };
 
-const HelpModal = ({ open, setOpen, step = 1 }) => {
+const HelpModal = ({ open, setOpen, step }) => {
   return (
     <Modal
       open={open}

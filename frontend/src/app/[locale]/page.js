@@ -21,7 +21,9 @@ const FooterCreditSection = () => {
     <div className="w-full py-3 bg-dark-10">
       <div className="container mx-auto 2xl:px-4">
         <Flex items="center" justify="space-between">
-          <div className="text-base text-light-1">{t("poweredBy")}</div>
+          <div className="text-sm xl:text-base text-light-1">
+            {t("poweredBy")}
+          </div>
           <div>
             <AkvoIcon />
           </div>
@@ -34,17 +36,17 @@ const FooterCreditSection = () => {
 const FooterCopySection = () => {
   const t = useTranslations("Landing");
   return (
-    <div className="w-full pt-8 pb-8 text-base text-grey-800 font-bold">
+    <div className="w-full pt-8 pb-8 text-grey-800 font-bold">
       <div className="container mx-auto 2xl:px-4">
         <div className="w-fit flex flex-wrap items-center gap-5">
-          <span>&copy; Copyright 2024</span>
+          <span className="text-sm xl:text-base">&copy; Copyright 2024</span>
           <span>
-            <Link href="/" className="hover:underline">
+            <Link href="/" className="text-sm xl:text-base hover:underline">
               {t("cookies")}
             </Link>
           </span>
           <span>
-            <Link href="/" className="hover:underline">
+            <Link href="/" className="text-sm xl:text-base hover:underline">
               {t("termNConditions")}
             </Link>
           </span>
@@ -57,41 +59,45 @@ const FooterCopySection = () => {
 const FooterLinksSection = () => {
   const t = useTranslations("Landing");
   return (
-    <div className="w-full pb-2 pt-8">
+    <div className="w-full pb-2 pt-12 xl:pt-14">
       <div className="container mx-auto 2xl:px-4 flex">
         <div className="w-full lg:w-11/12 flex flex-wrap">
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
-            <h3 className="font-bold text-xl text-grey-800">{t("topics")}</h3>
-            <ul className="text-base text-dark-7 leading-8">
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-9 mb-4">
+            <h3 className="font-bold text-base xl:text-lg text-grey-800">
+              {t("topics")}
+            </h3>
+            <ul className="text-sm xl:text-base text-dark-7 leading-8">
               <li>{t("topics1")}</li>
               <li>{t("topics2")}</li>
               <li>{t("topics3")}</li>
               <li>{t("topics4")}</li>
             </ul>
           </div>
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
-            <h3 className="font-bold text-xl text-grey-800">
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-9 mb-4">
+            <h3 className="font-bold text-base xl:text-lg text-grey-800">
               {t("forMembers")}
             </h3>
-            <ul className="text-base text-dark-7 leading-8">
+            <ul className="text-sm xl:text-base text-dark-7 leading-8">
               <li>{t("forMembers2")}</li>
               <li>{t("forMembers3")}</li>
               <li>{t("forMembers4")}</li>
             </ul>
           </div>
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
-            <h3 className="font-bold text-xl text-grey-800">
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-11 mb-4">
+            <h3 className="font-bold text-base xl:text-lg text-grey-800">
               {t("mostVisited")}
             </h3>
-            <ul className="text-base text-dark-7 leading-8">
+            <ul className="text-sm xl:text-base text-dark-7 leading-8">
               <li>{t("mostVisited1")}</li>
               <li>{t("mostVisited2")}</li>
               <li>{t("mostVisited3")}</li>
             </ul>
           </div>
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-4 mb-4">
-            <h3 className="font-bold text-xl text-grey-800">{t("contact")}</h3>
-            <ul className="text-base text-dark-7 space-y-5">
+          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-9 mb-4">
+            <h3 className="font-bold text-base xl:text-lg text-grey-800">
+              {t("contact")}
+            </h3>
+            <ul className="text-sm xl:text-base text-dark-7 space-y-5">
               <li className="whitespace-pre-line">{PARTOS.address}</li>
               <li>
                 <a href={`tel:${PARTOS.phone}`}>
@@ -148,7 +154,7 @@ const QuoteSection = () => {
         <div className="w-full flex gap-6 justify-center">
           <div className="w-full relative lg:w-8/12 border-l-4 border-l-light-1 pl-6 px-4 md:pl-12">
             <QuoteIcon className="w-8 md:w-10 lg:w-12 absolute top-[-10px] left-[-17px] md:top-[-5px] md:left-[-20px] lg:top-[-2px] lg:left-[-24px]" />
-            <em className="text-dark-10 text-md md:text-lg lg:text-xl leading-9">
+            <em className="text-dark-10 text-lg xl:text-xl leading-9">
               {t("quotes")}
             </em>
           </div>
@@ -170,21 +176,21 @@ const NewWaysSection = () => {
               height={400}
               src="/images/new-ways-collaboration.png"
               alt="New Ways Collaboration"
-              className="w-10/12 lg:w-8/12"
+              className="w-10/12 xl:w-8/12"
             />
           </div>
-          <div className="w-full md:w-3/5 lg:w-1/2 space-y-4 lg:space-y-12 px-4 lg:px-8 lg:pl-0 lg:pr-20 py-12 text-dark-10">
+          <div className="w-full md:w-3/5 lg:w-1/2 space-y-5 xl:space-y-12 px-4 lg:px-8 lg:pl-0 lg:pr-20 py-12 text-dark-10">
             <div>
-              <h2 className="text-3xl lg:text-5xl font-extra-bold">
+              <h2 className="text-4xl xl:text-5xl font-extra-bold">
                 {t("newWaysTitle")}
               </h2>
             </div>
             <div className="w-full md:w-10/12">
-              <strong className="text-md lg:text-xl font-bold">
+              <strong className="text-base xl:text-xl leading-8 font-bold whitespace-pre-line">
                 {t("newWaysDesc1")}
               </strong>
             </div>
-            <p className="text-sm lg:text-base font-semibold">
+            <p className="text-sm xl:text-base whitespace-pre-line">
               {t("newWaysDesc2")}
             </p>
             <div>
@@ -206,14 +212,16 @@ const NewWaysSection = () => {
 const HowItWorkSection = () => {
   const t = useTranslations("Landing");
   return (
-    <div className="w-full bg-light-1 py-16">
+    <div className="w-full bg-light-1 py-9 xl:py-16">
       <div className="container mx-auto 2xl:px-4">
         <div className="w-full relative">
           <div className="w-full relative flex flex-col md:flex-row items-center gap-4">
-            <div className="w-full md:w-8/12 space-y-10 text-dark-10">
-              <h2 className="text-3xl font-extra-bold">{t("howItWork")}</h2>
+            <div className="w-full lg:w-1/2 xl:w-8/12 space-y-5 xl:space-y-10 text-dark-10">
+              <h2 className="text-2xl xl:text-3xl font-extra-bold">
+                {t("howItWork")}
+              </h2>
               <div className="pb-10">
-                <p className="text-base">{t("howItWorkDesc")}</p>
+                <p className="text-sm xl:text-base">{t("howItWorkDesc")}</p>
               </div>
               <a
                 href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
@@ -223,8 +231,8 @@ const HowItWorkSection = () => {
                 <Button type="primary">{t("learnMore")}</Button>
               </a>
             </div>
-            <div className="w-full md:w-4/12 h-80 hidden md:block absolute top-[-1rem] right-0">
-              <div className="w-full lg:w-9/12 absolute z-10 top-0 right-0">
+            <div className="w-full lg:w-1/2 xl:w-4/12 h-80 hidden md:block absolute top-[5rem] xl:top-[-1rem] right-0">
+              <div className="w-full lg:w-8/12 absolute z-10 top-0 right-0">
                 <Image
                   src="/images/how-its-work-person.png"
                   alt="How it Works person"
@@ -235,7 +243,7 @@ const HowItWorkSection = () => {
               </div>
             </div>
           </div>
-          <div className="w-6/12 lg:w-5/12 hidden md:block z-0 absolute top-[-5rem] right-[-6rem] lg:top-[-10rem] 2xl:top-[-12rem] lg:right-[-10rem]">
+          <div className="w-6/12 xl:w-5/12 hidden md:block z-0 absolute top-[-5rem] right-[-6rem] lg:top-0 lg:right-[-4rem] xl:top-[-10rem] 2xl:top-[-12rem] xl:right-[-10rem]">
             <Image
               src="/images/partos-circle-multicolor.png"
               alt="How it Works circle"
@@ -254,23 +262,27 @@ const WhySection = () => {
   const t = useTranslations("Landing");
   return (
     <div className="w-full my-8">
-      <div className="container mx-auto 2xl:px-4 py-20 border-t border-t-dark-2">
+      <div className="container mx-auto 2xl:px-4 py-12 xl:py-20 border-t border-t-dark-2">
         <div className="w-full flex flex-wrap items-center">
           <div className="w-full md:w-1/2 space-y-6">
             <div>
-              <strong className="text-base text-primary-dark">
+              <strong className="text-sm xl:text-base text-primary-dark">
                 {t("features")}
               </strong>
-              <h2 className="text-4xl text-grey-900 font-extra-bold">
+              <h2 className="text-4xl xl:text-5xl text-grey-900 font-extra-bold">
                 {t("whyUsePAT")}
               </h2>
             </div>
             <div className="w-full lg:w-9/12">
-              <p className="text-base text-grey-600">{t("whyUseSubtitle")}</p>
+              <p className="text-base xl:text-lg text-grey-600">
+                {t("whyUseSubtitle")}
+              </p>
             </div>
           </div>
           <div className="w-full md:w-1/2 text-base text-dark-7">
-            <p className="whitespace-pre-line">{t("whyUseDesc")}</p>
+            <p className="text-sm xl:text-base whitespace-pre-line">
+              {t("whyUseDesc")}
+            </p>
           </div>
         </div>
       </div>
@@ -281,10 +293,10 @@ const WhySection = () => {
 const PartnerSection = () => {
   const t = useTranslations("Landing");
   return (
-    <div className="w-full py-16">
+    <div className="w-full py-9 xl:py-16">
       <div className="container mx-auto 2xl:px-4 space-y-12">
         <div className="w-full text-center">
-          <strong className="text-base text-grey-600 font-semibold">
+          <strong className="text-sm xl:text-base text-grey-600 font-extra-bold">
             {t("madePossibleBy")}
           </strong>
         </div>
@@ -297,7 +309,7 @@ const PartnerSection = () => {
                   alt={`Partner ${index + 1}`}
                   width={151}
                   height={151}
-                  className="w-full mb-3"
+                  className="w-24 xl:w-full mb-3"
                 />
               </li>
             );
@@ -308,18 +320,20 @@ const PartnerSection = () => {
   );
 };
 
-export const HeroSection = () => {
+export const HeroSection = ({ isLoggedIn = false }) => {
   const t = useTranslations("Landing");
   return (
     <div className="w-full flex flex-col items-center justify-center gap-9 pt-20 mb-4">
-      <h1 className="text-4xl md:text-5xl text-center font-extra-bold">
+      <h1 className="text-4xl xl:text-5xl text-center font-extra-bold">
         {t("title")}
       </h1>
       <div className="w-full lg:w-10/12 2xl:w-8/12 text-center">
-        <p className="text-xl text-dark-10 leading-8">{t("description")}</p>
+        <p className="text-lg xl:text-xl text-dark-10 leading-8">
+          {t("description")}
+        </p>
       </div>
-      <Link href="/register">
-        <Button type="primary" size="large">
+      <Link href={isLoggedIn ? "/dashboard" : "/register"}>
+        <Button type="primary" size="large" className="w-fit min-w-36">
           {t("createAccount")}
         </Button>
       </Link>
@@ -334,7 +348,7 @@ const Home = async () => {
       className={classNames(
         openSans.className,
         openSans.variable,
-        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto"
+        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto",
       )}
     >
       <div className="w-full relative bg-landing-gradient backdrop-blur">
@@ -347,7 +361,7 @@ const Home = async () => {
             <LandingButton isLoggedIn={session?.user?.id ? true : false} />
           </div>
 
-          <HeroSection />
+          <HeroSection isLoggedIn={session?.user?.id ? true : false} />
         </div>
         <div className="w-full relative px-10">
           <Image

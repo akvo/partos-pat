@@ -162,10 +162,16 @@ class JoinOrganizationsSerializer(serializers.ModelSerializer):
 
 class SessionListSerializer(serializers.ModelSerializer):
     facilitator = serializers.SerializerMethodField()
+    is_owner = serializers.SerializerMethodField()
 
     @extend_schema_field(UserFacilitatortSerializer())
     def get_facilitator(self, instance: PATSession):
         return UserFacilitatortSerializer(instance=instance.user).data
+
+    @extend_schema_field(OpenApiTypes.BOOL)
+    def get_is_owner(self, instance: PATSession):
+        current_user = self.context.get("user")
+        return instance.user.id == current_user.id
 
     class Meta:
         model = PATSession
@@ -178,6 +184,7 @@ class SessionListSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "closed_at",
+            "is_owner",
         ]
 
 
@@ -238,6 +245,7 @@ class CreateSessionSerializer(serializers.Serializer):
 
 
 class UpdateSessionSerializer(serializers.ModelSerializer):
+    session_name = CustomCharField(required=False)
     summary = CustomCharField(required=False)
     notes = CustomCharField(required=False)
     context = CustomCharField(required=False)
@@ -248,7 +256,7 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PATSession
-        fields = ["summary", "notes", "context", "is_published"]
+        fields = ["session_name", "summary", "notes", "context", "is_published"]
 
     def update(self, instance, validated_data):
         # Update the fields of the instance
@@ -264,6 +272,7 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
                 instance.set_closed()
 
         # Save the updated instance
+        instance.updated_at = timezone.now()
         instance.save()
         return instance
 
@@ -399,6 +408,9 @@ class DecisionUpdateSerializer(serializers.Serializer):
         instance.name = validated_data.get("name", instance.name)
         instance.agree = validated_data.get("agree", instance.agree)
         instance.notes = validated_data.get("notes", instance.notes)
+        instance.session.updated_at = timezone.now()
+        instance.session.save()
+        instance.updated_at = timezone.now()
         instance.save()
         if instance.agree is False:
             for score in instance.decision_participant.filter(
@@ -512,6 +524,11 @@ class ParticipantDecisionSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.score = validated_data.get("score", instance.score)
         instance.desired = validated_data.get("desired", instance.desired)
+
+        instance.decision.session.updated_at = timezone.now()
+        instance.decision.session.save()
+
+        instance.updated_at = timezone.now()
         instance.save()
         return instance
 
@@ -622,6 +639,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     organization_name = serializers.SerializerMethodField()
+    organization_acronym = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_full_name(self, instance: Participant):
@@ -635,6 +653,37 @@ class ParticipantSerializer(serializers.ModelSerializer):
     def get_organization_name(self, instance: Participant):
         return instance.organization.organization_name
 
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_organization_acronym(self, instance: Participant):
+        return instance.organization.acronym
+
     class Meta:
         model = Participant
-        fields = ["id", "full_name", "email", "role", "organization_name"]
+        fields = [
+            "id", "full_name", "email", "role", "organization_name",
+            "organization_acronym", "organization_id"
+        ]
+
+
+class TotalSessionPerMonthSerializer(serializers.Serializer):
+    total_sessions = serializers.IntegerField()
+    month = serializers.DateField()
+
+    class Meta:
+        fields = ["total_sessions", "month"]
+
+
+class TotalSessionCompletedSerializer(serializers.Serializer):
+    total_completed = serializers.IntegerField()
+    total_completed_last_30_days = serializers.IntegerField()
+
+    class Meta:
+        fields = ["total_completed", "total_completed_last_30_days"]
+
+
+class TotalSessionPerLast3YearsSerializer(serializers.Serializer):
+    total_sessions = serializers.ListField()
+    year = serializers.IntegerField()
+
+    class Meta:
+        fields = ["total_sessions", "year"]

@@ -68,10 +68,12 @@ module.exports = {
         10: "#1e1e1e",
       },
       ["light-grey"]: {
+        3: "#FDFBF8",
         4: "#FCFAF5",
         5: "#FBF9F3",
         7: "#E1E0DA",
         8: "#EAE2C9",
+        9: "#AEADA9",
       },
       blue: "#0089D7",
       grey: {
@@ -104,7 +106,7 @@ module.exports = {
         DEFAULT: "1rem",
         sm: "2rem", // 640px
         md: "3rem", // 768px
-        lg: "4rem", // 1024px
+        lg: "3rem", // 1024px
         xl: "4rem", // 1280px
       },
     },

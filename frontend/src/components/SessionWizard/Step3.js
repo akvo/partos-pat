@@ -23,7 +23,7 @@ const EditableCell = (
     haveEditAccess,
     ...restProps
   },
-  formInstance
+  formInstance,
 ) => {
   const t = useTranslations("Session");
   const t_error = useTranslations("Error");
@@ -45,7 +45,7 @@ const EditableCell = (
     );
   }
 
-  const agreeValue = formInstance.getFieldValue(record.id);
+  const agreeValue = record?.id ? formInstance.getFieldValue(record.id) : null;
   return (
     <td
       className={classNames(className, {
@@ -200,14 +200,16 @@ const StepThree = ({ patSession = {}, isEditable = false }, ref) => {
               cell: (props) =>
                 EditableCell(
                   { haveEditAccess: isEditable, ...props },
-                  ref.current
+                  ref.current,
                 ),
             },
           }}
           rowKey="id"
           dataSource={dataSource}
           columns={columns}
-          className="pat-table"
+          className={classNames("pat-table", {
+            "pat-table-editable": isEditable,
+          })}
           pagination={false}
           scroll={{
             x: "max-content",

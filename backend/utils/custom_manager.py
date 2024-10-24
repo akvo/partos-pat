@@ -1,4 +1,3 @@
-from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from utils.soft_deletes_model import SoftDeletesManager
 from uuid import uuid4
@@ -34,7 +33,7 @@ class UserManager(BaseUserManager, SoftDeletesManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class PATSessionManager(models.Manager):
+class PATSessionManager(SoftDeletesManager):
     def create_session(
         self, owner, name, join_code=None, **extra_fields
     ):

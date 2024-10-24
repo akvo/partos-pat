@@ -63,6 +63,10 @@ class DecisionUpdateEndpointTestCase(TestCase, ProfileTestHelperMixin):
         if len(res) > 1:
             ds2 = Decision.objects.filter(pk=res[1]["id"]).first()
             self.assertFalse(ds2.agree)
+        updated_pat_session = PATSession.objects.get(
+            pk=pat_session.id
+        )
+        self.assertIsNotNone(updated_pat_session.updated_at)
 
     def test_successfully_update_decision_notes(self):
         pat_session = PATSession.objects.annotate(

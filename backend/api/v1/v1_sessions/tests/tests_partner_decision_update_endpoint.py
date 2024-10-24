@@ -83,3 +83,7 @@ class UpdatePartnerDecisionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         updated_data = ParticipantDecision.objects.get(pk=score.id)
         self.assertEqual(res[0]["score"], updated_data.score)
         self.assertTrue(updated_data.desired)
+        updated_pat_session = PATSession.objects.get(
+            pk=pat_session.id
+        )
+        self.assertIsNotNone(updated_pat_session.updated_at)

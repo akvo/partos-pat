@@ -4,7 +4,6 @@ import { api } from "@/lib";
 import { Avatar, Button, Flex, message, Modal, Tooltip } from "antd";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
-import ProfileAvatar from "../ProfileAvatar";
 import countryOptions from "../../../i18n/countries.json";
 import { CopyIcon } from "../Icons";
 import { useRouter } from "@/routing";
@@ -19,7 +18,7 @@ const Section = ({ children }) => (
   </div>
 );
 
-const DetailSessionModal = ({ id }) => {
+const DetailSessionModal = ({ id, webdomain }) => {
   const [details, setDetails] = useState(null);
   const [preload, setPreload] = useState(true);
   const [open, setOpen] = useState(false);
@@ -37,16 +36,17 @@ const DetailSessionModal = ({ id }) => {
 
   const handleOnCopy = () => {
     if (details?.join_code) {
-      const detailsText = t("copyContent", {
-        session_name: details?.session_name,
-        organizations: details?.organizations
-          ?.map((o) => o?.acronym)
-          ?.join(", "),
-        context: details?.context,
-        join_code: details.join_code,
-      });
-      navigator.clipboard.writeText(detailsText);
-      message.success(t("copySuccess"));
+      const content = document.getElementById(`copy-content-${id}`).innerHTML;
+      navigator.clipboard
+        .write([
+          new ClipboardItem({
+            "text/html": new Blob([content], { type: "text/html" }),
+            "text/plain": new Blob([content], { type: "text/plain" }),
+          }),
+        ])
+        .then(() => {
+          message.success(t("copySuccess"));
+        });
     }
   };
 
@@ -68,7 +68,7 @@ const DetailSessionModal = ({ id }) => {
   }, [loadDetails]);
 
   const countries = countryOptions.filter((c) =>
-    details?.countries?.includes(c?.["alpha-2"])
+    details?.countries?.includes(c?.["alpha-2"]),
   );
 
   return (
@@ -164,6 +164,25 @@ const DetailSessionModal = ({ id }) => {
         <div className="text-center pt-6 pb-12">
           <h4 className="font-bold text-5xl">{details?.join_code}</h4>
         </div>
+        {details?.join_code && (
+          <div id={`copy-content-${id}`} className="hidden whitespace-pre-line">
+            {t.rich("copyContent", {
+              name: () => <p>{details?.session_name}</p>,
+              org: () => (
+                <i>
+                  {details?.organizations?.map((o) => o?.acronym)?.join(", ")}
+                </i>
+              ),
+              context: () => <p>{details?.context}</p>,
+              code: () => <b>{details.join_code}</b>,
+              url: () => (
+                <a href={webdomain} target="_blank">
+                  {webdomain}
+                </a>
+              ),
+            })}
+          </div>
+        )}
       </Section>
       <Section>
         <strong className="font-bold">{t("context")}</strong>

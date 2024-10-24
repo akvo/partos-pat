@@ -1,5 +1,5 @@
-import { Flex } from "antd";
-import { HelpButton, PATLogo } from "@/components";
+import { Flex, Space } from "antd";
+import { HelpButton, LangButton, PATLogo } from "@/components";
 import { Link } from "@/routing";
 
 const WithNavbarTemplate = ({ children }) => {
@@ -14,7 +14,10 @@ const WithNavbarTemplate = ({ children }) => {
                 <PATLogo />
               </div>
             </Link>
-            <HelpButton />
+            <Space size="small">
+              <HelpButton />
+              <LangButton inherit={false} />
+            </Space>
           </Flex>
         </div>
       </div>

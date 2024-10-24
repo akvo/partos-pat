@@ -122,7 +122,7 @@ const CreateSessionModal = ({ disabled = false }) => {
             <>
               <h3 className="text-md font-bold">{t("sessionSection")}</h3>
               <Row>
-                <Col md={24} lg={10}>
+                <Col md={24} lg={8} xl={10}>
                   <Form.Item
                     name="session_name"
                     rules={[
@@ -140,8 +140,12 @@ const CreateSessionModal = ({ disabled = false }) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col md={24} lg={14}>
-                  <Flex className="w-full" align="baseline">
+                <Col md={24} lg={16} xl={14}>
+                  <Flex
+                    className="w-full"
+                    align="baseline"
+                    justify="space-between"
+                  >
                     <Form.Item
                       name="countries"
                       rules={[
@@ -152,7 +156,7 @@ const CreateSessionModal = ({ disabled = false }) => {
                           }),
                         },
                       ]}
-                      className="w-full lg:w-2/5"
+                      className="min-w-48 2xl:w-2/5"
                     >
                       <Select
                         placeholder={t("countries")}
@@ -176,7 +180,7 @@ const CreateSessionModal = ({ disabled = false }) => {
                           }),
                         },
                       ]}
-                      className="w-full lg:w-2/5"
+                      className="w-full 2xl:w-2/5"
                     >
                       <Select
                         placeholder={t("sector")}
@@ -195,14 +199,13 @@ const CreateSessionModal = ({ disabled = false }) => {
                           }),
                         },
                       ]}
-                      className="w-full lg:w-1/5"
+                      className="w-64 2xl:w-1/5"
                     >
                       <DatePicker
                         format={{
                           format: "YYYY-MM-DD",
                           type: "mask",
                         }}
-                        className="w-full"
                         variant="borderless"
                         onChange={(_, dateString) => setDateSession(dateString)}
                       />

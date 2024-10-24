@@ -1,3 +1,4 @@
+from datetime import timedelta
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import (
     extend_schema,
@@ -9,12 +10,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from django.db.models.functions import Coalesce
 from rest_framework.decorators import (
     api_view,
     permission_classes,
 )
 from rest_framework.generics import get_object_or_404
-from django.db.models import Q
+from django.utils import timezone
+from django.db.models import Q, Count, DateField
+from django.db.models.functions import TruncMonth, ExtractYear
 from django.conf import settings
 from api.v1.v1_sessions.models import (
     PATSession,
@@ -41,11 +45,17 @@ from api.v1.v1_sessions.serializers import (
     ParticipantDecisionSerializer,
     ParticipantCommentSerializer,
     ParticipantSerializer,
+    TotalSessionPerMonthSerializer,
+    TotalSessionCompletedSerializer,
+    TotalSessionPerLast3YearsSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
+from api.v1.v1_users.permissions import IsSuperuser
+from api.v1.v1_sessions.constants import RoleTypes
+from collections import defaultdict
 
 
 class PATSessionAddListView(APIView):
@@ -99,6 +109,20 @@ class PATSessionAddListView(APIView):
                 type=OpenApiTypes.BOOL,
                 location=OpenApiParameter.QUERY,
             ),
+            OpenApiParameter(
+                name="search",
+                required=False,
+                default=None,
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+            ),
+            OpenApiParameter(
+                name="role",
+                required=False,
+                enum=RoleTypes.FieldStr.keys(),
+                type=OpenApiTypes.NUMBER,
+                location=OpenApiParameter.QUERY,
+            ),
         ],
         summary="To get list of PAT Sessions",
     )
@@ -106,6 +130,8 @@ class PATSessionAddListView(APIView):
         id = request.GET.get("id")
         code = request.GET.get("code")
         published_param = request.GET.get("published")
+        role_param = request.GET.get("role")
+        search_param = request.GET.get("search")
 
         published = False
         if published_param is not None:
@@ -154,18 +180,52 @@ class PATSessionAddListView(APIView):
             )
 
         queryset = PATSession.objects.filter(
-            (
+            is_published=published
+        )
+        if published:
+            if role_param:
+                role = int(role_param)
+                if role == RoleTypes.facilitated:
+                    queryset = queryset.filter(
+                        user=request.user
+                    )
+                elif role == RoleTypes.participated:
+                    queryset = queryset.filter(
+                        session_participant__user=request.user,
+                        session_participant__session_deleted_at__isnull=True
+                    )
+            else:
+                queryset = queryset.filter(
+                    Q(user=request.user) |
+                    Q(
+                        session_participant__user=request.user,
+                        session_participant__session_deleted_at__isnull=True
+                    )
+                )
+        else:
+            queryset = queryset.filter(
                 Q(user=request.user) |
                 Q(session_participant__user=request.user)
             )
-            & Q(is_published=published)
-        ).order_by("-created_at").distinct()
+        if search_param:
+            queryset = queryset.filter(
+                Q(session_name__icontains=search_param) |
+                Q(context__icontains=search_param)
+            )
+        queryset = queryset.annotate(last_updated_at=Coalesce(
+            "closed_at", "updated_at", "created_at"
+        ))
+        queryset = queryset.order_by("-last_updated_at").distinct()
         paginator = Pagination()
         if request.GET.get("page_size"):
             paginator.page_size = int(request.GET.get("page_size"))
         instance = paginator.paginate_queryset(queryset, request)
         response = paginator.get_paginated_response(
-            SessionListSerializer(instance, many=True).data
+            SessionListSerializer(
+                instance,
+                many=True,
+                context={"user": request.user}
+            ).data
         )
         return response
 
@@ -251,6 +311,42 @@ class PATSessionAddListView(APIView):
         return Response(
             data={},
             status=status.HTTP_404_NOT_FOUND,
+        )
+
+    @extend_schema(
+        request=None,
+        responses={200: SessionSerializer},
+        tags=["Session"],
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                required=True,
+                type=OpenApiTypes.NUMBER,
+                location=OpenApiParameter.QUERY,
+            ),
+        ],
+        summary="Delete PAT Session",
+    )
+    def delete(self, request, version):
+        id = request.GET.get("id")
+        instance = get_object_or_404(PATSession, pk=id)
+        if instance.user.id != request.user.id:
+            participant = instance.session_participant.filter(
+                user=request.user
+            ).first()
+            if not participant:
+                return Response(
+                    data={},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            participant.session_deleted_at = timezone.now()
+            participant.save()
+        if instance.user.id == request.user.id:
+            instance.soft_delete()
+        serializer = SessionSerializer(instance)
+        return Response(
+            data=serializer.data,
+            status=status.HTTP_200_OK
         )
 
 
@@ -544,3 +640,93 @@ def participant_list(request, session_id, version):
     queryset = Participant.objects.filter(session_id=session_id)
     serializer = ParticipantSerializer(queryset, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+@extend_schema(
+    responses={200: TotalSessionPerMonthSerializer(many=True)},
+    tags=["Statistics"],
+    summary="Get total sessions per month",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def total_session_per_month(request, version):
+    queryset = PATSession.objects.all()
+    total_sessions_per_month = queryset.annotate(
+        month=TruncMonth(
+            "created_at", output_field=DateField()
+        )
+    ).values("month").annotate(
+        total_sessions=Count("id")
+    ).order_by("month")
+
+    serializer = TotalSessionPerMonthSerializer(
+        instance=total_sessions_per_month,
+        many=True
+    )
+    return Response(
+        data=serializer.data,
+        status=status.HTTP_200_OK
+    )
+
+
+@extend_schema(
+    responses={200: TotalSessionCompletedSerializer},
+    tags=["Statistics"],
+    summary="Get total sessions completed",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def total_session_completed(request, version):
+    total_completed = PATSession.objects.filter(
+        closed_at__isnull=False
+    ).count()
+    total_completed_last_30_days = PATSession.objects.filter(
+        closed_at__isnull=False,
+        closed_at__gte=timezone.now() - timedelta(days=30)
+    ).count()
+    return Response(
+        data={
+            "total_completed": total_completed,
+            "total_completed_last_30_days": total_completed_last_30_days
+        },
+        status=status.HTTP_200_OK
+    )
+
+
+@extend_schema(
+    responses={200: TotalSessionPerLast3YearsSerializer(many=True)},
+    tags=["Statistics"],
+    summary="Get total sessions per last 3 years",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def total_session_per_last_3_years(request, version):
+    queryset = PATSession.objects.all()
+    current_year = timezone.now().year
+    three_years_ago = current_year - 2
+
+    dataset = queryset.filter(created_at__year__gte=three_years_ago) \
+        .annotate(
+            month=TruncMonth("created_at"),
+            year=ExtractYear("created_at")
+        ).values("year", "month") \
+        .annotate(total_sessions=Count("id")) \
+        .order_by("year", "month")
+
+    years_data = defaultdict(lambda: {"year": 0, "total_sessions": [0] * 12})
+
+    for entry in dataset:
+        year = entry["year"]
+        month = entry["month"].month - 1  # Adjust to 0-based index
+        total = entry["total_sessions"]
+
+        years_data[year]["year"] = year
+        years_data[year]["total_sessions"][month] = total
+
+    result = sorted(years_data.values(), key=lambda x: x["year"])
+
+    serializer = TotalSessionPerLast3YearsSerializer(instance=result, many=True)
+    return Response(
+        data=serializer.data,
+        status=status.HTTP_200_OK
+    )

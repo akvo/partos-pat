@@ -48,7 +48,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
 
     try {
       let decisionScores = decisions?.flatMap((d) =>
-        d?.scores?.map((s) => ({ ...s, decision_id: d?.id }))
+        d?.scores?.map((s) => ({ ...s, decision_id: d?.id })),
       );
 
       if (updateScores.length) {
@@ -120,8 +120,14 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                         key={key}
                         className="w-full h-full flex items-start justify-between border-b border-b-grey-100"
                       >
-                        <div className="w-full lg:min-w-[432px] h-33 sticky left-0 z-20 bg-light-1 flex flex-col justify-end p-2">
-                          {formInstance.getFieldValue(["scores", name, "name"])}
+                        <div className="w-full h-40 lg:min-w-[248px] xl:min-w-[348px] 2xl:min-w-[432px] sticky left-0 z-20 bg-light-1">
+                          <p className="p-2 mt-9 border-t border-t-grey-100">
+                            {formInstance.getFieldValue([
+                              "scores",
+                              name,
+                              "name",
+                            ])}
+                          </p>
                         </div>
                         <div className="w-fit flex flex-col z-0">
                           <div className="flex items-center justify-end font-bold bg-light-grey-7">
@@ -147,18 +153,16 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                 <div
                                   key={org.id}
                                   className={classNames(
-                                    "w-24 h-12 border-x border-x-light-1 h-12",
+                                    "w-24 h-10 border-x border-x-light-1",
                                     {
                                       "p-2": !isEditable,
                                       "px-4 py-2": isEditable,
-                                    },
-                                    {
                                       "bg-score-4": actualValue === 4,
                                       "bg-score-3": actualValue === 3,
                                       "bg-score-2": actualValue === 2,
                                       "bg-score-1": actualValue === 1,
                                       "bg-light-1": actualValue === 0,
-                                    }
+                                    },
                                   )}
                                 >
                                   {actualValue}
@@ -177,14 +181,14 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                 <div
                                   key={org.id}
                                   className={classNames(
-                                    "w-24 h-12 p-2 border-x border-x-light-1",
+                                    "w-24 h-10 p-2 border-x border-x-light-1",
                                     {
                                       "bg-score-4": desiredValue === 4,
                                       "bg-score-3": desiredValue === 3,
                                       "bg-score-2": desiredValue === 2,
                                       "bg-score-1": desiredValue === 1,
                                       "bg-light-1": desiredValue === 0,
-                                    }
+                                    },
                                   )}
                                 >
                                   {isEditable ? (
@@ -208,7 +212,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                           (_, value) => ({
                                             value,
                                             label: value,
-                                          })
+                                          }),
                                         )}
                                         variant="borderless"
                                         className="w-full pat-score"
@@ -228,14 +232,14 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                             })}
                           </div>
                         </div>
-                        <div className="w-24 sticky right-0 z-20 bg-light-1">
+                        <div className="w-24 h-40 sticky right-0 z-20 bg-light-1">
                           <div className="w-24 p-2 border-x border-x-light-1 font-bold bg-light-grey-7">
                             {t("agree")}
                           </div>
-                          <div className="w-24 h-12 p-2 border-x border-x-light-1 td-no">
+                          <div className="w-24 h-10 p-2 border-x border-x-light-1 td-no">
                             {t("no")}
                           </div>
-                          <div className="w-24 h-12 p-2 border-x border-x-light-1 td-yes">
+                          <div className="w-24 h-10 p-2 border-x border-x-light-1 td-yes">
                             {t("yes")}
                           </div>
                         </div>

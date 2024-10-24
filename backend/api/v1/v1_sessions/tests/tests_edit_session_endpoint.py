@@ -57,6 +57,11 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(res["summary"], "Lorem ipsum dolor sit amet")
         self.assertEqual(res["notes"], "Well done")
 
+        updated_pat_session = PATSession.objects.get(
+            pk=pat_session.id
+        )
+        self.assertIsNotNone(updated_pat_session.updated_at)
+
     def test_successfully_session_is_published(self):
         pat_session = (
             PATSession.objects.annotate(

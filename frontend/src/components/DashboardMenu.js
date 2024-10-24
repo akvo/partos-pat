@@ -1,19 +1,18 @@
 "use client";
 
 import { Button, Flex } from "antd";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { DASHBOARD_MENU } from "@/static/config";
 import { usePathname, useRouter } from "@/routing";
-import { LifebuoyIcon } from "./Icons";
-import { useState } from "react";
 import classNames from "classnames";
-import { HelpModal } from "./Modals";
+import { HelpSearchModal } from "./Modals";
 import { useUserContext } from "@/context/UserContextProvider";
+import { LangButton } from "./Buttons";
 
 const DashboardMenu = () => {
-  const [open, setOpen] = useState(false);
   const pathName = usePathname();
   const userContext = useUserContext();
+  const locale = useLocale();
 
   const router = useRouter();
   const t = useTranslations("Dashboard");
@@ -24,7 +23,7 @@ const DashboardMenu = () => {
         {DASHBOARD_MENU.filter(
           (m) =>
             userContext?.is_superuser ||
-            (!userContext?.is_superuser && !m?.isAdmin)
+            (!userContext?.is_superuser && !m?.isAdmin),
         ).map((m) => (
           <li
             className={classNames("font-bold hover:bg-primary-hover", {
@@ -39,23 +38,14 @@ const DashboardMenu = () => {
               }}
               icon={m.icon}
             >
-              {t(m.name)}
+              {m.name === "faqs" && locale === "fr" ? "FAQ" : t(m.name)}
             </Button>
           </li>
         ))}
       </ul>
-      <div className="w-full text-left">
-        <Button
-          type="link"
-          onClick={() => {
-            setOpen(true);
-          }}
-          icon={<LifebuoyIcon />}
-          size="large"
-        >
-          {t("support")}
-        </Button>
-        <HelpModal {...{ open, setOpen }} />
+      <div className="w-full flex flex-col gap-0 items-start justify-between">
+        <HelpSearchModal full_name={userContext?.full_name} />
+        <LangButton placement="top" className="ml-4" inherit={false} long />
       </div>
     </Flex>
   );

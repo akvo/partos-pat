@@ -18,7 +18,7 @@ describe("Home", () => {
     render(
       <NextIntlClientProvider locale="en" messages={messages}>
         <HeroSection />
-      </NextIntlClientProvider>
+      </NextIntlClientProvider>,
     );
 
     const patTitle = screen.getByText(messages.Landing.title);
@@ -30,7 +30,7 @@ describe("Home", () => {
     const { container } = render(
       <NextIntlClientProvider locale="en" messages={messages}>
         <HeroSection />
-      </NextIntlClientProvider>
+      </NextIntlClientProvider>,
     );
     expect(container).toMatchSnapshot();
   });

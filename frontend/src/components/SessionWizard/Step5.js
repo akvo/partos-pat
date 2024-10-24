@@ -88,12 +88,15 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                   {fields.map(({ key, name, ...restField }) => {
                     return (
                       <div key={key} className="w-full">
-                        <div className="w-full flex items-end justify-between border-b border-b-grey-100 relative overflow-x-auto">
-                          <div className="w-full lg:min-w-[432px] h-33 sticky left-0 z-20 bg-light-1 flex flex-col justify-end">
+                        <div className="w-full flex items-start justify-between border-b border-b-grey-100 relative overflow-x-auto">
+                          <div className="w-full lg:min-w-[248px] xl:min-w-[348px] 2xl:min-w-[432px] h-[116px] sticky left-0 z-20 bg-light-1 flex flex-col justify-end">
                             <div
-                              className={classNames("w-full h-auto", {
-                                "py-2 px-2 bg-[#FFF8E4]": !isEditable,
-                              })}
+                              className={classNames(
+                                "w-full min-h-10 px-2 pt-2",
+                                {
+                                  "bg-[#FFF8E4]": !isEditable,
+                                },
+                              )}
                             >
                               {formInstance.getFieldValue([
                                 "decisions",
@@ -126,14 +129,14 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                                   <div
                                     key={org.id}
                                     className={classNames(
-                                      "w-24 h-12 p-2 border-x border-x-light-1",
+                                      "w-24 h-10 p-2 border-x border-x-light-1",
                                       {
                                         "bg-score-4": actualValue === 4,
                                         "bg-score-3": actualValue === 3,
                                         "bg-score-2": actualValue === 2,
                                         "bg-score-1": actualValue === 1,
                                         "bg-light-1": actualValue === 0,
-                                      }
+                                      },
                                     )}
                                   >
                                     {actualValue}
@@ -144,20 +147,20 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                             <div className="flex items-center justify-end">
                               {patSession?.organizations?.map((org) => {
                                 const desiredValue = formInstance.getFieldValue(
-                                  ["decisions", name, `desired.${org.id}`]
+                                  ["decisions", name, `desired.${org.id}`],
                                 );
                                 return (
                                   <div
                                     key={org.id}
                                     className={classNames(
-                                      "w-24 h-12 p-2 border-x border-x-light-1",
+                                      "w-24 h-10 p-2 border-x border-x-light-1",
                                       {
                                         "bg-score-4": desiredValue === 4,
                                         "bg-score-3": desiredValue === 3,
                                         "bg-score-2": desiredValue === 2,
                                         "bg-score-1": desiredValue === 1,
                                         "bg-light-1": desiredValue === 0,
-                                      }
+                                      },
                                     )}
                                   >
                                     {desiredValue}
@@ -166,14 +169,14 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                               })}
                             </div>
                           </div>
-                          <div className="w-24 min-h-32 sticky right-0 z-20 bg-light-1">
+                          <div className="w-24 min-h-[116px] sticky right-0 z-20 bg-light-1">
                             <div className="w-24 p-2 border-x border-x-light-1 font-bold bg-light-grey-7">
                               {t("agree")}
                             </div>
-                            <div className="w-24 h-12 p-2 border-x border-x-light-1 td-no">
+                            <div className="w-24 h-10 p-2 border-x border-x-light-1 td-no">
                               {t("no")}
                             </div>
-                            <div className="w-24 h-12 p-2 border-x border-x-light-1 td-yes">
+                            <div className="w-24 h-10 p-2 border-x border-x-light-1 td-yes">
                               {t("yes")}
                             </div>
                           </div>

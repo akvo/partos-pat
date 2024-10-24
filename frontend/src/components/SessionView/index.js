@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import classNames from "classnames";
 import { openSans, sourceSansPro } from "@/app/fonts";
 
-import { ArrowFatIcon, FileArrowDownIcon } from "../Icons";
+import { ArrowFatIcon } from "../Icons";
 import SessionContent from "./SessionContent";
 import SessionSteps from "../SessionWizard/SessionSteps";
 import {
@@ -15,6 +15,7 @@ import {
 } from "@/context/SessionContextProvider";
 import { api } from "@/lib";
 import { PAT_SESSION } from "@/static/config";
+import { PrintButton } from "../Buttons";
 
 const SessionView = ({ patSession }) => {
   const sessionDispatch = useSessionDispatch();
@@ -31,7 +32,7 @@ const SessionView = ({ patSession }) => {
       try {
         const resData = await api(
           "GET",
-          `/decisions?session_id=${patSession.id}`
+          `/decisions?session_id=${patSession.id}`,
         );
         sessionDispatch({
           type: "DECISION_UPDATE",
@@ -53,7 +54,7 @@ const SessionView = ({ patSession }) => {
       try {
         const { data: dataComments } = await api(
           "GET",
-          `/session/${patSession.id}/comments`
+          `/session/${patSession.id}/comments`,
         );
         sessionDispatch({
           type: "COMMENT_UPDATE",
@@ -86,9 +87,17 @@ const SessionView = ({ patSession }) => {
   }, [loadComments]);
 
   return (
-    <div className={classNames(openSans.variable, openSans.className, "w-full h-full")}>
+    <div
+      className={classNames(
+        openSans.variable,
+        openSans.className,
+        "w-full h-full",
+      )}
+    >
       <div className="w-full container mx-auto mb-3">
-        <h2 className={classNames(sourceSansPro.className, "font-bold text-lg")}>
+        <h2
+          className={classNames(sourceSansPro.className, "font-bold text-lg")}
+        >
           {`${step + 1}.  `}
           {t(`titleStep${parseInt(step + 1)}`)}
         </h2>
@@ -106,15 +115,7 @@ const SessionView = ({ patSession }) => {
         <div className="w-full flex justify-between">
           <div className="min-w-32">
             {step < PAT_SESSION.totalSteps - 1 && (
-              <Button
-                icon={<FileArrowDownIcon />}
-                iconPosition="end"
-                className="bg-light-1"
-                block
-                ghost
-              >
-                {t("downloadPdf")}
-              </Button>
+              <PrintButton patSession={patSession} />
             )}
           </div>
           <Space>
@@ -132,14 +133,7 @@ const SessionView = ({ patSession }) => {
               {t("back")}
             </Button>
             {step === PAT_SESSION.totalSteps - 1 && (
-              <Button
-                type="primary"
-                icon={<FileArrowDownIcon />}
-                iconPosition="end"
-                block
-              >
-                {t("downloadPdf")}
-              </Button>
+              <PrintButton patSession={patSession} />
             )}
             {step < PAT_SESSION.totalSteps - 1 && (
               <Button

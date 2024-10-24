@@ -1,6 +1,7 @@
 export * from "./PasswordInput";
 export * from "./Buttons";
 export * from "./Modals";
+export * from "./Charts";
 export { default as RegisterForm } from "./Forms/RegisterForm";
 export { default as LoginForm } from "./Forms/LoginForm";
 export { default as ForgotPasswordForm } from "./Forms/ForgotPasswordForm";
@@ -18,3 +19,4 @@ export { default as SessionWizard } from "./SessionWizard";
 export { default as UsersTable } from "./UsersTable";
 export { default as SessionView } from "./SessionView";
 export { default as FacilitatorAvatar } from "./FacilitatorAvatar";
+export { TotalClosedLabel } from "./TotalClosedLabel";
