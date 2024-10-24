@@ -20,8 +20,21 @@ http:
       service: frontend-service
       tls:
         certResolver: myresolver
+
+    api-service-router-80:
+      rule: "Host(\`${WEBDOMAIN}\`) && PathPrefix(\`/api\`)"
+      service: api-service
+      entrypoints: web
       middlewares:
-        - redirect-documentation
+        - redirect-to-https
+
+    api-service-router-443:
+      entrypoints:
+        - websecure
+      rule: "Host(\`${WEBDOMAIN}\`) && PathPrefix(\`/api\`)"
+      service: api-service
+      tls:
+        certResolver: myresolver
 
   middlewares:
     redirect-to-https:
@@ -29,15 +42,15 @@ http:
         scheme: "https"
         permanent: true
 
-    redirect-documentation:
-      redirectRegex:
-        regex: "^https://${WEBDOMAIN}/documentation$"
-        replacement: "https://${WEBDOMAIN}/documentation/"
-        permanent: true
-
   services:
     frontend-service:
       loadBalancer:
         servers:
-          - url: "http://localhost:81"
+          - url: "http://localhost:3000"
+
+    api-service:
+      loadBalancer:
+        servers:
+          - url: "http://localhost:8000"
+
 EOF
