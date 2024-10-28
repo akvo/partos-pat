@@ -1,15 +1,53 @@
 "use client";
 
-import { Card, Flex, List } from "antd";
+import { useState } from "react";
+import { Card, Dropdown, Flex, List, Spin } from "antd";
 import { useTranslations } from "next-intl";
-import { FolderIcon, FolderLockIcon } from "./Icons";
+import {
+  DotsTreeVerticalIcon,
+  Eye,
+  FolderIcon,
+  FolderLockIcon,
+  PencilEditIcon,
+  TrashIcon,
+} from "./Icons";
 import { useRouter } from "@/routing";
 import { useUserContext } from "@/context/UserContextProvider";
+import { api } from "@/lib";
+import { EditSessionModal } from "./Modals";
+import moment from "moment";
 
 const ActiveSessionList = ({ data = [] }) => {
+  const [edit, setEdit] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [dataSource, setDatasource] = useState(data);
+
   const t = useTranslations("Dashboard");
   const router = useRouter();
   const userContext = useUserContext();
+
+  const onEdit = async (item) => {
+    setLoading(true);
+    try {
+      const patSession = await api("GET", `/sessions?id=${item.id}`);
+      if (patSession?.id) {
+        const organizations = await api(
+          "GET",
+          `/session/${item.id}/organizations`,
+        );
+        setEdit({
+          ...item,
+          ...patSession,
+          organizations,
+          date: moment(patSession?.date, "DD-MM-YYYY"),
+        });
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full h-auto pt-2 xl:pt-4">
@@ -24,7 +62,7 @@ const ActiveSessionList = ({ data = [] }) => {
           lg: 2,
           xl: 2,
         }}
-        dataSource={data}
+        dataSource={dataSource}
         renderItem={(item) => (
           <List.Item>
             <Card
@@ -33,19 +71,83 @@ const ActiveSessionList = ({ data = [] }) => {
               hoverable
             >
               <Flex justify="space-between" align="start" className="mb-3">
-                {item?.facilitator?.id === userContext?.id ? (
-                  <FolderIcon />
-                ) : (
-                  <FolderLockIcon />
-                )}
-                <span
-                  className="uppercase text-green-bold text-[10px] xl:text-xs font-bold"
-                  role="link"
-                  onClick={() => {
-                    router.push(`/dashboard?session=${item.id}`);
-                  }}
-                >
-                  {t("details")}
+                <span>
+                  {item?.facilitator?.id === userContext?.id ? (
+                    <FolderIcon />
+                  ) : (
+                    <FolderLockIcon />
+                  )}
+                </span>
+                <span>
+                  <Dropdown
+                    trigger={["click"]}
+                    placement="bottom"
+                    menu={{
+                      items: item?.is_owner
+                        ? [
+                            {
+                              label: (
+                                <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
+                                  <span className="w-10/12 text-right">
+                                    {t("view")}
+                                  </span>
+                                  <Eye />
+                                </div>
+                              ),
+                              key: "view",
+                              onClick: () => {
+                                router.push(`/dashboard?session=${item.id}`);
+                              },
+                            },
+                            {
+                              label: (
+                                <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
+                                  <span className="w-10/12 text-right">
+                                    {t("edit")}
+                                  </span>
+                                  {loading ? <Spin /> : <PencilEditIcon />}
+                                </div>
+                              ),
+                              key: "edit",
+                              onClick: () => {
+                                onEdit(item);
+                              },
+                            },
+                            {
+                              label: (
+                                <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
+                                  <span className="w-10/12 text-right">
+                                    {t("delete")}
+                                  </span>
+                                  <TrashIcon />
+                                </div>
+                              ),
+                              key: "delete",
+                              danger: true,
+                            },
+                          ]
+                        : [
+                            {
+                              label: (
+                                <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
+                                  <span className="w-10/12 text-right">
+                                    {t("view")}
+                                  </span>
+                                  <Eye />
+                                </div>
+                              ),
+                              key: "view",
+                              onClick: () => {
+                                router.push(`/dashboard?session=${item.id}`);
+                              },
+                            },
+                          ],
+                    }}
+                  >
+                    <a role="button" className="text-dark-10">
+                      <DotsTreeVerticalIcon />
+                    </a>
+                  </Dropdown>
                 </span>
               </Flex>
               <Flex
@@ -69,6 +171,20 @@ const ActiveSessionList = ({ data = [] }) => {
             </Card>
           </List.Item>
         )}
+      />
+      <EditSessionModal
+        open={edit ? true : false}
+        setClose={(patSession = {}) => {
+          setEdit(null);
+          if (patSession?.id) {
+            setDatasource(
+              dataSource.map((d) =>
+                d?.id === patSession?.id ? { ...d, ...patSession } : d,
+              ),
+            );
+          }
+        }}
+        initialValues={edit || {}}
       />
     </div>
   );
