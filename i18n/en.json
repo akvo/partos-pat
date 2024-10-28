@@ -153,7 +153,7 @@
 		"editTitle": "Edit Session"
 	},
 	"SessionDetails": {
-		"title": "PAT Session Details",
+		"title": "PAT session information",
 		"partnerOrg": "Partner Organizations ",
 		"participants": "Participants",
 		"countries": "Countries",
