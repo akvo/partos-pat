@@ -302,10 +302,18 @@ class PATSessionAddListView(APIView):
                 partial=True
             )
             if not serializer.is_valid():
-                return Response(data={}, status=status.HTTP_400_BAD_REQUEST)
+                errors = {
+                    "message": validate_serializers_message(serializer.errors),
+                    "details": serializer.errors,
+                }
+                return Response(
+                    data=errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
             serializer.save()
+            data = SessionSerializer(instance=instance).data
             return Response(
-                data=serializer.data,
+                data=data,
                 status=status.HTTP_200_OK,
             )
         return Response(
@@ -355,12 +363,6 @@ class PATSessionAddListView(APIView):
     tags=["Session"],
     parameters=[
         OpenApiParameter(
-            name="page",
-            required=True,
-            type=OpenApiTypes.NUMBER,
-            location=OpenApiParameter.QUERY,
-        ),
-        OpenApiParameter(
             name="search",
             required=False,
             default=None,
@@ -372,20 +374,20 @@ class PATSessionAddListView(APIView):
 )
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def organization_list(request, version):
-    queryset = Organization.objects.order_by("organization_name")
+def organization_list(request, session_id, version):
+    session = get_object_or_404(PATSession, pk=session_id)
+    queryset = Organization.objects.filter(session=session)
     search = request.GET.get("search")
     if search:
         queryset = queryset.filter(
             Q(organization_name__icontains=search) |
             Q(acronym__icontains=search)
         )
-    paginator = Pagination()
-    instance = paginator.paginate_queryset(queryset, request)
-    response = paginator.get_paginated_response(
-        OrganizationListSerializer(instance, many=True).data
+    instance = queryset.order_by("organization_name").all()
+    return Response(
+        data=OrganizationListSerializer(instance, many=True).data,
+        status=status.HTTP_200_OK
     )
-    return response
 
 
 @extend_schema(

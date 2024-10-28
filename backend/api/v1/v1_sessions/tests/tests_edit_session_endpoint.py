@@ -62,6 +62,45 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         )
         self.assertIsNotNone(updated_pat_session.updated_at)
 
+    def test_successfully_update_active_session(self):
+        pat_session = PATSession.objects.filter(
+            user=self.user,
+            closed_at__isnull=True
+        ).first()
+        orgs = []
+        for org in pat_session.session_organization.all():
+            orgs.append({
+                "id": org.id,
+                "name": org.organization_name,
+                "acronym": org.acronym,
+            })
+        payload = {
+            "session_name": f"EDITED-{pat_session.session_name}",
+            "countries": ["ID", "NL", "UK"],
+            "sector": pat_session.sector,
+            "date": "2024-10-29",
+            "context": "Lorem ipsum dolor amet",
+            "organizations": [
+                *orgs,
+                {"name": "New Organization", "acronym": "NEWOO"}
+            ]
+        }
+        req = self.client.put(
+            f"/api/v1/sessions?id={pat_session.id}",
+            payload,
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+
+        updated_session = PATSession.objects.filter(pk=pat_session.id).first()
+        self.assertEqual(res["session_name"], updated_session.session_name)
+        self.assertEqual(
+            updated_session.session_organization.count(),
+            len(orgs) + 1
+        )
+
     def test_successfully_session_is_published(self):
         pat_session = (
             PATSession.objects.annotate(

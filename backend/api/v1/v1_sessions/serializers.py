@@ -26,11 +26,22 @@ from utils.custom_serializer_fields import (
 
 
 class OrganizationFormSerializer(serializers.Serializer):
+    id = CustomPrimaryKeyRelatedField(
+        queryset=Organization.objects.none(),
+        required=False,
+        allow_null=True,
+    )
     name = CustomCharField()
     acronym = CustomCharField()
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields.get(
+            "id"
+        ).queryset = Organization.objects.all()
+
     class Meta:
-        fields = ["name", "acronym"]
+        fields = ["id", "name", "acronym"]
 
 
 class OrganizationListSerializer(serializers.ModelSerializer):
@@ -209,7 +220,7 @@ class CreateSessionSerializer(serializers.Serializer):
         return value
 
     def create(self, validated_data):
-        organizations = validated_data.pop("organizations")
+        organizations = validated_data.pop("organizations", [])
         name = validated_data.pop("session_name")
         pat_session = PATSession.objects.create_session(
             owner=self.context.get("user"),
@@ -246,6 +257,18 @@ class CreateSessionSerializer(serializers.Serializer):
 
 class UpdateSessionSerializer(serializers.ModelSerializer):
     session_name = CustomCharField(required=False)
+    countries = CustomJSONField(required=False)
+    sector = CustomChoiceField(
+        choices=SectorTypes.FieldStr,
+        required=False
+    )
+    other_sector = CustomCharField(required=False)
+    date = CustomDateField(required=False)
+    context = CustomCharField(required=False)
+    organizations = CustomListField(
+        child=OrganizationFormSerializer(),
+        required=False,
+    )
     summary = CustomCharField(required=False)
     notes = CustomCharField(required=False)
     context = CustomCharField(required=False)
@@ -256,11 +279,37 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PATSession
-        fields = ["session_name", "summary", "notes", "context", "is_published"]
+        fields = [
+            "session_name",
+            "countries",
+            "sector",
+            "other_sector",
+            "date",
+            "context",
+            "organizations",
+            "summary",
+            "notes",
+            "context",
+            "is_published"
+        ]
 
     def update(self, instance, validated_data):
         # Update the fields of the instance
         instance = super().update(instance, validated_data)
+
+        organizations = validated_data.pop("organizations", [])
+        for org in organizations:
+            if org.get("id"):
+                instance_org = org["id"]
+                instance_org.organization_name = org["name"]
+                instance_org.acronym = org["acronym"]
+                instance_org.save()
+            else:
+                Organization.objects.create(
+                    session=instance,
+                    organization_name=org["name"],
+                    acronym=org["acronym"],
+                )
 
         if validated_data.get("is_published"):
             total_scores = instance.session_decision \
@@ -276,8 +325,8 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def to_representation(self, instance):
-        return SessionSerializer(instance).data
+    # def to_representation(self, instance):
+    #     return SessionSerializer(instance).data
 
 
 class JoinSessionSerializer(serializers.Serializer):
@@ -480,7 +529,7 @@ class ParticipantDecisionSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
     organization_id = CustomPrimaryKeyRelatedField(
-        queryset=SystemUser.objects.none()
+        queryset=Organization.objects.none()
     )
     decision_id = CustomPrimaryKeyRelatedField(
         queryset=Decision.objects.none()

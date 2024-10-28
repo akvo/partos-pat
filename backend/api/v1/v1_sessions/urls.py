@@ -20,7 +20,7 @@ urlpatterns = [
         PATSessionAddListView.as_view()
     ),
     re_path(
-        r"^(?P<version>(v1))/organizations",
+        r"^(?P<version>(v1))/session/(?P<session_id>[0-9]+)/organizations",
         organization_list
     ),
     re_path(
