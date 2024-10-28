@@ -36,7 +36,7 @@ class ParticipantUpdateCommentEndpointTestCase(
             Participant.objects.create(
                 pat_session=pat_session,
                 user=self.user,
-                organization=pat_session.organizations.first()
+                organization=pat_session.session_organization.first()
             )
         self.reset_db_sequence(SystemUser)
         self.token = self.get_auth_token(email=email, password=password)
