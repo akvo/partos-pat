@@ -131,7 +131,8 @@
 		"userProfileSubtitle": "Update your profile and personal details",
 		"manageUsers": "Manage Users",
 		"statistics": "Statistics",
-		"filterByRole": "Filter by Role"
+		"filterByRole": "Filter by Role",
+		"edit": "Edit session info"
 	},
 	"CreateSession": {
 		"title": "Create New Session",
@@ -148,7 +149,8 @@
 		"date": "Date",
 		"cancel": "Cancel",
 		"save": "Save",
-		"orgMin2": "At least add 2 organizations"
+		"orgMin2": "At least add 2 organizations",
+		"editTitle": "Edit Session"
 	},
 	"SessionDetails": {
 		"title": "PAT Session Details",

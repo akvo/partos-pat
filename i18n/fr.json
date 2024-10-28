@@ -131,7 +131,8 @@
 		"userProfileSubtitle": "Mettez à jour votre profil et vos informations personnelles",
 		"manageUsers": "Gérer les utilisateurs",
 		"statistics": "Statistiques",
-		"filterByRole": "Filtrer par rôle"
+		"filterByRole": "Filtrer par rôle",
+		"edit": "Modifier"
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
@@ -148,7 +149,8 @@
 		"date": "Date",
 		"cancel": "Annuler",
 		"save": "Sauvegarder",
-		"orgMin2": "Ajoutez au moins 2 organisations"
+		"orgMin2": "Ajoutez au moins 2 organisations",
+		"editTitle": "Modifier la session"
 	},
 	"SessionDetails": {
 		"title": "Détails de la session PAT",
