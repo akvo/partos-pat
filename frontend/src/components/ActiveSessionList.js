@@ -14,13 +14,15 @@ import {
 import { useRouter } from "@/routing";
 import { useUserContext } from "@/context/UserContextProvider";
 import { api } from "@/lib";
-import { EditSessionModal } from "./Modals";
+import { DeleteSessionModal, EditSessionModal } from "./Modals";
 import moment from "moment";
 
 const ActiveSessionList = ({ data = [] }) => {
   const [edit, setEdit] = useState(null);
   const [loading, setLoading] = useState(false);
   const [dataSource, setDatasource] = useState(data);
+  const [patDelete, setPATDelete] = useState(null);
+  const [openDelete, setOpenDelete] = useState(false);
 
   const t = useTranslations("Dashboard");
   const router = useRouter();
@@ -47,6 +49,26 @@ const ActiveSessionList = ({ data = [] }) => {
       console.error(err);
       setLoading(false);
     }
+  };
+
+  const onDelete = async (item) => {
+    try {
+      const patSession = await api("GET", `/sessions?id=${item.id}`);
+      if (patSession?.id) {
+        setPATDelete({
+          ...item,
+          ...patSession,
+        });
+        setOpenDelete(true);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onDeleteSession = (id) => {
+    const updatedDataSource = dataSource.filter((d) => d?.id !== id);
+    setDatasource(updatedDataSource);
   };
 
   return (
@@ -124,6 +146,9 @@ const ActiveSessionList = ({ data = [] }) => {
                               ),
                               key: "delete",
                               danger: true,
+                              onClick: () => {
+                                onDelete(item);
+                              },
                             },
                           ]
                         : [
@@ -185,6 +210,12 @@ const ActiveSessionList = ({ data = [] }) => {
           }
         }}
         initialValues={edit || {}}
+      />
+      <DeleteSessionModal
+        open={openDelete}
+        setOpen={setOpenDelete}
+        patSession={patDelete}
+        onDeleteSession={onDeleteSession}
       />
     </div>
   );
