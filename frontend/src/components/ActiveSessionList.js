@@ -89,7 +89,7 @@ const ActiveSessionList = ({ data = [] }) => {
                               label: (
                                 <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
                                   <span className="w-10/12 text-right">
-                                    {t("view")}
+                                    {t("details")}
                                   </span>
                                   <Eye />
                                 </div>
@@ -131,7 +131,7 @@ const ActiveSessionList = ({ data = [] }) => {
                               label: (
                                 <div className="w-full flex flex-row items-center justify-end gap-2 font-bold">
                                   <span className="w-10/12 text-right">
-                                    {t("view")}
+                                    {t("details")}
                                   </span>
                                   <Eye />
                                 </div>
