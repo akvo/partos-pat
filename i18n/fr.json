@@ -282,7 +282,8 @@
 		"notes": "Remarques",
 		"notesLong": "Remarques sur les processus de prise de décision",
 		"summaryLong": "Mot de clôture",
-		"step6Desc": "Avant de conclure la session, l'animateur est invité à fournir des informations ou des détails supplémentaires sur les discussions. Assurez-vous que tous les participants ont soumis leurs commentaires depuis leur compte avant de publier la session."
+		"step6Desc": "Avant de conclure la session, l'animateur est invité à fournir des informations ou des détails supplémentaires sur les discussions. Assurez-vous que tous les participants ont soumis leurs commentaires depuis leur compte avant de publier la session.",
+		"successComment": "Vous avez soumis vos commentaires avec succès"
 	},
 	"FAQ": {
 		"faqs": "FAQS",

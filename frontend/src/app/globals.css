@@ -121,6 +121,9 @@
   .ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
     border-color: transparent;
   }
+  .ant-input-affix-wrapper > input.ant-input {
+    padding: 4px 11px;
+  }
   .ant-btn,
   .ant-btn.ant-btn-default {
     height: auto;
@@ -132,6 +135,13 @@
   }
   .ant-btn.simple {
     padding: 4px 16px;
+  }
+
+  .ant-btn-primary {
+    background-color: #ffd249;
+  }
+  .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #ffe38f;
   }
 
   .ant-btn-primary:not(.simple) {

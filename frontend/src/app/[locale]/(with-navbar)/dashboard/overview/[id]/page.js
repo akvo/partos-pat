@@ -7,6 +7,7 @@ import moment from "moment";
 import countryOptions from "../../../../../../../i18n/countries.json";
 import { ArrowFatIcon } from "@/components/Icons";
 import classNames from "classnames";
+import { redirect } from "next/navigation";
 
 export const revalidate = 60;
 
@@ -170,6 +171,9 @@ const OverviewSessionPage = async ({ params }) => {
   const countries = countryOptions?.filter((c) =>
     patSession?.countries?.includes(c?.["alpha-2"]),
   );
+  if (!patSession?.id) {
+    redirect(`/${params?.locale}/not-found`);
+  }
   return (
     <div className="w-full space-y-4 overflow-y-auto">
       <div className="container mx-auto pt-2">
