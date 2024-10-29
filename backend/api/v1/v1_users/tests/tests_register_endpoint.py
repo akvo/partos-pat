@@ -18,7 +18,6 @@ class RegistrationTestCase(TestCase):
     def test_successfully_register_with_fullname(self):
         payload = {
             "full_name": "Jane Doe",
-            "gender": 2,
             "country": "ID",
             "account_purpose": 1,
             "email": "user1@example.com",
@@ -32,7 +31,7 @@ class RegistrationTestCase(TestCase):
         )
         self.assertEqual(req.status_code, 201)
         res = req.json()
-        self.assertEqual(
+        self.assertCountEqual(
             list(res),
             [
                 "id", "full_name", "email", "gender",
@@ -45,7 +44,6 @@ class RegistrationTestCase(TestCase):
     def test_invalid_email(self):
         payload = {
             "full_name": "User 1",
-            "gender": 1,
             "country": "ID",
             "account_purpose": 1,
             "email": "user1",
@@ -61,10 +59,9 @@ class RegistrationTestCase(TestCase):
         res = req.json()
         self.assertEqual(res, {"message": "Enter a valid email address."})
 
-    def test_invalid_optiions(self):
+    def test_invalid_options(self):
         payload = {
             "full_name": "User 1",
-            "gender": 12,
             "country": "ID",
             "account_purpose": 111,
             "email": "user1@example.com",
@@ -82,7 +79,6 @@ class RegistrationTestCase(TestCase):
             res,
             {
                 "message": (
-                    '"12" is not a valid choice in gender.|'
                     '"111" is not a valid choice in account_purpose.'
                 )
             },
@@ -91,7 +87,6 @@ class RegistrationTestCase(TestCase):
     def test_confirm_password_not_match(self):
         payload = {
             "full_name": "User 1",
-            "gender": 1,
             "country": "ID",
             "account_purpose": 1,
             "email": "user1@example.com",
@@ -113,7 +108,6 @@ class RegistrationTestCase(TestCase):
     def test_email_exists(self):
         payload = {
             "full_name": "Joni",
-            "gender": 1,
             "country": "ID",
             "account_purpose": 3,
             "email": self.user.email,
@@ -135,7 +129,6 @@ class RegistrationTestCase(TestCase):
     def test_password_not_match_criteria(self):
         payload = {
             "full_name": "User 1",
-            "gender": 1,
             "country": "ID",
             "account_purpose": 1,
             "email": "user1@example.com",
@@ -154,7 +147,6 @@ class RegistrationTestCase(TestCase):
     def test_agreement_is_false(self):
         payload = {
             "full_name": "User 1",
-            "gender": 1,
             "country": "ID",
             "account_purpose": 1,
             "email": "user1@example.com",
@@ -179,7 +171,6 @@ class RegistrationTestCase(TestCase):
 
         payload = {
             "full_name": "User 1",
-            "gender": 1,
             "country": "ID",
             "account_purpose": 1,
             "email": deleted_user.email,

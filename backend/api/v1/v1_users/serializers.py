@@ -13,7 +13,6 @@ from utils.custom_serializer_fields import (
 
 class RegisterSerializer(serializers.ModelSerializer):
     full_name = CustomCharField()
-    gender = CustomChoiceField(choices=Gender.FieldStr)
     country = CustomCharField()
     account_purpose = CustomChoiceField(choices=AccountPurpose.FieldStr)
     email = CustomEmailField()
@@ -57,7 +56,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
             password=validated_data["password"],
             full_name=validated_data["full_name"],
-            gender=validated_data["gender"],
             country=validated_data["country"],
             account_purpose=validated_data["account_purpose"],
         )
@@ -67,7 +65,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = SystemUser
         fields = [
             "full_name",
-            "gender",
             "country",
             "account_purpose",
             "email",
@@ -127,7 +124,11 @@ class ManageUserSerializer(UserSerializer):
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     full_name = CustomCharField()
-    gender = CustomChoiceField(choices=Gender.FieldStr)
+    gender = CustomChoiceField(
+        choices=Gender.FieldStr,
+        required=False,
+        allow_null=True,
+    )
     country = CustomCharField()
     account_purpose = CustomChoiceField(choices=AccountPurpose.FieldStr)
 
