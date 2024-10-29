@@ -12,6 +12,7 @@ const PrintButton = ({ patSession }) => {
   const [loading, setLoading] = useState(false);
   const [participants, setParticipants] = useState([]);
   const [decisions, setDecisions] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const t = useTranslations("Session");
 
@@ -26,8 +27,13 @@ const PrintButton = ({ patSession }) => {
         "GET",
         `/decisions/?session_id=${patSession?.id}`,
       );
+      const { data: dataComments } = await api(
+        "GET",
+        `/session/${patSession?.id}/comments?page_size=100`,
+      );
       setParticipants(resParticipants);
       setDecisions(resDecisions);
+      setComments(dataComments);
       onPrint(`${PAT_SESSION.prefixFileName} ${patSession?.session_name}`);
       setLoading(false);
     } catch (err) {
@@ -49,11 +55,7 @@ const PrintButton = ({ patSession }) => {
         {t("downloadPdf")}
       </PrintDocument.Button>
       <PrintDocument.Area>
-        <PrintPage
-          patSession={patSession}
-          decisions={decisions}
-          participants={participants}
-        />
+        <PrintPage {...{ patSession, participants, decisions, comments }} />
       </PrintDocument.Area>
     </PrintDocument>
   );
