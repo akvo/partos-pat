@@ -5,7 +5,6 @@ import { Button, Form, Input, message } from "antd";
 import { useTranslations } from "next-intl";
 import { Envelope, LockIcon } from "@/components/Icons";
 import { Link, useRouter } from "@/routing";
-import SubmitButton from "../Buttons/SubmitButton";
 import { PasswordInput } from "../PasswordInput";
 import { signIn } from "@/lib/auth";
 
@@ -74,9 +73,9 @@ const LoginForm = () => {
           </Button>
         </Link>
       </div>
-      <SubmitButton form={form} loading={submitting} block>
+      <Button type="primary" htmlType="submit" loading={submitting} block>
         {t("loginText")}
-      </SubmitButton>
+      </Button>
     </Form>
   );
 };
