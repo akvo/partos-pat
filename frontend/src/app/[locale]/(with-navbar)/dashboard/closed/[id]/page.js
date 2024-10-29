@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/routing";
 import { HorizontalDivider, SessionView } from "@/components";
 import { api } from "@/lib";
+import { redirect } from "next/navigation";
 
 export const revalidate = 60;
 
@@ -12,6 +13,9 @@ const DashboardLink = () => {
 
 const ClosedSessionPage = async ({ params }) => {
   const patSession = await api("GET", `/sessions?id=${params.id}`);
+  if (!patSession?.id) {
+    redirect(`/${params?.locale}/not-found`);
+  }
   return (
     <div className="w-full space-y-4">
       <div className="container mx-auto pt-2">

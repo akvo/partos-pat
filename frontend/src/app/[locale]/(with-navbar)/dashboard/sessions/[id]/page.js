@@ -5,16 +5,22 @@ import { useTranslations } from "next-intl";
 import { HorizontalDivider, SessionWizard } from "@/components";
 import { api } from "@/lib";
 import { useParams } from "next/navigation";
+import { useRouter } from "@/routing";
 
 const SessionDetailsPage = () => {
   const [patSession, setPatSession] = useState(null);
   const [pending, setPending] = useState(true);
   const params = useParams();
+  const router = useRouter();
+
   const t = useTranslations("Dashboard");
 
   const loadPatSession = useCallback(async () => {
     try {
       const response = await api("GET", `/sessions?id=${params.id}`);
+      if (!response?.id) {
+        router.replace("/not-found");
+      }
       setPatSession(response);
     } catch (err) {
       console.error(err);
