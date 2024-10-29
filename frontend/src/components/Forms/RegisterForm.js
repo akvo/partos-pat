@@ -18,7 +18,7 @@ import {
   UserCircle,
   WarningCicle,
 } from "@/components/Icons";
-import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
+import { PURPOSE_OF_ACCOUNT } from "@/static/config";
 
 import countryOptions from "../../../i18n/countries.json";
 import { useRouter } from "@/routing";
@@ -53,10 +53,7 @@ const RegisterForm = () => {
   const t = useTranslations("Register");
   const tc = useTranslations("common");
   const t_err = useTranslations("Error");
-  const genderOptions = Object.keys(GENDER).map((k) => ({
-    label: tc(k),
-    value: GENDER?.[k],
-  }));
+
   const purposeOptions = Object.keys(PURPOSE_OF_ACCOUNT).map((k) => ({
     label: tc(k),
     value: PURPOSE_OF_ACCOUNT?.[k],
@@ -126,21 +123,6 @@ const RegisterForm = () => {
               <Input
                 placeholder={t("fullName")}
                 prefix={<UserCircle />}
-                variant="borderless"
-              />
-            </Form.Item>
-            <Form.Item
-              name="gender"
-              rules={[
-                {
-                  required: true,
-                  message: tc("genderRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t("gender")}
-                options={genderOptions}
                 variant="borderless"
               />
             </Form.Item>
