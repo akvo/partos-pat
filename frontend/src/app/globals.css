@@ -145,7 +145,7 @@
   .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):not(
       .ant-btn-background-ghost
     ):hover {
-      background-color: #ffe38f;
+    background-color: #ffe38f;
   }
 
   .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):not(
@@ -177,7 +177,9 @@
     padding-left: 20px;
     padding-right: 20px;
   }
-  .ant-btn-primary.ant-btn-background-ghost:not(:disabled):not(.ant-btn-disabled):hover {
+  .ant-btn-primary.ant-btn-background-ghost:not(:disabled):not(
+      .ant-btn-disabled
+    ):hover {
     color: var(--button-text);
     background-color: var(--primary-dark);
     border-color: transparent;

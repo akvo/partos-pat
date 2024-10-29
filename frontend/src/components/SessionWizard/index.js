@@ -81,6 +81,7 @@ const SessionWizard = ({ patSession, setPending }) => {
             className: "simple",
           },
         });
+        setPending(false);
       } catch ({ errorFields }) {
         formRef.current.setFields(errorFields);
       }

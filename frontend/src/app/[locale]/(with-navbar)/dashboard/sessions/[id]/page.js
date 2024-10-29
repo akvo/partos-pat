@@ -25,7 +25,7 @@ const SessionDetailsPage = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [params.id]);
+  }, [params.id, router]);
 
   useEffect(() => {
     loadPatSession();
