@@ -97,13 +97,14 @@ const StepThree = ({ patSession = {}, isEditable = false }, ref) => {
   const { saving } = sessionContext;
 
   const columns = useMemo(() => {
-    const orgs = patSession?.organizations?.map((o) => ({
-      title: o?.acronym,
-      dataIndex: o?.id,
-      editable: false,
-      key: o?.id,
-      className: "pat-org",
-    }));
+    const orgs =
+      patSession?.organizations?.map((o) => ({
+        title: o?.acronym,
+        dataIndex: o?.id,
+        editable: false,
+        key: o?.id,
+        className: "pat-org",
+      })) || [];
     return [
       {
         dataIndex: "name",
