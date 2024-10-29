@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useCallback, useEffect } from "react";
-import { Button, Space } from "antd";
+import { Button, Modal, Space } from "antd";
 import { useTranslations } from "next-intl";
 import classNames from "classnames";
 import { useRouter } from "@/routing";
@@ -67,6 +67,23 @@ const SessionWizard = ({ patSession, setPending }) => {
       }
     } else {
       router.push("/dashboard");
+    }
+  };
+
+  const onClickComment = async () => {
+    if (formRef.current) {
+      try {
+        await formRef.current.validateFields();
+        formRef.current.submit();
+        Modal.success({
+          content: t("successComment"),
+          okButtonProps: {
+            className: "simple",
+          },
+        });
+      } catch ({ errorFields }) {
+        formRef.current.setFields(errorFields);
+      }
     }
   };
 
@@ -261,7 +278,7 @@ const SessionWizard = ({ patSession, setPending }) => {
                   </Button>
                   <Button
                     type="primary"
-                    onClick={onClickSave}
+                    onClick={onClickComment}
                     loading={saving}
                     block
                   >

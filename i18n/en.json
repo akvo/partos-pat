@@ -282,7 +282,8 @@
 		"notes": "Notes",
 		"notesLong": "Notes on the Decision making processes",
 		"summaryLong": "Closing Remarks",
-		"step6Desc": "Before concluding the session, the facilitator is prompted to provide additional insights or details about the discussions. Ensure that all participants have submitted their comments from their accounts before publishing the session."
+		"step6Desc": "Before concluding the session, the facilitator is prompted to provide additional insights or details about the discussions. Ensure that all participants have submitted their comments from their accounts before publishing the session.",
+		"successComment": "You successfully submitted your comments"
 	},
 	"FAQ": {
 		"faqs": "FAQS",
