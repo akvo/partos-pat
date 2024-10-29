@@ -137,18 +137,26 @@
     padding: 4px 16px;
   }
 
-  .ant-btn-primary {
+  .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):not(
+      .ant-btn-background-ghost
+    ) {
     background-color: #ffd249;
   }
-  .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
-    background-color: #ffe38f;
+  .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):not(
+      .ant-btn-background-ghost
+    ):hover {
+      background-color: #ffe38f;
   }
 
-  .ant-btn-primary:not(.simple) {
+  .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):not(
+      .ant-btn-background-ghost
+    ):not(.simple) {
     box-shadow: 0px 4px 34px 0px rgba(var(--box-shadow-rgba));
   }
   .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover,
-  .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):not(
+      .ant-btn-background-ghost
+    ):hover {
     color: var(--button-text-hover);
     font-weight: 700;
     border-color: transparent;
@@ -168,6 +176,11 @@
     border-width: 2px;
     padding-left: 20px;
     padding-right: 20px;
+  }
+  .ant-btn-primary.ant-btn-background-ghost:not(:disabled):not(.ant-btn-disabled):hover {
+    color: var(--button-text);
+    background-color: var(--primary-dark);
+    border-color: transparent;
   }
   .ant-btn-link:not(:disabled):not(.ant-btn-disabled):hover {
     color: var(--button-text-hover);
