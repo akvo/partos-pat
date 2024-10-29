@@ -84,15 +84,7 @@ const ProfilePage = () => {
                 variant="borderless"
               />
             </Form.Item>
-            <Form.Item
-              name="gender"
-              rules={[
-                {
-                  required: true,
-                  message: tc("genderRequired"),
-                },
-              ]}
-            >
+            <Form.Item name="gender">
               <Select
                 placeholder={t_register("gender")}
                 options={genderOptions}
