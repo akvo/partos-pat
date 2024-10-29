@@ -53,7 +53,16 @@ const StepHelpText = ({ step }) => {
           <div className="pb-2">
             <strong className="text-xl">{t("titleStep4")}</strong>
           </div>
-          <p className="whitespace-pre-line">{t("helpStep4")}</p>
+          <p className="whitespace-pre-line">
+            {t.rich("helpStep4", {
+              italic: (token) => (
+                <>
+                  <i>{token}</i>
+                  <br />
+                </>
+              ),
+            })}
+          </p>
         </div>
       );
     case 5:

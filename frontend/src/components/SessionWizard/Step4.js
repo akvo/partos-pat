@@ -48,7 +48,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
 
     try {
       let decisionScores = decisions?.flatMap((d) =>
-        d?.scores?.map((s) => ({ ...s, decision_id: d?.id })),
+        d?.scores?.map((s) => ({ ...s, decision_id: d?.id }))
       );
 
       if (updateScores.length) {
@@ -100,7 +100,16 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
 
   return (
     <div className="w-full space-y-6">
-      <p>{t("step4Desc")}</p>
+      <p>
+        {t.rich("step4Desc", {
+          italic: (token) => (
+            <>
+              <i>{token}</i>
+              <br />
+            </>
+          ),
+        })}
+      </p>
       <Form
         ref={ref}
         component={false}
@@ -162,7 +171,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                       "bg-score-2": actualValue === 2,
                                       "bg-score-1": actualValue === 1,
                                       "bg-light-1": actualValue === 0,
-                                    },
+                                    }
                                   )}
                                 >
                                   {actualValue}
@@ -188,7 +197,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                       "bg-score-2": desiredValue === 2,
                                       "bg-score-1": desiredValue === 1,
                                       "bg-light-1": desiredValue === 0,
-                                    },
+                                    }
                                   )}
                                 >
                                   {isEditable ? (
@@ -212,7 +221,7 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
                                           (_, value) => ({
                                             value,
                                             label: value,
-                                          }),
+                                          })
                                         )}
                                         variant="borderless"
                                         className="w-full pat-score"
