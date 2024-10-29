@@ -22,7 +22,12 @@ const style = {
 
 const MAX_ORG_PER_PAGE = 6;
 
-const PrintPage = ({ patSession, decisions, participants }) => {
+const PrintPage = ({
+  patSession,
+  decisions = [],
+  participants = [],
+  comments = [],
+}) => {
   const groupedOrgPer3 = patSession?.organizations?.reduce((acc, item) => {
     const index = acc.findIndex((i) => i.length < MAX_ORG_PER_PAGE);
     if (index !== -1) {
@@ -32,6 +37,19 @@ const PrintPage = ({ patSession, decisions, participants }) => {
     }
     return acc;
   }, []);
+
+  const groupedComments = comments?.reduce((acc, comment) => {
+    const organizationName = comment?.organization_name;
+    if (!acc[organizationName]) {
+      acc[organizationName] = [];
+    }
+    acc[organizationName].push(comment);
+    return acc;
+  }, {});
+  const allComments = Object.keys(groupedComments).map((key) => ({
+    organization_name: key,
+    comments: groupedComments?.[key],
+  }));
 
   return (
     <div style={style.container}>
@@ -62,7 +80,7 @@ const PrintPage = ({ patSession, decisions, participants }) => {
         <thead>
           <tr>
             <PrintTable.TH>Name</PrintTable.TH>
-            <PrintTable.TH>Position</PrintTable.TH>
+            <PrintTable.TH>Role</PrintTable.TH>
             <PrintTable.TH>Email address</PrintTable.TH>
             <PrintTable.TH>Partner organization (PO)</PrintTable.TH>
             <PrintTable.TH>Acronym (PO)</PrintTable.TH>
@@ -273,6 +291,29 @@ const PrintPage = ({ patSession, decisions, participants }) => {
             })}
         </tbody>
       </PrintTable>
+      {allComments?.length > 0 && <p>Participant Feedback Summary</p>}
+      <ul style={{ marginLeft: "-24px" }}>
+        {allComments?.map((c, cx) => (
+          <li key={cx}>
+            <div style={{ padding: "8px 0", fontSize: 14 }}>
+              <strong>{c?.organization_name}</strong>
+            </div>
+            <PrintTable>
+              <tbody>
+                {c?.comments?.map((comment, index) => (
+                  <tr key={index}>
+                    <PrintTable.TD>
+                      <strong>{comment?.fullname}</strong>
+                      <br />
+                      <em>{comment?.comment}</em>
+                    </PrintTable.TD>
+                  </tr>
+                ))}
+              </tbody>
+            </PrintTable>
+          </li>
+        ))}
+      </ul>
       {patSession?.summary?.length > 0 && (
         <div>
           <p>Concluding remarks</p>

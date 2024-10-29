@@ -40,6 +40,7 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
   const [preload, setPreload] = useState(true);
   const [participants, setParticipants] = useState([]);
   const [decisions, setDecisions] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const sessionDispatch = useSessionDispatch();
 
@@ -99,8 +100,13 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
       setPatSession(resPatSession);
       const resParticipants = await api("GET", `/session/${id}/participants`);
       const resDecisions = await api("GET", `/decisions/?session_id=${id}`);
+      const { data: dataComments } = await api(
+        "GET",
+        `/session/${id}/comments?page_size=100`,
+      );
       setParticipants(resParticipants);
       setDecisions(resDecisions);
+      setComments(dataComments);
       printButtonRef.current.click();
     } catch (err) {
       console.error(err);
@@ -270,11 +276,7 @@ const ClosedSessionList = ({ data = [], totalClosed = 0 }) => {
           type="link"
         />
         <PrintDocument.Area>
-          <PrintPage
-            patSession={patSession}
-            participants={participants}
-            decisions={decisions}
-          />
+          <PrintPage {...{ patSession, participants, decisions, comments }} />
         </PrintDocument.Area>
       </PrintDocument>
       <DeleteSessionModal
