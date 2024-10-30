@@ -20,9 +20,9 @@ import {
 } from "@/components/Icons";
 import { PURPOSE_OF_ACCOUNT } from "@/static/config";
 
-import countryOptions from "../../../i18n/countries.json";
 import { useRouter } from "@/routing";
 import SubmitButton from "../Buttons/SubmitButton";
+import CountryDropdown from "../CountryDropdown";
 
 const InputPassword = (props) => {
   const [visible, setVisible] = useState(false);
@@ -126,25 +126,7 @@ const RegisterForm = () => {
                 variant="borderless"
               />
             </Form.Item>
-            <Form.Item
-              name="country"
-              rules={[
-                {
-                  required: true,
-                  message: tc("countryRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t("country")}
-                options={countryOptions}
-                fieldNames={{ label: "name", value: "alpha-2" }}
-                optionFilterProp="name"
-                variant="borderless"
-                showSearch
-                allowClear
-              />
-            </Form.Item>
+            <CountryDropdown form={form} />
             <Form.Item
               name="account_purpose"
               rules={[
