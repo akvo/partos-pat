@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox, Form, Input, Modal, Alert } from "antd";
 import { useTranslations } from "next-intl";
-import { TrashIcon, WarningIcon, FileArchiveIcon } from "../Icons";
+import { TrashIcon, WarningIcon } from "../Icons";
 import { api } from "@/lib";
 
 const DeleteSessionModal = ({ open, setOpen, patSession, onDeleteSession }) => {
@@ -17,6 +17,7 @@ const DeleteSessionModal = ({ open, setOpen, patSession, onDeleteSession }) => {
     try {
       await api("DELETE", `/sessions?id=${id}`);
       onDeleteSession(id);
+      form.resetFields();
       setOpen(false);
       setDeleting(false);
     } catch (err) {
@@ -24,6 +25,16 @@ const DeleteSessionModal = ({ open, setOpen, patSession, onDeleteSession }) => {
       setDeleting(false);
     }
   };
+
+  useEffect(() => {
+    if (
+      patSession?.session_name &&
+      patSession?.session_name !== form.getFieldValue("session_name")
+    ) {
+      form.setFieldValue("id", patSession.id);
+      form.setFieldValue("session_name", patSession.session_name);
+    }
+  }, [form, patSession]);
 
   return (
     <Modal
