@@ -5,7 +5,7 @@ import { Space } from "antd";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
-export const TotalClosedLabel = ({ initialTotalClosed = 0 }) => {
+const TotalClosedLabel = ({ initialTotalClosed = 0 }) => {
   const t = useTranslations("Dashboard");
 
   const sessionContext = useSessionContext();
