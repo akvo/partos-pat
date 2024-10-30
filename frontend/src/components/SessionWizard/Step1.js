@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Flex, Form, Input } from "antd";
-import { forwardRef, useCallback, useEffect, useState } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { MinusCircleIcon, PlusCircleIcon } from "../Icons";
 import { useTranslations } from "next-intl";
 import {
@@ -18,6 +18,16 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
 
   const { data: decisions, fetched } = sessionContext.decisions;
   const { saving } = sessionContext;
+  const inputRefs = useRef([]);
+
+  const handleAdd = () => {
+    setTimeout(() => {
+      const lastInput = inputRefs.current[inputRefs.current.length - 1];
+      if (lastInput) {
+        lastInput.focus();
+      }
+    }, 0);
+  };
 
   const onFinish = async (values) => {
     try {
@@ -102,7 +112,15 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
         <strong>{t("step1Title")}</strong>
         <p>{t("step1Desc")}</p>
       </div>
-      <Form ref={ref} onFinish={onFinish}>
+      <Form
+        ref={ref}
+        onFinish={onFinish}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
+      >
         {(_, formInstance) => (
           <Form.List
             name="decisions"
@@ -120,7 +138,7 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
             {(fields, option, { errors }) => (
               <Flex gap={16} vertical>
                 <div className="w-full relative">
-                  {fields.map(({ key, name, ...restField }) => (
+                  {fields.map(({ key, name, ...restField }, index) => (
                     <Flex className="w-full" key={key} gap="middle">
                       <Form.Item
                         {...restField}
@@ -140,6 +158,14 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
                           variant="borderless"
                           disabled={!isEditable}
                           className="pat-decision"
+                          ref={(el) => (inputRefs.current[index] = el)} // Store ref to input
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                              event.preventDefault();
+                              option.add();
+                              handleAdd();
+                            }
+                          }}
                         />
                       </Form.Item>
                       <Form.Item {...restField} name={[name, "id"]}>
