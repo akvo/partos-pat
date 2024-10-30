@@ -12,6 +12,7 @@ const { useForm } = Form;
 const CreateSessionModal = ({ disabled = false }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState([]);
   const [form] = useForm();
 
   const t = useTranslations("CreateSession");
@@ -29,6 +30,7 @@ const CreateSessionModal = ({ disabled = false }) => {
       }
       const _errors = errorsMapping(details);
       if (_errors.length) {
+        setFormErrors(_errors);
         form.setFields(_errors);
       }
       setLoading(false);
@@ -50,6 +52,7 @@ const CreateSessionModal = ({ disabled = false }) => {
         onCancel={() => {
           form.resetFields();
           setOpen(false);
+          setFormErrors([]);
         }}
         okText={t("save")}
         okButtonProps={{
@@ -74,7 +77,7 @@ const CreateSessionModal = ({ disabled = false }) => {
         width={1366}
       >
         <h2 className="text-xl font-bold mb-8">{t("title")}</h2>
-        <PATSessionForm {...{ form, onFinish }} />
+        <PATSessionForm {...{ form, onFinish, formErrors }} />
         <div className="py-2 mt-8 border-dashed border-t border-dark-2" />
       </Modal>
     </>

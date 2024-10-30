@@ -20,11 +20,17 @@ const PATSessionForm = ({
       { name: null, acronym: null },
     ],
   },
+  formErrors = [],
 }) => {
   const [dateSession, setDateSession] = useState(initialValues?.date);
 
   const t = useTranslations("CreateSession");
   const t_error = useTranslations("Error");
+
+  const dateError = formErrors?.find((e) => e?.name === "date");
+  const dateErrorForm = dateError
+    ? { help: dateError?.errors?.join(""), validateStatus: "error" }
+    : {};
 
   const sectorOptions = Object.keys(SECTOR).map((k) => ({
     label: SECTOR[k],
@@ -134,6 +140,7 @@ const PATSessionForm = ({
                     },
                   ]}
                   className="w-64 2xl:w-1/5"
+                  {...dateErrorForm}
                 >
                   <DatePicker
                     format={{
