@@ -12,7 +12,8 @@
 		"loginTextLink": "Se connecter",
 		"successRegister": "Succès! Vérifiez votre courrier électronique pour vérifier votre compte.",
 		"successVerified": "Votre compte a été vérifié avec succès",
-		"emailExists": "Un utilisateur avec cet e-mail existe déjà."
+		"emailExists": "Un utilisateur avec cet e-mail existe déjà.",
+		"countryOtherOption": "Autre zone géographique"
 	},
 	"common": {
 		"email": "E-mail",
