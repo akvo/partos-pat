@@ -1,12 +1,11 @@
 "use client";
 
-import { LogoutButton, ProfileAvatar } from "@/components";
+import { CountryDropdown, LogoutButton, ProfileAvatar } from "@/components";
 import { SaveIcon, UserCircle } from "@/components/Icons";
 import { useRouter } from "@/routing";
 import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
 import { Button, Card, Form, Input, Select, Space } from "antd";
 import { useTranslations } from "next-intl";
-import countryOptions from "../../../../../../i18n/countries.json";
 import { useUserContext, useUserDispatch } from "@/context/UserContextProvider";
 import { useState } from "react";
 import { api } from "@/lib";
@@ -91,25 +90,7 @@ const ProfilePage = () => {
                 variant="borderless"
               />
             </Form.Item>
-            <Form.Item
-              name="country"
-              rules={[
-                {
-                  required: true,
-                  message: tc("countryRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t_register("country")}
-                options={countryOptions}
-                fieldNames={{ label: "name", value: "alpha-2" }}
-                optionFilterProp="name"
-                variant="borderless"
-                showSearch
-                allowClear
-              />
-            </Form.Item>
+            <CountryDropdown form={form} />
             <Form.Item
               name="account_purpose"
               rules={[
