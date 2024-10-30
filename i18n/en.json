@@ -283,7 +283,9 @@
 		"notesLong": "Notes on the Decision making processes",
 		"summaryLong": "Closing Remarks",
 		"step6Desc": "Before concluding the session, the facilitator is prompted to provide additional insights or details about the discussions. Ensure that all participants have submitted their comments from their accounts before publishing the session.",
-		"successComment": "You successfully submitted your comments"
+		"successComment": "You successfully submitted your comments",
+		"step4ActiveLabel": "Actual levels of decision making",
+		"step4DesiredLabel": "Desired levels of decision making"
 	},
 	"FAQ": {
 		"faqs": "FAQS",
