@@ -92,7 +92,7 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
                           <div className="w-full lg:min-w-[248px] xl:min-w-[348px] 2xl:min-w-[432px] h-[116px] sticky left-0 z-20 bg-light-1 flex flex-col justify-end">
                             <div
                               className={classNames(
-                                "w-full min-h-10 px-2 pt-2",
+                                "w-full min-h-10 px-2 py-2",
                                 {
                                   "bg-[#FFF8E4]": !isEditable,
                                 },
