@@ -11,6 +11,8 @@ const { useForm } = Form;
 
 const EditSessionModal = ({ open, setClose, initialValues = {} }) => {
   const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState([]);
+
   const [form] = useForm();
 
   const t = useTranslations("CreateSession");
@@ -32,6 +34,7 @@ const EditSessionModal = ({ open, setClose, initialValues = {} }) => {
       }
       const _errors = errorsMapping(details);
       if (_errors.length) {
+        setFormErrors(_errors);
         form.setFields(_errors);
       }
       setLoading(false);
@@ -49,6 +52,7 @@ const EditSessionModal = ({ open, setClose, initialValues = {} }) => {
       onCancel={() => {
         form.resetFields();
         setClose();
+        setFormErrors([]);
       }}
       okText={t("save")}
       okButtonProps={{
@@ -73,7 +77,7 @@ const EditSessionModal = ({ open, setClose, initialValues = {} }) => {
       width={1366}
     >
       <h2 className="text-xl font-bold mb-8">{t("editTitle")}</h2>
-      <PATSessionForm {...{ initialValues, form, onFinish }} />
+      <PATSessionForm {...{ initialValues, form, onFinish, formErrors }} />
       <div className="py-2 mt-8 border-dashed border-t border-dark-2" />
     </Modal>
   );

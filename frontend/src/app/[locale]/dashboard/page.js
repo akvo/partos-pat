@@ -1,4 +1,4 @@
-import { Button, Card, Space, Tabs } from "antd";
+import { Button, Card, Tabs } from "antd";
 import { useTranslations } from "next-intl";
 import {
   ActiveSessionList,
@@ -6,6 +6,7 @@ import {
   CreateSessionModal,
   DetailSessionModal,
   JoinModal,
+  TotalActiveLabel,
   TotalClosedLabel,
 } from "@/components";
 
@@ -85,14 +86,7 @@ const PageContent = ({
         items={[
           {
             key: "active",
-            label: (
-              <Space>
-                <span>{t("activeSessions")}</span>
-                <span className="badge-number py-px px-2 border border-dark-2 rounded-full">
-                  {totalActive}
-                </span>
-              </Space>
-            ),
+            label: <TotalActiveLabel defaultValue={totalActive} />,
             children: (
               <div className="w-full flex flex-col md:flex-row gap-4 xl:gap-12">
                 <div className="w-full lg:w-4/6 xl:w-4/6 2xl:w-3/5">

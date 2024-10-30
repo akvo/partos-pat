@@ -16,6 +16,7 @@ import { useUserContext } from "@/context/UserContextProvider";
 import { api } from "@/lib";
 import { DeleteSessionModal, EditSessionModal } from "./Modals";
 import moment from "moment";
+import { useSessionDispatch } from "@/context/SessionContextProvider";
 
 const ActiveSessionList = ({ data = [] }) => {
   const [edit, setEdit] = useState(null);
@@ -27,6 +28,7 @@ const ActiveSessionList = ({ data = [] }) => {
   const t = useTranslations("Dashboard");
   const router = useRouter();
   const userContext = useUserContext();
+  const sessionDispatch = useSessionDispatch();
 
   const onEdit = async (item) => {
     setLoading(true);
@@ -67,8 +69,13 @@ const ActiveSessionList = ({ data = [] }) => {
   };
 
   const onDeleteSession = (id) => {
+    setPATDelete(null);
     const updatedDataSource = dataSource.filter((d) => d?.id !== id);
     setDatasource(updatedDataSource);
+    sessionDispatch({
+      type: "TOTAL_ACTIVE_UPDATE",
+      payload: updatedDataSource?.length,
+    });
   };
 
   return (
