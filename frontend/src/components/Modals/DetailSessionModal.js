@@ -127,6 +127,16 @@ const DetailSessionModal = ({ id, webdomain }) => {
       </div>
       <Section>
         <Flex justify="space-between" align="center">
+          <strong className="font-bold">{t("sector")}</strong>
+          <div>
+            {details?.sector === "Other"
+              ? details?.other_sector
+              : details?.sector}
+          </div>
+        </Flex>
+      </Section>
+      <Section>
+        <Flex justify="space-between" align="center">
           <strong className="font-bold">{t("countries")}</strong>
           <div>
             <ul>

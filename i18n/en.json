@@ -164,7 +164,8 @@
 		"copyContent": "You have been invited for a Power Awareness Session with the following details:\n\nTitle: <name>session_name</name>\nPartner organizations: <org>organization</org>\nSession context: <context>context_text</context>\n\nPlease make an account or login at <url>domain</url>  and join the session using the following invite code: <code>join_code</code>",
 		"copySuccess": "The session join code has been copied to the clipboard",
 		"partnerOrgLong": "Partner organizations represented in this meeting",
-		"contextLong": "PAT Session Context"
+		"contextLong": "PAT Session Context",
+		"sector": "Sector"
 	},
 	"Landing": {
 		"title": "The Power Awareness Tool",
