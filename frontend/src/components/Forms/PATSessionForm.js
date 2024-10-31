@@ -23,6 +23,7 @@ const PATSessionForm = ({
   formErrors = [],
 }) => {
   const [dateSession, setDateSession] = useState(initialValues?.date);
+  const [preload, setPreload] = useState(true);
 
   const t = useTranslations("CreateSession");
   const t_error = useTranslations("Error");
@@ -40,29 +41,29 @@ const PATSessionForm = ({
   const sectorValue = Form.useWatch((values) => values.sector, form);
 
   useEffect(() => {
-    if (initialValues?.sector && isNaN(form.getFieldValue("sector"))) {
-      const initSector = sectorOptions?.find(
-        (s) => s?.label === initialValues?.sector,
-      );
-      form.setFieldValue("sector", initSector?.value);
+    if (preload) {
+      setPreload(false);
+      Object.keys(initialValues).forEach((field) => {
+        form.setFieldValue(field, initialValues?.[field]);
+      });
     }
-  }, [sectorOptions, form, initialValues]);
-
+  }, [preload, form, initialValues]);
   return (
     <Form
       name="create-session"
       layout="vertical"
       form={form}
-      onFinish={(values) =>
-        onFinish
-          ? onFinish({
-              ...values,
-              date: moment(dateSession, "YYYY-MM-DD").format("YYYY-MM-DD"),
-              organizations:
-                values.organizations.length === 0 ? null : values.organizations,
-            })
-          : null
-      }
+      onFinish={(values) => {
+        if (onFinish) {
+          onFinish({
+            ...values,
+            date: moment(dateSession, "YYYY-MM-DD").format("YYYY-MM-DD"),
+            organizations:
+              values.organizations.length === 0 ? null : values.organizations,
+          });
+          form.resetFields();
+        }
+      }}
       initialValues={initialValues}
     >
       {(_, formInstance) => (
@@ -154,7 +155,7 @@ const PATSessionForm = ({
               </Flex>
             </Col>
           </Row>
-          {sectorValue === "0" && (
+          {["Other", "0"].includes(sectorValue) && (
             <Form.Item
               name="other_sector"
               rules={[

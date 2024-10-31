@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Form, Modal } from "antd";
 import { SaveIcon } from "../Icons";
@@ -75,6 +75,7 @@ const EditSessionModal = ({ open, setClose, initialValues = {} }) => {
       maskClosable={false}
       closable
       width={1366}
+      destroyOnClose
     >
       <h2 className="text-xl font-bold mb-8">{t("editTitle")}</h2>
       <PATSessionForm {...{ initialValues, form, onFinish, formErrors }} />
