@@ -7,10 +7,13 @@ import { useCallback, useEffect, useState } from "react";
 import countryOptions from "../../../i18n/countries.json";
 import { CopyIcon } from "../Icons";
 import { useRouter } from "@/routing";
-import moment from "moment";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import FacilitatorAvatar from "../FacilitatorAvatar";
 
 const MAX_COUNTRIES = 5;
+
+dayjs.extend(customParseFormat);
 
 const Section = ({ children }) => (
   <div className="w-full py-3 space-y-5 border-b border-dark-2 text-base">
@@ -100,7 +103,7 @@ const DetailSessionModal = ({ id, webdomain }) => {
         </div>
         <div>
           <strong className="font-bold">
-            {moment(details?.date, "DD-MM-YYYY").format("DD/MM/YYYY")}
+            {dayjs(details?.date, "DD-MM-YYYY").format("DD/MM/YYYY")}
           </strong>
         </div>
       </Flex>

@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import moment from "moment";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import PrintTable from "./PrintTable";
 import ScoreLegend from "../SessionWizard/ScoreLegend";
+
+dayjs.extend(customParseFormat);
 
 const style = {
   container: {
@@ -67,7 +70,7 @@ const PrintPage = ({
         <p>The session started on: {patSession?.date}</p>
         <p>
           The session ended on:{" "}
-          {moment(patSession?.closed_at, "YYYY-MM-DD").format("DD-MM-YYYY")}
+          {dayjs(patSession?.closed_at, "YYYY-MM-DD").format("DD-MM-YYYY")}
         </p>
         <span>
           <strong>Facilitator:</strong>

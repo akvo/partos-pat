@@ -7,7 +7,10 @@ import { PAT_SESSION, SECTOR } from "@/static/config";
 import ProfileAvatar from "../ProfileAvatar";
 import { MinusCircleIcon, PlusCircleIcon } from "../Icons";
 import countryOptions from "../../../i18n/countries.json";
-import moment from "moment";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 const { TextArea } = Input;
 
@@ -58,10 +61,15 @@ const PATSessionForm = ({
           const sector = isNaN(values?.sector)
             ? Object.keys(SECTOR)?.find((k) => SECTOR?.[k] === values?.sector)
             : values?.sector;
+          console.log(
+            "DATEE",
+            dateSession,
+            dayjs(dateSession).format("YYYY-MM-DD")
+          );
           onFinish({
             ...values,
             sector,
-            date: moment(dateSession, "YYYY-MM-DD").format("YYYY-MM-DD"),
+            date: dayjs(dateSession).format("YYYY-MM-DD"),
             organizations:
               values.organizations.length === 0 ? null : values.organizations,
           });

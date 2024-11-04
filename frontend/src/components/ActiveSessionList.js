@@ -15,9 +15,11 @@ import { useRouter } from "@/routing";
 import { useUserContext } from "@/context/UserContextProvider";
 import { api } from "@/lib";
 import { DeleteSessionModal, EditSessionModal } from "./Modals";
-import moment from "moment";
 import { useSessionDispatch } from "@/context/SessionContextProvider";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 const ActiveSessionList = ({ data = [] }) => {
   const [edit, setEdit] = useState(null);
@@ -40,11 +42,12 @@ const ActiveSessionList = ({ data = [] }) => {
           "GET",
           `/session/${item.id}/organizations`
         );
+        console.log("patSession?.date", patSession?.date);
         setEdit({
           ...item,
           ...patSession,
           organizations,
-          date: dayjs(patSession?.date),
+          date: dayjs(patSession?.date, "DD-MM-YYYY"),
         });
         setLoading(false);
       }

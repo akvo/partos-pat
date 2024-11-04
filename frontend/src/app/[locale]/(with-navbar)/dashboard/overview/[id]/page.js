@@ -3,7 +3,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/routing";
 import { FacilitatorAvatar, HorizontalDivider } from "@/components";
 import { api } from "@/lib";
-import moment from "moment";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import countryOptions from "../../../../../../../i18n/countries.json";
 import { ArrowFatIcon } from "@/components/Icons";
 import classNames from "classnames";
@@ -12,6 +13,8 @@ import { redirect } from "next/navigation";
 export const revalidate = 60;
 
 const MAX_COUNTRIES = 5;
+
+dayjs.extend(customParseFormat);
 
 const Section = ({ children }) => (
   <div className="w-full pb-3 pt-6 space-y-5 border-b border-dark-2 text-base">
@@ -205,7 +208,7 @@ const OverviewSessionPage = async ({ params }) => {
               </div>
               <div>
                 <strong className="font-bold">
-                  {moment(patSession?.date, "DD-MM-YYYY").format("DD/MM/YYYY")}
+                  {dayjs(patSession?.date, "DD-MM-YYYY").format("DD/MM/YYYY")}
                 </strong>
               </div>
             </Flex>
