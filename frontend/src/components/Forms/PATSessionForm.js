@@ -61,11 +61,6 @@ const PATSessionForm = ({
           const sector = isNaN(values?.sector)
             ? Object.keys(SECTOR)?.find((k) => SECTOR?.[k] === values?.sector)
             : values?.sector;
-          console.log(
-            "DATEE",
-            dateSession,
-            dayjs(dateSession).format("YYYY-MM-DD")
-          );
           onFinish({
             ...values,
             sector,

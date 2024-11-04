@@ -18,7 +18,7 @@ import {
 import { PublishModal } from "../Modals";
 import { api } from "@/lib";
 
-const SessionWizard = ({ patSession, setPending }) => {
+const SessionWizard = ({ patSession, setPending, readyToPublish = false }) => {
   const sessionDispatch = useSessionDispatch();
   const sessionContext = useSessionContext();
   const { loading, saving, step } = sessionContext;
@@ -214,7 +214,9 @@ const SessionWizard = ({ patSession, setPending }) => {
               </Button>
               <div className="min-w-32">
                 {step === PAT_SESSION.totalSteps - 1 ? (
-                  <PublishModal onPublish={onPublish} patSession={patSession} />
+                  <PublishModal
+                    {...{ patSession, onPublish, readyToPublish }}
+                  />
                 ) : (
                   <Button
                     type="primary"

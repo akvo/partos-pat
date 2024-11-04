@@ -133,7 +133,8 @@
 		"manageUsers": "Gérer les utilisateurs",
 		"statistics": "Statistiques",
 		"filterByRole": "Filtrer par rôle",
-		"edit": "Modifier"
+		"edit": "Modifier",
+		"alertInActive": "Vous pourrez publier cette session active une fois que la date sélectionnée correspond à la date du jour. Pour modifier ce paramètre, veuillez le modifier maintenant"
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
