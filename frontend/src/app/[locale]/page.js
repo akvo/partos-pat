@@ -262,14 +262,11 @@ const WhySection = () => {
   const t = useTranslations("Landing");
   return (
     <div className="w-full my-8">
-      <div className="container mx-auto 2xl:px-4 py-12 xl:py-20 border-t border-t-dark-2">
+      <div className="container mx-auto 2xl:px-4 py-12 xl:py-24 border-t border-t-dark-2">
         <div className="w-full flex flex-wrap items-center">
           <div className="w-full md:w-1/2 space-y-6">
             <div>
-              <strong className="text-sm xl:text-base text-primary-dark">
-                {t("features")}
-              </strong>
-              <h2 className="text-4xl xl:text-5xl text-grey-900 font-extra-bold">
+              <h2 className="text-3xl xl:text-4xl text-grey-900 font-extra-bold">
                 {t("whyUsePAT")}
               </h2>
             </div>
@@ -281,7 +278,20 @@ const WhySection = () => {
           </div>
           <div className="w-full md:w-1/2 text-base text-dark-7">
             <p className="text-sm xl:text-base whitespace-pre-line">
-              {t("whyUseDesc")}
+              {t("whyUseText1")}
+            </p>
+            <br />
+            <p className="text-sm xl:text-base whitespace-pre-line">
+              {t("whyUseText2")}
+            </p>
+            <ul className="list-disc ml-8">
+              <li>{t("whyUseText2a")}</li>
+              <li>{t("whyUseText2b")}</li>
+              <li>{t("whyUseText2c")}</li>
+              <li>{t("whyUseText2d")}</li>
+            </ul>
+            <p className="text-sm xl:text-base whitespace-pre-line">
+              {t("whyUseTextEnd")}
             </p>
           </div>
         </div>
