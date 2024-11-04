@@ -133,7 +133,8 @@
 		"manageUsers": "Manage Users",
 		"statistics": "Statistics",
 		"filterByRole": "Filter by Role",
-		"edit": "Edit session info"
+		"edit": "Edit session info",
+		"alertInActive": "You can publish this active session once the selected date matches today’s date. To change this setting, please edit it now"
 	},
 	"CreateSession": {
 		"title": "Create New Session",
