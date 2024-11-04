@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/routing";
 import { PartosLogo } from "@/components/Icons";
+import { PARTOS } from "@/static/config";
 
 const AuthTemplate = ({ children }) => {
   const t = useTranslations("common");
@@ -17,10 +18,13 @@ const AuthTemplate = ({ children }) => {
         />
       </div>
       <div className="w-full lg:w-7/12 xl:w-1/3 bg-light-1 px-12 py-3 text-dark-10 overflow-y-auto">
-        <div className="w-full flex items-center justify-center mb-8 text-dark-10">
+        <div className="w-full flex flex-col items-center justify-center mb-12 text-dark-10">
           <Link href="/">
             <PartosLogo width={125} height={125} />
           </Link>
+          <h1 className="w-fit font-bold text-xl 2xl:text-2xl">
+            {PARTOS.name}
+          </h1>
         </div>
         {children}
       </div>
