@@ -133,7 +133,8 @@
 		"manageUsers": "Gérer les utilisateurs",
 		"statistics": "Statistiques",
 		"filterByRole": "Filtrer par rôle",
-		"edit": "Modifier"
+		"edit": "Modifier",
+		"alertInActive": "Votre session active ne sera accessible que lorsque la date sélectionnée correspond à la date du jour. Si vous souhaitez modifier ce paramètre, veuillez le modifier maintenant."
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
