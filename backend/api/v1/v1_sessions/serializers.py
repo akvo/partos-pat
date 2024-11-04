@@ -277,6 +277,14 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
 
+    def validate_date(self, value):
+        today = timezone.now().date()
+        if value < today:
+            raise serializers.ValidationError(
+                "The date must be today or later."
+            )
+        return value
+
     class Meta:
         model = PATSession
         fields = [
