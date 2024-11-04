@@ -62,7 +62,7 @@ const TableCell = ({
   );
 };
 
-const PublishModal = ({ patSession, onPublish }) => {
+const PublishModal = ({ patSession, onPublish, readyToPublish = false }) => {
   const [preload, setPreload] = useState(true);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -123,6 +123,9 @@ const PublishModal = ({ patSession, onPublish }) => {
   }, [decisions]);
 
   const onFinish = async (values) => {
+    if (!readyToPublish) {
+      return;
+    }
     setPublishing(true);
     try {
       await api("PUT", `/sessions?id=${patSession.id}`, {
@@ -183,6 +186,7 @@ const PublishModal = ({ patSession, onPublish }) => {
         onClick={onClickPublish}
         icon={<FileArrowUpIcon />}
         iconPosition="end"
+        disabled={!readyToPublish}
         block
       >
         {t("publish")}
@@ -197,6 +201,7 @@ const PublishModal = ({ patSession, onPublish }) => {
           icon: <FileArrowUpIcon />,
           iconPosition: "end",
           loading: publishing,
+          disabled: !readyToPublish,
         }}
         onCancel={() => setOpen(false)}
         cancelButtonProps={{
