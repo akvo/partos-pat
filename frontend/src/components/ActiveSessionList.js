@@ -40,9 +40,8 @@ const ActiveSessionList = ({ data = [] }) => {
       if (patSession?.id) {
         const organizations = await api(
           "GET",
-          `/session/${item.id}/organizations`
+          `/session/${item.id}/organizations`,
         );
-        console.log("patSession?.date", patSession?.date);
         setEdit({
           ...item,
           ...patSession,
@@ -215,8 +214,8 @@ const ActiveSessionList = ({ data = [] }) => {
           if (patSession?.id) {
             setDatasource(
               dataSource.map((d) =>
-                d?.id === patSession?.id ? { ...d, ...patSession } : d
-              )
+                d?.id === patSession?.id ? { ...d, ...patSession } : d,
+              ),
             );
           }
         }}
