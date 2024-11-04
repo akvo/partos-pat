@@ -125,6 +125,7 @@
 		"invalidJoinExists": "Vous avez déjà rejoint.",
 		"invalidJoinCode": "Code d'adhésion invalide",
 		"invalidJoinOwner": "Vous êtes le propriétaire et faites déjà partie de la session.",
+		"alertInActive": "Vous pourrez publier cette session active une fois que la date sélectionnée correspond à la date du jour. Pour modifier ce paramètre, veuillez le modifier maintenant",
 		"userProfile": "Votre profil",
 		"userProfileTitle": "Informations personnelles",
 		"save": "Sauvegarder",
@@ -133,8 +134,7 @@
 		"manageUsers": "Gérer les utilisateurs",
 		"statistics": "Statistiques",
 		"filterByRole": "Filtrer par rôle",
-		"edit": "Modifier",
-		"alertInActive": "Vous pourrez publier cette session active une fois que la date sélectionnée correspond à la date du jour. Pour modifier ce paramètre, veuillez le modifier maintenant"
+		"edit": "Modifier"
 	},
 	"CreateSession": {
 		"title": "Créer une nouvelle session",
@@ -177,7 +177,6 @@
 		"features": "Caractéristiques",
 		"whyUsePAT": "Pourquoi utiliser le Power Awareness Tool?",
 		"whyUseSubtitle": "PAT sensibilise les partenaires aux relations de pouvoir dans les partenariats. Le PAT se concentre spécifiquement sur le pouvoir décisionnel dans les partenariats.",
-		"whyUseDesc": "Comme son nom l'indique, le PAT sensibilise les partenaires aux relations de pouvoir dans les partenariats. Alors que le pouvoir a de nombreuses dimensions, le PAT se concentre spécifiquement sur le pouvoir de décision dans les partenariats. La question centrale d’une session PAT est de savoir qui, dans un partenariat, prend les décisions sur quoi. C’est important, car dans de nombreux partenariats, ce n’est pas très clair. Le pouvoir est souvent exercé de manière implicite. Des décisions sont prises alors que tout le monde ne le sait pas. Souvent, personne n’y trouve à redire. Peut-être que tout le monde est d’accord avec la décision ou convient que ceux qui ont pris la décision ont le mandat de le faire. Cependant, il existe également des situations dans lesquelles certains partenaires se sentent mécontents de la manière dont une décision a été prise. Ils estiment qu’ils n’ont pas été impliqués de manière appropriée. Peut-être pensaient-ils qu’ils auraient dû prendre cette décision, ou qu’ils voulaient avoir un vote égal pour prendre la décision. Peut-être ont-ils le sentiment de ne pas avoir été correctement consultés. Si de telles situations se produisent fréquemment, cela peut conduire à des frictions qui minent le partenariat. Le PAT aide à anticiper de telles situations en sensibilisant les partenaires à la localisation du pouvoir de décision dans le partenariat. Le PAT rend le pouvoir visible, et lorsqu’il est visible, les partenaires sont en mesure de discuter et de se mettre d’accord sur qui devrait être impliqué et de quelle manière dans la prise de certaines décisions. De cette façon, le partenariat a plus de chances de rester sain. Veuillez noter que le PAT ne prescrit pas la manière dont les partenaires doivent être impliqués dans la prise de décision. C'est aux partenaires eux-mêmes de se mettre d'accord. Le PAT aide à avoir un dialogue franc et ouvert à ce sujet.",
 		"howItWorkDesc": "Il existe un large consensus selon lequel, dans les partenariats pour le développement, les donateurs et les ONG internationales ont trop de pouvoir, et les ONG locales du Sud trop peu. Malgré ce consensus, les déséquilibres de pouvoir persistent. Apparemment, il est difficile de mettre ces principes en pratique. Ceux qui ont le plus de pouvoir, généralement les donateurs et, dans une moindre mesure, les ONGI, ne sont pas toujours les mieux informés de la situation locale ou des changements nécessaires et de la manière dont ils le sont. Même s’il existe un large consensus sur ce point, les déséquilibres de pouvoir persistent. Nous pensons que cela est dû en partie au fait que le pouvoir est, à bien des égards, insaisissable. Par conséquent, Shift-The-Power-Lab a développé l'outil de sensibilisation au pouvoir ",
 		"howItWork": "Comment ça marche",
 		"learnMore": "Apprendre encore plus",
@@ -203,7 +202,14 @@
 		"mostVisited3": "Publications et résultats",
 		"cookies": "Cookies",
 		"termNConditions": "Conditions générales",
-		"poweredBy": "Générée par"
+		"poweredBy": "Générée par",
+		"whyUseText1": "Comme son nom l’indique, le PAT sensibilise les partenaires aux relations de pouvoir dans les partenariats en les rendant visibles. Dans tout partenariat, le pouvoir de décision peut être un facteur silencieux mais crucial. Qui décide quoi et comment peut faire ou défaire une collaboration. Le Power Awareness Tool (PAT) vous aide à mettre en lumière ces dynamiques et à explorer comment le pouvoir peut être transféré tout en garantissant l’implication de tous les partenaires.",
+		"whyUseText2": "Cela est nécessaire car dans de nombreux partenariats pour le développement, les donateurs et les ONG internationales ont trop de pouvoir, et les ONG locales du Sud trop peu. Il existe un large consensus sur le fait que cela devrait changer.  Malgré ce consensus, les déséquilibres de pouvoir persistent. Apparemment, il est difficile de mettre ces principes en pratique. Par conséquent, Partos a développé l’outil de sensibilisation au pouvoir.  En utilisant le PAT, vous pourrez : ",
+		"whyUseText2a": "Identifiez les sujets de prise de décision cruciaux et qui détient le pouvoir décisionnel dans votre partenariat.",
+		"whyUseText2b": "Évitez les malentendus et les frictions qui pourraient nuire à votre collaboration.",
+		"whyUseText2c": "Ayez des discussions ouvertes et honnêtes sur les processus de prise de décision.",
+		"whyUseText2d": "Convenez de la manière d'impliquer tous les partenaires dans la prise de décision d'une manière qui fonctionne pour tout le monde.",
+		"whyUseTextEnd": "\nLe PAT ne dicte pas la manière dont vous devez prendre des décisions – cela dépend de vous et de vos partenaires. Au lieu de cela, cela vous permet d’avoir une conversation claire et ouverte sur la dynamique du pouvoir, conduisant à un partenariat plus fort et plus efficace."
 	},
 	"Session": {
 		"menuStep1": "Énumérez les décisions importantes",
