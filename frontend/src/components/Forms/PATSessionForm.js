@@ -55,8 +55,12 @@ const PATSessionForm = ({
       form={form}
       onFinish={(values) => {
         if (onFinish) {
+          const sector = isNaN(values?.sector)
+            ? Object.keys(SECTOR)?.find((k) => SECTOR?.[k] === values?.sector)
+            : values?.sector;
           onFinish({
             ...values,
+            sector,
             date: moment(dateSession, "YYYY-MM-DD").format("YYYY-MM-DD"),
             organizations:
               values.organizations.length === 0 ? null : values.organizations,

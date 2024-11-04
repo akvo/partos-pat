@@ -17,6 +17,7 @@ import { api } from "@/lib";
 import { DeleteSessionModal, EditSessionModal } from "./Modals";
 import moment from "moment";
 import { useSessionDispatch } from "@/context/SessionContextProvider";
+import dayjs from "dayjs";
 
 const ActiveSessionList = ({ data = [] }) => {
   const [edit, setEdit] = useState(null);
@@ -37,13 +38,13 @@ const ActiveSessionList = ({ data = [] }) => {
       if (patSession?.id) {
         const organizations = await api(
           "GET",
-          `/session/${item.id}/organizations`,
+          `/session/${item.id}/organizations`
         );
         setEdit({
           ...item,
           ...patSession,
           organizations,
-          date: moment(patSession?.date, "DD-MM-YYYY"),
+          date: dayjs(patSession?.date),
         });
         setLoading(false);
       }
@@ -211,8 +212,8 @@ const ActiveSessionList = ({ data = [] }) => {
           if (patSession?.id) {
             setDatasource(
               dataSource.map((d) =>
-                d?.id === patSession?.id ? { ...d, ...patSession } : d,
-              ),
+                d?.id === patSession?.id ? { ...d, ...patSession } : d
+              )
             );
           }
         }}
