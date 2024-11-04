@@ -11,7 +11,7 @@ import {
 import { PAT_SESSION } from "@/static/config";
 import { api } from "@/lib";
 
-const StepOne = ({ patSession, isEditable = false }, ref) => {
+const StepOne = ({ accessible, patSession, isEditable = false }, ref) => {
   const sessionContext = useSessionContext();
   const sessionDispatch = useSessionDispatch();
   const [preload, setPreload] = useState(true);
@@ -204,7 +204,7 @@ const StepOne = ({ patSession, isEditable = false }, ref) => {
                       size="small"
                       disabled={
                         formInstance.getFieldValue("decisions")?.length >
-                        PAT_SESSION.maxDecisions
+                          PAT_SESSION.maxDecisions || !accessible
                       }
                       block
                       ghost

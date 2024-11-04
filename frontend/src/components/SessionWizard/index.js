@@ -18,7 +18,7 @@ import {
 import { PublishModal } from "../Modals";
 import { api } from "@/lib";
 
-const SessionWizard = ({ patSession, setPending }) => {
+const SessionWizard = ({ accessible, patSession, setPending }) => {
   const sessionDispatch = useSessionDispatch();
   const sessionContext = useSessionContext();
   const { loading, saving, step } = sessionContext;
@@ -179,7 +179,10 @@ const SessionWizard = ({ patSession, setPending }) => {
       <div className="w-full 2xl:h-[calc(100vh-315px)] bg-dashboard-session">
         <div className="w-full h-full container mx-auto">
           <SessionSteps current={step}>
-            <SessionContent {...{ step, patSession }} ref={formRef} />
+            <SessionContent
+              {...{ accessible, step, patSession }}
+              ref={formRef}
+            />
           </SessionSteps>
         </div>
       </div>
@@ -208,6 +211,7 @@ const SessionWizard = ({ patSession, setPending }) => {
                 className="w-fit bg-light-1"
                 onClick={onClickSave}
                 loading={saving}
+                disabled={!accessible}
                 ghost
               >
                 {t("saveNExit")}
@@ -223,6 +227,7 @@ const SessionWizard = ({ patSession, setPending }) => {
                     iconPosition="end"
                     loading={loading}
                     className="w-28"
+                    disabled={!accessible}
                   >
                     {t("next")}
                   </Button>
@@ -257,6 +262,7 @@ const SessionWizard = ({ patSession, setPending }) => {
                     iconPosition="end"
                     loading={loading}
                     className="w-28"
+                    disabled={!accessible}
                   >
                     {t("next")}
                   </Button>
@@ -281,6 +287,7 @@ const SessionWizard = ({ patSession, setPending }) => {
                     type="primary"
                     onClick={onClickComment}
                     loading={saving}
+                    disabled={!accessible}
                     block
                   >
                     {t("submitComments")}

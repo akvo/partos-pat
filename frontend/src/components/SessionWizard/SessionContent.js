@@ -6,7 +6,7 @@ import StepFour from "./Step4";
 import StepFive from "./Step5";
 import StepSix from "./Step6";
 
-const SessionContent = ({ step, patSession }, ref) => {
+const SessionContent = ({ accessible, step, patSession }, ref) => {
   switch (step) {
     case 1:
       return (
@@ -46,7 +46,7 @@ const SessionContent = ({ step, patSession }, ref) => {
     default:
       return (
         <StepOne
-          {...{ patSession }}
+          {...{ accessible, patSession }}
           ref={ref}
           isEditable={patSession?.is_owner}
         />
