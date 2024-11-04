@@ -125,6 +125,7 @@
 		"invalidJoinExists": "You have already joined.",
 		"invalidJoinCode": "Invalid Join code",
 		"invalidJoinOwner": "You are the owner and already part of the session.",
+		"alertInActive": "You can publish this active session once the selected date matches today’s date. To change this setting, please edit it now",
 		"userProfile": "Your Profile",
 		"userProfileTitle": "Personal Info",
 		"save": "Save",
@@ -133,8 +134,7 @@
 		"manageUsers": "Manage Users",
 		"statistics": "Statistics",
 		"filterByRole": "Filter by Role",
-		"edit": "Edit session info",
-		"alertInActive": "You can publish this active session once the selected date matches today’s date. To change this setting, please edit it now"
+		"edit": "Edit session info"
 	},
 	"CreateSession": {
 		"title": "Create New Session",
@@ -177,7 +177,6 @@
 		"features": "Features",
 		"whyUsePAT": "Why use the Power Awareness Tool?",
 		"whyUseSubtitle": "PAT makes partners aware about power relations in partnerships the PAT focuses specifically on decision-making power in partnerships.",
-		"whyUseDesc": "As the name suggests, the PAT makes partners aware about power relations in partnerships. Whereas power has many dimensions, the PAT focuses specifically on decision-making power in partnerships. The core question in a PAT session is about who in a partnership is making decisions about what. This is important, because in many partnerships, this is not very clear. Power is often exercised implicitly. Decisions are being made while not everyone knows this is happening. Often nobody has any quarrel with this. Maybe everyone agrees with the decision or agrees that the ones who have taken the decision have the mandate to do so.\nHowever, there are also situations in which some partners feel unhappy about how a decision has been taken. They believe that they have not been involved in a proper way. Maybe they believe they should have been the ones to take this decision, or they had wanted to have an equal vote in taking the decision. Maybe they feel that they have not been properly consulted.If such situations happen frequently, it may lead to frictions that undermine the partnership. The PAT helps to anticipate such situations by making partners more aware of where decision- making power is located in the partnership. The PAT makes power visible, and when it is visible, partners are in a position to discuss and agree on who should be involved in which way in making certain decisions. This way the partnership is more likely to remain healthy.\nPlease note that the PAT does not prescribe how partners should be involved in decision-making. That is up to the partners themselves to agree on. The PAT helps to have a frank and open-minded dialogue about this.",
 		"howItWorkDesc": "There is widespread consensus that in partnerships for development, donors, and international NGOs have too much power, and local NGOs in the Global South too little. Despite this consensus, the power imbalances persist. Apparently, it is hard to put the principles into practice. Those with the most power, usually the donors, and to a lesser extent the INGOs, are not always the most knowledgeable about the local situation or about the change needed and how. While there is broad consensus on this, power imbalances persist. We believe this is partly because power is in many ways elusive. Therefore, Shift-The-Power-Lab developed the Power Awareness Tool ",
 		"howItWork": "How it works",
 		"learnMore": "Learn More",
@@ -203,7 +202,14 @@
 		"mostVisited3": "Publications & Results",
 		"cookies": "Cookies",
 		"termNConditions": "Terms & Conditions",
-		"poweredBy": "Powered by"
+		"poweredBy": "Powered by",
+		"whyUseText1": "As the name suggests, the PAT makes partners aware of power relations in partnerships by making them visible. In any partnership, decision-making power can be a silent yet critical factor. Who gets to decide what and how can make or break a collaboration. The Power Awareness Tool (PAT) helps you shine a light on these dynamics and explore how power can be shifted while ensuring that all partners are involved.",
+		"whyUseText2": "This is necessary because in many partnerships for development, donors and international NGOs have too much power, and local NGOs in the Global South too little. There is widespread agreement that this should change.  Despite this consensus, the power imbalances persist. Apparently, it is hard to put the principles into practice. Therefore, Partos developed the Power Awareness Tool.  By using the PAT, you'll be able to: ",
+		"whyUseText2a": "Identify crucial decision-making topics and who holds decision-making power in your partnership.",
+		"whyUseText2b": "Avoid misunderstandings and frictions that can undermine your collaboration.",
+		"whyUseText2c": "Have open and honest discussions about decision-making processes.",
+		"whyUseText2d": "Agree on how to involve all partners in decision-making  in a way that works for everyone.",
+		"whyUseTextEnd": "\nThe PAT doesn't dictate how you should make decisions - that's up to you and your partners. Instead, it empowers you to have a clear and open-minded conversation about power dynamics, leading to a stronger and more effective partnership."
 	},
 	"Session": {
 		"menuStep1": "List important decisions",
