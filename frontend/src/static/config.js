@@ -22,10 +22,10 @@ export const PURPOSE_OF_ACCOUNT = {
 };
 
 export const PARTOS = {
-  email: "niels@partos.nl",
+  email: "info@partos.nl",
   name: "Power Awareness Tool",
-  address: "Ellermanstraat 18B\n1114AK Amsterdam",
-  phone: "020 32 09 901",
+  address: "The Hague Humanity Hub\nFluwelen Burgwal 58\n2511 CJ The Hague",
+  phone: "+3120 32 09 901",
   code: "KVK 34214586\nRSIN 813990646",
 };
 

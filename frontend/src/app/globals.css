@@ -442,6 +442,12 @@
   .pat-session-alert {
     padding: 8px;
   }
+  .pat-footer-item .pat-footer-caret {
+    display: none;
+  }
+  .pat-footer-item:hover .pat-footer-caret {
+    display: block;
+  }
 }
 
 body {
