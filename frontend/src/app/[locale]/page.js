@@ -306,7 +306,7 @@ const HowItWorkSection = () => {
                 <p className="text-sm xl:text-base">{t("howItWorkDesc")}</p>
               </div>
               <a
-                href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
+                href={PARTOS.PATGuidelineLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -478,7 +478,7 @@ const Home = async ({ params }) => {
 
       <div className="w-full bg-light-1 py-16">
         <div className="container mx-auto 2xl:px-4">
-          <FAQCollapsible />
+          <FAQCollapsible isPublic />
         </div>
       </div>
 
