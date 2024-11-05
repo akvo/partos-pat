@@ -66,23 +66,29 @@ const FooterCopySection = () => {
             href="https://www.belastingdienst.nl/rekenhulpen/anbi_zoeken/"
             target="_blank"
           >
-            <img
+            <Image
               src="/images/footer-ANBI.svg"
               className="w-full h-20"
+              width={100}
+              height={80}
               alt="ANBI"
             />
           </a>
           <span>
-            <img
+            <Image
               src="/images/footer-partos-9001.jpg"
               className="w-full h-20 invert-[5%]"
+              width={132}
+              height={80}
               alt="Partos 9001"
             />
           </span>
           <span>
-            <img
+            <Image
               src="/images/footer-EIK.png"
               className="w-full h-20 invert-[5%]"
+              width={84}
+              height={80}
               alt="EIK"
             />
           </span>
@@ -120,7 +126,7 @@ const FooterLinksSection = () => {
     <div
       className={classNames(
         sourceSansPro.className,
-        "w-full pb-2 pt-12 xl:pt-14 bg-footer bg-no-repeat bg-contain bg-right-bottom"
+        "w-full pb-2 pt-12 xl:pt-14 bg-footer bg-no-repeat bg-contain bg-right-bottom",
       )}
     >
       <div className="w-full">
@@ -434,7 +440,7 @@ const Home = async ({ params }) => {
       className={classNames(
         openSans.className,
         openSans.variable,
-        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto"
+        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto",
       )}
     >
       <div className="w-full relative bg-landing-gradient backdrop-blur">
@@ -453,7 +459,7 @@ const Home = async ({ params }) => {
         </div>
         <div className="w-full relative px-10">
           <Image
-            src={`/images/mockup-preview-${params?.locale || 'en'}.png`}
+            src={`/images/mockup-preview-${params?.locale || "en"}.png`}
             alt="PARTOS PAT Preview"
             width={1280}
             height={448}
