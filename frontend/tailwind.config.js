@@ -23,6 +23,7 @@ module.exports = {
           "url('/images/partos-circle-graphic-white-landing.png')",
         "landing-gradient":
           "linear-gradient(348deg, rgba(236, 241, 245, 0.50) 12.79%, #FFD249 95.83%)",
+        footer: "url('/images/bg-image-footer.png')",
       },
       fontWeight: {
         "extra-light": "200",

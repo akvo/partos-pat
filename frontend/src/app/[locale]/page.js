@@ -1,7 +1,9 @@
 import {
   AkvoIcon,
+  CaretRight,
   InstagramIcon,
   LindkedInIcon,
+  PartosLogo,
   QuoteIcon,
   TwitterXIcon,
 } from "@/components/Icons";
@@ -10,9 +12,9 @@ import { Button, Flex } from "antd";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { openSans } from "../fonts";
+import { openSans, sourceSansPro } from "../fonts";
 import { PARTOS } from "@/static/config";
-import { FAQCollapsible, LandingButton, PATLogo } from "@/components";
+import { FAQCollapsible, LandingButton } from "@/components";
 import { getSession } from "@/lib/auth";
 
 const FooterCreditSection = () => {
@@ -36,19 +38,53 @@ const FooterCreditSection = () => {
 const FooterCopySection = () => {
   const t = useTranslations("Landing");
   return (
-    <div className="w-full pt-8 pb-8 text-grey-800 font-bold">
-      <div className="container mx-auto 2xl:px-4">
+    <div className="w-full pt-8 pb-8 text-grey-800">
+      <div className="container mx-auto 2xl:px-4 flex flex-row flex-wrap items-center justify-between">
         <div className="w-fit flex flex-wrap items-center gap-5">
-          <span className="text-sm xl:text-base">&copy; Copyright 2024</span>
+          <span className="text-xs xl:text-sm">&copy; Copyright 2024</span>
           <span>
-            <Link href="/" className="text-sm xl:text-base hover:underline">
+            <Link
+              href="https://www.partos.nl/en/cookies/"
+              className="text-xs xl:text-sm hover:underline"
+              target="_blank"
+            >
               {t("cookies")}
             </Link>
           </span>
           <span>
-            <Link href="/" className="text-sm xl:text-base hover:underline">
+            <Link
+              href="https://www.partos.nl/en/terms-and-conditions/"
+              className="text-xs xl:text-sm hover:underline"
+              target="_blank"
+            >
               {t("termNConditions")}
             </Link>
+          </span>
+        </div>
+        <div className="w-fit h-20 bg-grey-100 flex flex-row items-start gap-4">
+          <a
+            href="https://www.belastingdienst.nl/rekenhulpen/anbi_zoeken/"
+            target="_blank"
+          >
+            <img
+              src="/images/footer-ANBI.svg"
+              className="w-full h-20"
+              alt="ANBI"
+            />
+          </a>
+          <span>
+            <img
+              src="/images/footer-partos-9001.jpg"
+              className="w-full h-20 invert-[5%]"
+              alt="Partos 9001"
+            />
+          </span>
+          <span>
+            <img
+              src="/images/footer-EIK.png"
+              className="w-full h-20 invert-[5%]"
+              alt="EIK"
+            />
           </span>
         </div>
       </div>
@@ -56,47 +92,86 @@ const FooterCopySection = () => {
   );
 };
 
+const FooterLink = ({ href, children }) => (
+  <li className="transition duration-150 ease-out hover:translate-x-1 pat-footer-item">
+    <a
+      href={href}
+      target="_blank"
+      className="flex flex-row items-center gap-1 hover:underline"
+    >
+      <span className="pat-footer-caret">
+        <CaretRight size={12} />
+      </span>
+      <span>{children}</span>
+    </a>
+  </li>
+);
+
+const FooterLinkContainer = ({ title, children }) => (
+  <div className="w-full md:w-1/2 lg:w-3/12 space-y-8 xl:space-y-6 mb-4">
+    <h3 className="font-bold text-base xl:text-lg text-grey-800">{title}</h3>
+    {children}
+  </div>
+);
+
 const FooterLinksSection = () => {
   const t = useTranslations("Landing");
   return (
-    <div className="w-full pb-2 pt-12 xl:pt-14">
-      <div className="container mx-auto 2xl:px-4 flex">
-        <div className="w-full lg:w-11/12 flex flex-wrap">
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-9 mb-4">
-            <h3 className="font-bold text-base xl:text-lg text-grey-800">
-              {t("topics")}
-            </h3>
-            <ul className="text-sm xl:text-base text-dark-7 leading-8">
-              <li>{t("topics1")}</li>
-              <li>{t("topics2")}</li>
-              <li>{t("topics3")}</li>
-              <li>{t("topics4")}</li>
+    <div
+      className={classNames(
+        sourceSansPro.className,
+        "w-full pb-2 pt-12 xl:pt-14 bg-footer bg-no-repeat bg-contain bg-right-bottom"
+      )}
+    >
+      <div className="w-full">
+        <div className="container mx-auto 2xl:px-4 flex flex-wrap">
+          <FooterLinkContainer title={t("topics")}>
+            <ul className="text-sm xl:text-base text-dark-7 space-y-2">
+              <FooterLink href="https://www.partos.nl/en/news/">
+                {t("topics1")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/events/">
+                {t("topics2")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/member-vacancies/">
+                {t("topics3")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/subscribe-newsletter/">
+                {t("topics4")}
+              </FooterLink>
             </ul>
-          </div>
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-9 mb-4">
-            <h3 className="font-bold text-base xl:text-lg text-grey-800">
-              {t("forMembers")}
-            </h3>
-            <ul className="text-sm xl:text-base text-dark-7 leading-8">
-              <li>{t("forMembers2")}</li>
-              <li>{t("forMembers3")}</li>
-              <li>{t("forMembers4")}</li>
+          </FooterLinkContainer>
+          <FooterLinkContainer title={t("forMembers")}>
+            <ul className="text-sm xl:text-base text-dark-7 space-y-2">
+              <FooterLink href="/login">{t("login")}</FooterLink>
+              <FooterLink href="https://www.partos.nl/en/activity/political-monitor/">
+                {t("forMembers2")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/about-partos/partos-code-of-conduct-integrity/">
+                {t("forMembers3")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/publication/partos-9001/">
+                {t("forMembers4")}
+              </FooterLink>
             </ul>
-          </div>
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-11 mb-4">
-            <h3 className="font-bold text-base xl:text-lg text-grey-800">
-              {t("mostVisited")}
-            </h3>
-            <ul className="text-sm xl:text-base text-dark-7 leading-8">
-              <li>{t("mostVisited1")}</li>
-              <li>{t("mostVisited2")}</li>
-              <li>{t("mostVisited3")}</li>
+          </FooterLinkContainer>
+          <FooterLinkContainer title={t("mostVisited")}>
+            <ul className="text-sm xl:text-base text-dark-7 space-y-2">
+              <FooterLink href="https://www.partos.nl/en/about-partos/">
+                {t("mostVisited1")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/leden/our-members/">
+                {t("mostVisited2")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/publications-results/">
+                {t("mostVisited3")}
+              </FooterLink>
+              <FooterLink href="https://www.partos.nl/en/member-vacancies/">
+                {t("topics3")}
+              </FooterLink>
             </ul>
-          </div>
-          <div className="w-full md:w-1/2 lg:w-3/12 space-y-12 xl:space-y-9 mb-4">
-            <h3 className="font-bold text-base xl:text-lg text-grey-800">
-              {t("contact")}
-            </h3>
+          </FooterLinkContainer>
+          <FooterLinkContainer title={t("contact")}>
             <ul className="text-sm xl:text-base text-dark-7 space-y-5">
               <li className="whitespace-pre-line">{PARTOS.address}</li>
               <li>
@@ -110,38 +185,39 @@ const FooterLinksSection = () => {
               </li>
               <li className="whitespace-pre-line">{PARTOS.code}</li>
             </ul>
-          </div>
-        </div>
-        <div className="w-full lg:w-1/12 flex gap-2 justify-end">
-          <a
-            href="https://twitter.com/PartosNL"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="p-2.5 bg-primary-normal rounded-sm">
-              <TwitterXIcon />
+            <div className="w-full flex flex-row gap-2 items-center">
+              <a
+                href="https://twitter.com/PartosNL"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="p-2.5 bg-primary-normal rounded-sm">
+                  <TwitterXIcon />
+                </div>
+              </a>
+              <a
+                href="https://nl.linkedin.com/company/partos"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="p-2.5 bg-primary-normal rounded-sm">
+                  <LindkedInIcon />
+                </div>
+              </a>
+              <a
+                href="https://www.instagram.com/partosnl/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="p-2.5 bg-primary-normal rounded-sm">
+                  <InstagramIcon />
+                </div>
+              </a>
             </div>
-          </a>
-          <a
-            href="https://nl.linkedin.com/company/partos"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="p-2.5 bg-primary-normal rounded-sm">
-              <LindkedInIcon />
-            </div>
-          </a>
-          <a
-            href="https://www.instagram.com/partosnl/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="p-2.5 bg-primary-normal rounded-sm">
-              <InstagramIcon />
-            </div>
-          </a>
+          </FooterLinkContainer>
         </div>
       </div>
+      <FooterCopySection />
     </div>
   );
 };
@@ -358,15 +434,17 @@ const Home = async () => {
       className={classNames(
         openSans.className,
         openSans.variable,
-        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto",
+        "w-full max-w-9xl h-screen bg-grey-100 text-base text-dark-10 overflow-y-auto"
       )}
     >
       <div className="w-full relative bg-landing-gradient backdrop-blur">
         <div className="w-2/6 h-full absolute top-0 left-0 bg-landing-circle bg-no-repeat bg-contain bg-left-top" />
         <div className="container mx-auto 2xl:px-4">
           <div className="w-full relative flex flex-col md:flex-row items-center py-6 justify-between">
-            <div className="z-10">
-              <PATLogo />
+            <div className="z-10 w-20">
+              <a href="https://www.partos.nl/" target="_blank">
+                <PartosLogo width="80" height="56" />
+              </a>
             </div>
             <LandingButton isLoggedIn={session?.user?.id ? true : false} />
           </div>
@@ -401,8 +479,6 @@ const Home = async () => {
       <QuoteSection />
 
       <FooterLinksSection />
-
-      <FooterCopySection />
 
       <FooterCreditSection />
     </main>

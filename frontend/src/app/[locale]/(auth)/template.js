@@ -13,8 +13,8 @@ const AuthTemplate = ({ children }) => {
           width={800}
           height={600}
           alt="PARTOS-PAT Background"
-          src="/images/bg-image-login.png"
-          className="bg-light-3 object-cover object-left w-full h-screen"
+          src="/images/bg-image-login.jpg"
+          className="bg-light-3 object-contain object-center w-full h-screen"
         />
       </div>
       <div className="w-full lg:w-7/12 xl:w-1/3 bg-light-1 px-12 py-3 text-dark-10 overflow-y-auto">
