@@ -7,7 +7,7 @@ const FAQPage = ({ searchParams }) => {
   const question = searchParams.question;
   return (
     <Card>
-      <div className={classNames(openSans.className, "p-12")}>
+      <div className={classNames(openSans.className, "p-6 xl:p-12")}>
         <FAQCollapsible
           defaultActiveKey={[question]}
           wrapClass="w-full flex flex-col items-start justify-start"

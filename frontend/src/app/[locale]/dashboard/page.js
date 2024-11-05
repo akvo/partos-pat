@@ -11,7 +11,7 @@ import {
 } from "@/components";
 
 import { api } from "@/lib";
-import { PAT_SESSION } from "@/static/config";
+import { PARTOS, PAT_SESSION } from "@/static/config";
 import classNames from "classnames";
 
 const PageTitle = () => {
@@ -156,7 +156,7 @@ const AboutCard = ({ isEmpty = false }) => {
             <p className="whitespace-pre-line">{t("aboutDescription")}</p>
           </div>
           <a
-            href="https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf"
+            href={PARTOS.PATGuidelineLink}
             target="_blank"
             rel="noopener noreferrer"
           >
