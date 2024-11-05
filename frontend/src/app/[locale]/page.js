@@ -427,7 +427,7 @@ export const HeroSection = ({ isLoggedIn = false }) => {
   );
 };
 
-const Home = async () => {
+const Home = async ({ params }) => {
   const session = await getSession();
   return (
     <main
@@ -453,7 +453,7 @@ const Home = async () => {
         </div>
         <div className="w-full relative px-10">
           <Image
-            src="/images/mockup-preview-pat.png"
+            src={`/images/mockup-preview-${params?.locale || 'en'}.png`}
             alt="PARTOS PAT Preview"
             width={1280}
             height={448}
