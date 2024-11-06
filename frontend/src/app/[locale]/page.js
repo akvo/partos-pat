@@ -297,8 +297,8 @@ const HowItWorkSection = () => {
     <div className="w-full bg-light-1 py-9 xl:py-16">
       <div className="container mx-auto 2xl:px-4">
         <div className="w-full relative">
-          <div className="w-full relative flex flex-col md:flex-row items-center gap-4">
-            <div className="w-full lg:w-1/2 xl:w-8/12 space-y-5 xl:space-y-10 text-dark-10">
+          <div className="w-8/12 lg:w-full relative flex flex-col flex-wrap lg:flex-row items-center gap-4">
+            <div className="w-full lg:w-7/12 xl:w-8/12 space-y-5 xl:space-y-10 text-dark-10">
               <h2 className="text-2xl xl:text-3xl font-extra-bold">
                 {t("howItWork")}
               </h2>
@@ -313,16 +313,16 @@ const HowItWorkSection = () => {
                 <Button type="primary">{t("learnMore")}</Button>
               </a>
             </div>
-            <div className="w-full lg:w-1/2 xl:w-4/12 h-80 hidden md:block absolute top-[5rem] xl:top-[-1rem] right-0">
-              <div className="w-full lg:w-8/12 absolute z-10 top-0 right-0">
-                <Image
-                  src="/images/how-its-work-person.png"
-                  alt="How it Works person"
-                  width={300}
-                  height={300}
-                  className="w-full"
-                />
-              </div>
+          </div>
+          <div className="w-4/12 h-80 hidden md:block absolute top-[5rem] xl:top-[-1rem] right-0 mr-0 2xl:mr-12">
+            <div className="w-full xl:w-8/12 absolute z-10 top-0 right-0">
+              <Image
+                src="/images/how-its-work-person.png"
+                alt="How it Works person"
+                width={300}
+                height={300}
+                className="w-full"
+              />
             </div>
           </div>
           <div className="w-6/12 xl:w-5/12 hidden md:block z-0 absolute top-[-5rem] right-[-6rem] lg:top-0 lg:right-[-4rem] xl:top-[-10rem] 2xl:top-[-12rem] xl:right-[-10rem]">
