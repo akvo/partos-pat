@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Collapse } from "antd";
 import { MinusCircleIcon, PlusCircleIcon } from "./Icons";
@@ -13,6 +13,7 @@ const FAQCollapsible = ({
   center = true,
   defaultActiveKey = ["1"],
   isPublic = false,
+  question = null,
 }) => {
   const [activeKey, setActiveKey] = useState(defaultActiveKey);
   const t = useTranslations("FAQ");
@@ -264,10 +265,31 @@ const FAQCollapsible = ({
     {
       key: "22",
       label: t("question22"),
-      children: <p className="whitespace-pre-line">{t("answer22")}</p>,
+      children: (
+        <p className="whitespace-pre-line">
+          {t.rich("answer22", {
+            link: (token) => (
+              <a
+                href={PARTOS.PATGuidelineLink}
+                target="_blank"
+                className="text-dark-10 font-bold underline hover:text-primary-dark"
+              >
+                {token}
+              </a>
+            ),
+          })}
+        </p>
+      ),
       public: "true",
     },
   ];
+
+  useEffect(() => {
+    const findKey = activeKey?.find((k) => question === k);
+    if (question && !findKey && activeKey?.length) {
+      setActiveKey([...activeKey, question]);
+    }
+  }, [question, activeKey]);
 
   return (
     <div className={wrapClass}>
