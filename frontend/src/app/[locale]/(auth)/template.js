@@ -16,7 +16,7 @@ const AuthTemplate = ({ children }) => {
           src="/images/bg-image-login.jpg"
           className="object-contain object-center w-full h-screen"
         />
-        <figcaption className="w-full h-4 px-4 py-8 text-xs text-dark-7 absolute bottom-0 left-0 z-20 bg-[#efe8e3]">
+        <figcaption className="w-full min-h-4 px-4 py-8 text-xs italic text-dark-7 absolute bottom-0 left-0 z-20 bg-[#efe8e3]">
           Illustrator Credit: Juan Dellacha – Visual illustration for Partos
           Collaborative Innovation Award winner ‘Virtual Innovation Labs –
           Innovation for Change – Latin America and Carribean’ 
