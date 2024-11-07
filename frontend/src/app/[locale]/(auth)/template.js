@@ -8,15 +8,20 @@ const AuthTemplate = ({ children }) => {
   const t = useTranslations("common");
   return (
     <div className="w-full max-w-9xl h-screen mx-auto flex flex-col md:flex-row gap-0 overflow-y-hidden">
-      <div className="hidden lg:block w-full lg:w-5/12 xl:w-2/3">
+      <figure className="hidden lg:block w-full lg:w-5/12 xl:w-2/3 relative bg-[#efe8e3]">
         <Image
           width={800}
           height={600}
           alt="PARTOS-PAT Background"
           src="/images/bg-image-login.jpg"
-          className="bg-light-3 object-contain object-center w-full h-screen"
+          className="object-contain object-center w-full h-screen"
         />
-      </div>
+        <figcaption className="w-full h-4 px-4 py-8 text-xs text-dark-7 absolute bottom-0 left-0 z-20 bg-[#efe8e3]">
+          Illustrator Credit: Juan Dellacha – Visual illustration for Partos
+          Collaborative Innovation Award winner ‘Virtual Innovation Labs –
+          Innovation for Change – Latin America and Carribean’ 
+        </figcaption>
+      </figure>
       <div className="w-full lg:w-7/12 xl:w-1/3 bg-light-1 px-12 py-3 text-dark-10 overflow-y-auto">
         <div className="w-full flex flex-col items-center justify-center mb-12 text-dark-10">
           <Link href="/">
