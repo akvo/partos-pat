@@ -100,16 +100,24 @@ const StepFour = ({ patSession = {}, isEditable = false }, ref) => {
 
   return (
     <div className="w-full space-y-6">
-      <p>
-        {t.rich("step4Desc", {
-          italic: (token) => (
-            <>
-              <i>{token}</i>
-              <br />
-            </>
-          ),
-        })}
-      </p>
+      <div className="w-full space-y-2 whitespace-pre-line">
+        <strong>{t("step4Title")}</strong>
+        <p>
+          {t.rich("step4Desc", {
+            italic: (token) => (
+              <>
+                <i>{token}</i>
+                <br />
+              </>
+            ),
+          })}
+        </p>
+        <ul className="list-disc ml-8 text-sm xl:text-base">
+          <li>{t("step4Text1")}</li>
+          <li>{t("step4Text2")}</li>
+        </ul>
+        <p>{t("step4TextEnd")}</p>
+      </div>
       <Form
         ref={ref}
         component={false}
