@@ -183,6 +183,7 @@ MAILJET_API_KEY = environ["MAILJET_APIKEY"]
 MAILJET_API_SECRET = environ["MAILJET_SECRET"]
 EMAIL_FROM = environ.get("EMAIL_FROM") or "noreply@akvo.org"
 
+# APP SETUP
 WEBDOMAIN = environ.get("WEBDOMAIN", "http://localhost:3000")
-
 TEST_ENV = environ.get("TEST_ENV") or False
+STORAGE_PATH = "./storage"
