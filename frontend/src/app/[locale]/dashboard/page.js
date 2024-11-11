@@ -19,7 +19,7 @@ const PageTitle = () => {
   return (
     <div className="w-full space-y-2">
       <h1 className="font-bold text-xl xl:text-2xl">{t("title")}</h1>
-      <p className="w-11/12 text-sm xl:text-base">{t("subtitle")}</p>
+      <i className="w-11/12 text-sm xl:text-base">{t("subtitle")}</i>
     </div>
   );
 };
@@ -154,6 +154,13 @@ const AboutCard = ({ isEmpty = false }) => {
           </h2>
           <div className="mb-8 max-h-[450px] text-sm xl:text-base overflow-y-scroll">
             <p className="whitespace-pre-line">{t("aboutDescription")}</p>
+            <ul className="list-disc ml-8">
+              <li>{t("aboutText1")}</li>
+              <li>{t("aboutText2")}</li>
+              <li>{t("aboutText3")}</li>
+              <li>{t("aboutText4")}</li>
+            </ul>
+            <p className="whitespace-pre-line">{t("aboutTextEnd")}</p>
           </div>
           <a
             href={PARTOS.PATGuidelineLink}
