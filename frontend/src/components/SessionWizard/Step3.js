@@ -186,7 +186,15 @@ const StepThree = ({ patSession = {}, isEditable = false }, ref) => {
 
   return (
     <div className="w-full space-y-6">
-      <p className="w-full whitespace-pre-line">{t("step3Desc")}</p>
+      <div className="w-full space-y-2 whitespace-pre-line">
+        <strong>{t("step3Title")}</strong>
+        <p>{t("step3Desc")}</p>
+        <ul className="list-disc ml-8">
+          <li>{t("step3Text1")}</li>
+          <li>{t("step3Text2")}</li>
+        </ul>
+        <p>{t("step3TextEnd")}</p>
+      </div>
       <Form
         ref={ref}
         component={false}
