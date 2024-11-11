@@ -10,6 +10,7 @@ from api.v1.v1_users.views import (
     ProfileView,
     ManageUsersViewSet,
     get_users_statistics,
+    download_users_csv
 )
 
 urlpatterns = [
@@ -37,5 +38,9 @@ urlpatterns = [
     re_path(
         r"^(?P<version>(v1))/admin/statistics/users",
         get_users_statistics
+    ),
+    re_path(
+        r"^(?P<version>(v1))/admin/download/users",
+        download_users_csv
     ),
 ]

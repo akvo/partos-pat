@@ -28,3 +28,4 @@ mailjet-rest==1.3.4
 Faker==28.4.1
 tblib==3.0.0
 readable-passcode==1.0.1
+pandas==2.2.3

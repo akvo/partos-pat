@@ -20,6 +20,7 @@ services:
     volumes:
       - ./backend:/app:delegated
       - ./i18n:/app/i18n:delegated
+      - ./storage:/app/storage:delegated
     environment:
       - DB_SCHEMA=partos_pat
       - DB_USER=akvo

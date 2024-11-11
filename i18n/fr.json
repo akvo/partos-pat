@@ -385,7 +385,8 @@
 		"deleteMessage": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée.",
 		"editText": "Modifier le compte",
 		"roleAdminValue": "Super administrateur",
-		"roleUserValue": "Utilisateur régulier"
+		"roleUserValue": "Utilisateur régulier",
+		"download": "Télécharger"
 	},
 	"Statistics": {
 		"noAccounts": "Nombre de comptes",
