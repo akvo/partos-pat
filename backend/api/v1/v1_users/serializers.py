@@ -1,6 +1,10 @@
 import re
+import os
+import json
 from rest_framework import serializers
-
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
+from partos_pat.settings import BASE_DIR
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.constants import Gender, AccountPurpose
 from utils.custom_serializer_fields import (
@@ -9,6 +13,17 @@ from utils.custom_serializer_fields import (
     CustomBooleanField,
     CustomEmailField,
 )
+
+
+def load_json(file_name: str):
+    file_path = os.path.join(BASE_DIR, "i18n", f"{file_name}.json")
+    with open(file_path, "r", encoding="utf-8") as file:
+        json_data = json.load(file)
+    return json_data
+
+
+countries_data = load_json(file_name="countries")
+transl_en_data = load_json(file_name="en")
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -115,8 +130,7 @@ class ManageUserSerializer(UserSerializer):
 
     def update(self, instance, validated_data):
         instance.is_superuser = validated_data.get(
-            "is_superuser",
-            instance.is_superuser
+            "is_superuser", instance.is_superuser
         )
         instance.save()
         return instance
@@ -209,4 +223,49 @@ class UserStatisticsSerializer(serializers.Serializer):
             "total_users",
             "total_users_last_30_days",
             "total_users_per_account_purpose",
+        ]
+
+
+class ExportUserSerializer(serializers.ModelSerializer):
+    account_purpose = serializers.SerializerMethodField()
+    gender = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
+    admin = serializers.SerializerMethodField()
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_account_purpose(self, instance: SystemUser):
+        key = AccountPurpose.FieldStr[instance.account_purpose]
+        if key in transl_en_data["common"]:
+            return transl_en_data["common"][key]
+        return key
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_gender(self, instance: SystemUser):
+        if instance.gender in Gender.FieldStr:
+            return Gender.FieldStr[instance.gender]
+        return instance.gender
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_country(self, instance: SystemUser):
+        cl = list(filter(
+            lambda c: c["alpha-2"] == instance.country,
+            countries_data,
+        ))
+        country = cl[0]["name"] if len(cl) == 1 else instance.country
+        return country
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_admin(self, instance: SystemUser):
+        return "Yes" if instance.is_superuser else "No"
+
+    class Meta:
+        model = SystemUser
+        fields = [
+            "id",
+            "full_name",
+            "email",
+            "gender",
+            "country",
+            "account_purpose",
+            "admin",
         ]
