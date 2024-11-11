@@ -31,13 +31,16 @@ class ParticipantUpdateCommentEndpointTestCase(
             closed_at__isnull=True,
             session_participant__user=self.user
         ).first()
-        self.pat_session = pat_session
-        if not self.pat_session:
+        if not pat_session:
+            pat_session = PATSession.objects \
+                .filter(closed_at__isnull=True) \
+                .order_by("?").first()
             Participant.objects.create(
                 pat_session=pat_session,
                 user=self.user,
                 organization=pat_session.session_organization.first()
             )
+        self.pat_session = pat_session
         self.reset_db_sequence(SystemUser)
         self.token = self.get_auth_token(email=email, password=password)
 
