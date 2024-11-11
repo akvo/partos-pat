@@ -15,15 +15,18 @@ import {
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import classNames from "classnames";
+import dayjs from "dayjs";
 import countries from "../../i18n/countries.json";
 import {
   ArrowNavIcon,
   Envelope,
+  FileArrowDownIcon,
   PencilEditIcon,
   SaveIcon,
   TrashIcon,
 } from "./Icons";
 import { useUserContext } from "@/context/UserContextProvider";
+import { getSession } from "@/lib/auth";
 
 const { Search } = Input;
 
@@ -134,6 +137,7 @@ const UsersTable = ({ initialData = [], total = 0, pageSize = 10 }) => {
   const [loading, setLoading] = useState(false);
   const [expandedRowKeys, setExpandedRowKeys] = useState([]);
   const [modal, contextHolder] = Modal.useModal();
+  const [downloading, setDownloading] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -157,6 +161,39 @@ const UsersTable = ({ initialData = [], total = 0, pageSize = 10 }) => {
     } catch (err) {
       console.error(err);
       setLoading(false);
+    }
+  };
+
+  const onDownload = async () => {
+    setDownloading(true);
+    try {
+      const { token: authToken } = await getSession();
+      const response = await fetch("/api/v1/admin/download/users", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a temporary link element to trigger the download
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `users-export-${dayjs().format("YYYY-MM-DD HHmm")}.csv`;
+        link.style.display = "none"; // Hide the link
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up the temporary URL and link
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      }
+      setDownloading(false);
+    } catch (err) {
+      console.error(err);
+      setDownloading(false);
     }
   };
 
@@ -232,7 +269,7 @@ const UsersTable = ({ initialData = [], total = 0, pageSize = 10 }) => {
           </span>
         </Space>
         <Space>
-          <Form form={form} onFinish={onFinishSearch}>
+          <Form form={form} onFinish={onFinishSearch} layout="inline">
             <Form.Item name="name">
               <Search
                 placeholder={tc("search")}
@@ -240,6 +277,18 @@ const UsersTable = ({ initialData = [], total = 0, pageSize = 10 }) => {
                 allowClear
               />
             </Form.Item>
+            <Button
+              htmlType="button"
+              type="primary"
+              className="simple"
+              size="small"
+              loading={downloading}
+              icon={<FileArrowDownIcon />}
+              onClick={onDownload}
+              ghost
+            >
+              {t("download")}
+            </Button>
           </Form>
         </Space>
       </Flex>
