@@ -41,7 +41,7 @@ const ResourcesPage = () => {
             <List.Item key={item.id}>
               <List.Item.Meta
                 title={
-                  <h3 className="font-bold text-lg xl:text-xl">
+                  <h3 className="font-bold text-lg xl:text-xl text-primary-dark">
                     {t(`resource${item.id}`)}
                   </h3>
                 }
