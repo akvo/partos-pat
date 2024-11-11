@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 from drf_spectacular.utils import (
     extend_schema,
@@ -15,6 +16,7 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.db.models import Count
 from django.contrib.auth import authenticate
+from django.http import HttpResponse, Http404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
@@ -362,7 +364,9 @@ def get_users_statistics(request, version):
 
     total_users_per_account_purpose = [
         {
-            "account_purpose": AccountPurpose.FieldStr[item["account_purpose"]],
+            "account_purpose": (
+                AccountPurpose.FieldStr[item["account_purpose"]]
+            ),
             "total": item["total"],
         } for item in total_users_per_account_purpose
     ]
@@ -374,3 +378,32 @@ def get_users_statistics(request, version):
         },
         status=status.HTTP_200_OK
     )
+
+
+@extend_schema(
+    responses={200: OpenApiTypes.BINARY},
+    tags=["ManageUsers"],
+    summary="Download users CSV",
+    description="Downloads a CSV file containing users.",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def download_users_csv(request, version):
+    filename = "users-export-test.csv"
+    if not settings.TEST_ENV:
+        filename = "users-export.csv"
+
+    # Define the path to the file
+    file_path = os.path.join(settings.BASE_DIR, 'storage', filename)
+
+    # Check if the file exists
+    if not os.path.exists(file_path):
+        raise Http404("File not found.")
+
+    # Open the file in binary mode and prepare the response
+    with open(file_path, 'rb') as file:
+        now = datetime.now()
+        export = f"{filename}-{now.strftime('%Y-%m-%d_%H%M')}.csv"
+        response = HttpResponse(file, content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="{export}"'
+        return response
