@@ -49,6 +49,7 @@ update_dbdocs() {
 }
 
 backend_test () {
+    mkdir -p backend/storage
     docker compose \
         -f docker-compose.test.yml \
         run -T backend ./test.sh
