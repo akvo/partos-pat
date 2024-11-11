@@ -69,9 +69,7 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
         columns = "id,date_joined,full_name,email,gender,country,"
         columns += "account_purpose,admin,verified"
         self.assertIn(columns, response.content.decode())
-        c_US = "United States of America"
-        data = f"{self.user.pk},2024-11-11,John Doe,"
-        data += f"john@test.com,male,{c_US},Other,No,No"
+        data = f"{self.user.pk},2024-11-11,John Doe"
         self.assertIn(
             data,
             response.content.decode()

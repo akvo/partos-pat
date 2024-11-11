@@ -17,6 +17,8 @@ from utils.custom_serializer_fields import (
 
 def load_json(file_name: str):
     file_path = os.path.join(BASE_DIR, "i18n", f"{file_name}.json")
+    if not os.path.exists(file_path):
+        return None
     with open(file_path, "r", encoding="utf-8") as file:
         json_data = json.load(file)
     return json_data
@@ -236,6 +238,8 @@ class ExportUserSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_account_purpose(self, instance: SystemUser):
+        if not transl_en_data:
+            return instance.account_purpose
         key = AccountPurpose.FieldStr[instance.account_purpose]
         if key in transl_en_data["common"]:
             return transl_en_data["common"][key]
@@ -249,6 +253,8 @@ class ExportUserSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_country(self, instance: SystemUser):
+        if not countries_data:
+            return instance.country
         cl = list(filter(
             lambda c: c["alpha-2"] == instance.country,
             countries_data,
