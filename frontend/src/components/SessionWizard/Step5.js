@@ -70,7 +70,11 @@ const StepFive = ({ patSession = {}, isEditable = false }, ref) => {
     <div className="w-full space-y-6">
       <div className="w-full space-y-2 whitespace-pre-line">
         <strong>{t("step5Title")}</strong>
-        <p>{t("step5Desc")}</p>
+        <p>
+          {t.rich("step5Desc", {
+            italic: (token) => <i>{token}</i>,
+          })}
+        </p>
       </div>
       <Form
         ref={ref}
