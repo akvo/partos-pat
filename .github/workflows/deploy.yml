@@ -26,6 +26,7 @@ jobs:
       - name: Copy i18n
         run: |
           cp src/i18n src/frontend/ -R
+          cp src/i18n src/backend/ -R
         shell: bash
 
       - name: List files
