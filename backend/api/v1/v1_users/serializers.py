@@ -231,6 +231,8 @@ class ExportUserSerializer(serializers.ModelSerializer):
     gender = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
     admin = serializers.SerializerMethodField()
+    verified = serializers.SerializerMethodField()
+    date_joined = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_account_purpose(self, instance: SystemUser):
@@ -258,14 +260,24 @@ class ExportUserSerializer(serializers.ModelSerializer):
     def get_admin(self, instance: SystemUser):
         return "Yes" if instance.is_superuser else "No"
 
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_verified(self, instance: SystemUser):
+        return "Yes" if instance.is_verified else "No"
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_date_joined(self, instance: SystemUser):
+        return instance.date_joined.strftime("%Y-%m-%d")
+
     class Meta:
         model = SystemUser
         fields = [
             "id",
+            "date_joined",
             "full_name",
             "email",
             "gender",
             "country",
             "account_purpose",
             "admin",
+            "verified",
         ]

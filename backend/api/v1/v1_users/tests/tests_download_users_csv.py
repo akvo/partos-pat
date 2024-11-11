@@ -1,4 +1,6 @@
 import os
+from unittest.mock import patch
+from django.utils import timezone
 from django.test import TestCase
 from django.core.management import call_command
 from django.test.utils import override_settings
@@ -9,7 +11,9 @@ from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 
 @override_settings(USE_TZ=False, TEST_ENV=True)
 class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
-    def setUp(self):
+    @patch('django.utils.timezone.now')
+    def setUp(self, mock_timezone_now):
+        mock_timezone_now.return_value = timezone.datetime(2024, 11, 11)
         password = "secret"
         self.user = SystemUser.objects.create_user(
             full_name="John Doe",
@@ -62,13 +66,14 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(response["Content-Type"], "text/csv")
 
         # Check the content of the file
-        self.assertIn(
-            "id,full_name,email,gender,country,account_purpose,admin",
-            response.content.decode()
-        )
+        columns = "id,date_joined,full_name,email,gender,country,"
+        columns += "account_purpose,admin,verified"
+        self.assertIn(columns, response.content.decode())
         c_US = "United States of America"
+        data = f"{self.user.pk},2024-11-11,John Doe,"
+        data += f"john@test.com,male,{c_US},Other,No,No"
         self.assertIn(
-            f"{self.user.pk},John Doe,john@test.com,male,{c_US},Other,No",
+            data,
             response.content.decode()
         )
 
