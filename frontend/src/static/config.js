@@ -130,6 +130,19 @@ export const PAT_COLORS = {
     ["rgba(217, 163, 0, 0.3)", "rgba(217, 163, 0, 1)"],
     ["rgba(247, 207, 86, 0.3)", "rgba(247, 207, 86, 1)"],
   ],
+  SESSION_CATEGORY: [
+    "#002f61",
+    "#00476f",
+    "#005d7a",
+    "#00737e",
+    "#00887c",
+    "#009c73",
+    "#2cae62",
+    "#68b94c",
+    "#9ec033",
+    "#d0c319",
+    "#ffc20e",
+  ],
 };
 
 export const FILTER_BY_ROLE = {

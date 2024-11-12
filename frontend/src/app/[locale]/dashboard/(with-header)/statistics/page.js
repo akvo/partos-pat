@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { openSans } from "@/app/fonts";
 import dynamic from "next/dynamic";
 import { api } from "@/lib";
-import { PAT_COLORS } from "@/static/config";
+import { PAT_COLORS, SECTOR } from "@/static/config";
 
 const IntroSection = () => {
   const t_dashboard = useTranslations("Dashboard");
@@ -86,13 +86,12 @@ const GridChartSection = ({
 };
 
 const AccountPurposeLegend = () => {
-  const t = useTranslations("common");
   return (
     <div className="w-full space-y-3">
-      {PAT_COLORS.ACCOUNT_PURPOSE.map((color, index) => (
+      {PAT_COLORS.SESSION_CATEGORY.map((color, index) => (
         <div key={index} className="flex items-center space-x-2">
           <div className="p-2 rounded-sm" style={{ backgroundColor: color }} />
-          <span className="text-xs">{t(`purposeOfAccount${index + 1}`)}</span>
+          <span className="text-xs">{SECTOR?.[index]}</span>
         </div>
       ))}
     </div>
@@ -109,11 +108,15 @@ const AccountPurposeTitle = () => {
 };
 
 const StatisticsPage = async () => {
-  const {
-    total_users,
-    total_users_last_30_days,
-    total_users_per_account_purpose,
-  } = await api("GET", "/admin/statistics/users");
+  const { total_users, total_users_last_30_days } = await api(
+    "GET",
+    "/admin/statistics/users",
+  );
+
+  const { total_sessions_per_category } = await api(
+    "GET",
+    "/admin/statistics/sessions",
+  );
 
   const { total_completed, total_completed_last_30_days } = await api(
     "GET",
@@ -152,7 +155,7 @@ const StatisticsPage = async () => {
               </div>
               <div className="w-full flex flex-col lg:flex-row">
                 <div className="w-full lg:w-1/2 min-h-28">
-                  <AccountPurposeChart data={total_users_per_account_purpose} />
+                  <AccountPurposeChart data={total_sessions_per_category} />
                 </div>
                 <div className="w-full lg:w-1/2 min-h-28">
                   <AccountPurposeLegend />

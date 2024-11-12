@@ -2,16 +2,13 @@
 
 import { PAT_COLORS } from "@/static/config";
 import { Doughnut } from "akvo-charts";
-import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 const AccountPurposeChart = ({ data = [] }) => {
-  const t = useTranslations("common");
-
   const rawConfig = useMemo(() => {
     const dataSource = data.map((d) => ({
       value: d.total,
-      name: t(d.account_purpose),
+      name: d.category,
     }));
     return {
       tooltip: {
@@ -39,9 +36,9 @@ const AccountPurposeChart = ({ data = [] }) => {
           data: dataSource,
         },
       ],
-      color: PAT_COLORS.ACCOUNT_PURPOSE,
+      color: PAT_COLORS.SESSION_CATEGORY,
     };
-  }, [data, t]);
+  }, [data]);
 
   return (
     <div className="w-full account-purpose-chart">
