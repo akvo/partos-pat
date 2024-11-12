@@ -146,13 +146,13 @@
 		"sessionSection": "Détails du partenariat",
 		"session_name": "Nom du partenariat",
 		"countries": "Pays",
-		"sector": "Secteur",
+		"purpose": "But de la création",
 		"orgSection": "Quelles sont les organisations partenaires représentées à cette réunion ? (Utilisez des acronymes)",
 		"orgName": "Nom de l'organisation",
 		"orgAcronym": "Acronyme",
 		"addOrgButton": "Ajouter une organisation partenaire",
 		"context": "Contexte et objectif de la session PAT",
-		"otherSector": "Autre secteur",
+		"otherPurpose": "Autre objectif",
 		"date": "Date",
 		"cancel": "Annuler",
 		"save": "Sauvegarder",
@@ -171,7 +171,7 @@
 		"copySuccess": "Le code de participation à la session a été copié dans le presse-papiers",
 		"partnerOrgLong": "Organisations partenaires représentées à cette réunion",
 		"contextLong": "Contexte de la session PAT",
-		"sector": "Secteur"
+		"purpose": "Secteur"
 	},
 	"Landing": {
 		"title": "Power Awareness Tool",

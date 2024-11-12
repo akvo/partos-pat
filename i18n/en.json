@@ -146,13 +146,13 @@
 		"sessionSection": "Partnership Details",
 		"session_name": "Name of the partnership",
 		"countries": "Countries",
-		"sector": "Sector",
+		"purpose": "Purpose of creation",
 		"orgSection": "What are the partner organisations represented in this meeting? (Use acronyms)",
 		"orgName": "Organization Name",
 		"orgAcronym": "Acronym",
 		"addOrgButton": "Add Partner Organization",
 		"context": "Context and purpose of PAT Session",
-		"otherSector": "Other Sector",
+		"otherPurpose": "Other Purpose",
 		"date": "Date",
 		"cancel": "Cancel",
 		"save": "Save",
@@ -171,7 +171,7 @@
 		"copySuccess": "The session join code has been copied to the clipboard",
 		"partnerOrgLong": "Partner organizations represented in this meeting",
 		"contextLong": "PAT Session Context",
-		"sector": "Sector"
+		"purpose": "Sector"
 	},
 	"Landing": {
 		"title": "The Power Awareness Tool",
