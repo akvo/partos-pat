@@ -3,7 +3,7 @@ from django.db.models import Count, Q
 from rest_framework import serializers
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
-from api.v1.v1_sessions.constants import SectorTypes
+from api.v1.v1_sessions.constants import SessionPurpose
 from api.v1.v1_sessions.models import (
     PATSession,
     Organization,
@@ -82,7 +82,7 @@ class SessionCreatedSerializer(serializers.Serializer):
 
 class SessionSerializer(serializers.ModelSerializer):
     facilitator = serializers.SerializerMethodField()
-    sector = serializers.SerializerMethodField()
+    purpose = serializers.SerializerMethodField()
     organizations = serializers.SerializerMethodField()
 
     @extend_schema_field(UserFacilitatortSerializer())
@@ -90,8 +90,10 @@ class SessionSerializer(serializers.ModelSerializer):
         return UserFacilitatortSerializer(instance=instance.user).data
 
     @extend_schema_field(OpenApiTypes.STR)
-    def get_sector(self, instance: PATSession):
-        return SectorTypes.FieldStr[instance.sector]
+    def get_purpose(self, instance: PATSession):
+        if instance.purpose in SessionPurpose.FieldStr:
+            return SessionPurpose.FieldStr[instance.purpose]
+        return instance.purpose
 
     @extend_schema_field(OrganizationListSerializer(many=True))
     def get_organizations(self, instance: PATSession):
@@ -106,8 +108,8 @@ class SessionSerializer(serializers.ModelSerializer):
             "session_name",
             "facilitator",
             "countries",
-            "sector",
-            "other_sector",
+            "purpose",
+            "other_purpose",
             "date",
             "context",
             "organizations",
@@ -136,8 +138,8 @@ class SessionDetailsSerializer(SessionSerializer):
             "session_name",
             "facilitator",
             "countries",
-            "sector",
-            "other_sector",
+            "purpose",
+            "other_purpose",
             "date",
             "context",
             "organizations",
@@ -202,8 +204,8 @@ class SessionListSerializer(serializers.ModelSerializer):
 class CreateSessionSerializer(serializers.Serializer):
     session_name = CustomCharField()
     countries = CustomJSONField()
-    sector = CustomChoiceField(choices=SectorTypes.FieldStr)
-    other_sector = CustomCharField(required=False)
+    purpose = CustomChoiceField(choices=SessionPurpose.FieldStr)
+    other_purpose = CustomCharField(required=False)
     date = CustomDateField()
     context = CustomCharField()
     organizations = CustomListField(
@@ -247,8 +249,8 @@ class CreateSessionSerializer(serializers.Serializer):
         fields = [
             "session_name",
             "countries",
-            "sector",
-            "other_sector",
+            "purpose",
+            "other_purpose",
             "date",
             "context",
             "organizations",
@@ -258,11 +260,11 @@ class CreateSessionSerializer(serializers.Serializer):
 class UpdateSessionSerializer(serializers.ModelSerializer):
     session_name = CustomCharField(required=False)
     countries = CustomJSONField(required=False)
-    sector = CustomChoiceField(
-        choices=SectorTypes.FieldStr,
+    purpose = CustomChoiceField(
+        choices=SessionPurpose.FieldStr,
         required=False
     )
-    other_sector = CustomCharField(required=False)
+    other_purpose = CustomCharField(required=False)
     date = CustomDateField(required=False)
     context = CustomCharField(required=False)
     organizations = CustomListField(
@@ -277,21 +279,13 @@ class UpdateSessionSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
 
-    def validate_date(self, value):
-        today = timezone.now().date()
-        if value < today:
-            raise serializers.ValidationError(
-                "The date must be today or later."
-            )
-        return value
-
     class Meta:
         model = PATSession
         fields = [
             "session_name",
             "countries",
-            "sector",
-            "other_sector",
+            "purpose",
+            "other_purpose",
             "date",
             "context",
             "organizations",

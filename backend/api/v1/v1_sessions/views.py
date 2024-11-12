@@ -55,7 +55,7 @@ from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
 from api.v1.v1_users.permissions import IsSuperuser
-from api.v1.v1_sessions.constants import RoleTypes, SectorTypes
+from api.v1.v1_sessions.constants import RoleTypes, SessionPurpose
 from collections import defaultdict
 
 
@@ -752,13 +752,13 @@ def get_sessions_statistics(request, version):
         created_at__gte=timezone.now() - timedelta(days=30)
     ).count()
     total_sessions_per_category = queryset.values(
-        "sector"
+        "purpose"
     ).annotate(
-        total=Count("sector")
-    ).order_by("sector")
+        total=Count("purpose")
+    ).order_by("purpose")
 
     categories = [
-        value for name, value in vars(SectorTypes).items()
+        value for name, value in vars(SessionPurpose).items()
         if (
             not name.startswith('__') and
             not callable(value) and
@@ -768,10 +768,10 @@ def get_sessions_statistics(request, version):
 
     total_sessions_per_category = [
         {
-            "category": SectorTypes.FieldStr[category],
+            "category": SessionPurpose.FieldStr[category],
             "total": next((
                 t["total"] for t in total_sessions_per_category
-                if t["sector"] == category
+                if t["purpose"] == category
             ), 0)
         }
         for category in categories
