@@ -415,7 +415,7 @@
 		"noAccountsLast30": "New accounts in the last 30 days",
 		"noSessionCompleted": "Number of sessions completed",
 		"noSessionCompletedLast30": "Number of sessions completed in last 30 days",
-		"noAccountPurpose": "Number of users in each purpose of account category",
+		"noAccountPurpose": "Number of cases within each purpose category",
 		"noSessionCreated": "Number of cases created per month grouped by year"
 	},
 	"DeleteSession": {

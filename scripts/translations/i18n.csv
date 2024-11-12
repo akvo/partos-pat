@@ -465,7 +465,7 @@ Statistics,noAccounts,Statistics.noAccounts,Number of accounts,Nombre de comptes
 Statistics,noAccountsLast30,Statistics.noAccountsLast30,New accounts in the last 30 days,Nouveaux comptes au cours des 30 derniers jours,
 Statistics,noSessionCompleted,Statistics.noSessionCompleted,Number of sessions completed,Nombre de séances complétées,
 Statistics,noSessionCompletedLast30,Statistics.noSessionCompletedLast30,Number of sessions completed in last 30 days,Nombre de séances réalisées au cours des 30 derniers jours,
-Statistics,noAccountPurpose,Statistics.noAccountPurpose,Number of users in each purpose of account category,Nombre d'utilisateurs dans chaque objectif de la catégorie de compte,
+Statistics,noAccountPurpose,Statistics.noAccountPurpose,Number of cases within each purpose category,Nombre de cas dans chaque catégorie de finalité,
 Statistics,noSessionCreated,Statistics.noSessionCreated,Number of cases created per month grouped by year,Nombre de dossiers créés par mois regroupés par année,
 DeleteSession,title,DeleteSession.title,Delete PAT Session,Supprimer la session PAT,
 DeleteSession,labelText,DeleteSession.labelText,Title,Titre,
