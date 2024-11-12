@@ -48,13 +48,14 @@ from api.v1.v1_sessions.serializers import (
     TotalSessionPerMonthSerializer,
     TotalSessionCompletedSerializer,
     TotalSessionPerLast3YearsSerializer,
+    SessionStatisticsSerializer,
 )
 from utils.custom_pagination import Pagination
 from utils.custom_serializer_fields import validate_serializers_message
 from utils.default_serializers import DefaultResponseSerializer
 from utils.email_helper import send_email, EmailTypes
 from api.v1.v1_users.permissions import IsSuperuser
-from api.v1.v1_sessions.constants import RoleTypes
+from api.v1.v1_sessions.constants import RoleTypes, SectorTypes
 from collections import defaultdict
 
 
@@ -727,8 +728,59 @@ def total_session_per_last_3_years(request, version):
 
     result = sorted(years_data.values(), key=lambda x: x["year"])
 
-    serializer = TotalSessionPerLast3YearsSerializer(instance=result, many=True)
+    serializer = TotalSessionPerLast3YearsSerializer(
+        instance=result,
+        many=True
+    )
     return Response(
         data=serializer.data,
+        status=status.HTTP_200_OK
+    )
+
+
+@extend_schema(
+    responses={200: SessionStatisticsSerializer},
+    tags=["Statistics"],
+    summary="Get session statistics",
+)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated, IsSuperuser])
+def get_sessions_statistics(request, version):
+    queryset = PATSession.objects.all()
+    total_sessions = queryset.count()
+    total_sessions_last_30_days = queryset.filter(
+        created_at__gte=timezone.now() - timedelta(days=30)
+    ).count()
+    total_sessions_per_category = queryset.values(
+        "sector"
+    ).annotate(
+        total=Count("sector")
+    ).order_by("sector")
+
+    categories = [
+        value for name, value in vars(SectorTypes).items()
+        if (
+            not name.startswith('__') and
+            not callable(value) and
+            name != "FieldStr"
+        )
+    ]
+
+    total_sessions_per_category = [
+        {
+            "category": SectorTypes.FieldStr[category],
+            "total": next((
+                t["total"] for t in total_sessions_per_category
+                if t["sector"] == category
+            ), 0)
+        }
+        for category in categories
+    ]
+    return Response(
+        data={
+            "total_sessions": total_sessions,
+            "total_sessions_last_30_days": total_sessions_last_30_days,
+            "total_sessions_per_category": total_sessions_per_category,
+        },
         status=status.HTTP_200_OK
     )

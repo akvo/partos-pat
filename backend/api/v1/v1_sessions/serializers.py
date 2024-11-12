@@ -744,3 +744,16 @@ class TotalSessionPerLast3YearsSerializer(serializers.Serializer):
 
     class Meta:
         fields = ["total_sessions", "year"]
+
+
+class SessionStatisticsSerializer(serializers.Serializer):
+    total_sessions = serializers.IntegerField()
+    total_sessions_last_30_days = serializers.IntegerField()
+    total_sessions_per_category = serializers.DictField()
+
+    class Meta:
+        fields = [
+            "total_sessions",
+            "total_sessions_last_30_days",
+            "total_sessions_per_category",
+        ]
