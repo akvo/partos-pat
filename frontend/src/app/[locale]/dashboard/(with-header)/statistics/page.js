@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { openSans } from "@/app/fonts";
 import dynamic from "next/dynamic";
 import { api } from "@/lib";
-import { PAT_COLORS, SECTOR } from "@/static/config";
+import { PAT_COLORS, SESSION_PURPOSE } from "@/static/config";
 
 const IntroSection = () => {
   const t_dashboard = useTranslations("Dashboard");
@@ -91,7 +91,7 @@ const AccountPurposeLegend = () => {
       {PAT_COLORS.SESSION_CATEGORY.map((color, index) => (
         <div key={index} className="flex items-center space-x-2">
           <div className="p-2 rounded-sm" style={{ backgroundColor: color }} />
-          <span className="text-xs">{SECTOR?.[index]}</span>
+          <span className="text-xs">{SESSION_PURPOSE?.[index]}</span>
         </div>
       ))}
     </div>

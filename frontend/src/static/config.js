@@ -79,17 +79,17 @@ export const BREADCRUMB_MENU = [
   },
 ];
 
-export const SECTOR = {
-  1: "Policy coherence",
-  2: "International fair agreements",
-  3: "Equality, inclusion & diversity",
-  4: "Human rights",
-  5: "Global Citizen & Global Engagement",
-  6: "Collaborate on sustainable development",
-  7: "Promoting peace and stabilising conflict",
-  8: "Nature, environment & climate justice",
-  9: "Fair distribution & access to basic amenities",
-  10: "Humanitarian emergency aid",
+export const SESSION_PURPOSE = {
+  1: "Purpose of creation #1",
+  2: "Purpose of creation #2",
+  3: "Purpose of creation #3",
+  4: "Purpose of creation #4",
+  5: "Purpose of creation #5",
+  6: "Purpose of creation #6",
+  7: "Purpose of creation #7",
+  8: "Purpose of creation #8",
+  9: "Purpose of creation #9",
+  10: "Purpose of creation #10",
   0: "Other",
 };
 
