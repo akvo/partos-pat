@@ -8,7 +8,7 @@ from datetime import timedelta
 
 from utils.soft_deletes_model import SoftDeletes
 from utils.custom_manager import UserManager
-from api.v1.v1_users.constants import AccountPurpose, Gender
+from api.v1.v1_users.constants import Gender
 
 
 class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
@@ -17,9 +17,6 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
     date_joined = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(default=None, null=True)
     country = models.CharField(max_length=25)
-    account_purpose = models.IntegerField(
-        choices=AccountPurpose.FieldStr.items(), default=None, null=True
-    )
     gender = models.IntegerField(
         choices=Gender.FieldStr.items(), default=None, null=True
     )
@@ -31,7 +28,7 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["full_name", "country", "account_purpose"]
+    REQUIRED_FIELDS = ["full_name", "country"]
 
     def delete(self, using=None, keep_parents=False, hard: bool = False):
         if hard:
