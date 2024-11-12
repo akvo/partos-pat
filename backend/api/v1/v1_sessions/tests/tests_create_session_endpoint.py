@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.test import TestCase
 from django.test.utils import override_settings
 from api.v1.v1_sessions.models import PATSession
-from api.v1.v1_sessions.constants import SectorTypes
+from api.v1.v1_sessions.constants import SessionPurpose
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 
@@ -32,7 +32,7 @@ class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         payload = {
             "session_name": "Test session #11",
             "countries": ["ID", "NL"],
-            "sector": SectorTypes.sector4,
+            "purpose": SessionPurpose.purpose4,
             "date": "2024-09-13",
             "context": "Lorem ipsum dolor amet",
             "organizations": [
@@ -68,7 +68,7 @@ class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         payload = {
             "session_name": "",
             "countries": None,
-            "sector": None,
+            "purpose": None,
             "date": "",
             "context": "",
             "organizations": []
@@ -90,7 +90,7 @@ class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         payload = {
             "session_name": "Test session #11",
             "countries": ["ID", "NL"],
-            "sector": SectorTypes.sector4,
+            "purpose": SessionPurpose.purpose4,
             "date": "2022-09-13",
             "context": "Lorem ipsum dolor amet",
             "organizations": [
@@ -108,11 +108,11 @@ class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         res = req.json()
         self.assertEqual(res["message"], "The date must be today or later.")
 
-    def test_invalid_sector(self):
+    def test_invalid_purpose(self):
         payload = {
             "session_name": "Test session #11",
             "countries": ["ID", "NL"],
-            "sector": 211,
+            "purpose": 211,
             "date": "2022-09-13",
             "context": "Lorem ipsum dolor amet",
             "organizations": [
@@ -132,7 +132,7 @@ class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         payload = {
             "session_name": "Test session #11",
             "countries": "ID",
-            "sector": SectorTypes.sector4,
+            "purpose": SessionPurpose.purpose4,
             "date": "2022-09-13",
             "context": "Lorem ipsum dolor amet",
             "organizations": [
@@ -152,7 +152,7 @@ class CreateSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         payload = {
             "session_name": "Test session #11",
             "countries": ["ID", "NL"],
-            "sector": SectorTypes.sector4,
+            "purpose": SessionPurpose.purpose4,
             "date": "2022-09-13",
             "context": "Lorem ipsum dolor amet",
             "organizations": [

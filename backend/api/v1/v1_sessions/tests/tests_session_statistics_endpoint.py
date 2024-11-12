@@ -8,7 +8,7 @@ from django.utils import timezone
 from api.v1.v1_sessions.models import PATSession
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
-from api.v1.v1_sessions.constants import SectorTypes
+from api.v1.v1_sessions.constants import SessionPurpose
 
 
 @override_settings(USE_TZ=False)
@@ -93,7 +93,7 @@ class SessionStatisticsEndpointTestCase(TestCase, ProfileTestHelperMixin):
             "total_sessions_per_category"
         ])
         categories = [
-            value for name, value in vars(SectorTypes).items()
+            value for name, value in vars(SessionPurpose).items()
             if (
                 not name.startswith('__') and
                 not callable(value) and

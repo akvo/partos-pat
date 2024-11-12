@@ -1,6 +1,6 @@
 from django.test import TestCase
 from api.v1.v1_sessions.models import PATSession
-from api.v1.v1_sessions.constants import SectorTypes
+from api.v1.v1_sessions.constants import SessionPurpose
 from api.v1.v1_sessions.models import SystemUser
 
 
@@ -13,7 +13,7 @@ class PATSessionModelTestCase(TestCase):
             owner=self.user,
             name="TEST PAT Session #1",
             countries=["ID", "NL", "EN"],
-            sector=SectorTypes.sector5,
+            purpose=SessionPurpose.purpose5,
             date="2024-09-12",
             context="This is an example of PAT Session"
         )
