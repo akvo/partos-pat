@@ -10,7 +10,6 @@ class RegistrationTestCase(TestCase):
         self.user = SystemUser.objects.create_user(
             email="john@test.com",
             gender=1,
-            account_purpose=1,
             country="EN",
             password="secret",
         )
@@ -19,7 +18,6 @@ class RegistrationTestCase(TestCase):
         payload = {
             "full_name": "Jane Doe",
             "country": "ID",
-            "account_purpose": 1,
             "email": "user1@example.com",
             "password": "Test#123",
             "confirm_password": "Test#123",
@@ -35,7 +33,7 @@ class RegistrationTestCase(TestCase):
             list(res),
             [
                 "id", "full_name", "email", "gender",
-                "country", "account_purpose", "is_superuser",
+                "country", "is_superuser",
             ],
         )
         self.assertEqual(res["full_name"], "Jane Doe")
@@ -45,7 +43,6 @@ class RegistrationTestCase(TestCase):
         payload = {
             "full_name": "User 1",
             "country": "ID",
-            "account_purpose": 1,
             "email": "user1",
             "password": "Test#123",
             "confirm_password": "Test#123",
@@ -59,36 +56,10 @@ class RegistrationTestCase(TestCase):
         res = req.json()
         self.assertEqual(res, {"message": "Enter a valid email address."})
 
-    def test_invalid_options(self):
-        payload = {
-            "full_name": "User 1",
-            "country": "ID",
-            "account_purpose": 111,
-            "email": "user1@example.com",
-            "password": "Test#123",
-            "confirm_password": "Test#123",
-            "agreement": True,
-        }
-
-        req = self.client.post(
-            "/api/v1/register", payload, content_type="application/json"
-        )
-        self.assertEqual(req.status_code, 400)
-        res = req.json()
-        self.assertEqual(
-            res,
-            {
-                "message": (
-                    '"111" is not a valid choice in account_purpose.'
-                )
-            },
-        )
-
     def test_confirm_password_not_match(self):
         payload = {
             "full_name": "User 1",
             "country": "ID",
-            "account_purpose": 1,
             "email": "user1@example.com",
             "password": "Open1234",
             "confirm_password": "Test",
@@ -109,7 +80,6 @@ class RegistrationTestCase(TestCase):
         payload = {
             "full_name": "Joni",
             "country": "ID",
-            "account_purpose": 3,
             "email": self.user.email,
             "password": "Test#123",
             "confirm_password": "Test#123",
@@ -130,7 +100,6 @@ class RegistrationTestCase(TestCase):
         payload = {
             "full_name": "User 1",
             "country": "ID",
-            "account_purpose": 1,
             "email": "user1@example.com",
             "password": "secret",
             "confirm_password": "secret",
@@ -148,7 +117,6 @@ class RegistrationTestCase(TestCase):
         payload = {
             "full_name": "User 1",
             "country": "ID",
-            "account_purpose": 1,
             "email": "user1@example.com",
             "password": "Open1234",
             "confirm_password": "Open1234",
@@ -172,7 +140,6 @@ class RegistrationTestCase(TestCase):
         payload = {
             "full_name": "User 1",
             "country": "ID",
-            "account_purpose": 1,
             "email": deleted_user.email,
             "password": "Open1234",
             "confirm_password": "Open1234",

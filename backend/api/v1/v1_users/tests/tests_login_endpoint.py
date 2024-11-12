@@ -7,7 +7,6 @@ class LoginTestCase(TestCase):
         self.user = SystemUser.objects.create_user(
             email="john@test.com",
             gender=1,
-            account_purpose=1,
             country="EN",
             password="Open1234",
         )
@@ -32,7 +31,7 @@ class LoginTestCase(TestCase):
             list(res["user"]),
             [
                 "id", "full_name", "email", "gender",
-                "country", "account_purpose", "is_superuser",
+                "country", "is_superuser",
             ]
         )
 

@@ -11,7 +11,6 @@ class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
             full_name="John Doe",
             email=email,
             gender=1,
-            account_purpose=1,
             country="EN",
             password=password,
         )
@@ -26,7 +25,6 @@ class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
             "full_name": "Jane Doe",
             "gender": 2,
             "country": "ID",
-            "account_purpose": 3
         }
         req = self.client.put(
             "/api/v1/users/me",
@@ -40,11 +38,10 @@ class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
             list(res),
             [
                 "id", "full_name", "email",
-                "gender", "country", "account_purpose", "is_superuser"
+                "gender", "country", "is_superuser"
             ]
         )
         updated_user = SystemUser.objects.get(pk=self.user.id)
         self.assertEqual(res["full_name"], updated_user.full_name)
         self.assertEqual(res["gender"], updated_user.gender)
         self.assertEqual(res["country"], updated_user.country)
-        self.assertEqual(res["account_purpose"], updated_user.account_purpose)

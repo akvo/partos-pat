@@ -15,7 +15,6 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
             full_name="John Doe",
             email="john@test.com",
             gender=1,
-            account_purpose=1,
             country="EN",
             password=password,
         )
@@ -25,7 +24,6 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Super Admin",
             email=admin_email,
             gender=1,
-            account_purpose=2,
             country="EN",
             password="secret",
         )
@@ -50,7 +48,6 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
                 "email",
                 "gender",
                 "country",
-                "account_purpose",
                 "is_superuser",
             ],
         )

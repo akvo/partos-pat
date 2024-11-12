@@ -10,7 +10,6 @@ class UsersResetPasswordTestCase(TestCase):
         self.user = SystemUser.objects.create_user(
             email="john@test.com",
             gender=1,
-            account_purpose=1,
             country="EN",
             password="secret",
         )
