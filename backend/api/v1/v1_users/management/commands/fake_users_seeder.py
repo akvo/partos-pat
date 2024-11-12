@@ -2,7 +2,7 @@ import random
 import json
 from django.core.management import BaseCommand
 from api.v1.v1_users.models import SystemUser
-from api.v1.v1_users.constants import Gender, AccountPurpose
+from api.v1.v1_users.constants import Gender
 
 from faker import Faker
 
@@ -17,9 +17,6 @@ class Command(BaseCommand):
         parser.add_argument(
             "-t", "--test", nargs="?", const=False, default=False, type=bool
         )
-
-    def fake_account_purpose(self):
-        return random.choice(list(AccountPurpose.FieldStr.keys()))
 
     def fake_gender(self):
         return random.choice(['M', 'F', 'OTHER'])
@@ -48,7 +45,6 @@ class Command(BaseCommand):
                 password="Test1234",
                 full_name=profile["name"],
                 date_joined=fake.date_this_year(),
-                account_purpose=self.fake_account_purpose(),
                 country=country,
                 gender=gender,
                 is_verified=fake.boolean()
