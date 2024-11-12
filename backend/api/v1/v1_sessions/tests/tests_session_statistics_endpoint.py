@@ -19,7 +19,6 @@ class SessionStatisticsEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Super Admin",
             email="admin@akvo.org",
             gender=1,
-            account_purpose=2,
             country="EN",
             password="Secret123!",
         )

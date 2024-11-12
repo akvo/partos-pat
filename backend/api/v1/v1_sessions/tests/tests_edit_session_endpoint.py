@@ -19,7 +19,6 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="John Doe",
             email=email,
             gender=1,
-            account_purpose=1,
             country="EN",
             password=password,
         )
@@ -145,7 +144,6 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Jane Doe",
             email=email,
             gender=2,
-            account_purpose=2,
             country="EN",
             password=password,
         )

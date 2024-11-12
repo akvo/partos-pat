@@ -27,7 +27,6 @@ class FakeSessionSeederTestCase(TestCase):
         user = SystemUser.objects.create_user(
             full_name="John Doe",
             country="US",
-            account_purpose=3,
             email="john@test.com",
             password="Open1234"
         )
