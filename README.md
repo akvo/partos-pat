@@ -12,6 +12,8 @@ Power Awarness Tool
   - [Frontend](#frontend)
   - [API Documentation](#api-documentation)
   - [PgAdmin](#pgadmin)
+- [Commands](#commands)
+  - [Export Users to CSV](#export-users-to-csv)
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
@@ -87,6 +89,26 @@ Use the following credentials to log in to PgAdmin:
 - **Email**: `dev@akvo.org`
 - **Password**: `password`
 
+
+## Commands
+
+### Export Users to CSV
+
+This command allows you to export user data from the database to a CSV file. Admin users can then download this file from the **Manage Users** page in the admin panel.
+
+#### Usage
+
+To run the command and generate the CSV file, use the following command in the terminal:
+
+```bash
+docker compose exec backend python manage.py export_users_csv
+```
+
+#### Details
+
+- **Command**: `export_users_csv`
+- **Functionality**: Exports user data from the database into a CSV format.
+- **File Location**: The generated CSV file is stored in the `./storage` directory, where it can be accessed via the admin dashboard under the Manage Users page.
 
 ---
 ## Troubleshooting
