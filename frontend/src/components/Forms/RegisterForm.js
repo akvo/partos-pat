@@ -78,21 +78,6 @@ const RegisterForm = () => {
             </Form.Item>
             <CountryDropdown form={form} />
             <Form.Item
-              name="account_purpose"
-              rules={[
-                {
-                  required: true,
-                  message: tc("purposeAccountRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t("purposeAccount")}
-                options={purposeOptions}
-                variant="borderless"
-              />
-            </Form.Item>
-            <Form.Item
               name="email"
               rules={[
                 {
