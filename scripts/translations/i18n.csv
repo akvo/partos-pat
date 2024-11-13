@@ -34,7 +34,7 @@ common,purposeOfAccount1,common.purposeOfAccount1,"I will facilitate a session f
 common,purposeOfAccount2,common.purposeOfAccount2,"I will participate in a session for partnership evaluation (baseline, endline)","Je participerai à une session d'évaluation du partenariat (baseline, endline)","Je vais participer à une session d'évaluation de partenariat (baseline, endline)"
 common,purposeOfAccount3,common.purposeOfAccount3,I will facilitate a session to map power dynamics in a future consortium,J'animerai une session pour cartographier la dynamique du pouvoir dans un futur consortium,Je vais animer une session pour cartographier les dynamiques de pouvoir dans un futur consortium
 common,purposeOfAccount4,common.purposeOfAccount4,I will participate in a session to map power dynamics in a future consortium,Je participerai à une session pour cartographier la dynamique du pouvoir dans un futur consortium,Je vais participer à une session pour cartographier les dynamiques de pouvoir dans un futur consortium
-common,purposeOfAccount5,common.purposeOfAccount5,I am a student/ researcher and want to learn about power dynamics,Je suis étudiant/chercheur et je souhaite en savoir plus sur la dynamique du pouvoir,Je suis étudiant/chercheur et je veux en savoir plus sur les dynamiques de pouvoir
+common,purposeOfAccount5,common.purposeOfAccount5,I am a student/ researcher and want to learn about power dynamics,Je suis étudiant/chercheur et je souhaite en savoir plus sur les dynamiques de pouvoir,Je suis étudiant/chercheur et je veux en savoir plus sur les dynamiques de pouvoir
 common,purposeOfAccount6,common.purposeOfAccount6,Other,Autre,
 common,countryRequired,common.countryRequired,Please select your country,Veuillez sélectionner votre pays,
 common,genderRequired,common.genderRequired,Please select your gender,Veuillez sélectionner votre sexe,
@@ -51,6 +51,7 @@ Register,successRegister,Register.successRegister,Success! Check your email to v
 Register,successVerified,Register.successVerified,Your account has been successfully verified,Votre compte a été vérifié avec succès,
 Register,emailExists,Register.emailExists,A user with this email already exists.,Un utilisateur avec cette adresse e-mail existe déjà.,Un utilisateur avec cet e-mail existe déjà.
 Register,countryOtherOption,Register.countryOtherOption,Other geographical region,Autre zone géographique,
+Register,title,Register.title,Register,Registre,
 Error,invalidEmail,Error.invalidEmail,Enter a valid email address.,Entrez une adresse e-mail valide.,
 Error,required,Error.required,{field_title} is required.,{field_title} est obligatoire.,
 Error,blank,Error.blank,{field_title} may not be blank,{field_title} n'est peut-être pas vide,
@@ -58,6 +59,7 @@ Error,null,Error.null,{field_title} may not be null.,{field_title} ne peut pas �
 Error,500,Error.500,Internal Server Error. Please try again later.,Erreur interne du serveur. Veuillez réessayer plus tard.,
 Error,invalidLogin,Error.invalidLogin,Invalid login credentials,Identifiants de connexion invalides,
 Error,maxChar,Error.maxChar,{field_title} must be up to {number} characters,{field_title} doit contenir jusqu'à {number} caractères,
+Login,title,Login.title,Login,Se connecter,
 Login,loginText,Login.loginText,Login,Se connecter,
 Login,createAccount,Login.createAccount,Create account,Créer un compte,
 Login,forgotLink,Login.forgotLink,Forgot your password,Mot de passe oublié,
@@ -119,7 +121,7 @@ CreateSession,orgName,CreateSession.orgName,Organization Name,Nom de l'organisat
 CreateSession,orgAcronym,CreateSession.orgAcronym,Acronym,Acronyme,
 CreateSession,addOrgButton,CreateSession.addOrgButton,Add Partner Organization,Ajouter une organisation partenaire,
 CreateSession,context,CreateSession.context,Context and purpose of PAT Session,Contexte et objectif de la session PAT,
-CreateSession,otherPurpose,CreateSession.otherPurpose,Other Sector,Autre objectif,
+CreateSession,otherPurpose,CreateSession.otherPurpose,Other Purpose,Autre objectif,
 CreateSession,date,CreateSession.date,Date,Date,
 CreateSession,cancel,CreateSession.cancel,Cancel,Annuler,
 CreateSession,save,CreateSession.save,Save,Sauvegarder,

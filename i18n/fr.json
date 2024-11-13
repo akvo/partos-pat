@@ -13,7 +13,8 @@
 		"successRegister": "Succès! Vérifiez votre courrier électronique pour vérifier votre compte.",
 		"successVerified": "Votre compte a été vérifié avec succès",
 		"emailExists": "Un utilisateur avec cet e-mail existe déjà.",
-		"countryOtherOption": "Autre zone géographique"
+		"countryOtherOption": "Autre zone géographique",
+		"title": "Registre"
 	},
 	"common": {
 		"email": "E-mail",
@@ -65,6 +66,7 @@
 		"maxChar": "{field_title} doit contenir jusqu'à {number} caractères"
 	},
 	"Login": {
+		"title": "Se connecter",
 		"loginText": "Se connecter",
 		"createAccount": "Créer un compte",
 		"forgotLink": "Mot de passe oublié"
