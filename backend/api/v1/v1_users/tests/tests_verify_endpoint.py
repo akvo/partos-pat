@@ -11,7 +11,6 @@ class VerificationTestCase(TestCase):
             email="test@test.org",
             password="test1234",
             full_name="test",
-            gender=1,
             country="ID",
         )
 

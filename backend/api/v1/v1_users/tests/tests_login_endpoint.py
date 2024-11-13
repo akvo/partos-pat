@@ -6,7 +6,6 @@ class LoginTestCase(TestCase):
     def setUp(self):
         self.user = SystemUser.objects.create_user(
             email="john@test.com",
-            gender=1,
             country="EN",
             password="Open1234",
         )
@@ -30,7 +29,7 @@ class LoginTestCase(TestCase):
         self.assertEqual(
             list(res["user"]),
             [
-                "id", "full_name", "email", "gender",
+                "id", "full_name", "email",
                 "country", "is_superuser",
             ]
         )

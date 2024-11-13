@@ -9,7 +9,6 @@ class RegistrationTestCase(TestCase):
     def setUp(self):
         self.user = SystemUser.objects.create_user(
             email="john@test.com",
-            gender=1,
             country="EN",
             password="secret",
         )
@@ -32,7 +31,7 @@ class RegistrationTestCase(TestCase):
         self.assertCountEqual(
             list(res),
             [
-                "id", "full_name", "email", "gender",
+                "id", "full_name", "email",
                 "country", "is_superuser",
             ],
         )

@@ -18,7 +18,6 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
         self.user = SystemUser.objects.create_user(
             full_name="John Doe",
             email="john@test.com",
-            gender=1,
             country="US",
             password=password,
         )
@@ -27,7 +26,6 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
         self.admin = SystemUser.objects.create_superuser(
             full_name="Super Admin",
             email=admin_email,
-            gender=1,
             country="EN",
             password="secret",
         )
@@ -64,7 +62,7 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(response["Content-Type"], "text/csv")
 
         # Check the content of the file
-        columns = "id,date_joined,full_name,email,gender,country,"
+        columns = "id,date_joined,full_name,email,country,"
         columns += "admin,verified"
         self.assertIn(columns, response.content.decode())
         data = f"{self.user.pk},2024-11-11,John Doe"

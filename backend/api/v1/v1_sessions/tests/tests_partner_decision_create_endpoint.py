@@ -17,7 +17,6 @@ class CreatePartnerDecisionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.user = SystemUser.objects.create_user(
             full_name="John Doe",
             email=email,
-            gender=1,
             country="EN",
             password=password,
         )

@@ -3,8 +3,7 @@
 import { CountryDropdown, LogoutButton, ProfileAvatar } from "@/components";
 import { SaveIcon, UserCircle } from "@/components/Icons";
 import { useRouter } from "@/routing";
-import { GENDER, PURPOSE_OF_ACCOUNT } from "@/static/config";
-import { Button, Card, Form, Input, Select, Space } from "antd";
+import { Button, Card, Form, Input, Space } from "antd";
 import { useTranslations } from "next-intl";
 import { useUserContext, useUserDispatch } from "@/context/UserContextProvider";
 import { useState } from "react";
@@ -24,16 +23,6 @@ const ProfilePage = () => {
   const userDispatch = useUserDispatch();
   const router = useRouter();
   const [form] = useForm();
-
-  const genderOptions = Object.keys(GENDER).map((k) => ({
-    label: tc(k),
-    value: GENDER?.[k],
-  }));
-
-  const purposeOptions = Object.keys(PURPOSE_OF_ACCOUNT).map((k) => ({
-    label: tc(k),
-    value: PURPOSE_OF_ACCOUNT?.[k],
-  }));
 
   const onFinish = async (payload) => {
     setLoading(true);
@@ -80,13 +69,6 @@ const ProfilePage = () => {
               <Input
                 placeholder={t_register("fullName")}
                 prefix={<UserCircle />}
-                variant="borderless"
-              />
-            </Form.Item>
-            <Form.Item name="gender">
-              <Select
-                placeholder={t_register("gender")}
-                options={genderOptions}
                 variant="borderless"
               />
             </Form.Item>
