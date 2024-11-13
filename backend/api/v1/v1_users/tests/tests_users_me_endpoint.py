@@ -10,7 +10,6 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
         self.user = SystemUser.objects.create_user(
             full_name="John Doe",
             email=email,
-            gender=1,
             country="EN",
             password=password,
         )
@@ -31,7 +30,7 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(
             list(res),
             [
-                "id", "full_name", "email", "gender",
+                "id", "full_name", "email",
                 "country", "is_superuser",
             ]
         )

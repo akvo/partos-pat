@@ -14,7 +14,6 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
         self.user = SystemUser.objects.create_user(
             full_name="John Doe",
             email="john@test.com",
-            gender=1,
             country="EN",
             password=password,
         )
@@ -23,7 +22,6 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
         self.admin = SystemUser.objects.create_superuser(
             full_name="Super Admin",
             email=admin_email,
-            gender=1,
             country="EN",
             password="secret",
         )
@@ -46,7 +44,6 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
                 "id",
                 "full_name",
                 "email",
-                "gender",
                 "country",
                 "is_superuser",
             ],

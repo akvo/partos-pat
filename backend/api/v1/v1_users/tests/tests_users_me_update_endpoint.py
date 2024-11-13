@@ -10,7 +10,6 @@ class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
         self.user = SystemUser.objects.create_user(
             full_name="John Doe",
             email=email,
-            gender=1,
             country="EN",
             password=password,
         )
@@ -23,7 +22,6 @@ class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
     def test_successfully_update_my_profile(self):
         payload = {
             "full_name": "Jane Doe",
-            "gender": 2,
             "country": "ID",
         }
         req = self.client.put(
@@ -38,10 +36,9 @@ class UpdateProfileTestCase(TestCase, ProfileTestHelperMixin):
             list(res),
             [
                 "id", "full_name", "email",
-                "gender", "country", "is_superuser"
+                "country", "is_superuser"
             ]
         )
         updated_user = SystemUser.objects.get(pk=self.user.id)
         self.assertEqual(res["full_name"], updated_user.full_name)
-        self.assertEqual(res["gender"], updated_user.gender)
         self.assertEqual(res["country"], updated_user.country)
