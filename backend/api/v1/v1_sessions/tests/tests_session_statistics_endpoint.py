@@ -18,7 +18,6 @@ class SessionStatisticsEndpointTestCase(TestCase, ProfileTestHelperMixin):
         self.admin = SystemUser.objects.create_superuser(
             full_name="Super Admin",
             email="admin@akvo.org",
-            gender=1,
             country="EN",
             password="Secret123!",
         )
