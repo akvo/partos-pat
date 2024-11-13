@@ -14,6 +14,9 @@ const LoginPage = ({ searchParams }) => {
   const { verified } = searchParams;
   return (
     <div className="w-full h-auto space-y-6 mb-8">
+      <div className="w-full pb-3">
+        <h4 className="font-bold text-lg 2xl:text-xl">{t("title")}</h4>
+      </div>
       {verified && (
         <Alert type="success" message={tr("successVerified")} closable />
       )}
