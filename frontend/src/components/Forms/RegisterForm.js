@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Checkbox, Form, Input, message, Modal, Select } from "antd";
 import { useTranslations } from "next-intl";
 import { Envelope, UserCircle } from "@/components/Icons";
-import { PURPOSE_OF_ACCOUNT } from "@/static/config";
 
 import { useRouter } from "@/routing";
 import SubmitButton from "../Buttons/SubmitButton";
@@ -21,11 +20,6 @@ const RegisterForm = () => {
   const t = useTranslations("Register");
   const tc = useTranslations("common");
   const t_err = useTranslations("Error");
-
-  const purposeOptions = Object.keys(PURPOSE_OF_ACCOUNT).map((k) => ({
-    label: tc(k),
-    value: PURPOSE_OF_ACCOUNT?.[k],
-  }));
 
   const onFinish = async (values) => {
     setSubmitting(true);
