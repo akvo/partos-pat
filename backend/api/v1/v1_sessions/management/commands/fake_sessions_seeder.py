@@ -12,7 +12,7 @@ from api.v1.v1_sessions.models import (
     ParticipantDecision,
     ParticipantComment
 )
-from api.v1.v1_sessions.constants import SectorTypes
+from api.v1.v1_sessions.constants import SessionPurpose
 from utils.custom_helper import generate_acronym
 from faker import Faker
 from typing import List
@@ -58,8 +58,8 @@ class Command(BaseCommand):
             "-u", "--user", nargs="?", const=False, default=None, type=int
         )
 
-    def fake_sector(self):
-        return random.choice(list(SectorTypes.FieldStr.keys()))
+    def fake_purpose(self):
+        return random.choice(list(SessionPurpose.FieldStr.keys()))
 
     def fake_organizations(
         self, pat_session: PATSession, total=0
@@ -102,10 +102,10 @@ class Command(BaseCommand):
         if user:
             current_user = SystemUser.objects.get(pk=int(user))
         for r in range(repeat):
-            sector = self.fake_sector()
-            other_sector = None
-            if sector == SectorTypes.sector_other:
-                other_sector = fake.catch_phrase()
+            purpose = self.fake_purpose()
+            other_purpose = None
+            if purpose == SessionPurpose.other_purpose:
+                other_purpose = fake.catch_phrase()
             owner = SystemUser.objects.order_by("?").first()
             if current_user:
                 owner = current_user
@@ -124,7 +124,7 @@ class Command(BaseCommand):
                 owner=owner,
                 name=fake.sentence(),
                 countries=countries,
-                sector=sector,
+                purpose=purpose,
                 date=fake.date_this_month(before_today=False),
                 context=fake.paragraph(),
             )
@@ -139,7 +139,7 @@ class Command(BaseCommand):
                 )
             )
             pat_session.created_at = created_at
-            pat_session.other_sector = other_sector
+            pat_session.other_purpose = other_purpose
             pat_session.save()
 
             participants = []

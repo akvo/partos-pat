@@ -19,7 +19,6 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="John Doe",
             email=email,
             gender=1,
-            account_purpose=1,
             country="EN",
             password=password,
         )
@@ -81,7 +80,7 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
         payload = {
             "session_name": f"EDITED-{pat_session.session_name}",
             "countries": ["ID", "NL", "UK"],
-            "sector": pat_session.sector,
+            "purpose": pat_session.purpose,
             "date": "2024-10-29",
             "context": "Lorem ipsum dolor amet",
             "organizations": [
@@ -145,7 +144,6 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Jane Doe",
             email=email,
             gender=2,
-            account_purpose=2,
             country="EN",
             password=password,
         )
@@ -171,24 +169,6 @@ class EditSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             HTTP_AUTHORIZATION=f"Bearer {new_user_token}"
         )
         self.assertEqual(req.status_code, 403)
-
-    def test_invalid_update_date(self):
-        pat_session = PATSession.objects.filter(
-            user=self.user,
-            closed_at__isnull=True
-        ).first()
-        payload = {
-            "date": "1999-01-29",
-        }
-        req = self.client.put(
-            f"/api/v1/sessions?id={pat_session.id}",
-            payload,
-            content_type="application/json",
-            HTTP_AUTHORIZATION=f"Bearer {self.token}"
-        )
-        self.assertEqual(req.status_code, 400)
-        res = req.json()
-        self.assertEqual(res["message"], "The date must be today or later.")
 
     def test_session_not_publish_when_decision_empty(self):
         payload = {

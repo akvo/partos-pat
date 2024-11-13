@@ -13,7 +13,6 @@ class VerificationTestCase(TestCase):
             full_name="test",
             gender=1,
             country="ID",
-            account_purpose=1,
         )
 
     def test_successfully_verified(self):

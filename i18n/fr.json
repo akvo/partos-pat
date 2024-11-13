@@ -146,13 +146,13 @@
 		"sessionSection": "Détails du partenariat",
 		"session_name": "Nom du partenariat",
 		"countries": "Pays",
-		"sector": "Secteur",
+		"purpose": "But de la création",
 		"orgSection": "Quelles sont les organisations partenaires représentées à cette réunion ? (Utilisez des acronymes)",
 		"orgName": "Nom de l'organisation",
 		"orgAcronym": "Acronyme",
 		"addOrgButton": "Ajouter une organisation partenaire",
 		"context": "Contexte et objectif de la session PAT",
-		"otherSector": "Autre secteur",
+		"otherPurpose": "Autre objectif",
 		"date": "Date",
 		"cancel": "Annuler",
 		"save": "Sauvegarder",
@@ -171,7 +171,7 @@
 		"copySuccess": "Le code de participation à la session a été copié dans le presse-papiers",
 		"partnerOrgLong": "Organisations partenaires représentées à cette réunion",
 		"contextLong": "Contexte de la session PAT",
-		"sector": "Secteur"
+		"purpose": "But de la création"
 	},
 	"Landing": {
 		"title": "Power Awareness Tool",
@@ -415,7 +415,7 @@
 		"noAccountsLast30": "Nouveaux comptes au cours des 30 derniers jours",
 		"noSessionCompleted": "Nombre de séances complétées",
 		"noSessionCompletedLast30": "Nombre de séances réalisées au cours des 30 derniers jours",
-		"noAccountPurpose": "Nombre d'utilisateurs dans chaque objectif de la catégorie de compte",
+		"noAccountPurpose": "Nombre de cas dans chaque catégorie de finalité",
 		"noSessionCreated": "Nombre de dossiers créés par mois regroupés par année"
 	},
 	"DeleteSession": {

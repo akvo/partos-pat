@@ -130,11 +130,11 @@ const DetailSessionModal = ({ id, webdomain }) => {
       </div>
       <Section>
         <Flex justify="space-between" align="center">
-          <strong className="font-bold">{t("sector")}</strong>
+          <strong className="font-bold">{t("purpose")}</strong>
           <div>
-            {details?.sector === "Other"
-              ? details?.other_sector
-              : details?.sector}
+            {details?.purpose === "Other"
+              ? details?.other_purpose
+              : details?.purpose}
           </div>
         </Flex>
       </Section>

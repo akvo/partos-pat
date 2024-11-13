@@ -2,10 +2,8 @@ from django.test import TestCase
 from django.core.management import call_command
 from django.test.utils import override_settings
 from django.utils import timezone
-from django.db.models import Count
 from datetime import timedelta
 from api.v1.v1_users.models import SystemUser
-from api.v1.v1_users.constants import AccountPurpose
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
 
 
@@ -17,7 +15,6 @@ class UsersStatisticsTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Super Admin",
             email="admin@akvo.org",
             gender=1,
-            account_purpose=2,
             country="EN",
             password="Secret123!",
         )
@@ -41,22 +38,4 @@ class UsersStatisticsTestCase(TestCase, ProfileTestHelperMixin):
         self.assertEqual(
             res["total_users_last_30_days"],
             total_users_last_30_days
-        )
-
-        total_users_per_account_purpose = SystemUser.objects.values(
-            "account_purpose"
-        ).annotate(
-            total=Count("account_purpose")
-        )
-        account_purpose_total = []
-        for total in total_users_per_account_purpose:
-            category_name = AccountPurpose.FieldStr[total["account_purpose"]]
-            account_purpose_total.append({
-                "account_purpose": category_name,
-                "total": total["total"]
-            })
-
-        self.assertCountEqual(
-            res["total_users_per_account_purpose"],
-            account_purpose_total
         )

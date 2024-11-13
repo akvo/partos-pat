@@ -12,6 +12,7 @@ from api.v1.v1_sessions.views import (
     total_session_completed,
     total_session_per_month,
     total_session_per_last_3_years,
+    get_sessions_statistics,
 )
 
 urlpatterns = [
@@ -62,5 +63,9 @@ urlpatterns = [
     re_path(
         r"^(?P<version>(v1))/admin/sessions/per-last-3-years",
         total_session_per_last_3_years
+    ),
+    re_path(
+        r"^(?P<version>(v1))/admin/statistics/sessions",
+        get_sessions_statistics
     ),
 ]

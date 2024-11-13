@@ -16,7 +16,6 @@ class GetSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="John Doe",
             email=email,
             gender=1,
-            account_purpose=1,
             country="EN",
             password=password,
         )
@@ -50,8 +49,8 @@ class GetSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
                 "session_name",
                 "facilitator",
                 "countries",
-                "sector",
-                "other_sector",
+                "purpose",
+                "other_purpose",
                 "date",
                 "context",
                 "organizations",
@@ -104,7 +103,6 @@ class GetSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Jane Doe",
             email=email,
             gender=2,
-            account_purpose=2,
             country="EN",
             password=password,
         )
@@ -132,7 +130,6 @@ class GetSessionEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Jane Doe",
             email=email,
             gender=2,
-            account_purpose=2,
             country="EN",
             password=password,
         )

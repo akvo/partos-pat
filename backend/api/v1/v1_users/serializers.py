@@ -6,7 +6,7 @@ from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from partos_pat.settings import BASE_DIR
 from api.v1.v1_users.models import SystemUser
-from api.v1.v1_users.constants import Gender, AccountPurpose
+from api.v1.v1_users.constants import Gender
 from utils.custom_serializer_fields import (
     CustomCharField,
     CustomChoiceField,
@@ -31,7 +31,6 @@ transl_en_data = load_json(file_name="en")
 class RegisterSerializer(serializers.ModelSerializer):
     full_name = CustomCharField()
     country = CustomCharField()
-    account_purpose = CustomChoiceField(choices=AccountPurpose.FieldStr)
     email = CustomEmailField()
     password = CustomCharField()
     confirm_password = CustomCharField()
@@ -74,7 +73,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data["password"],
             full_name=validated_data["full_name"],
             country=validated_data["country"],
-            account_purpose=validated_data["account_purpose"],
         )
         return user
 
@@ -83,7 +81,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = [
             "full_name",
             "country",
-            "account_purpose",
             "email",
             "password",
             "confirm_password",
@@ -100,7 +97,6 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "gender",
             "country",
-            "account_purpose",
             "is_superuser",
         ]
 
@@ -122,7 +118,6 @@ class ManageUserSerializer(UserSerializer):
             "email",
             "gender",
             "country",
-            "account_purpose",
             "is_superuser",
         ]
 
@@ -146,7 +141,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         allow_null=True,
     )
     country = CustomCharField()
-    account_purpose = CustomChoiceField(choices=AccountPurpose.FieldStr)
 
     class Meta:
         model = SystemUser
@@ -154,7 +148,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             "full_name",
             "gender",
             "country",
-            "account_purpose",
         ]
 
     def update(self, instance, validated_data):
@@ -218,32 +211,20 @@ class VerifyPasswordTokenSerializer(serializers.Serializer):
 class UserStatisticsSerializer(serializers.Serializer):
     total_users = serializers.IntegerField()
     total_users_last_30_days = serializers.IntegerField()
-    total_users_per_account_purpose = serializers.DictField()
 
     class Meta:
         fields = [
             "total_users",
             "total_users_last_30_days",
-            "total_users_per_account_purpose",
         ]
 
 
 class ExportUserSerializer(serializers.ModelSerializer):
-    account_purpose = serializers.SerializerMethodField()
     gender = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
     admin = serializers.SerializerMethodField()
     verified = serializers.SerializerMethodField()
     date_joined = serializers.SerializerMethodField()
-
-    @extend_schema_field(OpenApiTypes.STR)
-    def get_account_purpose(self, instance: SystemUser):
-        if not transl_en_data:
-            return instance.account_purpose
-        key = AccountPurpose.FieldStr[instance.account_purpose]
-        if key in transl_en_data["common"]:
-            return transl_en_data["common"][key]
-        return key
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_gender(self, instance: SystemUser):
@@ -283,7 +264,6 @@ class ExportUserSerializer(serializers.ModelSerializer):
             "email",
             "gender",
             "country",
-            "account_purpose",
             "admin",
             "verified",
         ]

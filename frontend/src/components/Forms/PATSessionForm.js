@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Col, DatePicker, Flex, Form, Input, Row, Select } from "antd";
-import { PAT_SESSION, SECTOR } from "@/static/config";
+import { PAT_SESSION, SESSION_PURPOSE } from "@/static/config";
 import ProfileAvatar from "../ProfileAvatar";
 import { MinusCircleIcon, PlusCircleIcon } from "../Icons";
 import countryOptions from "../../../i18n/countries.json";
@@ -36,12 +36,12 @@ const PATSessionForm = ({
     ? { help: dateError?.errors?.join(""), validateStatus: "error" }
     : {};
 
-  const sectorOptions = Object.keys(SECTOR).map((k) => ({
-    label: SECTOR[k],
+  const purposeOptions = Object.keys(SESSION_PURPOSE).map((k) => ({
+    label: SESSION_PURPOSE[k],
     value: k,
   }));
 
-  const sectorValue = Form.useWatch((values) => values.sector, form);
+  const purposeValue = Form.useWatch((values) => values.purpose, form);
 
   useEffect(() => {
     if (preload) {
@@ -58,12 +58,14 @@ const PATSessionForm = ({
       form={form}
       onFinish={(values) => {
         if (onFinish) {
-          const sector = isNaN(values?.sector)
-            ? Object.keys(SECTOR)?.find((k) => SECTOR?.[k] === values?.sector)
-            : values?.sector;
+          const purpose = isNaN(values?.purpose)
+            ? Object.keys(SESSION_PURPOSE)?.find(
+                (k) => SESSION_PURPOSE?.[k] === values?.purpose,
+              )
+            : values?.purpose;
           onFinish({
             ...values,
-            sector,
+            purpose,
             date: dayjs(dateSession).format("YYYY-MM-DD"),
             organizations:
               values.organizations.length === 0 ? null : values.organizations,
@@ -119,20 +121,20 @@ const PATSessionForm = ({
                 </Form.Item>
 
                 <Form.Item
-                  name="sector"
+                  name="purpose"
                   rules={[
                     {
                       required: true,
                       message: t_error("required", {
-                        field_title: t("sector"),
+                        field_title: t("purpose"),
                       }),
                     },
                   ]}
                   className="w-full 2xl:w-2/5"
                 >
                   <Select
-                    placeholder={t("sector")}
-                    options={sectorOptions}
+                    placeholder={t("purpose")}
+                    options={purposeOptions}
                     variant="borderless"
                   />
                 </Form.Item>
@@ -162,16 +164,16 @@ const PATSessionForm = ({
               </Flex>
             </Col>
           </Row>
-          {["Other", "0"].includes(sectorValue) && (
+          {["Other", "0"].includes(purposeValue) && (
             <Form.Item
-              name="other_sector"
+              name="other_purpose"
               rules={[
                 {
                   required: true,
                 },
               ]}
             >
-              <Input placeholder={"Other sector"} variant="borderless" />
+              <Input placeholder={t("otherPurpose")} variant="borderless" />
             </Form.Item>
           )}
           <Form.Item

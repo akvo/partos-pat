@@ -19,7 +19,6 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
             full_name="John Doe",
             email="john@test.com",
             gender=1,
-            account_purpose=6,
             country="US",
             password=password,
         )
@@ -29,7 +28,6 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Super Admin",
             email=admin_email,
             gender=1,
-            account_purpose=6,
             country="EN",
             password="secret",
         )
@@ -67,7 +65,7 @@ class DownloadUsersCSVTestCase(TestCase, ProfileTestHelperMixin):
 
         # Check the content of the file
         columns = "id,date_joined,full_name,email,gender,country,"
-        columns += "account_purpose,admin,verified"
+        columns += "admin,verified"
         self.assertIn(columns, response.content.decode())
         data = f"{self.user.pk},2024-11-11,John Doe"
         self.assertIn(

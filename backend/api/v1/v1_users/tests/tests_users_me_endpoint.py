@@ -11,7 +11,6 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
             full_name="John Doe",
             email=email,
             gender=1,
-            account_purpose=1,
             country="EN",
             password=password,
         )
@@ -33,7 +32,7 @@ class MyProfileTestCase(TestCase, ProfileTestHelperMixin):
             list(res),
             [
                 "id", "full_name", "email", "gender",
-                "country", "account_purpose", "is_superuser",
+                "country", "is_superuser",
             ]
         )
         self.assertEqual(res["full_name"], "John Doe")

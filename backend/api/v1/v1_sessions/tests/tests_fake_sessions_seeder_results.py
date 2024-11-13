@@ -13,8 +13,8 @@ class FakeSessionSeederResultsTestCase(TestCase):
         pat_session = PATSession.objects.order_by('?').first()
         # should have a name
         self.assertIsNotNone(pat_session.session_name)
-        # should have a sector
-        self.assertIsNotNone(pat_session.sector)
+        # should have a purpose
+        self.assertIsNotNone(pat_session.purpose)
         # should have a date planned
         self.assertIsNotNone(pat_session.date)
         # should have context

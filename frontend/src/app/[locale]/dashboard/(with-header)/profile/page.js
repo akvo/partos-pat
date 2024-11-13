@@ -91,21 +91,6 @@ const ProfilePage = () => {
               />
             </Form.Item>
             <CountryDropdown form={form} />
-            <Form.Item
-              name="account_purpose"
-              rules={[
-                {
-                  required: true,
-                  message: tc("purposeAccountRequired"),
-                },
-              ]}
-            >
-              <Select
-                placeholder={t_register("purposeAccount")}
-                options={purposeOptions}
-                variant="borderless"
-              />
-            </Form.Item>
           </div>
         </div>
         <div className="w-full flex flex-row justify-end py-8 px-5 border-t border-t-dark-2">

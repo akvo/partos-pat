@@ -8,6 +8,7 @@ from django.utils import timezone
 from api.v1.v1_sessions.models import PATSession
 from api.v1.v1_users.models import SystemUser
 from api.v1.v1_users.tests.mixins import ProfileTestHelperMixin
+from api.v1.v1_sessions.constants import SessionPurpose
 
 
 @override_settings(USE_TZ=False)
@@ -18,7 +19,6 @@ class SessionStatisticsEndpointTestCase(TestCase, ProfileTestHelperMixin):
             full_name="Super Admin",
             email="admin@akvo.org",
             gender=1,
-            account_purpose=2,
             country="EN",
             password="Secret123!",
         )
@@ -78,3 +78,29 @@ class SessionStatisticsEndpointTestCase(TestCase, ProfileTestHelperMixin):
         res = req.json()
         self.assertEqual(len(res), 3)
         self.assertEqual(len(res[0]["total_sessions"]), 12)
+
+    def test_get_total_session_per_category(self):
+        req = self.client.get(
+            "/api/v1/admin/statistics/sessions",
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {self.token}"
+        )
+        self.assertEqual(req.status_code, 200)
+        res = req.json()
+        self.assertEqual(list(res), [
+            "total_sessions",
+            "total_sessions_last_30_days",
+            "total_sessions_per_category"
+        ])
+        categories = [
+            value for name, value in vars(SessionPurpose).items()
+            if (
+                not name.startswith('__') and
+                not callable(value) and
+                name != "FieldStr"
+            )
+        ]
+        self.assertEqual(
+            len(res["total_sessions_per_category"]),
+            len(categories)
+        )

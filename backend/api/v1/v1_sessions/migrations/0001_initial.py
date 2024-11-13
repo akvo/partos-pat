@@ -86,7 +86,8 @@ class Migration(migrations.Migration):
                             (9, "Fair distribution & access to basic amenities"),
                             (10, "Humanitarian emergency aid"),
                             (0, "Other"),
-                        ]
+                        ],
+                        null=True
                     ),
                 ),
                 ("other_sector", models.CharField(max_length=100, null=True)),

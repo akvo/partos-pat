@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from api.v1.v1_users.models import SystemUser
-from api.v1.v1_sessions.constants import SectorTypes
+from api.v1.v1_sessions.constants import SessionPurpose
 from utils.custom_manager import PATSessionManager
 from utils.soft_deletes_model import SoftDeletes
 
@@ -15,8 +15,12 @@ class PATSession(SoftDeletes):
     )
     session_name = models.CharField(max_length=255)
     countries = models.JSONField()
-    sector = models.IntegerField(choices=SectorTypes.FieldStr.items())
-    other_sector = models.CharField(max_length=100, null=True)
+    purpose = models.IntegerField(
+        choices=SessionPurpose.FieldStr.items(),
+        default=None,
+        null=True,
+    )
+    other_purpose = models.CharField(max_length=100, null=True)
     date = models.DateField()
     context = models.TextField()
     summary = models.TextField(default=None, null=True)
@@ -28,7 +32,7 @@ class PATSession(SoftDeletes):
     closed_at = models.DateTimeField(default=None, null=True)
 
     REQUIRED_FIELDS = [
-        "session_name", "countries", "sector", "date", "context"
+        "session_name", "countries", "purpose", "date", "context"
     ]
 
     objects = PATSessionManager()
