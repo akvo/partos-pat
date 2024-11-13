@@ -13,11 +13,15 @@ const IFrame = ({ children, htmlID = "ardoc-print-iframe" }) => {
   const body = ref?.contentDocument?.body;
 
   // create a style
-  let css = "@page {";
-  css += "size: 210mm 297mm; margin: 15mm;";
-  css += "}";
-  css +=
-    "* { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }";
+  const css = `
+    * {
+      -webkit-print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      font-family: "Open Sans", sans-serif;
+    }
+    @page {
+      size: A4;
+    }`
   const style = document.createElement("style");
   style.type = "text/css";
   style.media = "print";
