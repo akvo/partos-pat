@@ -2,7 +2,6 @@ import random
 import json
 from django.core.management import BaseCommand
 from api.v1.v1_users.models import SystemUser
-from api.v1.v1_users.constants import Gender
 
 from faker import Faker
 
@@ -18,9 +17,6 @@ class Command(BaseCommand):
             "-t", "--test", nargs="?", const=False, default=False, type=bool
         )
 
-    def fake_gender(self):
-        return random.choice(['M', 'F', 'OTHER'])
-
     def handle(self, *args, **options):
         test = options.get("test")
         countries = ["ID", "NL", "UK", "AX", "AF"]
@@ -34,19 +30,14 @@ class Command(BaseCommand):
         repeat = options.get("repeat")
 
         for r in range(repeat):
-            gender_code = self.fake_gender()
-            profile = fake.simple_profile(
-                sex=gender_code if gender_code != 'OTHER' else None
-            )
+            profile = fake.simple_profile()
             country = random.choice(countries)
-            gender = Gender.FieldStr.get(gender_code)
             SystemUser.objects.create_user(
                 email=profile["mail"],
                 password="Test1234",
                 full_name=profile["name"],
                 date_joined=fake.date_this_year(),
                 country=country,
-                gender=gender,
                 is_verified=fake.boolean()
             )
         if not test:
