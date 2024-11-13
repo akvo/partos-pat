@@ -64,7 +64,6 @@ export const signIn = async (formData) => {
         "profile",
         JSON.stringify({
           full_name: user?.full_name,
-          gender: user?.gender,
           country: user?.country,
           is_superuser: user?.is_superuser,
         }),
