@@ -146,6 +146,7 @@ Veuillez créer un compte ou vous connecter à <url>domain</url>  et rejoindre 
 SessionDetails,copySuccess,SessionDetails.copySuccess,The session join code has been copied to the clipboard,Le code de participation à la session a été copié dans le presse-papiers,
 SessionDetails,partnerOrgLong,SessionDetails.partnerOrgLong,Partner organizations represented in this meeting,Organisations partenaires représentées à cette réunion,
 SessionDetails,contextLong,SessionDetails.contextLong,PAT Session Context,Contexte de la session PAT,
+SessionDetails,purpose,SessionDetails.purpose,Purpose of creation,But de la création,
 Dashboard,gettingStarted,Dashboard.gettingStarted,Getting Started,Commencer,
 Dashboard,createNewTitle,Dashboard.createNewTitle,Initiate New PAT Session,Lancer une nouvelle session PAT,
 Dashboard,createStep1,Dashboard.createStep1,Create a New PAT Session,Créer une nouvelle session PAT,

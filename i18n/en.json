@@ -171,7 +171,7 @@
 		"copySuccess": "The session join code has been copied to the clipboard",
 		"partnerOrgLong": "Partner organizations represented in this meeting",
 		"contextLong": "PAT Session Context",
-		"purpose": "Sector"
+		"purpose": "Purpose of creation"
 	},
 	"Landing": {
 		"title": "The Power Awareness Tool",
