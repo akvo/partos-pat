@@ -8,7 +8,6 @@ from datetime import timedelta
 
 from utils.soft_deletes_model import SoftDeletes
 from utils.custom_manager import UserManager
-from api.v1.v1_users.constants import Gender
 
 
 class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
@@ -17,9 +16,6 @@ class SystemUser(AbstractBaseUser, PermissionsMixin, SoftDeletes):
     date_joined = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(default=None, null=True)
     country = models.CharField(max_length=25)
-    gender = models.IntegerField(
-        choices=Gender.FieldStr.items(), default=None, null=True
-    )
     is_verified = models.BooleanField(default=False)
     verification_code = models.UUIDField(default=None, null=True)
     reset_password_code = models.UUIDField(default=None, null=True, blank=True)
