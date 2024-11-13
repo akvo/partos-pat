@@ -19,7 +19,7 @@ const PageTitle = () => {
   return (
     <div className="w-full space-y-2">
       <h1 className="font-bold text-xl xl:text-2xl">{t("title")}</h1>
-      <i className="w-11/12 text-sm xl:text-base">{t("subtitle")}</i>
+      <p className="w-11/12 text-sm xl:text-base">{t("subtitle")}</p>
     </div>
   );
 };
