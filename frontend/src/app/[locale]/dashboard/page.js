@@ -13,13 +13,12 @@ import {
 import { api } from "@/lib";
 import { PARTOS, PAT_SESSION } from "@/static/config";
 import classNames from "classnames";
-import { openSans } from "@/app/fonts";
 
 const PageTitle = () => {
   const t = useTranslations("Dashboard");
   return (
-    <div className={classNames(openSans.className, "w-full space-y-2")}>
-      <h1 className="font-semibold text-xl xl:text-2xl">{t("title")}</h1>
+    <div className="w-full space-y-2">
+      <h1 className="font-bold text-xl xl:text-2xl">{t("title")}</h1>
       <i className="w-11/12 text-sm xl:text-base">{t("subtitle")}</i>
     </div>
   );
