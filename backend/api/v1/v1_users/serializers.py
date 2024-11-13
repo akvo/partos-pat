@@ -6,10 +6,8 @@ from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from partos_pat.settings import BASE_DIR
 from api.v1.v1_users.models import SystemUser
-from api.v1.v1_users.constants import Gender
 from utils.custom_serializer_fields import (
     CustomCharField,
-    CustomChoiceField,
     CustomBooleanField,
     CustomEmailField,
 )
@@ -95,7 +93,6 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "full_name",
             "email",
-            "gender",
             "country",
             "is_superuser",
         ]
@@ -116,7 +113,6 @@ class ManageUserSerializer(UserSerializer):
             "id",
             "full_name",
             "email",
-            "gender",
             "country",
             "is_superuser",
         ]
@@ -135,18 +131,12 @@ class ManageUserSerializer(UserSerializer):
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     full_name = CustomCharField()
-    gender = CustomChoiceField(
-        choices=Gender.FieldStr,
-        required=False,
-        allow_null=True,
-    )
     country = CustomCharField()
 
     class Meta:
         model = SystemUser
         fields = [
             "full_name",
-            "gender",
             "country",
         ]
 
@@ -220,17 +210,10 @@ class UserStatisticsSerializer(serializers.Serializer):
 
 
 class ExportUserSerializer(serializers.ModelSerializer):
-    gender = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
     admin = serializers.SerializerMethodField()
     verified = serializers.SerializerMethodField()
     date_joined = serializers.SerializerMethodField()
-
-    @extend_schema_field(OpenApiTypes.STR)
-    def get_gender(self, instance: SystemUser):
-        if instance.gender in Gender.FieldStr:
-            return Gender.FieldStr[instance.gender]
-        return instance.gender
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_country(self, instance: SystemUser):
@@ -262,7 +245,6 @@ class ExportUserSerializer(serializers.ModelSerializer):
             "date_joined",
             "full_name",
             "email",
-            "gender",
             "country",
             "admin",
             "verified",
