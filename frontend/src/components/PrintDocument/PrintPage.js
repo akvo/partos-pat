@@ -65,7 +65,9 @@ const PrintPage = ({
         style={style.img}
       />
       <h1>{patSession?.session_name || "Untitled"}</h1>
-      <h2>Report of the Power Awareness Session</h2>
+      <h2 style={{ color: "#e68a69" }}>
+        Report of the Power Awareness Session
+      </h2>
       <div>
         <p>The session started on: {patSession?.date}</p>
         <p>
