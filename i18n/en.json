@@ -38,12 +38,6 @@
 		"purposeAccountRequired": "Please select the purpose of your account",
 		"confirmPasswordRequired": "Please Confirm Password",
 		"emailRequired": "Please enter your E-mail",
-		"purposeOfAccount1": "I will facilitate a session for partnership evaluation (baseline, endline)",
-		"purposeOfAccount2": "I will participate in a session for partnership evaluation (baseline, endline)",
-		"purposeOfAccount3": "I will facilitate a session to map power dynamics in a future consortium",
-		"purposeOfAccount4": "I will participate in a session to map power dynamics in a future consortium",
-		"purposeOfAccount5": "I am a student/ researcher and want to learn about power dynamics",
-		"purposeOfAccount6": "Other",
 		"countryRequired": "Please select your country",
 		"genderRequired": "Please select your gender",
 		"passwordStrength": "Password Strength: {progress} criteria met",
@@ -54,7 +48,13 @@
 		"previous": "Previous",
 		"next": "Next",
 		"facilitator": "Facilitator",
-		"joinHelpText": "If you have not received a session code, please contact the session facilitator. For any other questions, visit our <faq>faq</faq> page"
+		"joinHelpText": "If you have not received a session code, please contact the session facilitator. For any other questions, visit our <faq>faq</faq> page",
+		"purposeCreation1": "I am just checking out the Power Awareness Tool (PAT) out of curiosity.",
+		"purposeCreation2": "I want to facilitate a real PAT session in an <b>existing partnership</b> to evaluate the way decisions are made, and to determine how decisions should be made.",
+		"purposeCreation3": "I want to facilitate a real PAT session in an <b>emerging partnership</b> to determine the way decisions will be made.",
+		"purposeCreation4": "I want to facilitate a real PAT session in our <b>organization or team</b> to evaluate the way decisions are made, and to determine how decisions should be made.",
+		"purposeCreation5": "I want to use the PAT for an individual thought experiment just to figure out how decision making could work in a partnership.",
+		"purposeCreation6": "I want to use the PAT to explore if this is a <b>useful facilitation tool for consultancy assignments.</b>"
 	},
 	"Error": {
 		"invalidEmail": "Enter a valid email address.",

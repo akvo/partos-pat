@@ -38,12 +38,6 @@
 		"purposeAccountRequired": "Veuillez sélectionner l'objet de votre compte",
 		"confirmPasswordRequired": "Veuillez confirmer le mot de passe",
 		"emailRequired": "Veuillez entrer votre e-mail",
-		"purposeOfAccount1": "Je vais animer une session d'évaluation de partenariat (baseline, endline)",
-		"purposeOfAccount2": "Je vais participer à une session d'évaluation de partenariat (baseline, endline)",
-		"purposeOfAccount3": "Je vais animer une session pour cartographier les dynamiques de pouvoir dans un futur consortium",
-		"purposeOfAccount4": "Je vais participer à une session pour cartographier les dynamiques de pouvoir dans un futur consortium",
-		"purposeOfAccount5": "Je suis étudiant/chercheur et je veux en savoir plus sur les dynamiques de pouvoir",
-		"purposeOfAccount6": "Autre",
 		"countryRequired": "Veuillez sélectionner votre pays",
 		"genderRequired": "Veuillez sélectionner votre sexe",
 		"passwordStrength": "Force du mot de passe : {progress} critères remplis",
@@ -54,7 +48,13 @@
 		"previous": "Précédent",
 		"next": "Suivant",
 		"facilitator": "Facilitateur",
-		"joinHelpText": "Si vous n'avez pas reçu un code de session, veuillez contacter le facilitateur de la session. Pour toute autre question, visitez notre page <faq>faq</faq>"
+		"joinHelpText": "Si vous n'avez pas reçu un code de session, veuillez contacter le facilitateur de la session. Pour toute autre question, visitez notre page <faq>faq</faq>",
+		"purposeCreation1": "Je consulte simplement le Power Awareness Tool (PAT) par curiosité.",
+		"purposeCreation2": "Je souhaite animer une véritable session PAT dans un <b>partenariat existant</b> pour évaluer la façon dont les décisions sont prises et déterminer comment les décisions doivent être prises.",
+		"purposeCreation3": "Je souhaite animer une véritable session PAT dans un <b>partenariat émergent</b> pour déterminer la manière dont les décisions seront prises.",
+		"purposeCreation4": "Je souhaite animer une véritable session PAT dans notre <b>organisation ou équipe</b> pour évaluer la façon dont les décisions sont prises et déterminer comment les décisions doivent être prises.",
+		"purposeCreation5": "Je souhaite utiliser le PAT pour une expérience de pensée individuelle, simplement afin de comprendre comment la prise de décision pourrait fonctionner dans un partenariat.",
+		"purposeCreation6": "Je souhaite utiliser le PAT pour déterminer s'il s'agit d'un <b>outil de facilitation utile pour les missions de conseil.</b>"
 	},
 	"Error": {
 		"invalidEmail": "Entrez une adresse e-mail valide.",
