@@ -11,6 +11,7 @@ import {
   Button,
   Select,
   Modal,
+  Tooltip,
 } from "antd";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -24,6 +25,7 @@ import {
   PencilEditIcon,
   SaveIcon,
   TrashIcon,
+  VerifiedIcon,
 } from "./Icons";
 import { useUserContext } from "@/context/UserContextProvider";
 import { getSession } from "@/lib/auth";
@@ -242,6 +244,18 @@ const UsersTable = ({ initialData = [], total = 0, pageSize = 10 }) => {
       title: t("colEmail"),
       dataIndex: "email",
       key: "email",
+      render: (value, row) => (
+        <Space size="small">
+          <span>{value}</span>
+          {row?.is_verified && (
+            <Tooltip title={t("emailVerified")}>
+              <span className="text-green-bold">
+                <VerifiedIcon />
+              </span>
+            </Tooltip>
+          )}
+        </Space>
+      ),
     },
     {
       title: t("colRole"),
