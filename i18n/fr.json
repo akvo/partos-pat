@@ -410,7 +410,8 @@
 		"editText": "Modifier le compte",
 		"roleAdminValue": "Super administrateur",
 		"roleUserValue": "Utilisateur régulier",
-		"download": "Télécharger"
+		"download": "Télécharger",
+		"emailVerified": "L'e-mail a été vérifié"
 	},
 	"Statistics": {
 		"noAccounts": "Nombre de comptes",

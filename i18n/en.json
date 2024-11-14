@@ -410,7 +410,8 @@
 		"editText": "Edit account",
 		"roleAdminValue": "Super Admin",
 		"roleUserValue": "Regular User",
-		"download": "Download"
+		"download": "Download",
+		"emailVerified": "Email has been verified"
 	},
 	"Statistics": {
 		"noAccounts": "Number of accounts",
