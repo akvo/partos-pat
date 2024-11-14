@@ -173,8 +173,8 @@ Landing,howItWork,Landing.howItWork,How it works,Comment ça marche,
 Landing,learnMore,Landing.learnMore,Learn More,Apprendre encore plus,
 Landing,newWaysTitle,Landing.newWaysTitle,New ways of Collaboration,De nouvelles façons de collaborer,
 Landing,newWaysDesc1,Landing.newWaysDesc1,Partos facilitates the transition towards more equitable partnerships within development cooperation.,Partos facilite la transition vers des partenariats plus équitables au sein de la coopération au développement.,
-Landing,newWaysDesc2,Landing.newWaysDesc2,"We do this by tackling the problem of power imbalances between civil society organisations, moving from top-heavy and top-down systems of international development and philanthropy towards a flatter and more equitable paradigm of people-based development. 
-Under the Shift the Power Lab 2.0, Partos is scaling its efforts to accelerate the power dynamics shift within international development cooperation by co-creating practical solutions for systems change.","Nous y parvenons en abordant le problème des déséquilibres de pouvoir entre les organisations de la société civile, en passant de systèmes de développement international et de philanthropie hiérarchiques et descendants vers un paradigme plus plat et plus équitable de développement basé sur les personnes. 
+Landing,newWaysDesc2,Landing.newWaysDesc2,"We do this by tackling the problem of power imbalances between civil society organisations, moving from top-heavy and top-down systems of international development and philanthropy towards a flatter and more equitable paradigm of people-based development.
+Under the Shift the Power Lab 2.0, Partos is scaling its efforts to accelerate the power dynamics shift within international development cooperation by co-creating practical solutions for systems change.","Nous y parvenons en abordant le problème des déséquilibres de pouvoir entre les organisations de la société civile, en passant de systèmes de développement international et de philanthropie hiérarchiques et descendants vers un paradigme plus plat et plus équitable de développement basé sur les personnes.
 Dans le cadre du Shift the Power Lab 2.0, Partos intensifie ses efforts pour accélérer le changement de dynamique de pouvoir au sein de la coopération internationale au développement en co-créant des solutions pratiques pour le changement des systèmes.",
 Landing,faqTitle,Landing.faqTitle,Frequently asked questions,Questions fréquemment posées,
 Landing,faqSubtitle,Landing.faqSubtitle,Everything you need to know about the Power Awareness Tool,Tout ce que vous devez savoir sur l'outil de sensibilisation au pouvoir,Tout ce que vous devez savoir sur le Power Awareness Tool
@@ -458,6 +458,7 @@ ManageUsers,editText,ManageUsers.editText,Edit account,Modifier le compte,
 ManageUsers,roleAdminValue,ManageUsers.roleAdminValue,Super Admin,Super administrateur,
 ManageUsers,roleUserValue,ManageUsers.roleUserValue,Regular User,Utilisateur régulier,
 ManageUsers,download,ManageUsers.download,Download,Télécharger,
+ManageUsers,emailVerified,ManageUsers.emailVerified,Email has been verified,L'e-mail a été vérifié
 Statistics,noAccounts,Statistics.noAccounts,Number of accounts,Nombre de comptes,
 Statistics,noAccountsLast30,Statistics.noAccountsLast30,New accounts in the last 30 days,Nouveaux comptes au cours des 30 derniers jours,
 Statistics,noSessionCompleted,Statistics.noSessionCompleted,Number of sessions completed,Nombre de séances complétées,
