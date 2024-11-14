@@ -82,18 +82,11 @@ class SessionCreatedSerializer(serializers.Serializer):
 
 class SessionSerializer(serializers.ModelSerializer):
     facilitator = serializers.SerializerMethodField()
-    purpose = serializers.SerializerMethodField()
     organizations = serializers.SerializerMethodField()
 
     @extend_schema_field(UserFacilitatortSerializer())
     def get_facilitator(self, instance: PATSession):
         return UserFacilitatortSerializer(instance=instance.user).data
-
-    @extend_schema_field(OpenApiTypes.STR)
-    def get_purpose(self, instance: PATSession):
-        if instance.purpose in SessionPurpose.FieldStr:
-            return SessionPurpose.FieldStr[instance.purpose]
-        return instance.purpose
 
     @extend_schema_field(OrganizationListSerializer(many=True))
     def get_organizations(self, instance: PATSession):
