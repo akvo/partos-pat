@@ -11,10 +11,6 @@ const IntroSection = () => {
   return (
     <div className="w-full space-y-2 my-4 pb-4 border-b border-grey-100">
       <h1 className="font-extra-bold text-xl">{t_dashboard("statistics")}</h1>
-      <p className="text-base">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-        purus sit amet luctus venenatis.
-      </p>
     </div>
   );
 };
