@@ -684,6 +684,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
     email = serializers.SerializerMethodField()
     organization_name = serializers.SerializerMethodField()
     organization_acronym = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
 
     @extend_schema_field(OpenApiTypes.STR)
     def get_full_name(self, instance: Participant):
@@ -701,11 +702,15 @@ class ParticipantSerializer(serializers.ModelSerializer):
     def get_organization_acronym(self, instance: Participant):
         return instance.organization.acronym
 
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_country(self, instance: Participant):
+        return instance.user.country
+
     class Meta:
         model = Participant
         fields = [
             "id", "full_name", "email", "role", "organization_name",
-            "organization_acronym", "organization_id"
+            "organization_acronym", "organization_id", "country"
         ]
 
 
