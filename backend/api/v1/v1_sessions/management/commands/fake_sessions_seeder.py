@@ -104,8 +104,6 @@ class Command(BaseCommand):
         for r in range(repeat):
             purpose = self.fake_purpose()
             other_purpose = None
-            if purpose == SessionPurpose.other_purpose:
-                other_purpose = fake.catch_phrase()
             owner = SystemUser.objects.order_by("?").first()
             if current_user:
                 owner = current_user
