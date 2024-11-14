@@ -22,7 +22,6 @@ const initialValues = {
     data: [],
   },
   totalClosed: 0,
-  totalActive: 0,
   filterSubmitted: false,
 };
 
@@ -92,11 +91,6 @@ const patSessionReducer = (state, action) => {
       return {
         ...state,
         totalClosed: action?.payload,
-      };
-    case "TOTAL_ACTIVE_UPDATE":
-      return {
-        ...state,
-        totalActive: action?.payload,
       };
     case "FILTER_SUBMITTED":
       return {
