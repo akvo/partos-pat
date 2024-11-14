@@ -6,6 +6,7 @@ import { Button, Form, Modal } from "antd";
 import { FolderSimplePlus, SaveIcon } from "../Icons";
 import { api, errorsMapping } from "@/lib";
 import PATSessionForm from "../Forms/PATSessionForm";
+import { useRouter } from "@/routing";
 
 const { useForm } = Form;
 
@@ -17,6 +18,7 @@ const CreateSessionModal = ({ disabled = false }) => {
 
   const t = useTranslations("CreateSession");
   const td = useTranslations("Dashboard");
+  const router = useRouter();
 
   const onFinish = async (payload) => {
     setLoading(true);
@@ -25,8 +27,8 @@ const CreateSessionModal = ({ disabled = false }) => {
       if (dataID) {
         form.resetFields();
         setOpen(false);
-        const url = new URL(window.location);
-        window.location.href = `${url}?session=${dataID}`;
+        router.refresh("/dashboard");
+        router.replace(`/dashboard?session=${dataID}`);
       }
       const _errors = errorsMapping(details);
       if (_errors.length) {

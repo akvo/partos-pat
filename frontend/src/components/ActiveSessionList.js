@@ -21,10 +21,9 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-const ActiveSessionList = ({ data = [] }) => {
+const ActiveSessionList = ({ data: dataSource = [] }) => {
   const [edit, setEdit] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [dataSource, setDatasource] = useState(data);
   const [patDelete, setPATDelete] = useState(null);
   const [openDelete, setOpenDelete] = useState(false);
 
@@ -47,6 +46,7 @@ const ActiveSessionList = ({ data = [] }) => {
           ...patSession,
           organizations,
           date: dayjs(patSession?.date, "DD-MM-YYYY"),
+          purpose: `${patSession?.purpose}`,
         });
         setLoading(false);
       }
@@ -71,14 +71,9 @@ const ActiveSessionList = ({ data = [] }) => {
     }
   };
 
-  const onDeleteSession = (id) => {
+  const onDeleteSession = () => {
     setPATDelete(null);
-    const updatedDataSource = dataSource.filter((d) => d?.id !== id);
-    setDatasource(updatedDataSource);
-    sessionDispatch({
-      type: "TOTAL_ACTIVE_UPDATE",
-      payload: updatedDataSource?.length,
-    });
+    router.refresh("/dashboard");
   };
 
   return (
@@ -209,15 +204,9 @@ const ActiveSessionList = ({ data = [] }) => {
       />
       <EditSessionModal
         open={edit ? true : false}
-        setClose={(patSession = {}) => {
+        setClose={() => {
           setEdit(null);
-          if (patSession?.id) {
-            setDatasource(
-              dataSource.map((d) =>
-                d?.id === patSession?.id ? { ...d, ...patSession } : d,
-              ),
-            );
-          }
+          router.refresh("/dashboard");
         }}
         initialValues={edit || {}}
       />
