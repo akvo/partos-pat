@@ -10,6 +10,7 @@ import { useRouter } from "@/routing";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import FacilitatorAvatar from "../FacilitatorAvatar";
+import { SESSION_PURPOSE } from "@/static/config";
 
 const MAX_COUNTRIES = 5;
 
@@ -28,6 +29,7 @@ const DetailSessionModal = ({ id, webdomain }) => {
   const router = useRouter();
 
   const t = useTranslations("SessionDetails");
+  const t_common = useTranslations("common");
 
   const handleOnClose = () => {
     setOpen(false);
@@ -132,9 +134,11 @@ const DetailSessionModal = ({ id, webdomain }) => {
         <Flex justify="space-between" align="center">
           <strong className="font-bold">{t("purpose")}</strong>
           <div>
-            {details?.purpose === "Other"
-              ? details?.other_purpose
-              : details?.purpose}
+            {SESSION_PURPOSE?.[details?.purpose]
+              ? t_common.rich(SESSION_PURPOSE[details.purpose], {
+                  b: (token) => <b>{token}</b>,
+                })
+              : details?.other_purpose}
           </div>
         </Flex>
       </Section>

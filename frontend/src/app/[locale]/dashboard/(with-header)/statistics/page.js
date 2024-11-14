@@ -86,12 +86,17 @@ const GridChartSection = ({
 };
 
 const AccountPurposeLegend = () => {
+  const t = useTranslations("common");
   return (
     <div className="w-full space-y-3">
-      {PAT_COLORS.SESSION_CATEGORY.map((color, index) => (
+      {PAT_COLORS.SESSION_PURPOSE.map((color, index) => (
         <div key={index} className="flex items-center space-x-2">
           <div className="p-2 rounded-sm" style={{ backgroundColor: color }} />
-          <span className="text-xs">{SESSION_PURPOSE?.[index]}</span>
+          <span className="text-xs">
+            {t.rich(SESSION_PURPOSE?.[index + 1], {
+              b: (token) => <b>{token}</b>,
+            })}
+          </span>
         </div>
       ))}
     </div>

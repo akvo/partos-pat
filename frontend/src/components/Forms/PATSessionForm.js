@@ -30,6 +30,7 @@ const PATSessionForm = ({
 
   const t = useTranslations("CreateSession");
   const t_error = useTranslations("Error");
+  const t_common = useTranslations("common");
 
   const dateError = formErrors?.find((e) => e?.name === "date");
   const dateErrorForm = dateError
@@ -37,7 +38,9 @@ const PATSessionForm = ({
     : {};
 
   const purposeOptions = Object.keys(SESSION_PURPOSE).map((k) => ({
-    label: SESSION_PURPOSE[k],
+    label: t_common.rich(SESSION_PURPOSE[k], {
+      b: (token) => <b>{token}</b>,
+    }),
     value: k,
   }));
 
@@ -79,7 +82,7 @@ const PATSessionForm = ({
         <>
           <h3 className="text-md font-bold">{t("sessionSection")}</h3>
           <Row>
-            <Col md={24} lg={8} xl={10}>
+            <Col md={24} lg={12} xl={12}>
               <Form.Item
                 name="session_name"
                 rules={[
@@ -94,76 +97,74 @@ const PATSessionForm = ({
                 <Input placeholder={t("session_name")} variant="borderless" />
               </Form.Item>
             </Col>
-            <Col md={24} lg={16} xl={14}>
-              <Flex className="w-full" align="baseline" justify="space-between">
-                <Form.Item
-                  name="countries"
-                  rules={[
-                    {
-                      required: true,
-                      message: t_error("required", {
-                        field_title: t("countries"),
-                      }),
-                    },
-                  ]}
-                  className="min-w-48 2xl:w-2/5"
-                >
-                  <Select
-                    placeholder={t("countries")}
-                    options={countryOptions}
-                    fieldNames={{ label: "name", value: "alpha-2" }}
-                    optionFilterProp="name"
-                    variant="borderless"
-                    mode="multiple"
-                    showSearch
-                    allowClear
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="purpose"
-                  rules={[
-                    {
-                      required: true,
-                      message: t_error("required", {
-                        field_title: t("purpose"),
-                      }),
-                    },
-                  ]}
-                  className="w-full 2xl:w-2/5"
-                >
-                  <Select
-                    placeholder={t("purpose")}
-                    options={purposeOptions}
-                    variant="borderless"
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="date"
-                  rules={[
-                    {
-                      required: true,
-                      message: t_error("required", {
-                        field_title: t("date"),
-                      }),
-                    },
-                  ]}
-                  className="w-64 2xl:w-1/5"
-                  {...dateErrorForm}
-                >
-                  <DatePicker
-                    format={{
-                      format: "YYYY-MM-DD",
-                      type: "mask",
-                    }}
-                    variant="borderless"
-                    onChange={(_, dateString) => setDateSession(dateString)}
-                  />
-                </Form.Item>
-              </Flex>
+            <Col md={24} lg={6} xl={8}>
+              <Form.Item
+                name="countries"
+                rules={[
+                  {
+                    required: true,
+                    message: t_error("required", {
+                      field_title: t("countries"),
+                    }),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={t("countries")}
+                  options={countryOptions}
+                  fieldNames={{ label: "name", value: "alpha-2" }}
+                  optionFilterProp="name"
+                  variant="borderless"
+                  mode="multiple"
+                  showSearch
+                  allowClear
+                />
+              </Form.Item>
+            </Col>
+            <Col md={24} lg={6} xl={4}>
+              <Form.Item
+                name="date"
+                rules={[
+                  {
+                    required: true,
+                    message: t_error("required", {
+                      field_title: t("date"),
+                    }),
+                  },
+                ]}
+                className="w-full"
+                {...dateErrorForm}
+              >
+                <DatePicker
+                  format={{
+                    format: "YYYY-MM-DD",
+                    type: "mask",
+                  }}
+                  variant="borderless"
+                  className="w-full"
+                  onChange={(_, dateString) => setDateSession(dateString)}
+                />
+              </Form.Item>
             </Col>
           </Row>
+          <Form.Item
+            name="purpose"
+            rules={[
+              {
+                required: true,
+                message: t_error("required", {
+                  field_title: t("purpose"),
+                }),
+              },
+            ]}
+            className="w-full"
+          >
+            <Select
+              placeholder={t("purpose")}
+              options={purposeOptions}
+              variant="borderless"
+            />
+          </Form.Item>
           {["Other", "0"].includes(purposeValue) && (
             <Form.Item
               name="other_purpose"
