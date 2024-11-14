@@ -65,17 +65,12 @@ export const BREADCRUMB_MENU = [
 ];
 
 export const SESSION_PURPOSE = {
-  1: "Purpose of creation #1",
-  2: "Purpose of creation #2",
-  3: "Purpose of creation #3",
-  4: "Purpose of creation #4",
-  5: "Purpose of creation #5",
-  6: "Purpose of creation #6",
-  7: "Purpose of creation #7",
-  8: "Purpose of creation #8",
-  9: "Purpose of creation #9",
-  10: "Purpose of creation #10",
-  0: "Other",
+  1: "purposeCreation1",
+  2: "purposeCreation2",
+  3: "purposeCreation3",
+  4: "purposeCreation4",
+  5: "purposeCreation5",
+  6: "purposeCreation6",
 };
 
 export const PAT_SESSION = {
@@ -115,18 +110,13 @@ export const PAT_COLORS = {
     ["rgba(217, 163, 0, 0.3)", "rgba(217, 163, 0, 1)"],
     ["rgba(247, 207, 86, 0.3)", "rgba(247, 207, 86, 1)"],
   ],
-  SESSION_CATEGORY: [
+  SESSION_PURPOSE: [
     "#002f61",
-    "#00476f",
-    "#005d7a",
-    "#00737e",
-    "#00887c",
-    "#009c73",
-    "#2cae62",
-    "#68b94c",
-    "#9ec033",
-    "#d0c319",
-    "#ffc20e",
+    "#00617b",
+    "#008e81",
+    "#3fb470",
+    "#a5c954",
+    "#ffd249",
   ],
 };
 
