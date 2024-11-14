@@ -21,7 +21,7 @@ const IFrame = ({ children, htmlID = "ardoc-print-iframe" }) => {
     }
     @page {
       size: A4;
-    }`
+    }`;
   const style = document.createElement("style");
   style.type = "text/css";
   style.media = "print";
