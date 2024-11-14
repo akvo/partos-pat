@@ -115,6 +115,7 @@ class ManageUserSerializer(UserSerializer):
             "email",
             "country",
             "is_superuser",
+            "is_verified",
         ]
 
     # def create(self, validated_data):

@@ -46,6 +46,7 @@ class ManageUsersTestCase(TestCase, ProfileTestHelperMixin):
                 "email",
                 "country",
                 "is_superuser",
+                "is_verified",
             ],
         )
 
