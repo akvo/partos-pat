@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import PrintTable from "./PrintTable";
 import ScoreLegend from "../SessionWizard/ScoreLegend";
+import countryOptions from "../../../i18n/countries.json";
 
 dayjs.extend(customParseFormat);
 
@@ -81,25 +82,69 @@ const PrintPage = ({
       </div>
       <div style={{ breakAfter: "page" }}></div>
       <h3 style={style.title}>PAT session details</h3>
-      <p>Participants:</p>
+      <p>
+        This report contains the summary of a Power Awareness Tool (PAT) session
+        in the framework of the partnership{" "}
+        <strong>{patSession?.session_name}</strong>.<br />
+        <br />
+        The PAT session started on{" "}
+        {dayjs(patSession?.date, "DD-MM-YYYY").format("dddd, MMM D YYYY")} and
+        ended on{" "}
+        {dayjs(patSession?.closed_at, "YYYY-MM-DD").format("dddd, MMM D YYYY")}.
+        <br />
+        <br />
+        The purpose of this session was to have a frank and open-minded
+        discussion among partner organisations about the way important decisions
+        are taken and should be taken in this partnership. Read more about the
+        context of the session below.
+        <br />
+        <br />
+        The partner organisations in this session that were represented by one
+        or more participants were:
+      </p>
       <PrintTable>
         <thead>
           <tr>
-            <PrintTable.TH>Name</PrintTable.TH>
-            <PrintTable.TH>Role</PrintTable.TH>
-            <PrintTable.TH>Email address</PrintTable.TH>
             <PrintTable.TH>Partner organization (PO)</PrintTable.TH>
             <PrintTable.TH>Acronym (PO)</PrintTable.TH>
           </tr>
         </thead>
         <tbody>
+          {patSession?.organizations?.map((o) => {
+            return (
+              <tr key={o?.id}>
+                <PrintTable.TD>{o?.name}</PrintTable.TD>
+                <PrintTable.TD>{o?.acronym}</PrintTable.TD>
+              </tr>
+            );
+          })}
+        </tbody>
+      </PrintTable>
+      <br />
+      <PrintTable>
+        <thead>
+          <tr>
+            <PrintTable.TH>Name</PrintTable.TH>
+            <PrintTable.TH>Role</PrintTable.TH>
+            <PrintTable.TH>Country</PrintTable.TH>
+            <PrintTable.TH>Email address</PrintTable.TH>
+            <PrintTable.TH width="100">
+              Partner organization (PO) Acronym
+            </PrintTable.TH>
+          </tr>
+        </thead>
+        <tbody>
           {participants?.map((p) => {
+            const fc = countryOptions.find(
+              (c) => c?.["alpha-2"] === p?.country
+            );
+            const userCountry = fc?.name || p?.country;
             return (
               <tr key={p?.id}>
                 <PrintTable.TD>{p?.full_name}</PrintTable.TD>
                 <PrintTable.TD>{p?.role}</PrintTable.TD>
+                <PrintTable.TD>{userCountry}</PrintTable.TD>
                 <PrintTable.TD>{p?.email}</PrintTable.TD>
-                <PrintTable.TD>{p?.organization_name}</PrintTable.TD>
                 <PrintTable.TD>{p?.organization_acronym}</PrintTable.TD>
               </tr>
             );
@@ -118,7 +163,7 @@ const PrintPage = ({
       </PrintTable>
       <div style={{ breakAfter: "page" }}></div>
       <h3 style={style.title}>PAT session content</h3>
-      <strong>PAT session Step 1 List important decisions</strong>
+      <strong>Step 1 - List important decisions</strong>
       <p>
         As a first step in this joint analysis, each participant was asked to
         come up with at least one important decision taken in the partnership in
@@ -142,8 +187,7 @@ const PrintPage = ({
       <br />
       <div style={{ paddingTop: 24 }}>
         <strong>
-          PAT session Step 2 Determine actual level of participation in decision
-          making
+          Step 2 - Determine actual level of participation in decision making
         </strong>
       </div>
       <p>
@@ -178,7 +222,7 @@ const PrintPage = ({
                       const actualValue = d?.scores?.find(
                         (s) =>
                           s?.organization_id === o?.id &&
-                          (s?.desired === null || s?.desired === false),
+                          (s?.desired === null || s?.desired === false)
                       );
                       return (
                         <PrintTable.TD key={`${d?.id}-${o?.id}`}>
@@ -195,7 +239,7 @@ const PrintPage = ({
       ))}
       <div style={{ paddingTop: 24 }}>
         <strong>
-          PAT session Step 3 Reflect actual level of participation in decision
+          Step 3 - Reflect on the actual level of participation in decision
           making
         </strong>
       </div>
@@ -231,7 +275,7 @@ const PrintPage = ({
                       const actualValue = d?.scores?.find(
                         (s) =>
                           s?.organization_id === o?.id &&
-                          (s?.desired === null || s?.desired === false),
+                          (s?.desired === null || s?.desired === false)
                       );
                       return (
                         <PrintTable.TD key={`${d?.id}-${o?.id}`}>
@@ -279,7 +323,7 @@ const PrintPage = ({
                         const actualValue = d?.scores?.find(
                           (s) =>
                             s?.organization_id === o?.id &&
-                            (s?.desired === null || s?.desired === false),
+                            (s?.desired === null || s?.desired === false)
                         );
                         return (
                           <PrintTable.TD key={`${d?.id}-${o?.id}`}>
@@ -296,7 +340,8 @@ const PrintPage = ({
       ))}
       <div style={{ paddingTop: 24 }}>
         <strong>
-          PAT session Step 4 Determine level of participation in decision making
+          Step 4 - Determine the desired level of participation in decision
+          making
         </strong>
       </div>
       {groupedOrgPer3?.map((organizations, index) => (
@@ -329,7 +374,7 @@ const PrintPage = ({
                       <PrintTable.TD>{d?.name}</PrintTable.TD>
                       {organizations?.map((o) => {
                         const actualValue = d?.scores?.find(
-                          (s) => s?.organization_id === o?.id && s?.desired,
+                          (s) => s?.organization_id === o?.id && s?.desired
                         );
                         return (
                           <PrintTable.TD key={`${d?.id}-${o?.id}`}>
@@ -362,9 +407,7 @@ const PrintPage = ({
       </div>
       <br />
       <div style={{ paddingTop: 24 }}>
-        <strong>
-          PAT session Step 5 Determine level of participation in decision making
-        </strong>
+        <strong>Step 5 – Actions to be taken</strong>
       </div>
 
       <p>

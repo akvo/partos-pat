@@ -46,6 +46,7 @@ class ParticipantListEndpointTestCase(TestCase, ProfileTestHelperMixin):
               "organization_name",
               "organization_acronym",
               "organization_id",
+              "country",
            ]
         )
         self.assertEqual(len(res), pat_session.session_participant.count())
