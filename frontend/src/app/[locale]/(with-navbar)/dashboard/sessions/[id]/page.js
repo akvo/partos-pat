@@ -31,7 +31,7 @@ const SessionDetailsPage = () => {
       if (!response?.id) {
         router.replace("/not-found");
       }
-      if (dayjs(response?.date).isValid()) {
+      if (dayjs(response?.date, "DD-MM-YYYY").isValid()) {
         const _readyToPublish = dayjs().isSameOrAfter(
           dayjs(response.date, "DD-MM-YYYY").format("YYYY-MM-DD"),
         );
