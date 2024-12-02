@@ -14,6 +14,7 @@ Power Awarness Tool
   - [PgAdmin](#pgadmin)
 - [Commands](#commands)
   - [Export Users to CSV](#export-users-to-csv)
+  - [Create an Admin User](#creating-an-admin-user)
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
@@ -109,6 +110,21 @@ docker compose exec backend python manage.py export_users_csv
 - **Command**: `export_users_csv`
 - **Functionality**: Exports user data from the database into a CSV format.
 - **File Location**: The generated CSV file is stored in the `./storage` directory, where it can be accessed via the admin dashboard under the Manage Users page.
+
+
+### Creating an admin user
+
+This command allows you to create a superuser account in the PARTOS-PAT platform. A superuser has full administrative rights and can access the PARTOS-PAT admin panel to manage users and view statistics.
+
+#### Usage
+Run the command below in your terminal.
+```
+docker compose exec backend python manage.py createsuperuser
+```
+Follow the prompts to enter details like username, email, and password for the superuser. Once created, you can log in to the PARTOS-PAT admin interface using the credentials provided.
+
+References: [https://docs.djangoproject.com/en/1.8/intro/tutorial02/#creating-an-admin-user](https://docs.djangoproject.com/en/1.8/intro/tutorial02/#creating-an-admin-user)
+
 
 ---
 ## Troubleshooting
