@@ -11,9 +11,12 @@ export const PARTOS = {
   name: "Power Awareness Tool",
   address: "The Hague Humanity Hub\nFluwelen Burgwal 58\n2511 CJ The Hague",
   phone: "+3120 32 09 901",
+  phoneLink: "+31203209901",
   code: "KVK 34214586\nRSIN 813990646",
   PATGuidelineLink:
     "https://www.partos.nl/wp-content/uploads/2024/04/The-Power-Awareness-Tool-2.pdf",
+  TnCLastUpdate: "17 December 2024",
+  TnCLink: "https://www.partos.nl/en/terms-and-conditions/",
 };
 
 export const DASHBOARD_MENU = [
