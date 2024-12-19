@@ -8,6 +8,7 @@ import { useRouter } from "@/routing";
 import SubmitButton from "../Buttons/SubmitButton";
 import CountryDropdown from "../CountryDropdown";
 import { PasswordInput } from "../PasswordInput";
+import { TnCModal } from "../Modals";
 
 const { useForm } = Form;
 
@@ -138,12 +139,9 @@ const RegisterForm = () => {
                 </button>
               </Checkbox>
             </Form.Item>
-            <Modal
-              title={t("checkboxAgreementLink")}
+            <TnCModal
               open={openTerms}
-              onOk={() => setOpenTerms(false)}
-              onCancel={() => setOpenTerms(false)}
-              closable
+              handleClose={() => setOpenTerms(false)}
             />
             <SubmitButton form={form} loading={submitting} block>
               {t("btnCreateAccount")}
