@@ -6,3 +6,4 @@ export { default as PublishModal } from "./PublishModal";
 export { default as DeleteSessionModal } from "./DeleteSessionModal";
 export { default as HelpSearchModal } from "./HelpSearchModal";
 export { default as EditSessionModal } from "./EditSessionModal";
+export { default as TnCModal } from "./TnCModal";
