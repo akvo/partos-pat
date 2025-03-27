@@ -13,7 +13,7 @@ const AccountPurposeChart = ({ data = [] }) => {
       t.markup(name, {
         b: (token) => `<b>${token}</b>`,
       }),
-    [t],
+    [t]
   );
 
   const rawConfig = useMemo(() => {
@@ -25,7 +25,9 @@ const AccountPurposeChart = ({ data = [] }) => {
       tooltip: {
         trigger: "item",
         confine: true,
-        formatter: (props) => tooltipFormatter(props),
+        formatter: (params) => {
+          return `${tooltipFormatter(params)}: <b>${params.value}</b> (${params.percent}%)`;
+        },
         extraCssText: "width:auto; white-space:pre-wrap;",
       },
       legend: {
