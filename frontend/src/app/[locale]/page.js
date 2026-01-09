@@ -393,7 +393,7 @@ const PartnerSection = () => {
           </strong>
         </div>
         <ul className="w-full flex flex-wrap justify-between">
-          {Array.from({ length: 7 }).map((_, index) => {
+          {Array.from({ length: 8 }).map((_, index) => {
             return (
               <li key={index}>
                 <Image
