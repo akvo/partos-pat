@@ -178,9 +178,18 @@ SIMPLE_JWT = {
 AUTH_USER_MODEL = "v1_users.SystemUser"
 
 # MAIL SETUP
-EMAIL_BACKEND = "django_mailjet.backends.MailjetBackend"
-MAILJET_API_KEY = environ["MAILJET_APIKEY"]
-MAILJET_API_SECRET = environ["MAILJET_SECRET"]
+# Defaults target submission on 587 with STARTTLS, what managed relays
+# expect. Port 465 is implicit TLS: EMAIL_USE_SSL=true, EMAIL_USE_TLS=false.
+# Neither is inferable from the port; the wrong one blocks until timeout.
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = environ.get("EMAIL_HOST", "localhost")
+EMAIL_PORT = int(environ.get("EMAIL_PORT", 587))
+EMAIL_HOST_USER = environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = environ.get("EMAIL_USE_TLS", "true").lower() == "true"
+EMAIL_USE_SSL = environ.get("EMAIL_USE_SSL", "false").lower() == "true"
+# Without a timeout a hung relay holds the request thread indefinitely.
+EMAIL_TIMEOUT = 10
 EMAIL_FROM = environ.get("EMAIL_FROM") or "noreply@akvo.org"
 
 # APP SETUP
