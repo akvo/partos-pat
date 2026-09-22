@@ -30,8 +30,12 @@ services:
       - SECRET_KEY=secret
       # env vars for coveralls
       - COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN:-}
-      - MAILJET_APIKEY=$MAILJET_APIKEY
-      - MAILJET_SECRET=$MAILJET_SECRET
+      - EMAIL_HOST
+      - EMAIL_PORT
+      - EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD
+      - EMAIL_USE_TLS
+      - EMAIL_USE_SSL
       - WEBDOMAIN=notset
     depends_on:
       - db

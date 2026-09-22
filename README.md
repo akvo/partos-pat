@@ -36,8 +36,12 @@ Power Awarness Tool
      ```
    - Set the desired values for the following variables:
    ```
-   MAILJET_APIKEY=YOUR_MAILJET_API_KEY
-   MAILJET_SECRET=YOUR_MAILJET_SECRET
+   EMAIL_HOST=YOUR_SMTP_HOST
+   EMAIL_PORT=587
+   EMAIL_HOST_USER=YOUR_SMTP_USERNAME
+   EMAIL_HOST_PASSWORD=YOUR_SMTP_PASSWORD
+   EMAIL_USE_TLS=true   # "false" on port 465
+   EMAIL_USE_SSL=false  # "true" on port 465
    WEBDOMAIN="<<full site URL (default: http://localhost:3000)>>"
    ```
 
