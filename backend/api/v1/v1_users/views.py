@@ -27,6 +27,7 @@ from api.v1.v1_users.serializers import (
     UserSerializer,
     VerifyTokenSerializer,
     LoginSerializer,
+    LoginResponseSerializer,
     ForgotPasswordSerializer,
     VerifyPasswordTokenSerializer,
     ResetPasswordSerializer,
@@ -45,6 +46,7 @@ from utils.custom_pagination import Pagination
     request=RegisterSerializer,
     responses={201: UserSerializer, 400: DefaultResponseSerializer},
     tags=["Auth"],
+    summary="Register",
 )
 @api_view(["POST"])
 def register(request, version):
@@ -89,8 +91,10 @@ def register(request, version):
 
 
 @extend_schema(
-    responses={200: DefaultResponseSerializer},
+    responses={302: None, 400: DefaultResponseSerializer},
     tags=["Auth"],
+    summary="Verify registration token",
+    description="Redirects to the login page on success.",
     parameters=[
         OpenApiParameter(
             name="token",
@@ -120,8 +124,13 @@ def verify_token(request, version):
 
 @extend_schema(
     request=LoginSerializer,
-    responses={200: UserSerializer, 401: DefaultResponseSerializer},
+    responses={
+        200: LoginResponseSerializer,
+        400: DefaultResponseSerializer,
+        401: DefaultResponseSerializer,
+    },
     tags=["Auth"],
+    summary="Login",
 )
 @api_view(["POST"])
 def login(request, version):
@@ -164,7 +173,8 @@ def login(request, version):
 
 
 @extend_schema(
-    responses={200: ForgotPasswordSerializer},
+    request=ForgotPasswordSerializer,
+    responses={200: DefaultResponseSerializer},
     tags=["Auth"],
     summary="Forgot password",
 )
@@ -195,7 +205,7 @@ def forgot_password(request, version):
 
 
 @extend_schema(
-    responses={200: DefaultResponseSerializer},
+    responses={200: DefaultResponseSerializer, 400: DefaultResponseSerializer},
     tags=["Auth"],
     summary="Verify password code",
     parameters=[
@@ -229,7 +239,8 @@ def verify_password_code(request, version):
 
 
 @extend_schema(
-    responses={200: DefaultResponseSerializer},
+    request=ResetPasswordSerializer,
+    responses={200: DefaultResponseSerializer, 400: DefaultResponseSerializer},
     tags=["Auth"],
     summary="Reset password",
     parameters=[

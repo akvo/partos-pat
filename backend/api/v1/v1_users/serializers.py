@@ -160,6 +160,12 @@ class LoginSerializer(serializers.Serializer):
     password = CustomCharField()
 
 
+class LoginResponseSerializer(serializers.Serializer):
+    user = UserSerializer()
+    token = serializers.CharField()
+    expiration_time = serializers.DateTimeField()
+
+
 class ForgotPasswordSerializer(serializers.Serializer):
     email = CustomEmailField()
 

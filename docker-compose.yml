@@ -36,6 +36,7 @@ services:
       - EMAIL_HOST_PASSWORD
       - EMAIL_USE_TLS
       - EMAIL_USE_SSL
+      - EMAIL_FROM
       - WEBDOMAIN=$WEBDOMAIN
     depends_on:
       - db

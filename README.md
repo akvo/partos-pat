@@ -42,6 +42,7 @@ Power Awarness Tool
    EMAIL_HOST_PASSWORD=YOUR_SMTP_PASSWORD
    EMAIL_USE_TLS=true   # "false" on port 465
    EMAIL_USE_SSL=false  # "true" on port 465
+   EMAIL_FROM=YOUR_STMP_EMAIL_FROM
    WEBDOMAIN="<<full site URL (default: http://localhost:3000)>>"
    ```
 
